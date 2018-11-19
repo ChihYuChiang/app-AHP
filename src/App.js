@@ -1,16 +1,20 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
 import readXlsxFile from "read-excel-file";
 import * as d3 from "d3";
 
 import drawBaseGraph from "./js/drawBaseGraph";
 
+import Pair from "./component/pair";
+
 
 class App extends Component {
-  state = {
-    options: [],
-    root: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      options: [],
+      root: []
+    };
+  }
 
   render() {
     return (
@@ -20,11 +24,9 @@ class App extends Component {
           <div>
             <input type="file" name="file" id="input" accept=".xlsx" className="inputfile"/>
             <label htmlFor="input">Choose a file</label>
-            <Button>test</Button>
           </div>
-          <div>
-            <svg />
-          </div>
+          <div><svg /></div>
+          <div><Pair /></div>
         </div>
       </div>
     );
