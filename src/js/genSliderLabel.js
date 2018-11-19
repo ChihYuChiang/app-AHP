@@ -1,10 +1,10 @@
 function main() {
-    var rangeSlider = document.getElementById("range-slider");
-    var rangeLabel = document.getElementById("range-label");
+    let rangeSlider = document.getElementById("range-slider");
+    let rangeLabel = document.getElementById("range-label");
     
-    function showSliderValue() {
+    function genSliderLabel() {
       rangeLabel.innerHTML = rangeSlider.value;
-      var labelPosition = (rangeSlider.value - rangeSlider.min) / (rangeSlider.max - rangeSlider.min);
+      let labelPosition = (rangeSlider.value - rangeSlider.min) / (rangeSlider.max - rangeSlider.min);
     
       if (rangeSlider.value === rangeSlider.min) {
         rangeLabel.style.left = labelPosition * 100 + 2 + "%";
@@ -15,7 +15,8 @@ function main() {
       }
     }
     
-    rangeSlider.addEventListener("input", showSliderValue, false);
+    genSliderLabel(); //Set default presentation
+    rangeSlider.addEventListener("input", genSliderLabel, false);
 }
 
 export default main;

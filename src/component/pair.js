@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 
 class Pair extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      value: 5
-    };
+  state = {
+    value: 5
+  };
 
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({ value: event.target.value })
+  handleChange = (event) => { //Arrow functions always gets the context from where they have been defined.
+    this.setState({ value: event.target.value });
   }
 
   render() {

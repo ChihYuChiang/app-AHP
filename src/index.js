@@ -6,8 +6,8 @@ import 'font-awesome/css/font-awesome.css';
 import './index.scss';
 
 import App from './App';
-import showSliderValue from './js/showSliderValue';
+import genSliderLabel from './js/genSliderLabel';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 
-showSliderValue();
+genSliderLabel();

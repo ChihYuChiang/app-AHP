@@ -8,13 +8,10 @@ import Pair from "./component/pair";
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      options: [],
-      root: []
-    };
-  }
+  state = {
+    options: [],
+    root: []
+  };
 
   render() {
     return (
@@ -36,7 +33,7 @@ class App extends Component {
     this.listen2Data();
   }
 
-  listen2Data() {
+  listen2Data = () => {
     const input = document.getElementById("input");
   
     input.addEventListener("change", () => {
