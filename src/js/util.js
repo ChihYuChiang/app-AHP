@@ -59,4 +59,4 @@ console.log(computeScore(test3, genWeight(test3)))
 // console.log(test[0][1])
 // console.log(test[index.indexOf('b')][index.indexOf('b')])
 
-// export { genPair };
+export { genPair };

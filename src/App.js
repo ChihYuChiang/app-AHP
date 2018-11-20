@@ -4,13 +4,14 @@ import readXlsxFile from "read-excel-file";
 import drawBaseGraph from "./js/drawBaseGraph";
 import preprocessData from "./js/preprocessData";
 
-import Pair from "./component/pair";
+import Comparison from "./component/comparison";
 
 
 class App extends Component {
   state = {
     options: [],
-    root: []
+    root: [],
+    comData: {}
   };
 
   render() {
@@ -23,7 +24,7 @@ class App extends Component {
             <label htmlFor="input">Choose a file</label>
           </div>
           <div><svg /></div>
-          <div><Pair /></div>
+          <div><Comparison handleComData={ this.handleComData } /></div>
         </div>
       </div>
     );
@@ -42,6 +43,10 @@ class App extends Component {
           drawBaseGraph(this.state.root);
         });
     });
+  }
+
+  handleComData = (comData) => {
+    this.setState({ comData: comData });
   }
 }
 
