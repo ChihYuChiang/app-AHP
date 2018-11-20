@@ -27,15 +27,25 @@ function genWeight(matrix) {
 
 function computeCR(matrix, weights) {
   let lambda = matrix.map((row, i) => {
-      let tmp = row.reduce((acc, cur, j) => {
-        return acc + cur * weights[j];
-      }, 0);
-      return tmp / weights[i];
+    let tmp = row.reduce((acc, cur, j) => {
+      return acc + cur * weights[j];
+    }, 0);
+    return tmp / weights[i];
   })
   let CI = ((lambda.reduce((acc, cur) => acc + cur, 0) / matrix.length) - matrix.length) / (matrix.length - 1);
   const RIs = [null, null, null, 0.58, 0.9, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49, 1.51, 1.53, 1.56, 1.57, 1.58];
   let CR = CI / RIs[matrix.length]
   return CR;
+}
+
+function computeScore(cMatrix, weights) {
+  let scores = cMatrix.map((row) => {
+    let tmp = row.reduce((acc, cur, j) => {
+      return acc + cur * weights[j];
+    }, 0)
+    return tmp;
+  });
+  return scores;
 }
 
 
@@ -45,7 +55,7 @@ let test2 = [[1, 1/6, 0.2], [6, 1, 2], [5, 0.5, 1]];
 let test3 = [[1, 9, 7], [1/9, 1, 1/5], [1/7, 5, 1]];
 let index = ["a", "b", "c"];
 
-console.log(computeCR(test3, genWeight(test3)))
+console.log(computeScore(test3, genWeight(test3)))
 // console.log(test[0][1])
 // console.log(test[index.indexOf('b')][index.indexOf('b')])
 
