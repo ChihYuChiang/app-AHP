@@ -1,9 +1,17 @@
 function genPair(data) {
     let combination = [];
-    data.forEach((a) => {
-        combination.push(...data.map((b) => [a, b]));
+
+    data.forEach((a, ia) => {
+        combination.push(...data.map((b, ib) => {
+            if (ia < ib) return [a, b];
+            else return null;
+        }));
     });
-    combination = combination.filter((com) => com[0] !== com[1]);
+
+    //Filter undefined
+    combination = combination.filter((c) => c);
+
+    return combination;
 }
 
 export { genPair };
