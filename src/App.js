@@ -11,7 +11,9 @@ class App extends Component {
   state = {
     options: [],
     root: [],
-    comData: {}
+    comData: {},
+    pairs: {},
+    curPairs: 0
   };
 
   render() {
@@ -24,7 +26,7 @@ class App extends Component {
             <label htmlFor="input">Choose a file</label>
           </div>
           <div><svg /></div>
-          <div><Comparison handleComData={ this.handleComData } /></div>
+          <div><Comparison handleComData={this.handleComData} pairs={Object.entries(this.state.pairs)[this.state.curPairs]} /></div>
         </div>
       </div>
     );
@@ -46,7 +48,10 @@ class App extends Component {
   }
 
   handleComData = (comData) => {
-    this.setState({ comData: comData });
+    this.setState({
+      comData: comData,
+      curPairs: this.state.curPairs + 1
+    });
   }
 }
 

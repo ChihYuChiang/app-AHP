@@ -52,7 +52,7 @@ async function main(rows) {
 
 
   //--Get pairwise data
-  let pairData = [];
+  let pairData = {};
   function extract(obj) {
     if (obj.children) {
       obj.children.map(extract);
@@ -61,11 +61,10 @@ async function main(rows) {
         let ids = obj.children.map((c) => c.id);
         let pairs = genPair(ids);
         pairs = pairs.map((pair) => ({
-          groupId: obj.id,
           source: pair[0],
           dest: pair[1]
         }));
-        pairData.push(pairs);
+        pairData[obj.id] = (pairs);
       }
     }
   }

@@ -3,9 +3,16 @@ import { Button } from "react-bootstrap";
 
 
 class Comparison extends Component {
-  state = {
-    comData: {}
-  };
+  constructor(props) {
+    super(props);
+
+    let tempState = { comData: {} };
+    ['a', 'b', 'c'].forEach(e => {
+      tempState.comData[e] = 5;
+    });
+
+    this.state = tempState;
+  }
 
   render() {
     let tmp = ['a', 'b', 'c'];
