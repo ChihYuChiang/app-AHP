@@ -23,6 +23,8 @@ class App extends Component {
   };
 
   render() {
+    let [gId, pairs] = Object.entries(this.state.criterion.pairs)[this.state.criterion.curPairs] || [undefined, undefined];
+
     return (
       <div className="App">
         <div className="container">
@@ -32,7 +34,7 @@ class App extends Component {
             <label htmlFor="input">Choose a file</label>
           </div>
           <div><svg /></div>
-          <div><Comparison handleComData={this.handleComData} pairs={Object.entries(this.state.criterion.pairs)[this.state.criterion.curPairs]} /></div>
+          <div><Comparison handleComData={this.handleComData} pairs={pairs} gId={gId} /></div>
         </div>
       </div>
     );
@@ -45,7 +47,7 @@ class App extends Component {
     input.addEventListener("change", () => {
       readXlsxFile(input.files[0])
         .then(preprocessData)
-        .then((data) => {
+        .then((data) => { //item/root pairs
           this.setState({
             option: {
               ...this.state.option,
@@ -67,7 +69,7 @@ class App extends Component {
       criterion: {
         ...this.state.criterion,
         compares: comData,
-        curPairs: this.state.curPairs + 1
+        curPairs: this.state.criterion.curPairs + 1
       }
     });
   }

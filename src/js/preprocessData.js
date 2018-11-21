@@ -5,14 +5,23 @@ async function main(rows) {
   const nRow = rows.length;
   const nCol = rows[0].length;
 
-  //--Get options
-  let options = [];
+
+  //--Option
+  //Get data
+  let items = [];
   for (let i = 1; rows[i][0]; i++) {
-    options.push({ id: i, name: rows[i][0] });
+    items.push({ id: i, name: rows[i][0] });
   }
 
+  let pairs_option = genPair(items);
+  pairs_option = pairs_option.map((pair) => ({
+    source: pair[0].id,
+    dest: pair[1].id
+  }));
 
-  //--Get hierarchy data
+
+  //--Criterion
+  //Get hierarchy data
   function searchParent(i, j) {
     if (j === 1) {
       return "0-0";
@@ -50,9 +59,8 @@ async function main(rows) {
   let treeLayout = d3.tree().nodeSize([root.dx, root.dy]);
   treeLayout(root);
 
-
-  //--Get pairwise data
-  let pairData = {};
+  //Get pairwise data
+  let pairs_criterion = {};
   function extract(obj) {
     if (obj.children) {
       obj.children.map(extract);
@@ -64,20 +72,22 @@ async function main(rows) {
           source: pair[0],
           dest: pair[1]
         }));
-        pairData[obj.id] = (pairs);
+        pairs_criterion[obj.id] = pairs;
       }
     }
   }
   extract(root);
 
+
+  //--Return
   return {
     option: {
-      items: [],
-      pairs: []
+      items: items,
+      pairs: pairs_option
     },
     criterion: {
       root: root,
-      pairs: pairData
+      pairs: pairs_criterion
     }
   };
 }

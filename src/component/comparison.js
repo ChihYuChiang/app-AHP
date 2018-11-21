@@ -6,32 +6,37 @@ class Comparison extends Component {
   constructor(props) {
     super(props);
 
-    let tempState = { comData: {} };
-    ['a', 'b', 'c'].forEach(e => {
-      tempState.comData[e] = 5;
-    });
-
-    this.state = tempState;
+    this.state = {
+      compares: []
+    }
   }
 
   render() {
-    let tmp = ['a', 'b', 'c'];
-    let pairs = tmp.map((id) => (<Pair key={id} id={id} updateComData={this.updateComData} />));
+    if (this.props.pairs) {
+      let pairs = this.props.pairs.map((pair) => (<Pair key={pair.source + 'to' + pair.dest} data={pair} updateComData={this.updateComData} />));
+  
+      return (
+        <div className="comparison">
+          {pairs}
+          <Button onClick={this.handleComData8Reset}>Submit</Button>
+        </div>
+      );
 
-    return (
-      <div className="comparison">
-        {pairs}
-        <Button onClick={() => {this.props.handleComData(this.state.comData);}}>Submit</Button>
-      </div>
-    );
+    } else return <div />
   }
 
-  updateComData = (id, value) => {
-    this.setState({
-      comData: {
-        ...this.state.comData,
-        [id]: value
-      }
+  handleComData8Reset = () => {
+    this.props.handleComData(this.state.compares);
+    this.setState({ compares: [] });
+  }
+
+  updateComData = (value, data) => {
+    data.value = value;
+    this.setState((curState) => { //Update uses the current state/prop values requires the function form
+      let compares = curState.compares.filter((pair) => pair.dest !== data.dest || pair.source !== data.source);
+      compares.push(data);
+      curState.compares = compares;
+      return curState;
     });
   }
 }
@@ -60,6 +65,7 @@ class Pair extends Component {
   }
   
   componentDidMount() {
+    this.props.updateComData(this.state.value, this.props.data); //Set default comData (if not changed by user)
     this.genSliderLabel(); //Set default presentation
   }
 
@@ -79,7 +85,7 @@ class Pair extends Component {
   
   handleChange = (event) => { //Arrow functions always gets the context from where they have been defined.
     this.setState({ value: +event.target.value }, () => {
-      this.props.updateComData(this.props.id, this.state.value);
+      this.props.updateComData(this.state.value, this.props.data);
     });
   }
 }
