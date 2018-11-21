@@ -9,11 +9,17 @@ import Comparison from "./component/comparison";
 
 class App extends Component {
   state = {
-    options: [],
-    root: [],
-    comData: {},
-    pairs: {},
-    curPairs: 0
+    option: {
+      items: [],
+      pairs: [],
+      compares: []
+    },
+    criterion: {
+      root: [],
+      pairs: {},
+      curPairs: 0,
+      compares: {}
+    }
   };
 
   render() {
@@ -26,7 +32,7 @@ class App extends Component {
             <label htmlFor="input">Choose a file</label>
           </div>
           <div><svg /></div>
-          <div><Comparison handleComData={this.handleComData} pairs={Object.entries(this.state.pairs)[this.state.curPairs]} /></div>
+          <div><Comparison handleComData={this.handleComData} pairs={Object.entries(this.state.criterion.pairs)[this.state.criterion.curPairs]} /></div>
         </div>
       </div>
     );
@@ -40,17 +46,29 @@ class App extends Component {
       readXlsxFile(input.files[0])
         .then(preprocessData)
         .then((data) => {
-          this.setState(data);
+          this.setState({
+            option: {
+              ...this.state.option,
+              ...data.option
+            },
+            criterion: {
+              ...this.state.criterion,
+              ...data.criterion
+            }
+          });
           //Draw first graph after loaded
-          drawBaseGraph(this.state.root);
+          drawBaseGraph(this.state.criterion.root);
         });
     });
   }
 
   handleComData = (comData) => {
     this.setState({
-      comData: comData,
-      curPairs: this.state.curPairs + 1
+      criterion: {
+        ...this.state.criterion,
+        compares: comData,
+        curPairs: this.state.curPairs + 1
+      }
     });
   }
 }

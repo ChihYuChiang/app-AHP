@@ -70,7 +70,16 @@ async function main(rows) {
   }
   extract(root);
 
-  return { options: options, root: root, pairs: pairData };
+  return {
+    option: {
+      items: [],
+      pairs: []
+    },
+    criterion: {
+      root: root,
+      pairs: pairData
+    }
+  };
 }
 
 export default main;

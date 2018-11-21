@@ -78,7 +78,7 @@ class Pair extends Component {
   }
   
   handleChange = (event) => { //Arrow functions always gets the context from where they have been defined.
-    this.setState({ value: event.target.value }, () => {
+    this.setState({ value: +event.target.value }, () => {
       this.props.updateComData(this.props.id, this.state.value);
     });
   }
