@@ -10,7 +10,19 @@ function genPair(data) {
   return combination;
 }
 
-function genMatrix(pair) {}
+function genMatrix(compares) {
+  let mIndex = new Set();
+  compares.forEach((compare) => {mIndex.add(compare.dest); mIndex.add(compare.source);});
+  mIndex = Array.from(mIndex);
+
+  let matrix = Array.from({ length: mIndex.length }, (_) => new Array(mIndex.length).fill(1)); //Array.fill() creates only shallowcopy and can't be used here
+  compares.forEach((compare) => {
+    matrix[mIndex.indexOf(compare.source)][mIndex.indexOf(compare.dest)] = compare.value;
+    matrix[mIndex.indexOf(compare.dest)][mIndex.indexOf(compare.source)] = 1 / compare.value;
+  });
+
+  return [matrix, mIndex];
+}
 
 //Reverse normalize (Ref p237)
 function genWeight(matrix) {
@@ -22,7 +34,7 @@ function genWeight(matrix) {
   let sum = weights.reduce((acc, cur) => acc + cur, 0);
   weights = weights.map(i => i / sum);
 
-  return weights
+  return weights;
 }
 
 function computeCR(matrix, weights) {
@@ -38,8 +50,8 @@ function computeCR(matrix, weights) {
   return CR;
 }
 
-function computeScore(cMatrix, weights) {
-  let scores = cMatrix.map((row) => {
+function computeScore(matrix, weights) {
+  let scores = matrix.map((row) => {
     let tmp = row.reduce((acc, cur, j) => {
       return acc + cur * weights[j];
     }, 0)
@@ -49,14 +61,24 @@ function computeScore(cMatrix, weights) {
 }
 
 
-let test = new Array(3).fill(new Array(3).fill(1));
-test = [[1, 3, 7], [1 / 3, 1, 5], [1 / 7, 1 / 5, 1]];
+let test = [[1, 3, 7], [1 / 3, 1, 5], [1 / 7, 1 / 5, 1]];
 let test2 = [[1, 1/6, 0.2], [6, 1, 2], [5, 0.5, 1]];
 let test3 = [[1, 9, 7], [1/9, 1, 1/5], [1/7, 5, 1]];
 let index = ["a", "b", "c"];
 
-console.log(computeScore(test3, genWeight(test3)))
+let test4 = [
+  {source: "a", dest: "b", value: 4},
+  {source: "a", dest: "c", value: 6},
+  {source: "a", dest: "d", value: 1},
+  {source: "b", dest: "c", value: 5},
+  {source: "b", dest: "d", value: 2},
+  {source: "c", dest: "d", value: 4}
+]
+let gg = genMatrix(test4)[0]
+console.log(gg)
+// console.log(computeScore(test3, genWeight(test3)))
 // console.log(test[0][1])
 // console.log(test[index.indexOf('b')][index.indexOf('b')])
 
-export { genPair };
+
+export { genPair, genMatrix, genWeight, computeCR };

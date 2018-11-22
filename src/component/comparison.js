@@ -1,8 +1,17 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 
+import { genMatrix, genWeight, computeCR } from "../js/pair8Matrix";
+
 
 class Comparison extends Component {
+  /*
+    props = {
+      handleComData //Add comData into the store
+      pairs //Multiple pair entries, each with source, dest
+      gId //The id of this pair group, also the parent node's name in the root
+    }
+  */
   constructor(props) {
     super(props);
 
@@ -26,7 +35,15 @@ class Comparison extends Component {
   }
 
   handleComData8Reset = () => {
-    this.props.handleComData(this.state.compares);
+    let [matrix, mIndex] = genMatrix(this.state.compares);
+    let weights = genWeight(matrix);
+    let CR = computeCR(matrix, weights);
+
+    this.props.handleComData({
+      gId: this.props.gId,
+      weights: weights,
+      mIndex: mIndex
+    });
     this.setState({ compares: [] });
   }
 
@@ -43,6 +60,12 @@ class Comparison extends Component {
 
 
 class Pair extends Component {
+  /*
+    props = {
+      data //A pair data, with source, dest
+      updateComData //Update the comData state in the parent company
+    }
+  */
   state = {
     value: 5
   };
@@ -52,14 +75,17 @@ class Pair extends Component {
   
   render() {
     return (
-      <div className="slider-wrapper">
-        <input name="range-slider" type="range" className="fluid-slider" max="9" min="1" step="1"
-          value={this.state.value}
-          onChange={this.handleChange}
-          onInput={this.genSliderLabel}
-          ref={this.sliderElement}
-          />
-        <span className="range-label" ref={this.labelElement}>{this.state.value}</span>
+      <div>
+        <p className="prompt">{this.props.data.source + '>' + this.props.data.dest}</p>
+          <div className="slider-wrapper">
+            <input name="range-slider" type="range" className="fluid-slider" max="9" min="1" step="1"
+              value={this.state.value}
+              onChange={this.handleChange}
+              onInput={this.genSliderLabel}
+              ref={this.sliderElement}
+              />
+            <span className="range-label" ref={this.labelElement}>{this.state.value}</span>
+          </div>
       </div>
     );
   }
