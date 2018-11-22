@@ -2,14 +2,18 @@ import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 
 import { genMatrix, genWeight, computeCR } from "../js/pair8Matrix";
+import { isEmpty } from "../js/util";
 
 
 class Comparison extends Component {
   /*
     props = {
       handleComData //Add comData into the store
-      pairs //Multiple pair entries, each with source, dest
-      gId //The id of this pair group, also the parent node's name in the root
+      pairData
+      //The id of this pair group, also the parent node's name in the root
+      //Multiple pair entries, each with source, dest
+      //Type, option or criterion
+      id2Name //A dict translate node id to the name to be displayed
     }
   */
   constructor(props) {
@@ -21,8 +25,15 @@ class Comparison extends Component {
   }
 
   render() {
-    if (this.props.pairs) {
-      let pairs = this.props.pairs.map((pair) => (<Pair key={pair.source + 'to' + pair.dest} data={pair} updateComData={this.updateComData} />));
+    if (!isEmpty(this.props.pairData)) {
+      let pairs = this.props.pairData.pairs.map((pair) => (
+        <Pair key={pair.source + 'to' + pair.dest}
+          type={this.props.pairData.type}
+          data={pair}
+          updateComData={this.updateComData}
+          id2Name={this.props.id2Name}
+        />
+      ));
   
       return (
         <div className="comparison">
@@ -40,7 +51,8 @@ class Comparison extends Component {
     let CR = computeCR(matrix, weights);
 
     this.props.handleComData({
-      gId: this.props.gId,
+      type: this.props.pairData.type,
+      gId: this.props.pairData.gId,
       weights: weights,
       mIndex: mIndex
     });
@@ -64,6 +76,7 @@ class Pair extends Component {
     props = {
       data //A pair data, with source, dest
       updateComData //Update the comData state in the parent company
+      id2Name //A dict translate node id to the name to be displayed
     }
   */
   state = {
@@ -74,9 +87,12 @@ class Pair extends Component {
   labelElement = React.createRef();
   
   render() {
+    let sourceName = this.props.type === 'criterion' ? this.props.id2Name[this.props.data.source] : this.props.data.source;
+    let destName = this.props.type === 'criterion' ? this.props.id2Name[this.props.data.dest] : this.props.data.dest;
+
     return (
       <div>
-        <p className="prompt">{this.props.data.source + '>' + this.props.data.dest}</p>
+        <p className="prompt">{sourceName + ' > ' + destName}</p>
           <div className="slider-wrapper">
             <input name="range-slider" type="range" className="fluid-slider" max="9" min="1" step="1"
               value={this.state.value}

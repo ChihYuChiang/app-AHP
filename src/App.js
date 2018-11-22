@@ -8,33 +8,41 @@ import Comparison from "./component/comparison";
 
 
 class App extends Component {
-  state = {
-    option: {
-      items: [],
-      pairs: [],
-      compares: []
-    },
-    criterion: {
-      root: [],
-      pairs: {},
-      curPairs: 0,
-      compares: {}
-    }
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      option: {
+        items: [],
+        pairs: [],
+        compares: []
+      },
+      criterion: {
+        root: [],
+        pairs: {},
+        compares: {},
+        id2Name: {}
+      },
+      pairsGenerator: {},
+      curPairData: {}
+    };
+  }
 
   render() {
-    let [gId, pairs] = Object.entries(this.state.criterion.pairs)[this.state.criterion.curPairs] || [undefined, undefined];
-
     return (
       <div className="App">
         <div className="container">
-          <h1>test</h1>
+          <h1>AHP</h1>
           <div>
             <input type="file" name="file" id="input" accept=".xlsx" className="inputfile"/>
             <label htmlFor="input">Choose a file</label>
           </div>
           <div><svg /></div>
-          <div><Comparison handleComData={this.handleComData} pairs={pairs} gId={gId} /></div>
+          <Comparison
+            handleComData={this.handleComData}
+            pairData={this.state.curPairData}
+            id2Name={this.state.criterion.id2Name}
+          />
         </div>
       </div>
     );
@@ -47,7 +55,7 @@ class App extends Component {
     input.addEventListener("change", () => {
       readXlsxFile(input.files[0])
         .then(preprocessData)
-        .then((data) => { //item/root pairs
+        .then((data) => { //item/root, pairs, id2Name, generator
           this.setState({
             option: {
               ...this.state.option,
@@ -56,7 +64,9 @@ class App extends Component {
             criterion: {
               ...this.state.criterion,
               ...data.criterion
-            }
+            },
+            pairsGenerator: data.pairsGenerator,
+            curPairData: data.pairsGenerator.next().value
           });
           //Draw first graph after loaded
           drawBaseGraph(this.state.criterion.root);
@@ -69,8 +79,8 @@ class App extends Component {
       criterion: {
         ...this.state.criterion,
         compares: comData,
-        curPairs: this.state.criterion.curPairs + 1
-      }
+      },
+      curPairData: this.state.pairsGenerator.next().value
     });
   }
 }

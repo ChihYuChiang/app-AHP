@@ -13,10 +13,11 @@ async function main(rows) {
     items.push({ id: i, name: rows[i][0] });
   }
 
+  //Get pairwise data
   let pairs_option = genPair(items);
   pairs_option = pairs_option.map((pair) => ({
-    source: pair[0].id,
-    dest: pair[1].id
+    source: pair[0].id + '', //A weird way of converting number to string
+    dest: pair[1].id + ''
   }));
 
 
@@ -51,7 +52,6 @@ async function main(rows) {
     .parentId(function(d) {
       return d.parent;
     })(data);
-  console.log(root);
 
   //Identify graph boundary
   root.dx = 30;
@@ -59,9 +59,12 @@ async function main(rows) {
   let treeLayout = d3.tree().nodeSize([root.dx, root.dy]);
   treeLayout(root);
 
-  //Get pairwise data
+  //Get pairwise data and id to name dict
   let pairs_criterion = {};
+  let id2Name = {};
   function extract(obj) {
+    id2Name[obj.id] = obj.data.name;
+    
     if (obj.children) {
       obj.children.map(extract);
       
@@ -87,9 +90,29 @@ async function main(rows) {
     },
     criterion: {
       root: root,
-      pairs: pairs_criterion
-    }
+      pairs: pairs_criterion,
+      id2Name: id2Name
+    },
+    pairsGenerator: genComPairs(pairs_criterion, root, pairs_option)
   };
+}
+
+function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //Generator
+  for (let gId8pairs of Object.entries(criterionPairs)) { //Yield can't be used in forEach callback
+    yield ({
+      type: 'criterion',
+      gId: gId8pairs[0],
+      pairs: gId8pairs[1]
+    });
+  }
+    
+  for (let leaf of criterionRoot.leaves()) {
+    yield ({
+      type: 'option',
+      gId: leaf.id,
+      pairs: optionPairs
+    });
+  }
 }
 
 export default main;
