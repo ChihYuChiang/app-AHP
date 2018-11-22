@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { genPair } from "./pair8Matrix"; //Have to ad ./ or it is deemed as a module
+import { genPair } from "./pairMatrix"; //Have to ad ./ or it is deemed as a module
 
 async function main(rows) {
   const nRow = rows.length;

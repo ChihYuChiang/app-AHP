@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 
-import drawBaseGraph from "./js/drawBaseGraph";
-import preprocessData from "./js/preprocessData";
+import drawBaseGraph from "./js/graph";
+import preprocessData from "./js/preData";
+import { isEmpty } from "./js/util";
 
 import Comparison from "./component/comparison";
 
@@ -17,7 +18,7 @@ class App extends Component {
     criterion: {
       root: [],
       pairs: {},
-      compares: {},
+      compares: [],
       id2Name: {}
     },
     pairsGenerator: {},
@@ -71,12 +72,24 @@ class App extends Component {
   }
 
   handleComData = (comData) => {
-    this.setState({
-      criterion: {
-        ...this.state.criterion,
-        compares: comData,
-      },
-      curPairData: this.state.pairsGenerator.next().value
+    this.setState((state, _) => {
+      state[comData.type].compares.push({
+        ...comData,
+        type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
+      });
+      state.curPairData = state.pairsGenerator.next().value;
+
+      return state
+    }, () => {
+      if (isEmpty(this.state.curPairData)) console.log('process score and update graph');
+    });
+  }
+
+  updateRoot = () => {
+    this.setState((state, _) => {
+      let nodes = state.root.descendants();
+
+      return state;
     });
   }
 }

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 
-import { genMatrix, genWeight, computeCR } from "../js/pair8Matrix";
+import { genMatrix, genWeight, computeCR } from "../js/pairMatrix";
 import { isEmpty } from "../js/util";
 
 
