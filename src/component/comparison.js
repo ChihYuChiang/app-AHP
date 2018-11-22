@@ -10,24 +10,22 @@ class Comparison extends Component {
     props = {
       handleComData //Add comData into the store
       pairData
-      //The id of this pair group, also the parent node's name in the root
-      //Multiple pair entries, each with source, dest
-      //Type, option or criterion
+      //.gId, The id of this pair group, also the parent node's name in the root
+      //.pairs, Multiple pair entries, each with source, dest
+      //.type, option or criterion
       id2Name //A dict translate node id to the name to be displayed
     }
   */
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      compares: []
-    }
+  state = {
+    compares: []
   }
 
   render() {
     if (!isEmpty(this.props.pairData)) {
+      let groupLabel = this.props.pairData.type === 'criterion' ? 'Criterion importance' : 'Regarding ' + this.props.id2Name[this.props.pairData.gId];
+
       let pairs = this.props.pairData.pairs.map((pair) => (
-        <Pair key={pair.source + 'to' + pair.dest}
+        <Pair key={this.props.pairData.gId + pair.source + '_' + pair.dest}
           type={this.props.pairData.type}
           data={pair}
           updateComData={this.updateComData}
@@ -37,6 +35,7 @@ class Comparison extends Component {
   
       return (
         <div className="comparison">
+          <p>{groupLabel}</p>
           {pairs}
           <Button onClick={this.handleComData8Reset}>Submit</Button>
         </div>
@@ -80,7 +79,7 @@ class Pair extends Component {
     }
   */
   state = {
-    value: 5
+    value: 0
   };
 
   sliderElement = React.createRef();
@@ -94,7 +93,7 @@ class Pair extends Component {
       <div>
         <p className="prompt">{sourceName + ' > ' + destName}</p>
           <div className="slider-wrapper">
-            <input name="range-slider" type="range" className="fluid-slider" max="9" min="1" step="1"
+            <input name="range-slider" type="range" className="fluid-slider" max="8" min="-8" step="1"
               value={this.state.value}
               onChange={this.handleChange}
               onInput={this.genSliderLabel}

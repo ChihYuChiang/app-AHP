@@ -16,9 +16,16 @@ function genMatrix(compares) {
   mIndex = Array.from(mIndex);
 
   let matrix = Array.from({ length: mIndex.length }, (_) => new Array(mIndex.length).fill(1)); //Array.fill() creates only shallowcopy and can't be used here
+  //-8 to 8, 0 means equal
+  //0 -> 1; 8 -> 9; -8 -> 1/9
+  function translate(value) {
+    if (value >= 0) return value + 1;
+    else return 1 / (-value + 1);
+  }
   compares.forEach((compare) => {
-    matrix[mIndex.indexOf(compare.source)][mIndex.indexOf(compare.dest)] = compare.value;
-    matrix[mIndex.indexOf(compare.dest)][mIndex.indexOf(compare.source)] = 1 / compare.value;
+    let translatedValue = translate(compare.value);
+    matrix[mIndex.indexOf(compare.source)][mIndex.indexOf(compare.dest)] = translatedValue;
+    matrix[mIndex.indexOf(compare.dest)][mIndex.indexOf(compare.source)] = 1 / translatedValue;
   });
 
   return [matrix, mIndex];

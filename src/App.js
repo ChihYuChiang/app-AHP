@@ -8,25 +8,21 @@ import Comparison from "./component/comparison";
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      option: {
-        items: [],
-        pairs: [],
-        compares: []
-      },
-      criterion: {
-        root: [],
-        pairs: {},
-        compares: {},
-        id2Name: {}
-      },
-      pairsGenerator: {},
-      curPairData: {}
-    };
-  }
+  state = {
+    option: {
+      items: [],
+      pairs: [],
+      compares: []
+    },
+    criterion: {
+      root: [],
+      pairs: {},
+      compares: {},
+      id2Name: {}
+    },
+    pairsGenerator: {},
+    curPairData: {}
+  };
 
   render() {
     return (
