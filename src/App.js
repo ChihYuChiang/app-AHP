@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 
-import drawTreeGraph from "./js/treeGraph";
+import drawTreeGraph, { updateTreeGraph } from "./js/treeGraph";
 import preprocessData from "./js/preData";
 import util from "./js/util";
 import score from "./js/score";
@@ -81,13 +81,16 @@ class App extends Component {
       });
       state.curPairData = state.pairDataGenerator.next().value;
 
-      return state
+      return state;
     }, () => {
       if (util.isEmpty(this.state.curPairData)) {
         this.updateRootWCom();
-        drawTreeGraph(this.state.criterion.root);
+        this.forceUpdate(() => { //Element is controlled by React and will not re-render without the data binding, need forceUpdate
+          updateTreeGraph(this.state.criterion.root);
+        });
       }
     });
+    
   }
 
   updateRootWCom = () => {
