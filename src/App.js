@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 
-import drawBaseGraph from "./js/treeGraph";
+import drawTreeGraph from "./js/treeGraph";
 import preprocessData from "./js/preData";
 import util from "./js/util";
-import { embedWeight } from "./js/score";
+import score from "./js/score";
 
 import Comparison from "./component/comparison";
 
@@ -17,9 +17,10 @@ class App extends Component {
       compares: []
     },
     criterion: {
-      root: [],
+      items: [],
       pairs: {},
       compares: [],
+      root: [],
       id2Name: {}
     },
     pairDataGenerator: {},
@@ -53,7 +54,7 @@ class App extends Component {
     input.addEventListener("change", () => {
       readXlsxFile(input.files[0])
         .then(preprocessData)
-        .then((data) => { //item/root, pairs, id2Name, generator
+        .then((data) => { //items, root, pairs, id2Name, generator
           this.setState({
             option: {
               ...this.state.option,
@@ -67,7 +68,7 @@ class App extends Component {
             curPairData: data.pairDataGenerator.next().value
           });
           //Draw first graph after loaded
-          drawBaseGraph(this.state.criterion.root);
+          drawTreeGraph(this.state.criterion.root);
         });
     });
   }
@@ -84,14 +85,14 @@ class App extends Component {
     }, () => {
       if (util.isEmpty(this.state.curPairData)) {
         this.updateRootWCom();
-        console.log('process score and update graph');
+        drawTreeGraph(this.state.criterion.root);
       }
     });
   }
 
   updateRootWCom = () => {
     this.setState((state, _) => {
-      let root = embedWeight(state.criterion.root, state.option.compares, state.criterion.compares);
+      let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
 
       return {
         criterion: {

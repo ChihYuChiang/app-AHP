@@ -24,28 +24,21 @@ async function main(rows) {
 
   //--Criterion
   //Get hierarchy data
-  let items_criterion = [{ id: "0-0", name: "root", parent: "" }];
+  let items_criterion = [{ id: "0-0", name: "root", parent: "", level: 0 }];
   for (let i = 1; i < nRow; i++) {
     for (let j = nCol - 1; j > 0; j--) {
       if (rows[i][j]) {
         items_criterion.push({
           id: i + "-" + j,
           name: rows[i][j],
-          parent: searchParent(rows, i, j)
+          parent: searchParent(rows, i, j),
+          level: j
         });
       }
     }
   }
+  let root = genRoot(items_criterion);
 
-  let root = d3
-    .stratify()
-    .id(function(d) {
-      return d.id;
-    })
-    .parentId(function(d) {
-      return d.parent;
-    })(items_criterion);
-  
   //Get pairwise data and id to name dict
   let [pairs_criterion, id2Name] = extractPairs(root);
 
@@ -66,6 +59,17 @@ async function main(rows) {
   };
 }
 
+
+function genRoot(data) {
+  return d3
+    .stratify()
+    .id(function(d) {
+      return d.id;
+    })
+    .parentId(function(d) {
+      return d.parent;
+    })(data);
+}
 
 function searchParent(rows, i, j) {
   if (j === 1) {
@@ -133,4 +137,4 @@ function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //Generator
   }
 }
 
-export default main;
+export { main as default, genRoot };
