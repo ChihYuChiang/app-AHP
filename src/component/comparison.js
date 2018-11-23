@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import { Button } from "react-bootstrap";
 
-import { genMatrix, genWeight, computeCR } from "../js/pairMatrix";
-import { isEmpty } from "../js/util";
+import { genMatrix, genWeight, computeCR } from "../js/pair8Matrix";
+import util from "../js/util";
+import CONST from "../js/const";
 
 
 class Comparison extends Component {
@@ -21,8 +22,8 @@ class Comparison extends Component {
   }
 
   render() {
-    if (!isEmpty(this.props.pairData)) {
-      let groupLabel = this.props.pairData.type === 'criterion' ? 'Criterion importance' : 'Regarding ' + this.props.id2Name[this.props.pairData.gId];
+    if (!util.isEmpty(this.props.pairData)) {
+      let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION ? 'Criterion importance' : 'Regarding ' + this.props.id2Name[this.props.pairData.gId];
 
       let pairs = this.props.pairData.pairs.map((pair) => (
         <Pair key={this.props.pairData.gId + pair.source + '_' + pair.dest}
@@ -86,8 +87,8 @@ class Pair extends Component {
   labelElement = React.createRef();
   
   render() {
-    let sourceName = this.props.type === 'criterion' ? this.props.id2Name[this.props.data.source] : this.props.data.source;
-    let destName = this.props.type === 'criterion' ? this.props.id2Name[this.props.data.dest] : this.props.data.dest;
+    let sourceName = this.props.type === CONST.DATA_TYPE.CRITERION ? this.props.id2Name[this.props.data.source] : this.props.data.source;
+    let destName = this.props.type === CONST.DATA_TYPE.CRITERION ? this.props.id2Name[this.props.data.dest] : this.props.data.dest;
 
     return (
       <div>

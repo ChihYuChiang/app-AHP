@@ -1,5 +1,7 @@
 import * as d3 from "d3";
-import { genPair } from "./pairMatrix"; //Have to ad ./ or it is deemed as a module
+
+import { genPair } from "./pair8Matrix"; //Have to ad ./ or it is deemed as a module
+import CONST from "./const";
 
 async function main(rows) {
   const nRow = rows.length;
@@ -93,14 +95,14 @@ async function main(rows) {
       pairs: pairs_criterion,
       id2Name: id2Name
     },
-    pairsGenerator: genComPairs(pairs_criterion, root, pairs_option)
+    pairDataGenerator: genComPairs(pairs_criterion, root, pairs_option)
   };
 }
 
 function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //Generator
   for (let gId8pairs of Object.entries(criterionPairs)) { //Yield can't be used in forEach callback
     yield ({
-      type: 'criterion',
+      type: CONST.DATA_TYPE.CRITERION,
       gId: gId8pairs[0],
       pairs: gId8pairs[1]
     });
@@ -108,7 +110,7 @@ function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //Generator
     
   for (let leaf of criterionRoot.leaves()) {
     yield ({
-      type: 'option',
+      type: CONST.DATA_TYPE.OPTION,
       gId: leaf.id,
       pairs: optionPairs
     });
