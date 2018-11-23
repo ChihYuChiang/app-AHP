@@ -57,32 +57,22 @@ function computeCR(matrix, weights) {
   return CR;
 }
 
-function computeScore(matrix, weights) {
-  let scores = matrix.map((row) => {
-    let tmp = row.reduce((acc, cur, j) => {
-      return acc + cur * weights[j];
-    }, 0)
-    return tmp;
-  });
-  return scores;
-}
 
+// let test = [[1, 3, 7], [1 / 3, 1, 5], [1 / 7, 1 / 5, 1]];
+// let test2 = [[1, 1/6, 0.2], [6, 1, 2], [5, 0.5, 1]];
+// let test3 = [[1, 9, 7], [1/9, 1, 1/5], [1/7, 5, 1]];
+// let index = ["a", "b", "c"];
 
-let test = [[1, 3, 7], [1 / 3, 1, 5], [1 / 7, 1 / 5, 1]];
-let test2 = [[1, 1/6, 0.2], [6, 1, 2], [5, 0.5, 1]];
-let test3 = [[1, 9, 7], [1/9, 1, 1/5], [1/7, 5, 1]];
-let index = ["a", "b", "c"];
-
-let test4 = [
-  {source: "a", dest: "b", value: 4},
-  {source: "a", dest: "c", value: 6},
-  {source: "a", dest: "d", value: 1},
-  {source: "b", dest: "c", value: 5},
-  {source: "b", dest: "d", value: 2},
-  {source: "c", dest: "d", value: 4}
-]
-let gg = genMatrix(test4)[0]
-console.log(gg)
+// let test4 = [
+//   {source: "a", dest: "b", value: 4},
+//   {source: "a", dest: "c", value: 6},
+//   {source: "a", dest: "d", value: 1},
+//   {source: "b", dest: "c", value: 5},
+//   {source: "b", dest: "d", value: 2},
+//   {source: "c", dest: "d", value: 4}
+// ]
+// let gg = genMatrix(test4)[0]
+// console.log(gg)
 // console.log(computeScore(test3, genWeight(test3)))
 // console.log(test[0][1])
 // console.log(test[index.indexOf('b')][index.indexOf('b')])

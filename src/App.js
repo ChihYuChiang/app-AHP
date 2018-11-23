@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 
-import drawBaseGraph from "./js/graph";
+import drawBaseGraph from "./js/treeGraph";
 import preprocessData from "./js/preData";
-import { isEmpty } from "./js/util";
+import util from "./js/util";
+import { embedWeight } from "./js/score";
 
 import Comparison from "./component/comparison";
 
@@ -21,7 +22,7 @@ class App extends Component {
       compares: [],
       id2Name: {}
     },
-    pairsGenerator: {},
+    pairDataGenerator: {},
     curPairData: {}
   };
 
@@ -62,8 +63,8 @@ class App extends Component {
               ...this.state.criterion,
               ...data.criterion
             },
-            pairsGenerator: data.pairsGenerator,
-            curPairData: data.pairsGenerator.next().value
+            pairDataGenerator: data.pairDataGenerator,
+            curPairData: data.pairDataGenerator.next().value
           });
           //Draw first graph after loaded
           drawBaseGraph(this.state.criterion.root);
@@ -77,19 +78,27 @@ class App extends Component {
         ...comData,
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
-      state.curPairData = state.pairsGenerator.next().value;
+      state.curPairData = state.pairDataGenerator.next().value;
 
       return state
     }, () => {
-      if (isEmpty(this.state.curPairData)) console.log('process score and update graph');
+      if (util.isEmpty(this.state.curPairData)) {
+        this.updateRootWCom();
+        console.log('process score and update graph');
+      }
     });
   }
 
-  updateRoot = () => {
+  updateRootWCom = () => {
     this.setState((state, _) => {
-      let nodes = state.root.descendants();
+      let root = embedWeight(state.criterion.root, state.option.compares, state.criterion.compares);
 
-      return state;
+      return {
+        criterion: {
+          ...state.criterion,
+          root: root
+        }
+      };
     });
   }
 }
