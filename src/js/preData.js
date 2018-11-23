@@ -1,22 +1,21 @@
 import * as d3 from "d3";
 
-import { genPair } from "./pair8Matrix"; //Have to ad ./ or it is deemed as a module
 import CONST from "./const";
+
 
 async function main(rows) {
   const nRow = rows.length;
   const nCol = rows[0].length;
 
-
   //--Option
   //Get data
-  let items = [];
+  let items_option = [];
   for (let i = 1; rows[i][0]; i++) {
-    items.push({ id: i, name: rows[i][0] });
+    items_option.push({ id: i, name: rows[i][0] });
   }
 
   //Get pairwise data
-  let pairs_option = genPair(items);
+  let pairs_option = genPair(items_option);
   pairs_option = pairs_option.map((pair) => ({
     source: pair[0].id + '', //A weird way of converting number to string
     dest: pair[1].id + ''
@@ -25,27 +24,19 @@ async function main(rows) {
 
   //--Criterion
   //Get hierarchy data
-  function searchParent(i, j) {
-    if (j === 1) {
-      return "0-0";
-    } else if (rows[i][j - 1]) {
-      return i + "-" + (j - 1);
-    } else {
-      return searchParent(i - 1, j);
-    }
-  }
-  let data = [{ id: "0-0", name: "root", parent: "" }];
+  let items_criterion = [{ id: "0-0", name: "root", parent: "" }];
   for (let i = 1; i < nRow; i++) {
     for (let j = nCol - 1; j > 0; j--) {
       if (rows[i][j]) {
-        data.push({
+        items_criterion.push({
           id: i + "-" + j,
           name: rows[i][j],
-          parent: searchParent(i, j)
+          parent: searchParent(rows, i, j)
         });
       }
     }
   }
+
   let root = d3
     .stratify()
     .id(function(d) {
@@ -53,22 +44,60 @@ async function main(rows) {
     })
     .parentId(function(d) {
       return d.parent;
-    })(data);
-
-  //Identify graph boundary
-  root.dx = 30;
-  root.dy = 500 / (root.height + 1);
-  let treeLayout = d3.tree().nodeSize([root.dx, root.dy]);
-  treeLayout(root);
-
+    })(items_criterion);
+  
   //Get pairwise data and id to name dict
-  let pairs_criterion = {};
+  let [pairs_criterion, id2Name] = extractPairs(root);
+
+
+  //--Return
+  return {
+    option: {
+      items: items_option,
+      pairs: pairs_option
+    },
+    criterion: {
+      items: items_criterion,
+      pairs: pairs_criterion,
+      root: root,
+      id2Name: id2Name
+    },
+    pairDataGenerator: genComPairs(pairs_criterion, root, pairs_option)
+  };
+}
+
+
+function searchParent(rows, i, j) {
+  if (j === 1) {
+    return "0-0";
+  } else if (rows[i][j - 1]) {
+    return i + "-" + (j - 1);
+  } else {
+    return searchParent(rows, i - 1, j);
+  }
+}
+
+function genPair(data) {
+  let combination = [];
+
+  data.forEach((a, ia) => {
+    combination.push(...data.map((b, ib) => (ia < ib ? [a, b] : null)));
+  });
+  //Filter undefined
+  combination = combination.filter(c => c);
+
+  return combination;
+}
+
+function extractPairs(root) {
+  let pairsObj = {};
   let id2Name = {};
-  function extract(obj) {
+
+  let extractPair = (obj) => {
     id2Name[obj.id] = obj.data.name;
     
     if (obj.children) {
-      obj.children.map(extract);
+      obj.children.map(extractPair);
       
       if (obj.children.length > 1) {
         let ids = obj.children.map((c) => c.id);
@@ -77,26 +106,13 @@ async function main(rows) {
           source: pair[0],
           dest: pair[1]
         }));
-        pairs_criterion[obj.id] = pairs;
+        pairsObj[obj.id] = pairs;
       }
     }
   }
-  extract(root);
+  extractPair(root);
 
-
-  //--Return
-  return {
-    option: {
-      items: items,
-      pairs: pairs_option
-    },
-    criterion: {
-      root: root,
-      pairs: pairs_criterion,
-      id2Name: id2Name
-    },
-    pairDataGenerator: genComPairs(pairs_criterion, root, pairs_option)
-  };
+  return [pairsObj, id2Name];
 }
 
 function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //Generator

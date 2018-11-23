@@ -1,6 +1,12 @@
 import * as d3 from "d3";
 
 function main(root) {
+  //Identify graph boundary
+  root.dx = 30;
+  root.dy = 500 / (root.height + 1);
+  let treeLayout = d3.tree().nodeSize([root.dx, root.dy]);
+  treeLayout(root);
+
   let x0 = Infinity;
   let x1 = -x0;
   root.each(d => {

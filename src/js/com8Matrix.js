@@ -1,15 +1,3 @@
-function genPair(data) {
-  let combination = [];
-
-  data.forEach((a, ia) => {
-    combination.push(...data.map((b, ib) => (ia < ib ? [a, b] : null)));
-  });
-  //Filter undefined
-  combination = combination.filter(c => c);
-
-  return combination;
-}
-
 function genMatrix(compares) {
   let mIndex = new Set();
   compares.forEach((compare) => {mIndex.add(compare.dest); mIndex.add(compare.source);});
@@ -78,4 +66,4 @@ function computeCR(matrix, weights) {
 // console.log(test[index.indexOf('b')][index.indexOf('b')])
 
 
-export { genPair, genMatrix, genWeight, computeCR };
+export { genMatrix, genWeight, computeCR };
