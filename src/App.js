@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 
-import drawTreeGraph, { updateTreeGraph } from "./js/treeGraph";
 import preprocessData from "./js/preData";
 import util from "./js/util";
 import score from "./js/score";
+import CONST from "./js/const";
 
 import Comparison from "./component/comparison";
+import Graph from "./component/graph";
+import FileInput from "./component/fileInput";
 
 
 class App extends Component {
@@ -24,7 +26,8 @@ class App extends Component {
       id2Name: {}
     },
     pairDataGenerator: {},
-    curPairData: {}
+    curPairData: {},
+    curGraph: null
   };
 
   render() {
@@ -32,11 +35,11 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <h1>AHP</h1>
-          <div>
-            <input type="file" name="file" id="input" accept=".xlsx" className="inputfile"/>
-            <label htmlFor="input">Choose a file</label>
-          </div>
-          <div><svg /></div>
+          <FileInput />
+          <Graph
+            curGraph={this.state.curGraph}
+            root={this.state.criterion.root}
+          />
           <Comparison
             handleComData={this.handleComData}
             pairData={this.state.curPairData}
@@ -65,13 +68,13 @@ class App extends Component {
               ...data.criterion
             },
             pairDataGenerator: data.pairDataGenerator,
-            curPairData: data.pairDataGenerator.next().value
+            curPairData: data.pairDataGenerator.next().value,
+            curGraph: CONST.GRAPH_TYPE.TREE //Draw first graph after loaded
           });
-          //Draw first graph after loaded
-          drawTreeGraph(this.state.criterion.root);
         });
     });
   }
+
 
   handleComData = (comData) => {
     this.setState((state, _) => {
@@ -80,31 +83,16 @@ class App extends Component {
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
       state.curPairData = state.pairDataGenerator.next().value;
-
-      return state;
-    }, () => {
-      if (util.isEmpty(this.state.curPairData)) {
-        this.updateRootWCom();
-        this.forceUpdate(() => { //Element is controlled by React and will not re-render without the data binding, need forceUpdate
-          updateTreeGraph(this.state.criterion.root);
-        });
+      state.curGraph = null; //Hide svg
+      if (util.isEmpty(state.curPairData)) {
+        let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
+        state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
+        state.criterion.root = root
       }
-    });
-    
-  }
-
-  updateRootWCom = () => {
-    this.setState((state, _) => {
-      let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
-
-      return {
-        criterion: {
-          ...state.criterion,
-          root: root
-        }
-      };
+      return state;
     });
   }
 }
+
 
 export default App;
