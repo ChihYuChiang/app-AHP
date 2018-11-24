@@ -1,5 +1,7 @@
 import * as d3 from "d3";
 
+import styles from '../scss/variable.scss';
+
 
 function main(root) {
   //Identify graph boundary
@@ -57,7 +59,7 @@ function updateTreeGraph(root) {
       .append("path")
       .classed("link", true)
       .attr("fill", "none")
-      .attr("stroke", "#DBDBDB")
+      .attr("stroke", styles.gray300)
     .merge(linkPaths) //Both enter and update
       .attr("d", (d) => `
           M${d.target.y},${d.target.x}
@@ -81,7 +83,6 @@ function updateTreeGraph(root) {
   nodeGs_enter
     .append("circle")
     .classed("node_circle", true)
-    .attr("fill", "#4682B4");
     
   nodeGs_enter
     .append("text")
@@ -98,7 +99,13 @@ function updateTreeGraph(root) {
   
   nodeGs_enter8Update
     .select(".node_circle")
-    .attr("r", (d) => (Math.pow(d.data.parWeight, 0.4) * 30) || 4);
+    .attr("r", (d) => (Math.pow(d.data.parWeight, 0.5) * 30) || 4)
+    .attr("fill", (d) => {
+      if (d.data.score == null) return styles.primary;
+      let color = d.data.score.reduce((acc, cur, i) => (cur > d.data.score[acc]) ? i : acc, 0);
+      console.log(color)
+      return `hsl(${color * 30}, 100%, 50%)`;
+    });
 
   nodeGs_enter8Update
     .select(".node_text")

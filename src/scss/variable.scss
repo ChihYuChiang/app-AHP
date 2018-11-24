@@ -1,3 +1,4 @@
+//When add new var, add into export as well to be used in js
 $white    : #fff      !default;
 $gray-100 : #f8f9fa   !default;
 $gray-200 : #e9ecef   !default;
@@ -29,3 +30,37 @@ $warning  : $yellow     !default;
 $danger   : $red        !default;
 $light    : $gray-100   !default;
 $dark     : $gray-800   !default;
+
+:export {
+    white: $white;
+    gray100: $gray-100; 
+    gray200: $gray-200; 
+    gray300: $gray-300; 
+    gray400: $gray-400; 
+    gray500: $gray-500; 
+    gray600: $gray-600; 
+    gray700: $gray-700; 
+    gray800: $gray-800; 
+    gray900: $gray-900; 
+    black: $black;
+
+    blue: $blue;     
+    indigo: $indigo;   
+    purple: $purple;   
+    pink: $pink;     
+    red: $red;      
+    orange: $orange;   
+    yellow: $yellow;   
+    green: $green;   
+    teal: $teal;     
+    cyan: $cyan;
+
+    primary: $primary;  
+    secondary: $secondary;
+    success: $success;  
+    info: $info;     
+    warning: $warning;  
+    danger: $danger;   
+    light: $light;    
+    dark: $dark     
+}
