@@ -77,17 +77,20 @@ class App extends Component {
 
 
   handleComData = (comData) => {
+    //Accept batch compare data and update App state
     this.setState((state, _) => {
       state[comData.type].compares.push({
         ...comData,
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
-      state.curPairData = state.pairDataGenerator.next().value;
+      state.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
       state.curGraph = null; //Hide svg
+
+      //If all pairs are displayed, compute score and produce report
       if (util.isEmpty(state.curPairData)) {
         let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
+        state.criterion.root = root;
         state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
-        state.criterion.root = root
       }
       return state;
     });
