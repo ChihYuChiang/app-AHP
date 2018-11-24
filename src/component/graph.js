@@ -13,7 +13,7 @@ function Graph (props) {
     }
   */
   if (props.curGraph == null) {
-    return <svg style={{ display: 'none' }} />
+    return <div id="canvasRoot"><svg style={{ display: 'none' }} /></div>;
   }
   if (props.curGraph === CONST.GRAPH_TYPE.TREE) {
     drawTreeGraph(props.root);
@@ -22,7 +22,7 @@ function Graph (props) {
     updateTreeGraph(props.root);
   }
 
-  return <svg style={{ display: 'block' }} />;
+  return <div id="canvasRoot"><svg style={{ display: 'block' }} /></div>;
 }
 
 

@@ -1,28 +1,20 @@
 @import "scss/variable.scss";
 @import "scss/mixin.scss";
 @import "scss/fluid-slider.scss";
+@import "scss/input-file.scss";
 
-.inputfile {
-  width: 0.1px;
-  height: 0.1px;
-  opacity: 0;
-  overflow: hidden;
+
+#canvasRoot {
+  position: relative;
+}
+
+#explanation {
+  visibility: hidden;
   position: absolute;
+  top: 50px;
+  left: 30px;
+  width: 140px;
+  text-align: center;
+  color: #666;
   z-index: -1;
-}
-
-.inputfile + label {
-  font-size: 1.25em;
-  font-weight: 700;
-  color: $white;
-  background-color: $gray-800;
-  display: inline-block;
-}
-
-.inputfile + label:hover {
-  background-color: $red;
-}
-
-.inputfile + label {
-  cursor: pointer; /* "hand" cursor */
 }

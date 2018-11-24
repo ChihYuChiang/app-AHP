@@ -19,6 +19,22 @@ function main(root) {
     .style("width", "100%")
     .style("height", x1 - x0 + root.dx * 2);
   
+  //Information
+  let explanation = d3.select("#canvasRoot")
+    .append("div")
+    .attr("id", "explanation");
+  
+  explanation
+    .append("div")
+    .attr("id", "head-explanation")
+    .style("font-size", "25px");
+    
+  explanation  
+    .append("span")
+    .attr("id", "sub-explanation")
+    .attr("font-size", "10px")
+    .text("of score come from this criterion");
+
   //Graph root
   //svg -> g -> g.links and g.nodes
   let gr = svg
@@ -137,6 +153,12 @@ function genScales(root) {
 }
 
 function highlightHovered(d) {
+  d3.select("#explanation")
+    .style("visibility", () => d.data.parWeight ? "visible" : "hidden");
+    
+  d3.select("#head-explanation")
+    .text(d.data.parWeight ? (d.data.parWeight * 100).toFixed(2) + "%" : "");
+
   let circles = d3.selectAll(".node_circle")
     .transition(1000)
     .style("opacity", 0.3);
@@ -149,7 +171,10 @@ function highlightHovered(d) {
     .style("opacity", 1);
 }
 
-function resumeHovered() {
+function resumeHovered(d) {
+  d3.select("#explanation")
+    .style("visibility", "hidden");
+
   d3.selectAll(".node_circle")
     .transition(1000)
     .style("opacity", 1);
