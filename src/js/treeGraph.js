@@ -98,11 +98,11 @@ function updateTreeGraph(root) {
   
   nodeGs_enter8Update
     .select(".node_circle")
-    .attr("r", (d) => (d.data.weight * 8) || 4);
+    .attr("r", (d) => (Math.pow(d.data.parWeight, 0.4) * 30) || 4);
 
   nodeGs_enter8Update
     .select(".node_text")
-    .text((d) => {return d.data.name});
+    .text((d) => d.data.name);
 }
 
 

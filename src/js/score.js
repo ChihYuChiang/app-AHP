@@ -21,6 +21,16 @@ class main {
     }
 
 
+    //--Partitioned weight
+    function getParWeight (datum) {
+      if (datum.parent === "") return 1; //root
+      else return datum.weight * getParWeight(data.filter((d) => d.id === datum.parent)[0]);
+    }
+    for (let d of data) {
+      d.parWeight = getParWeight(d);
+    }
+
+
     //--Score
     //Leaves
     for (let compare of optCom) {
