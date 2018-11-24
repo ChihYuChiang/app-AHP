@@ -87,7 +87,7 @@ function updateTreeGraph(root) {
   nodeGs_enter
     .append("text")
     .classed("node_text", true)
-    .attr("fill", "black")
+    .attr("fill", styles.black)
     .attr("text-anchor", "middle")
     .attr("dy", "-10px");
 
@@ -102,9 +102,20 @@ function updateTreeGraph(root) {
     .attr("r", (d) => (Math.pow(d.data.parWeight, 0.5) * 30) || 4)
     .attr("fill", (d) => {
       if (d.data.score == null) return styles.primary;
-      let color = d.data.score.reduce((acc, cur, i) => (cur > d.data.score[acc]) ? i : acc, 0);
-      console.log(color)
-      return `hsl(${color * 30}, 100%, 50%)`;
+
+      let nOptions = root.data.score.length;
+      let lightnessScale = d3.scaleLinear()
+        .domain([1 / nOptions, (nOptions * 0.8) / nOptions])
+        .range([0.9, 0.5])
+        .clamp(true);
+      let hueScale = d3.scaleOrdinal()
+        .domain([...root.data.score.keys()]) //The option ids; keys() return an iterator
+        .range(d3.schemeCategory10);
+      let topOptId = d.data.score.reduce((acc, cur, i) => (cur > d.data.score[acc]) ? i : acc, 0);
+      let colorHue = hueScale(topOptId);
+      let color = d3.hsl(colorHue);
+      color.l = lightnessScale(d.data.score[topOptId]);
+      return color;
     });
 
   nodeGs_enter8Update
