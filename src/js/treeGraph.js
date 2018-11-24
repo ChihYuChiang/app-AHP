@@ -160,14 +160,22 @@ function highlightHovered(d) {
     .text(d.data.parWeight ? (d.data.parWeight * 100).toFixed(2) + "%" : "");
 
   let circles = d3.selectAll(".node_circle")
-    .transition(1000)
+    .transition(800)
+    .style("opacity", 0.3);
+  let links = d3.selectAll(".link")
+    .transition(800)
     .style("opacity", 0.3);
 
   let ancestorIds = getAncestorIds(d);
   let ancestorCircles = circles.filter((d) => {
-    return ancestorIds.indexOf(d.id) >= 0
+    return ancestorIds.indexOf(d.id) >= 0;
   });
+  let ancestorLinks = links.filter((d) => {
+    return ancestorIds.indexOf(d.source.id) >= 0 && ancestorIds.indexOf(d.target.id) >= 0;
+  })
   ancestorCircles
+    .style("opacity", 1);
+  ancestorLinks
     .style("opacity", 1);
 }
 
@@ -176,7 +184,10 @@ function resumeHovered(d) {
     .style("visibility", "hidden");
 
   d3.selectAll(".node_circle")
-    .transition(1000)
+    .transition(800)
+    .style("opacity", 1);
+  d3.selectAll(".link")
+    .transition(800)
     .style("opacity", 1);
 }
 
