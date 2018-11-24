@@ -79,8 +79,6 @@ function updateTreeGraph(root) {
     .enter()
       .append("g")
       .classed("node", true)
-      .on("mouseover", highlightHovered)
-      .on("mouseleave", resumeHovered);
   
   nodeGs_enter
     .append("circle")
@@ -98,13 +96,13 @@ function updateTreeGraph(root) {
     
   nodeGs_enter8Update
     .attr("transform", (d) => `translate(${d.y}, ${d.x})`); //Swap x and y to make the graph horizontal
-
+    
   nodeGs_enter8Update
     .select(".node_circle")
     .attr("r", (d) => (Math.pow(d.data.parWeight, 0.5) * 30) || 4)
     .attr("fill", (d) => {
       if (d.data.score == null) return styles.primary;
-
+      
       let [hueScale, lightnessScale] = genScales(root);
       let topOptId = d.data.score.reduce((acc, cur, i) => (cur > d.data.score[acc]) ? i : acc, 0);
       let colorHue = hueScale(topOptId);
@@ -112,10 +110,18 @@ function updateTreeGraph(root) {
       color.l = lightnessScale(d.data.score[topOptId]);
       return color;
     });
-
+  
   nodeGs_enter8Update
     .select(".node_text")
-    .text((d) => d.data.name);
+    .text((d) => d.data.name)
+    .style("pointer-events", "none");
+
+  nodeGs_enter8Update //Mouse event listener
+    .append("circle")
+    .attr("r", (d) => ((Math.pow(d.data.parWeight, 0.5) * 30) || 4) + 10)
+    .style("opacity", 0)
+    .on("mouseover", highlightHovered)
+    .on("mouseleave", resumeHovered);
 }
 
 function genScales(root) {
@@ -132,6 +138,7 @@ function genScales(root) {
 
 function highlightHovered(d) {
   let circles = d3.selectAll(".node_circle")
+    .transition(1000)
     .style("opacity", 0.3);
 
   let ancestorIds = getAncestorIds(d);
@@ -144,6 +151,7 @@ function highlightHovered(d) {
 
 function resumeHovered() {
   d3.selectAll(".node_circle")
+    .transition(1000)
     .style("opacity", 1);
 }
 
