@@ -104,6 +104,13 @@ function updateTreeGraph(root, options) {
     .attr("text-anchor", "middle")
     .attr("dy", "-10px");
 
+  nodeGs_enter
+    .append("circle")
+    .classed("node_listener", true)
+    .style("opacity", 0)
+    .on("mouseover", highlightHovered)
+    .on("mouseleave", resumeHovered);
+
   let nodeGs_enter8Update = nodeGs_enter
     .merge(nodeGs);
     
@@ -136,11 +143,8 @@ function updateTreeGraph(root, options) {
     .style("pointer-events", "none");
 
   nodeGs_enter8Update //Mouse event listener
-    .append("circle")
-    .attr("r", (d) => ((Math.pow(d.data.parWeight, 0.5) * 30) || 4) + 10)
-    .style("opacity", 0)
-    .on("mouseover", highlightHovered)
-    .on("mouseleave", resumeHovered);
+    .select(".node_listener")
+    .attr("r", (d) => ((Math.pow(d.data.parWeight, 0.5) * 30) || 4) + 10);
 }
 
 function genScales(root) {
@@ -155,11 +159,11 @@ function genScales(root) {
   return [hueScale, lightnessScale];
 }
 
-function highlightHovered(d) {
+function highlightHovered(datum) {
   d3.select("#explanation")
-    .style("visibility", () => d.data.parWeight ? "visible" : "hidden");
+    .style("visibility", () => datum.data.parWeight ? "visible" : "hidden");
   d3.select("#head-explanation")
-    .text(d.data.parWeight ? (d.data.parWeight * 100).toFixed(2) + "%" : "");
+    .text(datum.data.parWeight ? (datum.data.parWeight * 100).toFixed(2) + "%" : "");
   d3.select("#sub-explanation")
     .text("of score come from this criterion");
 
@@ -170,7 +174,7 @@ function highlightHovered(d) {
     .transition(800)
     .style("opacity", 0.3);
 
-  let ancestorIds = getAncestorIds(d);
+  let ancestorIds = getAncestorIds(datum);
   let ancestorCircles = circles.filter((d) => {
     return ancestorIds.indexOf(d.id) >= 0;
   });
@@ -182,16 +186,30 @@ function highlightHovered(d) {
   ancestorLinks
     .style("opacity", 1);
   
-  if (typeof d.data.score !== "undefined") drawBarChart(d);
+  if (typeof datum.data.score !== "undefined") {
+    d3.selectAll(".node_circle")
+      .filter((d) => datum.id === d.id)
+      .transition(800)
+      .attr("transform", `translate(${0}, ${(Math.pow(datum.data.parWeight, 0.5) * 30) + 5})`);
+    
+    drawBarChart(datum);
+  }
 }
 
-function resumeHovered() {
+function resumeHovered(datum) {
   d3.select("#explanation")
     .style("visibility", "hidden");
 
   d3.selectAll(".node_circle")
     .transition(800)
     .style("opacity", 1);
+  if (typeof datum.data.score !== "undefined") {
+    d3.selectAll(".node_circle")
+      .filter((d) => datum.id === d.id)
+      .transition(800)
+      .attr("transform", `translate(${0}, ${0})`);
+  }
+  
   d3.selectAll(".link")
     .transition(800)
     .style("opacity", 1);

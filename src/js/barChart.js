@@ -4,7 +4,6 @@ import styles from '../scss/variable.scss';
 
 
 function main(datum) {
-  console.log(datum)
   //Graph root
   let [height, width] = [67, 100];
   let gr = d3.select("svg")
