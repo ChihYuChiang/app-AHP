@@ -78,7 +78,9 @@ function updateTreeGraph(root) {
   let nodeGs_enter = nodeGs
     .enter()
       .append("g")
-      .classed("node", true);
+      .classed("node", true)
+      .on("mouseover", highlightHovered)
+      .on("mouseleave", resumeHovered);
   
   nodeGs_enter
     .append("circle")
@@ -96,21 +98,14 @@ function updateTreeGraph(root) {
     
   nodeGs_enter8Update
     .attr("transform", (d) => `translate(${d.y}, ${d.x})`); //Swap x and y to make the graph horizontal
-  
+
   nodeGs_enter8Update
     .select(".node_circle")
     .attr("r", (d) => (Math.pow(d.data.parWeight, 0.5) * 30) || 4)
     .attr("fill", (d) => {
       if (d.data.score == null) return styles.primary;
 
-      let nOptions = root.data.score.length;
-      let lightnessScale = d3.scaleLinear()
-        .domain([1 / nOptions, (nOptions * 0.8) / nOptions])
-        .range([0.9, 0.5])
-        .clamp(true);
-      let hueScale = d3.scaleOrdinal()
-        .domain([...root.data.score.keys()]) //The option ids; keys() return an iterator
-        .range(d3.schemeCategory10);
+      let [hueScale, lightnessScale] = genScales(root);
       let topOptId = d.data.score.reduce((acc, cur, i) => (cur > d.data.score[acc]) ? i : acc, 0);
       let colorHue = hueScale(topOptId);
       let color = d3.hsl(colorHue);
@@ -121,6 +116,45 @@ function updateTreeGraph(root) {
   nodeGs_enter8Update
     .select(".node_text")
     .text((d) => d.data.name);
+}
+
+function genScales(root) {
+  let nOptions = root.data.score.length;
+  let lightnessScale = d3.scaleLinear()
+    .domain([1 / nOptions, (nOptions * 0.8) / nOptions])
+    .range([0.9, 0.5])
+    .clamp(true);
+  let hueScale = d3.scaleOrdinal()
+    .domain([...root.data.score.keys()]) //The option ids; keys() return an iterator
+    .range(d3.schemeCategory10);
+  return [hueScale, lightnessScale];
+}
+
+function highlightHovered(d) {
+  let circles = d3.selectAll(".node_circle")
+    .style("opacity", 0.3);
+
+  let ancestorIds = getAncestorIds(d);
+  let ancestorCircles = circles.filter((d) => {
+    return ancestorIds.indexOf(d.id) >= 0
+  });
+  ancestorCircles
+    .style("opacity", 1);
+}
+
+function resumeHovered() {
+  d3.selectAll(".node_circle")
+    .style("opacity", 1);
+}
+
+function getAncestorIds(d) {
+  let ancestors = [];
+  while (d.parent) {
+    ancestors.unshift(d.id);
+    d = d.parent;
+  }
+  ancestors.unshift('0-0'); //Include root
+  return ancestors;
 }
 
 
