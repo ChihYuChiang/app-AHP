@@ -39,6 +39,7 @@ class App extends Component {
           <Graph
             curGraph={this.state.curGraph}
             root={this.state.criterion.root}
+            options={this.state.option.items}
           />
           <Comparison
             handleComData={this.handleComData}

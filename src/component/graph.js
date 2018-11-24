@@ -16,10 +16,10 @@ function Graph (props) {
     return <div id="canvasRoot"><svg style={{ display: 'none' }} /></div>;
   }
   if (props.curGraph === CONST.GRAPH_TYPE.TREE) {
-    drawTreeGraph(props.root);
+    drawTreeGraph(props.root, props.options);
   }
   if (props.curGraph === CONST.GRAPH_TYPE.TREE_UPDATE) {
-    updateTreeGraph(props.root);
+    updateTreeGraph(props.root, props.options);
   }
 
   return <div id="canvasRoot"><svg style={{ display: 'block' }} /></div>;

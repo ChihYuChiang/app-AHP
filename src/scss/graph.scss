@@ -1,0 +1,17 @@
+#canvasRoot {
+  position: relative;
+  font-family: sans-serif;
+  font-size: 10px;
+}
+
+#explanation {
+  visibility: hidden;
+  position: absolute;
+  top: 50px;
+  left: 30px;
+  width: 120px;
+  text-align: center;
+  font-size: 11px;
+  color: #666;
+  z-index: -1;
+}

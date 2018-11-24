@@ -1,9 +1,10 @@
 import * as d3 from "d3";
 
+import drawBarChart from './barChart';
 import styles from '../scss/variable.scss';
 
 
-function main(root) {
+function main(root, options) {
   //Identify graph boundary
   root = genTreeLayout(root);
   let x0 = Infinity;
@@ -32,22 +33,18 @@ function main(root) {
   explanation  
     .append("span")
     .attr("id", "sub-explanation")
-    .attr("font-size", "10px")
-    .text("of score come from this criterion");
 
   //Graph root
   //svg -> g -> g.links and g.nodes
   let gr = svg
     .append("g")
-    .classed("treeRoot", true)
-    .attr("font-family", "sans-serif")
-    .attr("font-size", 10)
+    .attr("id", "treeRoot")
     .attr("transform", `translate(${root.dy / 3},${root.dx - x0})`);
-  gr.append("g").classed("links", true);
-  gr.append("g").classed("nodes", true);
+  gr.append("g").attr("id", "links");
+  gr.append("g").attr("id", "nodes");
 
   //Initial update
-  updateTreeGraph(root);
+  updateTreeGraph(root, options);
 }
 
 
@@ -60,13 +57,13 @@ function genTreeLayout(root) {
   return root;
 }
 
-function updateTreeGraph(root) {
+function updateTreeGraph(root, options) {
   root = genTreeLayout(root);
-  let rootElement = d3.select(".treeRoot");
+  let rootElement = d3.select("#treeRoot");
 
   //Links (curvy)
   let linkPaths = rootElement
-    .select("g.links")
+    .select("#links")
     .selectAll("path.link")
     .data(root.links())
     
@@ -87,7 +84,7 @@ function updateTreeGraph(root) {
 
   //Nodes
   let nodeGs = rootElement
-    .select("g.nodes")
+    .select("#nodes")
     .selectAll("g.node")
     .data(root.descendants());
   
@@ -111,7 +108,13 @@ function updateTreeGraph(root) {
     .merge(nodeGs);
     
   nodeGs_enter8Update
-    .attr("transform", (d) => `translate(${d.y}, ${d.x})`); //Swap x and y to make the graph horizontal
+    .attr("transform", (d) => `translate(${d.y}, ${d.x})`) //Swap x and y to make the graph horizontal
+    .datum((d) => { //Pass option info to each node (for bar chart)
+      d.options = options;
+      d.dx = root.dx;
+      d.dy = root.dy;
+      return d;
+    });
     
   nodeGs_enter8Update
     .select(".node_circle")
@@ -155,9 +158,10 @@ function genScales(root) {
 function highlightHovered(d) {
   d3.select("#explanation")
     .style("visibility", () => d.data.parWeight ? "visible" : "hidden");
-    
   d3.select("#head-explanation")
     .text(d.data.parWeight ? (d.data.parWeight * 100).toFixed(2) + "%" : "");
+  d3.select("#sub-explanation")
+    .text("of score come from this criterion");
 
   let circles = d3.selectAll(".node_circle")
     .transition(800)
@@ -177,9 +181,11 @@ function highlightHovered(d) {
     .style("opacity", 1);
   ancestorLinks
     .style("opacity", 1);
+  
+  if (typeof d.data.score !== "undefined") drawBarChart(d);
 }
 
-function resumeHovered(d) {
+function resumeHovered() {
   d3.select("#explanation")
     .style("visibility", "hidden");
 
@@ -189,6 +195,9 @@ function resumeHovered(d) {
   d3.selectAll(".link")
     .transition(800)
     .style("opacity", 1);
+  
+  d3.select("#barRoot")
+    .remove();
 }
 
 function getAncestorIds(d) {

@@ -2,19 +2,4 @@
 @import "scss/mixin.scss";
 @import "scss/fluid-slider.scss";
 @import "scss/input-file.scss";
-
-
-#canvasRoot {
-  position: relative;
-}
-
-#explanation {
-  visibility: hidden;
-  position: absolute;
-  top: 50px;
-  left: 30px;
-  width: 140px;
-  text-align: center;
-  color: #666;
-  z-index: -1;
-}
+@import "scss/graph.scss";
