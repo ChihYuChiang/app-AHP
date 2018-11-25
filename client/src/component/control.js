@@ -12,9 +12,9 @@ function Control () {
       <Button>Record Result</Button>
       <FormGroup controlId="recordUrl">
         <ControlLabel>Click to copy</ControlLabel>
-        <FormControl componentClass="textarea" readOnly
+        <FormControl type="text" readOnly
           onClick={copyRecordUrl}
-          value={"test"}
+          value={"this is the url for your record"}
         />
       </FormGroup>
     </div>
