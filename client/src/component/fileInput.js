@@ -9,7 +9,7 @@ function FileInput () {
       <label htmlFor="input">Choose a file</label>
 
       <Button>Demo</Button>
-      <Button>Export Result</Button>
+      <Button>Record Result</Button>
     </div>
   );
 }

@@ -79,7 +79,7 @@ class App extends Component {
     });
 
     //Test server connection
-    this.callApi()
+    this.testApi()
       .then((res) => this.setState({ serverResponse: res.express }))
       .catch((err) => console.log(err));
   }
@@ -99,21 +99,38 @@ class App extends Component {
         let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
         state.criterion.root = root;
         state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
+
+        this.recordResult(state);
       }
       return state;
     });
-  }
+  };
 
   hideGraph = () => {
     this.setState({ curGraph: null });
-  }
+  };
 
-  callApi = async () => {
+  recordResult = async (state) => {
+    const response = await fetch('/api/world', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        items_criterion: state.criterion.items,
+        items_option: state.option.items,
+        compares_criterion: state.criterion.compares,
+        compares_option: state.option.compares
+      }),
+    });
+    const body = await response.text();
+    console.log(body);
+  };
+
+  testApi = async () => {
     const response = await fetch('/api/hello');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
     return body;
-  }
+  };
 }
 
 
