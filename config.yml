@@ -1,0 +1,3 @@
+MongoAtlas:
+  db: app
+  collection: test
