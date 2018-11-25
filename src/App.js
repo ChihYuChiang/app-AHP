@@ -43,6 +43,7 @@ class App extends Component {
           />
           <Comparison
             handleComData={this.handleComData}
+            hideGraph={this.hideGraph}
             pairData={this.state.curPairData}
             id2Name={this.state.criterion.id2Name}
           />
@@ -85,7 +86,6 @@ class App extends Component {
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
       state.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
-      state.curGraph = null; //Hide svg
 
       //If all pairs are displayed, compute score and produce report
       if (util.isEmpty(state.curPairData)) {
@@ -95,6 +95,10 @@ class App extends Component {
       }
       return state;
     });
+  }
+
+  hideGraph = () => {
+    this.setState({ curGraph: null });
   }
 }
 

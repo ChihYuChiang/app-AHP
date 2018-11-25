@@ -10,6 +10,7 @@ class Comparison extends Component {
   /*
     props = {
       handleComData //Add comData into the store
+      hideGraph //As the name suggests
       pairData
       //.gId, The id of this pair group, also the parent node's name in the root
       //.pairs, Multiple pair entries, each with source, dest
@@ -18,11 +19,17 @@ class Comparison extends Component {
     }
   */
   state = {
-    compares: []
+    compares: [],
+    confirmation: false
   }
 
-  render() {
+  render() {    
     if (!util.isEmpty(this.props.pairData)) {
+      
+      if (!this.state.confirmation) {
+        return <Button onClick={this.confirmCriteria}>Confirm</Button>;
+      }
+
       let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION ? 'Criterion importance' : 'Regarding ' + this.props.id2Name[this.props.pairData.gId];
 
       let pairs = this.props.pairData.pairs.map((pair) => (
@@ -42,8 +49,9 @@ class Comparison extends Component {
         </div>
       );
 
-    } else return <div />
+    } else return <div />;
   }
+
 
   handleComData8Reset = () => {
     let [matrix, mIndex] = genMatrix(this.state.compares);
@@ -67,6 +75,11 @@ class Comparison extends Component {
       curState.compares = compares;
       return curState;
     });
+  }
+
+  confirmCriteria = () => {
+    this.setState({ confirmation: true });
+    this.props.hideGraph();
   }
 }
 
