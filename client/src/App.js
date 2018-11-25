@@ -8,7 +8,7 @@ import CONST from "./js/const";
 
 import Comparison from "./component/comparison";
 import Graph from "./component/graph";
-import FileInput from "./component/fileInput";
+import Control from "./component/control";
 
 
 class App extends Component {
@@ -37,7 +37,7 @@ class App extends Component {
         <div className="container">
           <h1>AHP</h1>
           <p className="dev">{this.state.serverResponse}</p>
-          <FileInput />
+          <Control />
           <Graph
             curGraph={this.state.curGraph}
             root={this.state.criterion.root}
