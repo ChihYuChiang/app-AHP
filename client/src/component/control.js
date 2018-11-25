@@ -22,6 +22,7 @@ function Control () {
 }
 
 
+//Copy the url into clipboard when clicking the element
 function copyRecordUrl() {
   let urlElement = document.getElementById("recordUrl");
   urlElement.select(); //https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
