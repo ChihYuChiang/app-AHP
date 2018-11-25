@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-import drawBarChart from './barChart';
+import inter from './treeGraph-inter';
 import styles from '../scss/variable.scss';
 
 
@@ -15,24 +15,25 @@ function main(root, options) {
   });
 
   //Setup svg
+  //Make a mask
   const svg = d3
     .select("svg")
     .style("width", "100%")
     .style("height", x1 - x0 + root.dx * 2);
   
   //Information
-  let explanation = d3.select("#canvasRoot")
+  let information = d3.select("#canvasRoot")
     .append("div")
-    .attr("id", "explanation");
+    .attr("id", "information");
   
-  explanation
+  information
     .append("div")
-    .attr("id", "head-explanation")
+    .attr("id", "head-information")
     .style("font-size", "25px");
     
-  explanation  
+  information  
     .append("span")
-    .attr("id", "sub-explanation")
+    .attr("id", "sub-information")
 
   //Graph root
   //svg -> g -> g.links and g.nodes
@@ -108,8 +109,8 @@ function updateTreeGraph(root, options) {
     .append("circle")
     .classed("node_listener", true)
     .style("opacity", 0)
-    .on("mouseover", highlightHovered)
-    .on("mouseleave", resumeHovered);
+    .on("mouseover", inter.highlightHovered)
+    .on("mouseleave", inter.resumeHovered);
 
   let nodeGs_enter8Update = nodeGs_enter
     .merge(nodeGs);
@@ -157,75 +158,6 @@ function genScales(root) {
     .domain([...root.data.score.keys()]) //The option ids; keys() return an iterator
     .range(d3.schemeCategory10);
   return [hueScale, lightnessScale];
-}
-
-function highlightHovered(datum) {
-  d3.select("#explanation")
-    .style("visibility", () => datum.data.parWeight ? "visible" : "hidden");
-  d3.select("#head-explanation")
-    .text(datum.data.parWeight ? (datum.data.parWeight * 100).toFixed(2) + "%" : "");
-  d3.select("#sub-explanation")
-    .text("of score come from this criterion");
-
-  let circles = d3.selectAll(".node_circle")
-    .transition(800)
-    .style("opacity", 0.3);
-  let links = d3.selectAll(".link")
-    .transition(800)
-    .style("opacity", 0.3);
-
-  let ancestorIds = getAncestorIds(datum);
-  let ancestorCircles = circles.filter((d) => {
-    return ancestorIds.indexOf(d.id) >= 0;
-  });
-  let ancestorLinks = links.filter((d) => {
-    return ancestorIds.indexOf(d.source.id) >= 0 && ancestorIds.indexOf(d.target.id) >= 0;
-  })
-  ancestorCircles
-    .style("opacity", 1);
-  ancestorLinks
-    .style("opacity", 1);
-  
-  if (typeof datum.data.score !== "undefined") {
-    d3.selectAll(".node_circle")
-      .filter((d) => datum.id === d.id)
-      .transition(800)
-      .attr("transform", `translate(${0}, ${(Math.pow(datum.data.parWeight, 0.5) * 30) + 5})`);
-    
-    drawBarChart(datum);
-  }
-}
-
-function resumeHovered(datum) {
-  d3.select("#explanation")
-    .style("visibility", "hidden");
-
-  d3.selectAll(".node_circle")
-    .transition(800)
-    .style("opacity", 1);
-  if (typeof datum.data.score !== "undefined") {
-    d3.selectAll(".node_circle")
-      .filter((d) => datum.id === d.id)
-      .transition(800)
-      .attr("transform", `translate(${0}, ${0})`);
-  }
-  
-  d3.selectAll(".link")
-    .transition(800)
-    .style("opacity", 1);
-  
-  d3.select("#barRoot")
-    .remove();
-}
-
-function getAncestorIds(d) {
-  let ancestors = [];
-  while (d.parent) {
-    ancestors.unshift(d.id);
-    d = d.parent;
-  }
-  ancestors.unshift('0-0'); //Include root
-  return ancestors;
 }
 
 

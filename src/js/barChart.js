@@ -29,6 +29,8 @@ function main(datum) {
     .ease(d3.easeQuadOut);
   barGs
     .append("rect")
+    .attr("rx", "1px")
+    .attr("ry", "1px")
     .attr("fill", (_, i) => {
       let color = d3.hsl(hueScale(i));
       color.l = 0.7;
