@@ -1,31 +1,17 @@
 {
-  "name": "temp",
+  "name": "AHP-server",
   "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "bootstrap": "3.3.7",
-    "d3": "^5.7.0",
-    "font-awesome": "^4.7.0",
-    "node-sass": "^4.10.0",
-    "react": "^16.6.3",
-    "react-bootstrap": "^0.32.4",
-    "react-dom": "^16.6.3",
-    "react-scripts": "2.1.1",
-    "read-excel-file": "^2.0.5"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+	"start": "npm run dev"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "devDependencies": {
+    "concurrently": "^4.0.1"
+  }
 }

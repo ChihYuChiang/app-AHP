@@ -27,7 +27,8 @@ class App extends Component {
     },
     pairDataGenerator: {},
     curPairData: {},
-    curGraph: null
+    curGraph: null,
+    serverResponse: ''
   };
 
   render() {
@@ -35,6 +36,7 @@ class App extends Component {
       <div className="App">
         <div className="container">
           <h1>AHP</h1>
+          <p className="dev">{this.state.serverResponse}</p>
           <FileInput />
           <Graph
             curGraph={this.state.curGraph}
@@ -75,6 +77,11 @@ class App extends Component {
           });
         });
     });
+
+    //Test server connection
+    this.callApi()
+      .then((res) => this.setState({ serverResponse: res.express }))
+      .catch((err) => console.log(err));
   }
 
 
@@ -99,6 +106,13 @@ class App extends Component {
 
   hideGraph = () => {
     this.setState({ curGraph: null });
+  }
+
+  callApi = async () => {
+    const response = await fetch('/api/hello');
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+    return body;
   }
 }
 
