@@ -2,6 +2,7 @@ const yaml = require('js-yaml');
 const fs   = require('fs');
 const assert = require('assert').strict;
 const MongoClient = require('mongodb').MongoClient;
+const ObjectId = require('mongodb').ObjectId;
 const CRED = yaml.safeLoad(fs.readFileSync('./ref/credential.yml', 'utf8'));
 const CONFIG = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
 
@@ -35,8 +36,8 @@ exports.getCompare = async function(recordId) {
     const collection = client.db(CONFIG.MongoAtlas.db).collection(CONFIG.MongoAtlas.collection);
     
     //Retrieve a single doc by id
-    let res = await collection.findOne({ id: recordId });
-    console.log(res);
+    let res = await collection.findOne({ _id: new ObjectId(recordId) });
+    assert.equal(res._id.toHexString(), recordId);
 
     //Close connection
     client.close();

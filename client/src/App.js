@@ -37,7 +37,10 @@ class App extends Component {
         <div className="container">
           <h1>AHP</h1>
           <p className="dev">{this.state.serverResponse}</p>
-          <Control />
+          <Control
+            getDemoData={this.getDemoData}
+            recordResult={this.recordResult}
+          />
           <Graph
             curGraph={this.state.curGraph}
             root={this.state.criterion.root}
@@ -99,8 +102,6 @@ class App extends Component {
         let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
         state.criterion.root = root;
         state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
-
-        this.recordResult(state);
       }
       return state;
     });
@@ -110,15 +111,38 @@ class App extends Component {
     this.setState({ curGraph: null });
   };
 
-  recordResult = async (state) => {
+  showGraph = () => {
+    this.setState({ curGraph: null });
+  };
+
+  getDemoData = async () => {
+    const response = await fetch('/api/demo');
+    const body = await response.json();
+    if (response.status !== 200) throw Error(body.message);
+
+    //Restore state
+    this.setState((curState) => {
+      //TODO: Clean cur state
+
+      curState.option.items = body.items_option;
+      curState.criterion.items = body.items_criterion;
+      let root = score.embedValue(body.items_criterion, body.compares_option, body.compares_criterion);
+      curState.criterion.root = root;
+      curState.curGraph = CONST.GRAPH_TYPE.TREE;
+
+      return curState;
+    });
+  };
+
+  recordResult = async () => {
     const response = await fetch('/api/world', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        items_criterion: state.criterion.items,
-        items_option: state.option.items,
-        compares_criterion: state.criterion.compares,
-        compares_option: state.option.compares
+        items_criterion: this.state.criterion.items,
+        items_option: this.state.option.items,
+        compares_criterion: this.state.criterion.compares,
+        compares_option: this.state.option.compares
       }),
     });
     const body = await response.text();

@@ -9,15 +9,13 @@ router.get('/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
 });
 
-router.post('/world', (req, res) => {
-  res.send(
-    `I received your POST request. This is what you sent me: ${req.body}`,
-  );
+router.get('/demo', (req, res) => {
+  dbOps.getCompare("5bfb6a51bc4c4763540525cf")
+    .then((data) => {res.send(data);});
+});
 
-  // dbOps.postCompare(req.body).then(() => {
-  //   dbOps.getCompare("5bfa9fe98e4a664d14a69f10");
-  // });
-  dbOps.postCompare(req.body)
+router.post('/world', (req, res) => {
+  res.send(`I received your POST request. This is what you sent me: ${req.body}`);
 });
 
 
