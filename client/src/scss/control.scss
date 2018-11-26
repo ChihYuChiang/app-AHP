@@ -12,3 +12,7 @@
   margin: 0;
   cursor: pointer; /* "hand" cursor */
 }
+
+a:link, a:visited, a:hover, a:active {
+  @include remove-a-effect;
+}

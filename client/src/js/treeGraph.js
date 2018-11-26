@@ -18,11 +18,12 @@ function main(root, options) {
   });
 
   //Setup svg
-  //Make a mask
+  const width_svg = "100%";
+  const height_svg = x1 - x0 + root.dx * 2;
   const svg = d3
     .select("svg")
-    .style("width", "100%")
-    .style("height", x1 - x0 + root.dx * 2);
+    .style("width", width_svg)
+    .style("height", height_svg);
   
   //Information
   let information = d3.select("#canvasRoot")
@@ -46,6 +47,15 @@ function main(root, options) {
     .attr("transform", `translate(${root.dy / 3},${root.dx - x0})`);
   gr.append("g").attr("id", "links");
   gr.append("g").attr("id", "nodes");
+
+  // //Mask for masking pointer event
+  // svg
+  //   .append("rect")
+  //   .attr("id", "mask-svg")
+  //   .attr('width', width_svg)
+  //   .attr('height', height_svg)
+  //   .style('opacity', 0)
+  //   .style("visibility", "hidden");
 
   //Initial update
   updateTreeGraph(root, options);

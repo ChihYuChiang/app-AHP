@@ -15,14 +15,24 @@ class main {
     );
     d3.select("#sub-information").text("of score come from this criterion");
   
-    let circles = d3
+    let circles = d3 //transform, opacity 1, transition delay are set to prevent animation interference
       .selectAll(".node_circle")
+      .attr("transform", `translate(${0}, ${0})`)
+      .style("opacity", 1)
+      .transition()
+      .delay(5)
       .style("opacity", 0.3);
     let labels = d3
       .selectAll(".node_text")
+      .style("opacity", 1)
+      .transition()
+      .delay(5)
       .style("opacity", 0.3);
     let links = d3
       .selectAll(".link")
+      .style("opacity", 1)
+      .transition()
+      .delay(5)
       .style("opacity", 0.3);
   
     let ancestorIds = getAncestorIds(datum);
@@ -56,6 +66,12 @@ class main {
   }
   
   static resumeHovered(datum) {
+    // //Mask the svg for a certain period to prevent the interference of animations
+    // d3.select("#mask-svg")
+      // .style("visibility", "visible")
+      // .transition()
+      // .delay(200)
+      // .style("visibility", "hidden");
     d3.select("#information").style("visibility", "hidden");
   
     d3.selectAll(".node_circle")
