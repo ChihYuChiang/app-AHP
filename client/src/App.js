@@ -9,7 +9,8 @@ import CONST from "./js/const";
 import Comparison from "./component/comparison";
 import Graph from "./component/graph";
 import Control from "./component/control";
-//'react-animation-components'
+//'https://popmotion.io/pose/'
+//https://reacttraining.com/react-router/web/api/
 
 import { Loading } from "./component/util";
 
@@ -64,7 +65,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const input = document.getElementById("input");
+    const input = document.getElementById("inputCriterionFile");
     
     //Listen to file input
     input.addEventListener("change", () => {

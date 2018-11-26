@@ -11,11 +11,14 @@ function Control(props) {
   */
   return (
     <div>
-      <input type="file" name="file" id="input" accept=".xlsx" className="inputfile"/>
-      <label htmlFor="input">Choose a file</label>
+      <input type="file" id="inputCriterionFile" accept=".xlsx" className="file-input"/>
+      <div className="btn-group" role="group">
+        <Button><label htmlFor="inputCriterionFile" className="file-label">Choose a File</label></Button>
+        <Button>Download Template</Button>
+        <Button onClick={props.getDemoData}>Demo</Button>
+        <Button onClick={props.recordResult}>Record Result</Button>
+      </div>
 
-      <Button onClick={props.getDemoData}>Demo</Button>
-      <Button onClick={props.recordResult}>Record Result</Button>
       <FormGroup controlId="recordUrl">
         <ControlLabel>Click to copy</ControlLabel>
         <FormControl type="text" readOnly

@@ -10,12 +10,12 @@ export const Loading = (props) => {
         <div className="d-flex justify-content-center">
           <span
             className="fa fa-cog fa-spin fa-3x"
-            style={{ color: styles.primary }}
+            style={{ color: styles.gray800 }}
           />
         </div>
         <p
           className="d-flex justify-content-center small"
-          style={{ color: styles.gray700 }}
+          style={{ color: styles.gray800 }}
         >Loading ...</p>
       </div>
     );
