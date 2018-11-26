@@ -5,6 +5,9 @@ import styles from '../scss/variable.scss';
 
 
 function main(root, options) {
+  //Clear current graph
+  d3.select("svg").selectAll("*").remove();
+
   //Identify graph boundary
   root = genTreeLayout(root);
   let x0 = Infinity;

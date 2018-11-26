@@ -111,10 +111,6 @@ class App extends Component {
     this.setState({ curGraph: null });
   };
 
-  showGraph = () => {
-    this.setState({ curGraph: null });
-  };
-
   getDemoData = async () => {
     const response = await fetch('/api/demo');
     const body = await response.json();
@@ -128,7 +124,7 @@ class App extends Component {
       curState.criterion.items = body.items_criterion;
       let root = score.embedValue(body.items_criterion, body.compares_option, body.compares_criterion);
       curState.criterion.root = root;
-      curState.curGraph = CONST.GRAPH_TYPE.TREE;
+      curState.curGraph = CONST.GRAPH_TYPE.TREE_DEMO;
 
       return curState;
     });
