@@ -9,6 +9,9 @@ import CONST from "./js/const";
 import Comparison from "./component/comparison";
 import Graph from "./component/graph";
 import Control from "./component/control";
+//'react-animation-components'
+
+import { Loading } from "./component/util";
 
 
 class App extends Component {
@@ -28,6 +31,7 @@ class App extends Component {
     pairDataGenerator: {},
     curPairData: {},
     curGraph: null,
+    isLoading: false,
     serverResponse: ''
   };
 
@@ -41,6 +45,8 @@ class App extends Component {
             getDemoData={this.getDemoData}
             recordResult={this.recordResult}
           />
+          <Loading
+            isLoading={this.state.isLoading}/>
           <Graph
             curGraph={this.state.curGraph}
             root={this.state.criterion.root}
@@ -112,6 +118,9 @@ class App extends Component {
   };
 
   getDemoData = async () => {
+    //Hide graph and display loading spinner
+    this.setState({ curGraph: null, isLoading: true });
+
     const response = await fetch('/api/demo');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
@@ -125,6 +134,8 @@ class App extends Component {
       let root = score.embedValue(body.items_criterion, body.compares_option, body.compares_criterion);
       curState.criterion.root = root;
       curState.curGraph = CONST.GRAPH_TYPE.TREE_DEMO;
+
+      curState.isLoading = false;
 
       return curState;
     });
