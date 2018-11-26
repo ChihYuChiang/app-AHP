@@ -1,6 +1,8 @@
 import React from "react";
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 
+import CONST from "../js/const";
+
 
 function Control(props) {
   /*
@@ -12,11 +14,15 @@ function Control(props) {
   return (
     <div>
       <input type="file" id="inputCriterionFile" accept=".xlsx" className="file-input"/>
-      <div className="btn-group" role="group">
-        <Button><label htmlFor="inputCriterionFile" className="file-label">Choose a File</label></Button>
-        <Button>Download Template</Button>
-        <Button onClick={props.getDemoData}>Demo</Button>
-        <Button onClick={props.recordResult}>Record Result</Button>
+      <div className="btn-toolbar" role="toolbar">
+        <div className="btn-group" role="group">
+          <Button><label htmlFor="inputCriterionFile" className="file-label">Choose a File</label></Button>
+          <Button><a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>Download Template</a></Button>
+          <Button onClick={props.getDemoData}>Demo</Button>
+        </div>
+        <div className="btn-group" role="group">
+          <Button onClick={props.recordResult}>Record Result</Button>
+        </div>
       </div>
 
       <FormGroup controlId="recordUrl">

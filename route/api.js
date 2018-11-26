@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const dbOps = require('../module/dbOps');
+const dbOps = require('../module/dbOps'); //The path in require start from this file; the path in the code starts from project root
 
 
 //api/
 router.get('/hello', (req, res) => {
   res.send({ express: 'Hello From Express' });
+});
+
+router.get('/template', (req, res) => {
+  res.download('./ref/Book1.xlsx', 'criterion-template.xlsx');
 });
 
 router.get('/demo', (req, res) => {

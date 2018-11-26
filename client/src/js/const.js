@@ -7,6 +7,9 @@ const main = {
     TREE: 'tree',
     TREE_UPDATE: 'tree_update',
     TREE_DEMO: 'tree_demo'
+  },
+  PATH: {
+    TEMPLATE_SERVER: 'http://localhost:5000'
   }
 }
 
