@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Button } from 'reactstrap';
 
 import { genMatrix, genWeight, computeCR } from "../js/com8Matrix";
 import util from "../js/util";
@@ -26,7 +27,7 @@ class Comparison extends Component {
     if (!util.isEmpty(this.props.pairData)) {
       
       if (!this.state.confirmation) {
-        return <button className="btn btn-default" onClick={this.confirmCriteria}>Confirm</button>;
+        return <Button className="btn-wide" onClick={this.confirmCriteria}>Confirm</Button>;
       }
 
       let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION ? 'Criterion importance' : 'Regarding ' + this.props.id2Name[this.props.pairData.gId];
@@ -44,7 +45,7 @@ class Comparison extends Component {
         <div className="comparison">
           <p>{groupLabel}</p>
           {pairs}
-          <button className="btn btn-default" onClick={this.handleComData8Reset}>Submit</button>
+          <Button className="btn-wide" onClick={this.handleComData8Reset}>Submit</Button>
         </div>
       );
 
@@ -129,11 +130,11 @@ class Pair extends Component {
     let labelPosition = (sliderElement.value - sliderElement.min) / (sliderElement.max - sliderElement.min);
   
     if (sliderElement.value === sliderElement.min) {
-      labelElement.style.left = labelPosition * 100 + 2 + "%";
+      labelElement.style.left = labelPosition * 100 + 2 - 43.5 + "%";
     } else if (sliderElement.value === sliderElement.max) {
-      labelElement.style.left = labelPosition * 100 - 2 + "%";
+      labelElement.style.left = labelPosition * 100 - 2 - 43.5 + "%";
     } else {
-      labelElement.style.left = labelPosition * 100 + "%";
+      labelElement.style.left = labelPosition * 100 - 43.5 + "%";
     }
   }
   

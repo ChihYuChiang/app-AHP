@@ -40,25 +40,31 @@ class App extends Component {
     return (
       <div className="App">
         <div className="container">
-          <h1>AHP</h1>
-          <p className="dev">{this.state.serverResponse}</p>
-          <Control
-            getDemoData={this.getDemoData}
-            recordResult={this.recordResult}
-          />
-          <Loading
-            isLoading={this.state.isLoading}/>
-          <Graph
-            curGraph={this.state.curGraph}
-            root={this.state.criterion.root}
-            options={this.state.option.items}
-          />
-          <Comparison
-            handleComData={this.handleComData}
-            hideGraph={this.hideGraph}
-            pairData={this.state.curPairData}
-            id2Name={this.state.criterion.id2Name}
-          />
+          <div className="col-12" align="center">
+            <div id="head-spacer"></div>
+            <h1>AHP</h1>
+            <p className="col-8">{this.state.serverResponse}</p>
+            <Control
+              getDemoData={this.getDemoData}
+              recordResult={this.recordResult}
+            />
+            <div className="content mt-4">
+              <Loading
+                isLoading={this.state.isLoading}/>
+              <Graph
+                curGraph={this.state.curGraph}
+                root={this.state.criterion.root}
+                options={this.state.option.items}
+              />
+              <Comparison
+                handleComData={this.handleComData}
+                hideGraph={this.hideGraph}
+                pairData={this.state.curPairData}
+                id2Name={this.state.criterion.id2Name}
+              />
+            </div>
+            <div id="bottom-spacer"></div>
+          </div>
         </div>
       </div>
     );

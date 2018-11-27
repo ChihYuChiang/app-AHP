@@ -3,3 +3,15 @@
 @import "scss/fluid-slider.scss";
 @import "scss/control.scss";
 @import "scss/graph.scss";
+
+html { //For rem, which Bootstrap 4 bases on
+  font-size: 14px;
+}
+
+.btn-wide {
+  width: 300px;
+}
+
+#head-spacer, #bottom-spacer {
+  margin: 100px;
+}

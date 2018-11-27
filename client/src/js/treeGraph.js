@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 
+import CONST from "./const";
 import inter from './treeGraph-inter';
 import styles from '../scss/variable.scss';
 
@@ -23,8 +24,8 @@ function main(root, options) {
   });
 
   //Setup svg
-  const width_svg = "100%";
-  const height_svg = x1 - x0 + root.dx * 2;
+  const width_svg = 600;
+  const height_svg = x1 - x0 + root.dx * 2 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
   const svg = d3
     .select("svg")
     .style("width", width_svg)
@@ -47,7 +48,7 @@ function main(root, options) {
   //Graph root
   //svg -> g -> g.links and g.nodes
   root.transX = root.dy / 3; //Origin translate (the root node in the graph)
-  root.transY = root.dx - x0;
+  root.transY = root.dx - x0 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
   let gr = svg
     .append("g")
     .attr("id", "treeRoot")

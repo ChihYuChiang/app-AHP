@@ -8,6 +8,9 @@ const main = {
     TREE_UPDATE: 'tree_update',
     TREE_DEMO: 'tree_demo'
   },
+  GRAPH_MEASURE: {
+    BAR_HEIGHT: 67
+  },
   PATH: {
     TEMPLATE_SERVER: process.env.NODE_ENV === 'production' ? '.' : 'http://localhost:5000'
   }

@@ -1,11 +1,12 @@
 import * as d3 from "d3";
 
+import CONST from "./const";
 import styles from '../scss/variable.scss';
 
 
 function main(datum) {
   //Graph root
-  let [height, width] = [67, 100];
+  let [height, width] = [CONST.GRAPH_MEASURE.BAR_HEIGHT, 100];
   let gr = d3.select("svg")
     .append("g")
     .attr("id", "barRoot")

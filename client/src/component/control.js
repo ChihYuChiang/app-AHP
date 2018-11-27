@@ -15,7 +15,7 @@ function Control(props) {
   return (
     <div>
       <input type="file" id="inputCriterionFile" accept=".xlsx" className="file-input"/>
-      <ButtonToolbar>
+      <ButtonToolbar className="justify-content-center">
         <ButtonGroup className="mr-2">
           <Button><label htmlFor="inputCriterionFile" className="file-label">Choose a File</label></Button>
           <Button><a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>Download Template</a></Button>
@@ -26,7 +26,7 @@ function Control(props) {
         </ButtonGroup>
       </ButtonToolbar>
 
-      <div className="mt-4">
+      <div className="col-8 mt-4">
         <Label for="recordUrl">Click to copy</Label >
         <Input type="text" id="recordUrl" readOnly
           onClick={copyRecordUrl}

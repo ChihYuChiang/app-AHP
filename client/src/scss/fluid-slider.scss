@@ -55,7 +55,7 @@
 .fluid-slider:active + .range-label {
   visibility: visible;
   opacity: 1;
-  top: -75px;
+  top: -74px;
 }
 
 .fluid-slider:before,
@@ -103,7 +103,6 @@
   border: 6px solid #34495e;
   left: attr(value) 20;
   transition: all ease-in 0.05s;
-  z-index: -1;
 }
 
 .range-label:after {
