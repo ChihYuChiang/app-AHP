@@ -11,7 +11,7 @@ function main(root, options) {
 
   //Generate tree layout
   root.dx = 40; //The min distance between 2 nodes at the same level (vertically in this graph)
-  root.dy = 400 / root.height; //The distance between levels (horizontally in this graph)
+  root.dy = 500 / root.height; //The distance between levels (horizontally in this graph)
   let treeLayout = d3.tree().nodeSize([root.dx, root.dy]);
   treeLayout(root);
 
@@ -24,7 +24,7 @@ function main(root, options) {
   });
 
   //Setup svg
-  const width_svg = 600;
+  const width_svg = 650;
   const height_svg = x1 - x0 + root.dx * 2 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
   const svg = d3
     .select("svg")
@@ -163,7 +163,7 @@ function genScales(root) {
 }
 
 function getCircleR(parWeight) {
-  return (Math.pow(parWeight, 0.5) * 30) || 4
+  return (Math.pow(parWeight, 0.45) * 30) || 4 //TODO: base on the minimum value
 }
 
 
