@@ -98,7 +98,7 @@ function produceTreeGraph(root, options) {
   nodeGs_enter
     .append("text")
     .classed("node_text", true)
-    .attr("fill", styles.black)
+    .attr("fill", styles.gray900)
     .attr("text-anchor", "middle");
   
   nodeGs_enter
