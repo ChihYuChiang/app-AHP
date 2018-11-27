@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 
 import drawBarChart from './barChart';
+import { getCircleR } from './treeGraph';
 import styles from '../scss/variable.scss';
 
 
@@ -15,24 +16,19 @@ class main {
     );
     d3.select("#sub-information").text("of score come from this criterion");
   
-    let circles = d3 //transform, opacity 1, transition delay are set to prevent animation interference
+    let circles = d3
       .selectAll(".node_circle")
-      .attr("transform", `translate(${0}, ${0})`)
-      .style("opacity", 1)
-      .transition()
-      .delay(5)
+      .interrupt()
+      .attr("transform",`translate(${0}, ${0})`)
       .style("opacity", 0.3);
     let labels = d3
       .selectAll(".node_text")
-      .style("opacity", 1)
-      .transition()
-      .delay(5)
+      .interrupt()
+      .style("visibility", "visible")
       .style("opacity", 0.3);
     let links = d3
       .selectAll(".link")
-      .style("opacity", 1)
-      .transition()
-      .delay(5)
+      .interrupt()
       .style("opacity", 0.3);
   
     let ancestorIds = getAncestorIds(datum);
@@ -48,47 +44,91 @@ class main {
         ancestorIds.indexOf(d.target.id) >= 0
       );
     });
-    ancestorCircles.style("opacity", 1);
-    ancestorLabels.style("opacity", 1);
-    ancestorLinks.style("opacity", 1);
+    ancestorCircles
+      .interrupt()
+      .style("opacity", 1);
+    ancestorLabels
+      .interrupt()
+      .style("opacity", 1);
+    ancestorLinks
+      .interrupt()
+      .style("opacity", 1);
   
     if (typeof datum.data.score !== "undefined") {
-      d3.selectAll(".node_circle")
+      let curCircle = d3.selectAll(".node_circle")
         .filter(d => datum.id === d.id)
-        .transition(800)
-        .attr(
-          "transform",
-          `translate(${0}, ${Math.pow(datum.data.parWeight, 0.5) * 30 + 5})`
-        );
+      curCircle  
+        .transition()
+        .duration(350)
+        .attr("transform",`translate(${0}, ${getCircleR(datum.data.parWeight) + 5})`)
+        .on("interrupt", () => {
+          curCircle
+            .attr("transform",`translate(${0}, ${0})`);
+        });
+      let curLabel = d3.selectAll(".node_text")
+        .filter(d => datum.id === d.id)
+        .style("visibility", "hidden")
+        .attr("transform",`translate(${getCircleR(datum.data.parWeight) + 5}, ${getCircleR(datum.data.parWeight) * 2 + 14})`)
+        .attr("text-anchor", "start");
+      curLabel
+        .transition()
+        .duration(200)
+        .delay(200)
+        .on("start", () => {
+          curLabel
+            .style("visibility", "visible")
+            .style("opacity", 0);
+        })
+        .style("opacity", 1);
   
       drawBarChart(datum);
     }
   }
   
   static resumeHovered(datum) {
-    // //Mask the svg for a certain period to prevent the interference of animations
-    // d3.select("#mask-svg")
-      // .style("visibility", "visible")
-      // .transition()
-      // .delay(200)
-      // .style("visibility", "hidden");
     d3.select("#information").style("visibility", "hidden");
   
-    d3.selectAll(".node_circle")
-      .transition(800)
+    let circles = d3.selectAll(".node_circle");
+    let labels = d3.selectAll(".node_text");
+    let links = d3.selectAll(".link");
+    circles
+      .transition()
+      .duration(300)
       .style("opacity", 1);
-    d3.selectAll(".node_text")
-      .transition(800)
+    labels
+      .transition()
+      .duration(300)
       .style("opacity", 1);
-    d3.selectAll(".link")
-      .transition(800)
+    links
+      .transition()
+      .duration(300)
       .style("opacity", 1);
 
     if (typeof datum.data.score !== "undefined") {
-      d3.selectAll(".node_circle")
+      let curCircle = d3.selectAll(".node_circle")
         .filter(d => datum.id === d.id)
-        .transition(800)
-        .attr("transform", `translate(${0}, ${0})`);
+      curCircle  
+        .transition()
+        .duration(300)
+        .attr("transform", `translate(${0}, ${0})`)
+        .on("interrupt", () => {
+          curCircle
+            .attr("transform", `translate(${0}, ${0})`);
+        });
+      let curLabel = d3.selectAll(".node_text")
+        .filter(d => datum.id === d.id)
+        .style("visibility", "hidden")
+        .attr("transform", `translate(${0}, ${0})`)
+        .attr("text-anchor", "middle");
+      curLabel
+        .transition()
+        .duration(200)
+        .on("start", () => {
+          curLabel
+            .style("visibility", "visible")
+            .style("opacity", 0);
+        })
+        .style("opacity", 1);
 
       d3.select("#barRoot").remove();
     }

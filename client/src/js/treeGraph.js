@@ -8,8 +8,13 @@ function main(root, options) {
   //Clear current graph
   d3.select("svg").selectAll("*").remove();
 
+  //Generate tree layout
+  root.dx = 40; //The min distance between 2 nodes at the same level (vertically in this graph)
+  root.dy = 400 / root.height; //The distance between levels (horizontally in this graph)
+  let treeLayout = d3.tree().nodeSize([root.dx, root.dy]);
+  treeLayout(root);
+
   //Identify graph boundary
-  root = genTreeLayout(root);
   let x0 = Infinity;
   let x1 = -x0;
   root.each(d => {
@@ -41,38 +46,21 @@ function main(root, options) {
 
   //Graph root
   //svg -> g -> g.links and g.nodes
+  root.transX = root.dy / 3; //Origin translate (the root node in the graph)
+  root.transY = root.dx - x0;
   let gr = svg
     .append("g")
     .attr("id", "treeRoot")
-    .attr("transform", `translate(${root.dy / 3},${root.dx - x0})`);
+    .attr("transform", `translate(${root.transX}, ${root.transY})`);
   gr.append("g").attr("id", "links");
   gr.append("g").attr("id", "nodes");
 
-  // //Mask for masking pointer event
-  // svg
-  //   .append("rect")
-  //   .attr("id", "mask-svg")
-  //   .attr('width', width_svg)
-  //   .attr('height', height_svg)
-  //   .style('opacity', 0)
-  //   .style("visibility", "hidden");
-
-  //Initial update
-  updateTreeGraph(root, options);
+  //Actually draw graph
+  produceTreeGraph(root, options);
 }
 
 
-function genTreeLayout(root) {
-  root.dx = 30;
-  root.dy = 500 / (root.height + 1);
-  let treeLayout = d3.tree().nodeSize([root.dx, root.dy]);
-  treeLayout(root);
-
-  return root;
-}
-
-function updateTreeGraph(root, options) {
-  root = genTreeLayout(root);
+function produceTreeGraph(root, options) {
   let rootElement = d3.select("#treeRoot");
 
   //Links (curvy)
@@ -106,18 +94,17 @@ function updateTreeGraph(root, options) {
     .enter()
       .append("g")
       .classed("node", true)
-  
-  nodeGs_enter
-    .append("circle")
-    .classed("node_circle", true)
-    
+      
   nodeGs_enter
     .append("text")
     .classed("node_text", true)
     .attr("fill", styles.black)
-    .attr("text-anchor", "middle")
-    .attr("dy", "-10px");
-
+    .attr("text-anchor", "middle");
+  
+  nodeGs_enter
+    .append("circle")
+    .classed("node_circle", true)
+      
   nodeGs_enter
     .append("circle")
     .classed("node_listener", true)
@@ -132,14 +119,14 @@ function updateTreeGraph(root, options) {
     .attr("transform", (d) => `translate(${d.y}, ${d.x})`) //Swap x and y to make the graph horizontal
     .datum((d) => { //Pass option info to each node (for bar chart)
       d.options = options;
-      d.dx = root.dx;
-      d.dy = root.dy;
+      d.transX = root.transX;
+      d.transY = root.transY;
       return d;
     });
     
   nodeGs_enter8Update
     .select(".node_circle")
-    .attr("r", (d) => (Math.pow(d.data.parWeight, 0.5) * 30) || 4)
+    .attr("r", (d) => getCircleR(d.data.parWeight))
     .attr("fill", (d) => {
       if (d.data.score == null) return styles.primary;
       
@@ -154,11 +141,12 @@ function updateTreeGraph(root, options) {
   nodeGs_enter8Update
     .select(".node_text")
     .text((d) => d.data.name)
+    .attr("dy", (d) => -getCircleR(d.data.parWeight) - 6)
     .style("pointer-events", "none");
 
   nodeGs_enter8Update //Mouse event listener
     .select(".node_listener")
-    .attr("r", (d) => ((Math.pow(d.data.parWeight, 0.5) * 30) || 4) + 10);
+    .attr("r", (d) => getCircleR(d.data.parWeight) + 10);
 }
 
 function genScales(root) {
@@ -173,5 +161,9 @@ function genScales(root) {
   return [hueScale, lightnessScale];
 }
 
+function getCircleR(parWeight) {
+  return (Math.pow(parWeight, 0.5) * 30) || 4
+}
 
-export { main as default, updateTreeGraph };
+
+export { main as default, getCircleR };

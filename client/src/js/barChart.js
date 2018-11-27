@@ -10,7 +10,7 @@ function main(datum) {
     .append("g")
     .attr("id", "barRoot")
     //(0, 0) is the root node, (dx, dy) is the shift of the tree from the origin
-    .attr("transform", `translate(${datum.y + datum.dx + 5}, ${datum.x + datum.dy + height + 15})`)
+    .attr("transform", `translate(${datum.y + datum.transX - 3}, ${datum.x + datum.transY - height + 1})`)
     .style("pointer-events", "none");
   
   //Scales
