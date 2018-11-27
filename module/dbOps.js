@@ -3,7 +3,7 @@ const fs   = require('fs');
 const assert = require('assert').strict;
 const MongoClient = require('mongodb').MongoClient;
 const ObjectId = require('mongodb').ObjectId;
-const CRED = yaml.safeLoad(fs.readFileSync('./ref/credential.yml', 'utf8'));
+const CRED = yaml.safeLoad(fs.readFileSync('./credential.yml', 'utf8'));
 const CONFIG = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
 
 

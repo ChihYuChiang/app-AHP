@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Button } from "react-bootstrap";
 
 import { genMatrix, genWeight, computeCR } from "../js/com8Matrix";
 import util from "../js/util";
@@ -27,7 +26,7 @@ class Comparison extends Component {
     if (!util.isEmpty(this.props.pairData)) {
       
       if (!this.state.confirmation) {
-        return <Button onClick={this.confirmCriteria}>Confirm</Button>;
+        return <button className="btn btn-default" onClick={this.confirmCriteria}>Confirm</button>;
       }
 
       let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION ? 'Criterion importance' : 'Regarding ' + this.props.id2Name[this.props.pairData.gId];
@@ -45,7 +44,7 @@ class Comparison extends Component {
         <div className="comparison">
           <p>{groupLabel}</p>
           {pairs}
-          <Button onClick={this.handleComData8Reset}>Submit</Button>
+          <button className="btn btn-default" onClick={this.handleComData8Reset}>Submit</button>
         </div>
       );
 

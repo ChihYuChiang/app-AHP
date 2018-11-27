@@ -10,7 +10,7 @@ router.get('/hello', (req, res) => {
 });
 
 router.get('/template', (req, res) => {
-  res.download('./ref/Book1.xlsx', 'criterion-template.xlsx');
+  res.download('./ref/criterion-template.xlsx', 'criterion-template.xlsx');
 });
 
 router.get('/demo', (req, res) => {

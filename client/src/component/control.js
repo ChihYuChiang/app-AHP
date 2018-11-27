@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
+
+import { Button, ButtonGroup, ButtonToolbar, Label, Input } from 'reactstrap';
 
 import CONST from "../js/const";
 
@@ -14,24 +15,24 @@ function Control(props) {
   return (
     <div>
       <input type="file" id="inputCriterionFile" accept=".xlsx" className="file-input"/>
-      <div className="btn-toolbar" role="toolbar">
-        <div className="btn-group" role="group">
+      <ButtonToolbar>
+        <ButtonGroup className="mr-2">
           <Button><label htmlFor="inputCriterionFile" className="file-label">Choose a File</label></Button>
           <Button><a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>Download Template</a></Button>
           <Button onClick={props.getDemoData}>Demo</Button>
-        </div>
-        <div className="btn-group" role="group">
+        </ButtonGroup>
+        <ButtonGroup>
           <Button onClick={props.recordResult}>Record Result</Button>
-        </div>
-      </div>
+        </ButtonGroup>
+      </ButtonToolbar>
 
-      <FormGroup controlId="recordUrl">
-        <ControlLabel>Click to copy</ControlLabel>
-        <FormControl type="text" readOnly
+      <div className="mt-4">
+        <Label for="recordUrl">Click to copy</Label >
+        <Input type="text" id="recordUrl" readOnly
           onClick={copyRecordUrl}
           value={"this is the url for your record"}
         />
-      </FormGroup>
+      </div>
     </div>
   );
 }

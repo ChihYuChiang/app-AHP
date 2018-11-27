@@ -43,7 +43,6 @@ class App extends Component {
           <h1>AHP</h1>
           <p className="dev">{this.state.serverResponse}</p>
           <Control
-            serveTemplate={this.serveTemplate}
             getDemoData={this.getDemoData}
             recordResult={this.recordResult}
           />
@@ -117,12 +116,6 @@ class App extends Component {
 
   hideGraph = () => {
     this.setState({ curGraph: null });
-  };
-
-  serveTemplate = async () => {
-    const response = await fetch('/api/template');
-
-    console.log(response)
   };
 
   getDemoData = async () => {
