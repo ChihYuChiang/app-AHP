@@ -1,40 +1,52 @@
-import React from "react";
+import React, { Component } from "react";
 
 import { Button, ButtonGroup, ButtonToolbar, Label, Input } from 'reactstrap';
 
 import CONST from "../js/const";
 
 
-function Control(props) {
+class Control extends Component {
   /*
     props = {
       getDemoData //Get from db the specified data for demo
       recordResult //Record to db the current comparison data
     }
   */
-  return (
-    <div>
-      <input type="file" id="inputCriterionFile" accept=".xlsx" className="file-input"/>
-      <ButtonToolbar className="justify-content-center">
-        <ButtonGroup className="mr-2">
-          <Button><label htmlFor="inputCriterionFile" className="file-label">Choose a File</label></Button>
-          <Button><a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>Download Template</a></Button>
-          <Button onClick={props.getDemoData}>Demo</Button>
-        </ButtonGroup>
-        <ButtonGroup>
-          <Button onClick={props.recordResult}>Record Result</Button>
-        </ButtonGroup>
-      </ButtonToolbar>
+  state = {
+    recordUrl: '' //Set when the user record the result
+  };
 
-      <div className="col-8 mt-4">
-        <Label for="recordUrl">Click to copy</Label >
-        <Input type="text" id="recordUrl" readOnly
-          onClick={copyRecordUrl}
-          value={"this is the url for your record"}
-        />
+  render() {
+    return (
+      <div>
+        <input type="file" id="inputCriterionFile" accept=".xlsx" className="file-input"/>
+        <ButtonToolbar className="justify-content-center">
+          <ButtonGroup className="mr-2">
+            <Button><label htmlFor="inputCriterionFile" className="file-label">Choose a File</label></Button>
+            <Button><a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>Download Template</a></Button>
+            <Button onClick={this.props.getDemoData}>Demo</Button>
+          </ButtonGroup>
+          <ButtonGroup>
+            <Button onClick={this.record8GetUrl}>Record Result</Button>
+          </ButtonGroup>
+        </ButtonToolbar>
+  
+        <div className="col-8 mt-4">
+          <Label for="recordUrl">Click to copy the record url</Label >
+          <Input type="text" id="recordUrl" readOnly
+            onClick={copyRecordUrl}
+            value={this.state.recordUrl}
+          />
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
+
+
+  record8GetUrl = async () => {
+    let recordUrl = await this.props.recordResult();
+    this.setState({ recordUrl: recordUrl });
+  };
 }
 
 

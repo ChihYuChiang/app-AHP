@@ -1,3 +1,4 @@
+hostUrl: https://app-ahp.herokuapp.com/
 MongoAtlas:
   db: app
   collection: test

@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const yaml = require('js-yaml');
+const fs   = require('fs');
 
+const CONFIG = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
 const dbOps = require('../module/dbOps'); //The path in require start from this file; the path in the code starts from project root
 
 
@@ -18,8 +21,12 @@ router.get('/demo', (req, res) => {
     .then((data) => {res.send(data);});
 });
 
-router.post('/world', (req, res) => {
-  res.send(`I received your POST request. This is what you sent me: ${req.body}`);
+router.post('/record', (req, res) => {
+  dbOps.postCompare(req.body)
+    .then((insertedId) => {
+      if (process.env.NODE_ENV === 'production') res.send(CONFIG.hostUrl + insertedId);
+      else res.send('localhost:3000/' + insertedId); //Direct to the React server
+    });
 });
 
 

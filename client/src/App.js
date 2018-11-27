@@ -149,7 +149,9 @@ class App extends Component {
   };
 
   recordResult = async () => {
-    const response = await fetch('/api/world', {
+    this.setState({ isLoading: true });
+
+    const response = await fetch('/api/record', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -159,11 +161,13 @@ class App extends Component {
         compares_option: this.state.option.compares
       }),
     });
-    const body = await response.text();
-    console.log(body);
+    const recordId = await response.text();
+
+    this.setState({ isLoading: false });
+    return recordId;
   };
 
-  testApi = async () => {
+  testApi = async () => { //TODO: remove
     const response = await fetch('/api/hello');
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
