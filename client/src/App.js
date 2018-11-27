@@ -4,6 +4,7 @@ import readXlsxFile from "read-excel-file";
 import preprocessData from "./js/preData";
 import util from "./js/util";
 import score from "./js/score";
+import { genRoot } from './js/preData';
 import CONST from "./js/const";
 
 import Comparison from "./component/comparison";
@@ -45,7 +46,7 @@ class App extends Component {
             <h1>AHP</h1>
             <p className="col-8">{this.state.serverResponse}</p>
             <Control
-              getDemoData={this.getDemoData}
+              renderDemoGraph={() => {this.renderDemo8EntryGraph(CONST.GRAPH_TYPE.TREE_DEMO);}}
               recordResult={this.recordResult}
             />
             <div className="content mt-4">
@@ -71,9 +72,11 @@ class App extends Component {
   }
 
   componentDidMount() {
-    const input = document.getElementById("inputCriterionFile");
-    
+    //Render entry graph
+    this.renderDemo8EntryGraph(CONST.GRAPH_TYPE.TREE_ENTRY);
+
     //Listen to file input
+    const input = document.getElementById("inputCriterionFile");
     input.addEventListener("change", () => {
       readXlsxFile(input.files[0])
         .then(preprocessData)
@@ -89,7 +92,7 @@ class App extends Component {
             },
             pairDataGenerator: data.pairDataGenerator,
             curPairData: data.pairDataGenerator.next().value,
-            curGraph: CONST.GRAPH_TYPE.TREE //Draw first graph after loaded
+            curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD //Draw first graph after loaded
           });
         });
     });
@@ -124,7 +127,7 @@ class App extends Component {
     this.setState({ curGraph: null });
   };
 
-  getDemoData = async () => {
+  renderDemo8EntryGraph = async (graphType) => {
     //Hide graph and display loading spinner
     this.setState({ curGraph: null, isLoading: true });
 
@@ -132,18 +135,17 @@ class App extends Component {
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
 
-    //Restore state
     this.setState((curState) => {
       //TODO: Clean cur state
-
+  
       curState.option.items = body.items_option;
       curState.criterion.items = body.items_criterion;
-      let root = score.embedValue(body.items_criterion, body.compares_option, body.compares_criterion);
+      let root = genRoot(body.items_criterion);
       curState.criterion.root = root;
-      curState.curGraph = CONST.GRAPH_TYPE.TREE_DEMO;
-
+      curState.curGraph = graphType;
+  
       curState.isLoading = false;
-
+  
       return curState;
     });
   };

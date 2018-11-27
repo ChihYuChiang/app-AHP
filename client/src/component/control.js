@@ -24,7 +24,7 @@ class Control extends Component {
           <ButtonGroup className="mr-2">
             <Button><label htmlFor="inputCriterionFile" className="file-label">Choose a File</label></Button>
             <Button><a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>Download Template</a></Button>
-            <Button onClick={this.props.getDemoData}>Demo</Button>
+            <Button onClick={this.props.renderDemoGraph}>Demo</Button>
           </ButtonGroup>
           <ButtonGroup>
             <Button onClick={this.record8GetUrl}>Record Result</Button>

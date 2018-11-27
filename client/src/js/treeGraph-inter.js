@@ -9,10 +9,10 @@ class main {
   
   static highlightHovered(datum) {
     d3.select("#information").style("visibility", () =>
-      datum.data.parWeight ? "visible" : "hidden"
+      datum.inter ? "visible" : "hidden"
     );
     d3.select("#head-information").text(
-      datum.data.parWeight ? (datum.data.parWeight * 100).toFixed(2) + "%" : ""
+      datum.inter ? (datum.data.parWeight * 100).toFixed(2) + "%" : ""
     );
     d3.select("#sub-information").text("of score come from this criterion");
   
@@ -54,13 +54,14 @@ class main {
       .interrupt()
       .style("opacity", 1);
   
-    if (typeof datum.data.score !== "undefined") {
+    // if (typeof datum.data.score !== "undefined") { //Add util
+    if (datum.inter) {
       let curCircle = d3.selectAll(".node_circle")
         .filter(d => datum.id === d.id)
       curCircle  
         .transition()
         .duration(350)
-        .attr("transform",`translate(${0}, ${getCircleR(datum.data.parWeight) + 5})`)
+        .attr("transform",`translate(${0}, ${getCircleR(datum.data.parWeight, datum.inter) + 5})`)
         .on("interrupt", () => {
           curCircle
             .attr("transform",`translate(${0}, ${0})`);
@@ -68,7 +69,7 @@ class main {
       let curLabel = d3.selectAll(".node_text")
         .filter(d => datum.id === d.id)
         .style("visibility", "hidden")
-        .attr("transform",`translate(${getCircleR(datum.data.parWeight) + 5}, ${getCircleR(datum.data.parWeight) * 2 + 14})`)
+        .attr("transform",`translate(${getCircleR(datum.data.parWeight, datum.inter) + 5}, ${getCircleR(datum.data.parWeight, datum.inter) * 2 + 14})`)
         .attr("text-anchor", "start");
       curLabel
         .transition()
@@ -104,7 +105,7 @@ class main {
       .duration(300)
       .style("opacity", 1);
 
-    if (typeof datum.data.score !== "undefined") {
+    if (datum.inter) {
       let curCircle = d3.selectAll(".node_circle")
         .filter(d => datum.id === d.id)
       curCircle  

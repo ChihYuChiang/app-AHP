@@ -15,11 +15,8 @@ function Graph (props) {
   if (props.curGraph == null) {
     return <div id="canvasRoot"><svg style={{ display: 'none' }} /></div>;
   }
-  if ([CONST.GRAPH_TYPE.TREE, CONST.GRAPH_TYPE.TREE_DEMO].includes(props.curGraph)) {
-    drawTreeGraph(props.root, props.options);
-  }
-  if (props.curGraph === CONST.GRAPH_TYPE.TREE_UPDATE) {
-    drawTreeGraph(props.root, props.options);
+  else {
+    drawTreeGraph(props.root, props.options, props.curGraph);
   }
 
   return <div id="canvasRoot"><svg style={{ display: 'block' }} /></div>;

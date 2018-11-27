@@ -1,11 +1,14 @@
 import * as d3 from "d3";
 
 import CONST from "./const";
-import inter from './treeGraph-inter';
+import interaction from './treeGraph-inter';
 import styles from '../scss/variable.scss';
 
 
-function main(root, options) {
+function main(root, options, graphType) {
+  //If there's additional interaction
+  let inter = [CONST.GRAPH_TYPE.TREE_DEMO, CONST.GRAPH_TYPE.TREE_UPDATE].includes(graphType) ? true : false;
+
   //Clear current graph
   d3.select("svg").selectAll("*").remove();
 
@@ -57,11 +60,11 @@ function main(root, options) {
   gr.append("g").attr("id", "nodes");
 
   //Actually draw graph
-  produceTreeGraph(root, options);
+  produceTreeGraph(root, options, inter);
 }
 
 
-function produceTreeGraph(root, options) {
+function produceTreeGraph(root, options, inter) {
   let rootElement = d3.select("#treeRoot");
 
   //Links (curvy)
@@ -110,8 +113,8 @@ function produceTreeGraph(root, options) {
     .append("circle")
     .classed("node_listener", true)
     .style("opacity", 0)
-    .on("mouseover", inter.highlightHovered)
-    .on("mouseleave", inter.resumeHovered);
+    .on("mouseover", interaction.highlightHovered)
+    .on("mouseleave", interaction.resumeHovered);
 
   let nodeGs_enter8Update = nodeGs_enter
     .merge(nodeGs);
@@ -122,32 +125,34 @@ function produceTreeGraph(root, options) {
       d.options = options;
       d.transX = root.transX;
       d.transY = root.transY;
+      d.inter = inter;
       return d;
     });
     
   nodeGs_enter8Update
     .select(".node_circle")
-    .attr("r", (d) => getCircleR(d.data.parWeight))
+    .attr("r", (d) => getCircleR(d.data.parWeight, inter))
     .attr("fill", (d) => {
-      if (d.data.score == null) return styles.primary;
-      
-      let [hueScale, lightnessScale] = genScales(root);
-      let topOptId = d.data.score.reduce((acc, cur, i) => (cur > d.data.score[acc]) ? i : acc, 0);
-      let colorHue = hueScale(topOptId);
-      let color = d3.hsl(colorHue);
-      color.l = lightnessScale(d.data.score[topOptId]);
-      return color;
+      if (!inter) return styles.primary;
+      else {
+        let [hueScale, lightnessScale] = genScales(root);
+        let topOptId = d.data.score.reduce((acc, cur, i) => (cur > d.data.score[acc]) ? i : acc, 0);
+        let colorHue = hueScale(topOptId);
+        let color = d3.hsl(colorHue);
+        color.l = lightnessScale(d.data.score[topOptId]);
+        return color;
+      }
     });
   
   nodeGs_enter8Update
     .select(".node_text")
     .text((d) => d.data.name)
-    .attr("dy", (d) => -getCircleR(d.data.parWeight) - 6)
+    .attr("dy", (d) => -getCircleR(d.data.parWeight, inter) - 6)
     .style("pointer-events", "none");
 
   nodeGs_enter8Update //Mouse event listener
     .select(".node_listener")
-    .attr("r", (d) => getCircleR(d.data.parWeight) + 10);
+    .attr("r", (d) => getCircleR(d.data.parWeight, inter) + 10);
 }
 
 function genScales(root) {
@@ -162,8 +167,8 @@ function genScales(root) {
   return [hueScale, lightnessScale];
 }
 
-function getCircleR(parWeight) {
-  return (Math.pow(parWeight, 0.45) * 30) || 4 //TODO: base on the minimum value
+function getCircleR(parWeight, inter) {
+  return inter ? (Math.pow(parWeight, 0.45) * 30) : 4; //TODO: base on the minimum value
 }
 
 
