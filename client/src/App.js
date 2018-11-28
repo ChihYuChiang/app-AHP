@@ -32,7 +32,7 @@ class App extends Component {
     },
     pairDataGenerator: {},
     curPairData: {},
-    curGraph: null,
+    curGraph: CONST.GRAPH_TYPE.NULL,
     isLoading: false,
     serverResponse: ''
   };
@@ -45,10 +45,13 @@ class App extends Component {
             <div id="head-spacer"></div>
             <h1>AHP</h1>
             <p className="col-8">{this.state.serverResponse}</p>
-            <Control
-              renderDemoGraph={() => {this.renderDemo8EntryGraph(CONST.GRAPH_TYPE.TREE_DEMO);}}
-              recordResult={this.recordResult}
-            />
+            <div className="mt-4">
+              <Control
+                curGraph={this.state.curGraph}
+                renderDemoGraph={() => {this.renderDemo8EntryGraph(CONST.GRAPH_TYPE.TREE_DEMO);}}
+                recordResult={this.recordResult}
+              />
+            </div>
             <div className="content mt-4">
               <Loading
                 isLoading={this.state.isLoading}/>
@@ -58,8 +61,8 @@ class App extends Component {
                 options={this.state.option.items}
               />
               <Comparison
+                enterComparison={this.enterComparison}
                 handleComData={this.handleComData}
-                hideGraph={this.hideGraph}
                 pairData={this.state.curPairData}
                 id2Name={this.state.criterion.id2Name}
                 options={this.state.option.items}
@@ -124,13 +127,13 @@ class App extends Component {
     });
   };
 
-  hideGraph = () => {
-    this.setState({ curGraph: null });
+  enterComparison = () => {
+    this.setState({ curGraph: CONST.GRAPH_TYPE.COMPARISON });
   };
 
   renderDemo8EntryGraph = async (graphType) => {
     //Hide graph and display loading spinner
-    this.setState({ curGraph: null, isLoading: true });
+    this.setState({ curGraph: CONST.GRAPH_TYPE.NULL, isLoading: true });
 
     const response = await fetch('/api/demo');
     const body = await response.json();

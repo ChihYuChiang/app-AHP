@@ -8,6 +8,7 @@ import CONST from "../js/const";
 class Control extends Component {
   /*
     props = {
+      curGraph //App state marker
       getDemoData //Get from db the specified data for demo
       recordResult //Record to db the current comparison data
     }
@@ -17,29 +18,37 @@ class Control extends Component {
   };
 
   render() { //TODO popover instruction
-    return (
-      <div>
-        <input type="file" id="inputCriterionFile" accept=".xlsx" className="file-input"/>
-        <ButtonToolbar className="justify-content-center">
-          <ButtonGroup className="mr-2">
-            <Button><label htmlFor="inputCriterionFile" className="file-label">Upload Criteria</label></Button>
-            <Button><a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>Download Template</a></Button>
-            <Button onClick={this.props.renderDemoGraph}>Demo Result</Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <Button onClick={this.record8GetUrl}>Record Result</Button>
-          </ButtonGroup>
-        </ButtonToolbar>
-  
-        <div className="col-8 mt-4">
-          <Label for="recordUrl">Click to copy the record url</Label >
-          <Input type="text" id="recordUrl" readOnly
-            onClick={copyRecordUrl}
-            value={this.state.recordUrl}
-          />
+    if ([CONST.GRAPH_TYPE.TREE_UPLOAD, CONST.GRAPH_TYPE.COMPARISON].includes(this.props.curGraph)) {
+      return <div></div>;
+    } else if (this.props.curGraph === CONST.GRAPH_TYPE.TREE_UPDATE) {
+      return (
+        <div>
+          <Button onClick={this.record8GetUrl}>Record Result</Button>
+          <Button className="ml-5" disabled>Upload New Criteria</Button>
+          {/* <div className="col-8 mt-4">
+            <Label for="recordUrl">Click to copy the record url</Label >
+            <Input type="text" id="recordUrl" readOnly
+              onClick={copyRecordUrl}
+              value={this.state.recordUrl}
+            />
+          </div> */}
         </div>
-      </div>
-    );
+      )
+    }
+    else {
+      return (
+        <div>
+          <input type="file" id="inputCriterionFile" accept=".xlsx" className="file-input"/>
+          <ButtonToolbar className="justify-content-center">
+            <Button className="mr-2" onClick={this.props.renderDemoGraph}>Demo Result</Button>
+            <ButtonGroup>
+              <Button><a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>Download Template</a></Button>
+              <Button><label htmlFor="inputCriterionFile" className="file-label">Upload Your Criteria</label></Button>
+            </ButtonGroup>
+          </ButtonToolbar>
+        </div>
+      );
+    }
   }
 
 

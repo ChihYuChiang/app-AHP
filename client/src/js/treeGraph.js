@@ -69,7 +69,7 @@ function main(root, options, graphType) {
   //Graph root
   //#canvasRoot -> svg -> g -> g.links and g.nodes
   root.transX = root.dy / 3; //Origin translate (the root node in the graph)
-  root.transY = root.dx - x0 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
+  root.transY = root.dx - x0 + (inter ? CONST.GRAPH_MEASURE.BAR_HEIGHT / 2 : 0);
   let gr = svg
     .append("g")
     .attr("id", "treeRoot")
@@ -227,5 +227,6 @@ function genScales(root) {
 function getCircleR(parWeight, inter) {
   return inter ? Math.pow(parWeight, 0.45) * 30 : 4; //TODO: base on the minimum value
 }
+
 
 export { main as default, getCircleR };

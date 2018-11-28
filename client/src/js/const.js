@@ -7,7 +7,9 @@ const main = {
     TREE_UPLOAD: 'tree_upload',
     TREE_UPDATE: 'tree_update',
     TREE_DEMO: 'tree_demo',
-    TREE_ENTRY: 'tree_entry'
+    TREE_ENTRY: 'tree_entry',
+    COMPARISON: 'comparison',
+    NULL: 'null'
   },
   GRAPH_MEASURE: {
     BAR_HEIGHT: 67,

@@ -12,7 +12,7 @@ function Graph (props) {
       root //Data for the hierarchical graph
     }
   */
-  if (props.curGraph == null) {
+  if ([CONST.GRAPH_TYPE.NULL, CONST.GRAPH_TYPE.COMPARISON].includes(props.curGraph)) {
     return <div id="canvasRoot" style={{ display: "none" }} />;
   }
   else {

@@ -9,6 +9,7 @@ import CONST from "../js/const";
 class Comparison extends Component {
   /*
     props = {
+      enterComparison //Update graph (app) state
       handleComData //Add comData into the store
       hideGraph //As the name suggests
       pairData
@@ -28,10 +29,17 @@ class Comparison extends Component {
     if (!util.isEmpty(this.props.pairData)) {
       
       if (!this.state.confirmation) {
-        return <Button className="btn-wide" onClick={this.confirmCriteria}>Confirm</Button>;
+        return (
+          <div>
+            <Button className="btn-wide mr-5" onClick={this.confirmCriteria}>Confirm</Button>
+            {/* <Button className="btn-medium">Modify</Button> */}
+          </div>
+        );
       }
 
-      let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION ? 'Criterion importance' : 'Regarding ' + this.props.id2Name[this.props.pairData.gId];
+      let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION
+        ? 'Criterion Importance' //TODO: Show breadcrumb
+        : <p>Regarding <span className="prompt-highlight">{this.props.id2Name[this.props.pairData.gId]}</span></p>;
 
       let pairs = this.props.pairData.pairs.map((pair) => (
         <Pair key={this.props.pairData.gId + pair.source + '_' + pair.dest}
@@ -44,8 +52,8 @@ class Comparison extends Component {
       ));
   
       return (
-        <div className="comparison">
-          <p>{groupLabel}</p>
+        <div className="comparison mt-4">
+          <h6>{groupLabel}</h6>
           {pairs}
           <Button className="btn-wide" onClick={this.handleComData8Reset}>Submit</Button>
         </div>
@@ -81,7 +89,7 @@ class Comparison extends Component {
 
   confirmCriteria = () => {
     this.setState({ confirmation: true });
-    this.props.hideGraph();
+    this.props.enterComparison();
   }
 }
 
