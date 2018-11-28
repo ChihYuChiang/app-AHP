@@ -8,6 +8,7 @@ const main = {
     TREE_UPDATE: 'tree_update',
     TREE_DEMO: 'tree_demo',
     TREE_ENTRY: 'tree_entry',
+    TREE_RECORD: 'tree_record',
     COMPARISON: 'comparison',
     NULL: 'null'
   },
