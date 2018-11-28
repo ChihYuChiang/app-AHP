@@ -49,12 +49,16 @@ function main(root, options, graphType) {
     .append("div")
     .attr("id", "dashboard");
 
-  dashboard
+  let legend = dashboard
     .append("div")
     .attr("id", "legend")
-    .append("svg")
-    .style("width", "100%")
-    .style("height", options.length * 20);
+    legend
+      .append("p")
+      .attr("id", "legend-title");
+    legend
+      .append("svg")
+      .style("width", "100%")
+      .style("height", options.length * CONST.GRAPH_MEASURE.LEGEND_ITEM_HEIGHT);
     
   let information = dashboard
     .append("div")
@@ -158,7 +162,7 @@ function produceTreeGraph(root, options, inter) {
         let [hueScale, lightnessScale] = genScales(root);
         let colorHue = hueScale(d.topOptId);
         let color = d3.hsl(colorHue);
-        color.l = lightnessScale(d.data.score[d.topOptId]);
+        color.l = lightnessScale(d.data.score[d.topOptId - 1]);
         return color;
       }
     });
@@ -175,13 +179,16 @@ function produceTreeGraph(root, options, inter) {
 function produceLegend(root, options) {
   let [hueScale, lightnessScale] = genScales(root);
 
+  d3.select("#legend > p")
+    .text("Options");
+
   var legendItems = d3.select("#legend > svg")
     .selectAll(".legendItem")
     .data(options)
     .enter()
     .append("g")
     .classed("legendItem", true)
-    .attr("transform", (_, i) => "translate(0," + i * 20 + ")")
+    .attr("transform", (_, i) => "translate(0," + i * CONST.GRAPH_MEASURE.LEGEND_ITEM_HEIGHT + ")")
     .on("click", interaction.highlightClicked_legend);
   d3.select("#canvasRoot > svg") //Click the svg to resume
     .on("click", interaction.resumeClicked_legend);
@@ -226,7 +233,7 @@ function genScales(root) {
 }
 
 function getCircleR(parWeight, inter) {
-  return inter ? Math.pow(parWeight, 0.45) * 30 : 4; //TODO: base on the minimum value
+  return inter ? Math.pow(parWeight, 0.4) * 30 : 4; //TODO: base on the minimum value
 }
 
 

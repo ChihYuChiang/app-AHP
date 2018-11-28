@@ -19,20 +19,7 @@ import { Loading } from "./util";
 
 class Main extends Component {
   state = {
-    option: {
-      items: [],
-      pairs: [],
-      compares: []
-    },
-    criterion: {
-      items: [],
-      pairs: {},
-      compares: [],
-      root: [],
-      id2Name: {}
-    },
-    pairDataGenerator: {},
-    curPairData: {},
+    ...buildDefaultState(),
     curGraph: CONST.GRAPH_TYPE.NULL,
     curControl: CONST.CONTROL_TYPE.NULL,
     isLoading: false,
@@ -104,7 +91,8 @@ class Main extends Component {
                 },
                 pairDataGenerator: data.pairDataGenerator,
                 curPairData: data.pairDataGenerator.next().value,
-                curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD //Draw first graph after loaded
+                curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
+                curControl: CONST.CONTROL_TYPE.NULL
               });
             });
         });
@@ -167,7 +155,11 @@ class Main extends Component {
     if (response.status !== 200) throw Error(body.message);
 
     this.setState((curState) => {
-      //TODO: Clean cur state
+      //Clear cur state
+      curState = {
+        ...curState,
+        ...buildDefaultState()
+      };
   
       curState.option.items = body.items_option;
       curState.criterion.items = body.items_criterion;
@@ -208,6 +200,24 @@ class Main extends Component {
     return body;
   };
 }
+
+
+const buildDefaultState = () => ({
+  option: {
+    items: [],
+    pairs: [],
+    compares: []
+  },
+  criterion: {
+    items: [],
+    pairs: {},
+    compares: [],
+    root: [],
+    id2Name: {}
+  },
+  pairDataGenerator: {},
+  curPairData: {}
+});
 
 
 export default Main;

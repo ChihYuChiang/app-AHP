@@ -120,7 +120,7 @@ class Pair extends Component {
 
     return (
       <div>
-        <p className="prompt">{sourceName + ' > ' + destName}</p>
+        <p className="prompt">{destName}<span id="vs"> vs </span>{sourceName}</p>
           <div className="slider-wrapper">
             <input name="range-slider" type="range" className="fluid-slider" max="8" min="-8" step="1"
               value={this.state.value}

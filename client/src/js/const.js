@@ -19,7 +19,8 @@ const main = {
   },
   GRAPH_MEASURE: {
     BAR_HEIGHT: 67,
-    BAR_WIDTH: 100
+    BAR_WIDTH: 100,
+    LEGEND_ITEM_HEIGHT: 22
   },
   PATH: {
     TEMPLATE_SERVER: process.env.NODE_ENV === 'production' ? '.' : 'http://localhost:5000'
