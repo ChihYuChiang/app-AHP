@@ -10,7 +10,8 @@ const main = {
     TREE_ENTRY: 'tree_entry'
   },
   GRAPH_MEASURE: {
-    BAR_HEIGHT: 67
+    BAR_HEIGHT: 67,
+    BAR_WIDTH: 100
   },
   PATH: {
     TEMPLATE_SERVER: process.env.NODE_ENV === 'production' ? '.' : 'http://localhost:5000'

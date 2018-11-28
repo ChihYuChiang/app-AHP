@@ -40,22 +40,30 @@ function main(root, options, graphType) {
     .style("width", width_svg)
     .style("height", height_svg);
 
-  //Information
-  let information = d3
+  //Dashboard
+  //#canvasRoot -> #dashboard -> #information and #legend
+  let dashboard = d3
     .select("#canvasRoot")
+    .append("div")
+    .attr("id", "dashboard");
+
+  dashboard
+    .append("div")
+    .attr("id", "legend")
+    .append("svg")
+    .style("width", "100%")
+    .style("height", options.length * 20);
+    
+  let information = dashboard
     .append("div")
     .attr("id", "information");
   information
     .append("div")
     .attr("id", "head-information")
     .style("font-size", "25px");
-  information.append("span").attr("id", "sub-information");
-
-  //Legend
-  d3.select("#canvasRoot")
-    .append("div")
-    .attr("id", "legend")
-    .append("svg");
+  information
+    .append("span")
+    .attr("id", "sub-information");
 
   //Graph root
   //#canvasRoot -> svg -> g -> g.links and g.nodes
@@ -193,6 +201,7 @@ function produceLegend(root, options) {
     .attr("dx", "-5px")
     .text((d) => d.name)
     .style("text-anchor", "start")
+    .style("fill", styles.gray800)
     .style("font-size", 12);
 }
 

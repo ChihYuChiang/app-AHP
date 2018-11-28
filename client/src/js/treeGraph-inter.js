@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 
+import CONST from "./const";
 import drawBarChart from './barChart';
 import { getCircleR } from './treeGraph';
 import styles from '../scss/variable.scss';
@@ -8,13 +9,15 @@ import styles from '../scss/variable.scss';
 class main {
   
   static highlightHovered(datum) {
+
+    //--Base interaction
     d3.select("#information").style("visibility", () =>
       datum.inter ? "visible" : "hidden"
     );
     d3.select("#head-information").text(
       datum.inter ? (datum.data.parWeight * 100).toFixed(2) + "%" : ""
     );
-    d3.select("#sub-information").text("of score come from this criterion");
+    d3.select("#sub-information").text("of final score comes from this criterion");
   
     let circles = d3
       .selectAll(".node_circle")
@@ -54,6 +57,8 @@ class main {
       .interrupt()
       .style("opacity", 1);
   
+
+    //--Rich interaction
     // if (typeof datum.data.score !== "undefined") { //Add util
     if (datum.inter) {
       let curCircle = d3.selectAll(".node_circle")
@@ -69,8 +74,8 @@ class main {
       let curLabel = d3.selectAll(".node_text")
         .filter(d => datum.id === d.id)
         .style("visibility", "hidden")
-        .attr("transform",`translate(${getCircleR(datum.data.parWeight, datum.inter) + 5}, ${getCircleR(datum.data.parWeight, datum.inter) * 2 + 14})`)
-        .attr("text-anchor", "start");
+        .attr("transform",`translate(${CONST.GRAPH_MEASURE.BAR_WIDTH / 2 - 3}, ${getCircleR(datum.data.parWeight, datum.inter) + 22})`)
+        .attr("font-size", "1.2em");
       curLabel
         .transition()
         .duration(200)
@@ -87,6 +92,8 @@ class main {
   }
   
   static resumeHovered(datum) {
+    
+    //--Base interaction
     d3.select("#information").style("visibility", "hidden");
   
     let circles = d3.selectAll(".node_circle");
@@ -105,6 +112,8 @@ class main {
       .duration(300)
       .style("opacity", 1);
 
+    
+    //--Rich interaction
     if (datum.inter) {
       let curCircle = d3.selectAll(".node_circle")
         .filter(d => datum.id === d.id)
@@ -120,7 +129,7 @@ class main {
         .filter(d => datum.id === d.id)
         .style("visibility", "hidden")
         .attr("transform", `translate(${0}, ${0})`)
-        .attr("text-anchor", "middle");
+        .attr("font-size", "1em");
       curLabel
         .transition()
         .duration(200)
@@ -134,7 +143,14 @@ class main {
       d3.select("#barRoot").remove();
     }
   }
+
+  static highlightHovered_legend() {
+
+  }
+  
+  static resumeHovered_legend() {
     
+  }
 }
 
 

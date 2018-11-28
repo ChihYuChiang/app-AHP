@@ -6,7 +6,7 @@ import styles from '../scss/variable.scss';
 
 function main(datum) {
   //Graph root
-  let [height, width] = [CONST.GRAPH_MEASURE.BAR_HEIGHT, 100];
+  let [height, width] = [CONST.GRAPH_MEASURE.BAR_HEIGHT, CONST.GRAPH_MEASURE.BAR_WIDTH];
   let gr = d3.select("svg")
     .append("g")
     .attr("id", "barRoot")
@@ -30,8 +30,8 @@ function main(datum) {
     .ease(d3.easeQuadOut);
   barGs
     .append("rect")
-    .attr("rx", "1px")
-    .attr("ry", "1px")
+    .attr("rx", "3px")
+    .attr("ry", "3px")
     .attr("fill", (_, i) => {
       let color = d3.hsl(hueScale(i));
       color.l = 0.7;
