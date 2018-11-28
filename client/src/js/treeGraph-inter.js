@@ -3,7 +3,6 @@ import * as d3 from "d3";
 import CONST from "./const";
 import drawBarChart from './barChart';
 import { getCircleR } from './treeGraph';
-import styles from '../scss/variable.scss';
 
 
 class main {

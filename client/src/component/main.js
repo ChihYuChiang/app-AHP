@@ -10,8 +10,9 @@ import CONST from "../js/const";
 import Comparison from "./comparison";
 import Graph from "./graph";
 import Control from "./control";
+import Footer from "./footer";
 //'https://popmotion.io/pose/'
-//https://reacttraining.com/react-router/web/api/
+//font awesome as button
 
 import { Loading } from "./util";
 
@@ -67,6 +68,9 @@ class Main extends Component {
               id2Name={this.state.criterion.id2Name}
               options={this.state.option.items}
             />
+          </div>
+          <div className="fixed-bottom">
+            <Footer />
           </div>
           <div id="bottom-spacer"></div>
         </div>

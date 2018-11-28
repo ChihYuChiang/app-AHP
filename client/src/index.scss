@@ -21,3 +21,13 @@ html { //For rem, which Bootstrap 4 bases on
 #head-spacer, #bottom-spacer {
   margin: 100px;
 }
+
+#signature {
+  color: $gray-200;
+  font-size: 0.75rem;
+  background-color: $gray-700;
+  padding-top: 10px;
+  padding-bottom: 12px;
+  padding-right: 40px;
+  text-align: right;
+}
