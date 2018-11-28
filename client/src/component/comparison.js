@@ -16,6 +16,7 @@ class Comparison extends Component {
       //.pairs, Multiple pair entries, each with source, dest
       //.type, option or criterion
       id2Name //A dict translate node id to the name to be displayed
+      options //Aa array of option items
     }
   */
   state = {
@@ -38,6 +39,7 @@ class Comparison extends Component {
           data={pair}
           updateComData={this.updateComData}
           id2Name={this.props.id2Name}
+          options={this.props.options}
         />
       ));
   
@@ -90,6 +92,7 @@ class Pair extends Component {
       data //A pair data, with source, dest
       updateComData //Update the comData state in the parent company
       id2Name //A dict translate node id to the name to be displayed
+      options //Aa array of option items
     }
   */
   state = {
@@ -100,8 +103,12 @@ class Pair extends Component {
   labelElement = React.createRef();
   
   render() {
-    let sourceName = this.props.type === CONST.DATA_TYPE.CRITERION ? this.props.id2Name[this.props.data.source] : this.props.data.source;
-    let destName = this.props.type === CONST.DATA_TYPE.CRITERION ? this.props.id2Name[this.props.data.dest] : this.props.data.dest;
+    let sourceName = this.props.type === CONST.DATA_TYPE.CRITERION
+      ? this.props.id2Name[this.props.data.source]
+      : this.props.options.filter((op) => op.id + '' === this.props.data.source)[0].name;
+    let destName = this.props.type === CONST.DATA_TYPE.CRITERION
+      ? this.props.id2Name[this.props.data.dest]
+      : this.props.options.filter((op) => op.id + '' === this.props.data.dest)[0].name;
 
     return (
       <div>

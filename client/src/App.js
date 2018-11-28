@@ -62,6 +62,7 @@ class App extends Component {
                 hideGraph={this.hideGraph}
                 pairData={this.state.curPairData}
                 id2Name={this.state.criterion.id2Name}
+                options={this.state.option.items}
               />
             </div>
             <div id="bottom-spacer"></div>
