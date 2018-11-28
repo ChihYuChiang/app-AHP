@@ -21,7 +21,12 @@ router.get('/demo', (req, res) => {
     .then((data) => {res.send(data);});
 });
 
-router.post('/record', (req, res) => {
+router.get('/record/:id', (req, res) => { //TODO: handle error (no record)
+  dbOps.getCompare(req.params.id)
+    .then((data) => {res.send(data);});
+});
+
+router.post('/create', (req, res) => {
   dbOps.postCompare(req.body)
     .then((insertedId) => {
       if (process.env.NODE_ENV === 'production') res.send(CONFIG.hostUrl + 'record/' + insertedId);

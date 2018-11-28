@@ -74,30 +74,36 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    //Render entry graph
-    this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_ENTRY);
+    if (this.props.match.params.recordId) {
+      //Render the specific record graph
+      this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_RECORD);
 
-    //Listen to file input
-    const input = document.getElementById("inputCriterionFile");
-    input.addEventListener("change", () => {
-      readXlsxFile(input.files[0])
-        .then(preprocessData)
-        .then((data) => { //items, root, pairs, id2Name, generator
-          this.setState({
-            option: {
-              ...this.state.option,
-              ...data.option
-            },
-            criterion: {
-              ...this.state.criterion,
-              ...data.criterion
-            },
-            pairDataGenerator: data.pairDataGenerator,
-            curPairData: data.pairDataGenerator.next().value,
-            curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD //Draw first graph after loaded
+    } else {
+      //Render entry graph
+      this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_ENTRY);
+  
+      //Listen to file input
+      const input = document.getElementById("inputCriterionFile");
+      input.addEventListener("change", () => {
+        readXlsxFile(input.files[0])
+          .then(preprocessData)
+          .then((data) => { //items, root, pairs, id2Name, generator
+            this.setState({
+              option: {
+                ...this.state.option,
+                ...data.option
+              },
+              criterion: {
+                ...this.state.criterion,
+                ...data.criterion
+              },
+              pairDataGenerator: data.pairDataGenerator,
+              curPairData: data.pairDataGenerator.next().value,
+              curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD //Draw first graph after loaded
+            });
           });
-        });
-    });
+      });
+    }
 
     //Test server connection
     this.testApi()
@@ -133,7 +139,16 @@ class Main extends Component {
     //Hide graph and display loading spinner
     this.setState({ curGraph: CONST.GRAPH_TYPE.NULL, isLoading: true });
 
-    const response = await fetch('/api/demo');
+    switch (graphType) {
+      case CONST.GRAPH_TYPE.TREE_DEMO:
+      case CONST.GRAPH_TYPE.TREE_ENTRY:
+        var response = await fetch('/api/demo');
+        break;
+      
+      case CONST.GRAPH_TYPE.TREE_RECORD:
+        var response = await fetch('/api/record/' + this.props.match.params.recordId);
+    }
+
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
 
@@ -155,7 +170,7 @@ class Main extends Component {
   recordResult = async () => {
     this.setState({ isLoading: true });
 
-    const response = await fetch('/api/record', {
+    const response = await fetch('/api/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

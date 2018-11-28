@@ -9,7 +9,8 @@ function main(root, options, graphType) {
   //If there's additional interaction
   let inter = [
     CONST.GRAPH_TYPE.TREE_DEMO,
-    CONST.GRAPH_TYPE.TREE_UPDATE
+    CONST.GRAPH_TYPE.TREE_UPDATE,
+    CONST.GRAPH_TYPE.TREE_RECORD
   ].includes(graphType)
     ? true
     : false;
