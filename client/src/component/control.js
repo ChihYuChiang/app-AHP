@@ -18,30 +18,32 @@ class Control extends Component {
 
   render() {
     //TODO popover instruction
-    switch (this.props.curGraph) {
+    switch (this.props.curControl) {
       
-      case CONST.GRAPH_TYPE.TREE_UPLOAD:
-      case CONST.GRAPH_TYPE.TREE_RECORD:
-      case CONST.GRAPH_TYPE.COMPARISON:
+      case CONST.CONTROL_TYPE.NULL:
         return <div />;
 
-      case CONST.GRAPH_TYPE.TREE_UPDATE:
+      case CONST.CONTROL_TYPE.UPDATE:
+        let recordUrl4Copy = !this.state.recordUrl
+          ? <div></div>
+          : <div className="col-8 mt-4">
+              <Label for="recordUrl">Click to copy the record url</Label >
+              <Input type="text" id="recordUrl" readOnly
+                onClick={copyRecordUrl}
+                value={this.state.recordUrl}
+              />
+            </div>
         return (
           <div>
             <Button onClick={this.record8GetUrl}>Record Result</Button>
             <Button className="ml-5" disabled>
               Upload New Criteria
             </Button>
-            {/* <div className="col-8 mt-4">
-              <Label for="recordUrl">Click to copy the record url</Label >
-              <Input type="text" id="recordUrl" readOnly
-                onClick={copyRecordUrl}
-                value={this.state.recordUrl}
-              />
-            </div> */}
+            {recordUrl4Copy}
           </div>
         );
-
+      
+      case CONST.CONTROL_TYPE.DEFAULT:
       default:
         return (
           <div>

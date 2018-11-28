@@ -12,6 +12,11 @@ const main = {
     COMPARISON: 'comparison',
     NULL: 'null'
   },
+  CONTROL_TYPE: {
+    UPDATE: 'update',
+    DEFAULT: 'default',
+    NULL: 'null'
+  },
   GRAPH_MEASURE: {
     BAR_HEIGHT: 67,
     BAR_WIDTH: 100

@@ -33,6 +33,7 @@ class Main extends Component {
     pairDataGenerator: {},
     curPairData: {},
     curGraph: CONST.GRAPH_TYPE.NULL,
+    curControl: CONST.CONTROL_TYPE.NULL,
     isLoading: false,
     serverResponse: ''
   };
@@ -46,7 +47,7 @@ class Main extends Component {
           <p className="col-8">{this.state.serverResponse}</p>
           <div className="mt-4">
             <Control
-              curGraph={this.state.curGraph}
+              curControl={this.state.curControl}
               renderDemoGraph={() => {this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_DEMO);}}
               recordResult={this.recordResult}
             />
@@ -80,29 +81,31 @@ class Main extends Component {
 
     } else {
       //Render entry graph
-      this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_ENTRY);
-  
-      //Listen to file input
-      const input = document.getElementById("inputCriterionFile");
-      input.addEventListener("change", () => {
-        readXlsxFile(input.files[0])
-          .then(preprocessData)
-          .then((data) => { //items, root, pairs, id2Name, generator
-            this.setState({
-              option: {
-                ...this.state.option,
-                ...data.option
-              },
-              criterion: {
-                ...this.state.criterion,
-                ...data.criterion
-              },
-              pairDataGenerator: data.pairDataGenerator,
-              curPairData: data.pairDataGenerator.next().value,
-              curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD //Draw first graph after loaded
+      this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_ENTRY).then(() => {
+        //TODO: deal with the bad file input listener
+        //Listen to file input
+        const input = document.getElementById("inputCriterionFile");
+        input.addEventListener("change", () => {
+          readXlsxFile(input.files[0])
+            .then(preprocessData)
+            .then((data) => { //items, root, pairs, id2Name, generator
+              this.setState({
+                option: {
+                  ...this.state.option,
+                  ...data.option
+                },
+                criterion: {
+                  ...this.state.criterion,
+                  ...data.criterion
+                },
+                pairDataGenerator: data.pairDataGenerator,
+                curPairData: data.pairDataGenerator.next().value,
+                curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD //Draw first graph after loaded
+              });
             });
-          });
+        });
       });
+  
     }
 
     //Test server connection
@@ -126,27 +129,34 @@ class Main extends Component {
         let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
         state.criterion.root = root;
         state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
+        state.curControl = CONST.CONTROL_TYPE.UPDATE;
       }
       return state;
     });
   };
 
   enterComparison = () => {
-    this.setState({ curGraph: CONST.GRAPH_TYPE.COMPARISON });
+    this.setState({
+      curGraph: CONST.GRAPH_TYPE.COMPARISON,
+      curControl: CONST.CONTROL_TYPE.NULL
+    });
   };
 
   fetch8RenderGraph = async (graphType) => {
     //Hide graph and display loading spinner
     this.setState({ curGraph: CONST.GRAPH_TYPE.NULL, isLoading: true });
 
+    var response, targetControl;
     switch (graphType) {
       case CONST.GRAPH_TYPE.TREE_DEMO:
       case CONST.GRAPH_TYPE.TREE_ENTRY:
-        var response = await fetch('/api/demo');
+        response = await fetch('/api/demo');
+        targetControl = CONST.CONTROL_TYPE.DEFAULT;
         break;
       
       case CONST.GRAPH_TYPE.TREE_RECORD:
-        var response = await fetch('/api/record/' + this.props.match.params.recordId);
+        response = await fetch('/api/record/' + this.props.match.params.recordId);
+        targetControl = CONST.CONTROL_TYPE.NULL;
     }
 
     const body = await response.json();
@@ -160,6 +170,7 @@ class Main extends Component {
       let root = genRoot(body.items_criterion);
       curState.criterion.root = root;
       curState.curGraph = graphType;
+      curState.curControl = targetControl;
   
       curState.isLoading = false;
   

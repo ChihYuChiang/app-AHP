@@ -144,13 +144,10 @@ class main {
     }
   }
 
-  static highlightClicked_legend(datum) {
+  static highlightClicked_legend(datum) { //If not bright or dim, then react
     d3.selectAll(".node")
-      .transition()
-      .duration(200)
       .style("opacity", 0.3);
     d3.selectAll(".topOptId_" + datum.id)
-      .interrupt()
       .style("opacity", 1);
   }
   

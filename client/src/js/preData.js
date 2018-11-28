@@ -24,7 +24,7 @@ async function main(rows) {
 
   //--Criterion
   //Get hierarchy data
-  let items_criterion = [{ id: "0-0", name: "Root", parent: "", level: 0 }];
+  let items_criterion = [{ id: "0-0", name: "Decision", parent: "", level: 0 }];
   for (let i = 1; i < nRow; i++) {
     for (let j = nCol - 1; j > 0; j--) {
       if (rows[i][j]) {

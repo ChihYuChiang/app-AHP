@@ -182,7 +182,7 @@ function produceLegend(root, options) {
     .append("g")
     .classed("legendItem", true)
     .attr("transform", (_, i) => "translate(0," + i * 20 + ")")
-    .on("click", interaction.highlightClicked_legend)
+    .on("click", interaction.highlightClicked_legend);
   d3.select("#canvasRoot > svg") //Click the svg to resume
     .on("click", interaction.resumeClicked_legend);
   legendItems
