@@ -144,12 +144,18 @@ class main {
     }
   }
 
-  static highlightHovered_legend() {
-
+  static highlightClicked_legend(datum) {
+    d3.selectAll(".node")
+      .transition()
+      .duration(200)
+      .style("opacity", 0.3);
+    d3.selectAll(".topOptId_" + datum.id)
+      .interrupt()
+      .style("opacity", 1);
   }
   
-  static resumeHovered_legend() {
-    
+  static resumeClicked_legend() {
+    d3.selectAll(".node").style("opacity", 1);
   }
 }
 

@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 
+import util from "./util";
 import CONST from "./const";
 import styles from '../scss/variable.scss';
 
@@ -33,11 +34,11 @@ function main(datum) {
     .attr("rx", "3px")
     .attr("ry", "3px")
     .attr("fill", (_, i) => {
-      let color = d3.hsl(hueScale(i));
+      let color = d3.hsl(hueScale(i + 1));
       color.l = 0.7;
       return color;
     })
-    .attr("x", (_, i) => xScale(i))
+    .attr("x", (_, i) => xScale(i + 1))
     .attr("y", height)
     .attr("height", 0)
     .attr("width", xScale.bandwidth())
@@ -49,8 +50,8 @@ function main(datum) {
 
 
 function genScales(datum, height, width) {
-  let xScale = d3.scaleBand()
-    .domain([...datum.data.score.keys()])
+  let xScale = d3.scaleBand()  //1, 2, .., nOptions
+    .domain(util.range(1, datum.data.score.length + 1))
     .range([0, width])
     .padding(0.1);
   let yScale = d3.scaleLinear()
@@ -58,8 +59,9 @@ function genScales(datum, height, width) {
     .nice() //Extend the domain to round values
     .range([0, height]);
 
-  let hueScale = d3.scaleOrdinal()
-    .domain([...datum.data.score.keys()]) //The option ids; keys() return an iterator
+  let hueScale = d3 //1, 2, .., nOptions
+    .scaleOrdinal()
+    .domain(util.range(1, datum.data.score.length + 1))
     .range(d3.schemeCategory10);
 
   return [xScale, yScale, hueScale];

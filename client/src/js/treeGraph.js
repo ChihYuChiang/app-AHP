@@ -2,6 +2,7 @@ import * as d3 from "d3";
 
 import CONST from "./const";
 import interaction from "./treeGraph-inter";
+import util from "./util";
 import styles from "../scss/variable.scss";
 
 function main(root, options, graphType) {
@@ -129,7 +130,7 @@ function produceTreeGraph(root, options, inter) {
     .append("circle")
     .classed("node_listener", true)
     .style("opacity", 0)
-    .on("mouseover", interaction.highlightHovered)
+    .on("mouseover", (d) => {interaction.resumeClicked_legend(); interaction.highlightHovered(d);})
     .on("mouseleave", interaction.resumeHovered);
 
   let nodeGs_enter8Update = nodeGs_enter.merge(nodeGs); //Under current design, no update will be made
@@ -141,8 +142,12 @@ function produceTreeGraph(root, options, inter) {
       d.transX = root.transX;
       d.transY = root.transY;
       d.inter = inter;
+      d.topOptId = inter
+       ? d.data.score.reduce((acc, cur, i) => (cur > d.data.score[acc] ? i : acc), 0) + 1 //Option id starts from 1
+       : 0
       return d;
-    });
+    })
+    .each(function(d) {d3.select(this).classed("topOptId_" + d.topOptId, true);});
   nodeGs_enter8Update
     .select(".node_circle")
     .attr("r", d => getCircleR(d.data.parWeight, inter))
@@ -150,13 +155,9 @@ function produceTreeGraph(root, options, inter) {
       if (!inter) return styles.primary;
       else {
         let [hueScale, lightnessScale] = genScales(root);
-        let topOptId = d.data.score.reduce(
-          (acc, cur, i) => (cur > d.data.score[acc] ? i : acc),
-          0
-        );
-        let colorHue = hueScale(topOptId);
+        let colorHue = hueScale(d.topOptId);
         let color = d3.hsl(colorHue);
-        color.l = lightnessScale(d.data.score[topOptId]);
+        color.l = lightnessScale(d.data.score[d.topOptId]);
         return color;
       }
     });
@@ -179,7 +180,10 @@ function produceLegend(root, options) {
     .enter()
     .append("g")
     .classed("legendItem", true)
-    .attr("transform", (_, i) => "translate(0," + i * 20 + ")");
+    .attr("transform", (_, i) => "translate(0," + i * 20 + ")")
+    .on("click", interaction.highlightClicked_legend)
+  d3.select("#canvasRoot > svg") //Click the svg to resume
+    .on("click", interaction.resumeClicked_legend);
   legendItems
     .append("rect")
     .attr("rx", "2px")
@@ -189,7 +193,7 @@ function produceLegend(root, options) {
     .attr("width", 10)
     .attr("height", 10)
     .style("fill", (_, i) => {
-      let color = d3.hsl(hueScale(i));
+      let color = d3.hsl(hueScale(i + 1));
       color.l = 0.7;
       return color;
     });
@@ -213,9 +217,9 @@ function genScales(root) {
     .domain([1 / nOptions, (nOptions * 0.8) / nOptions])
     .range([0.9, 0.5])
     .clamp(true);
-  let hueScale = d3
+  let hueScale = d3 //1, 2, .., nOptions
     .scaleOrdinal()
-    .domain([...root.data.score.keys()]) //The option ids; keys() return an iterator
+    .domain(util.range(1, nOptions + 1))
     .range(d3.schemeCategory10);
   return [hueScale, lightnessScale];
 }

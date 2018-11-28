@@ -9,7 +9,6 @@
   width: 120px;
   top: 50px;
   left: 20%;
-  z-index: -1;
 }
 
 #information {
@@ -23,8 +22,8 @@
 #legend {
   margin-bottom: 50px;
   margin-left: 10%;
-}
 
-svg text {
-  cursor: default;
+  g {
+    cursor: pointer;
+  }
 }
