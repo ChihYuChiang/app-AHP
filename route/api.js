@@ -24,8 +24,8 @@ router.get('/demo', (req, res) => {
 router.post('/record', (req, res) => {
   dbOps.postCompare(req.body)
     .then((insertedId) => {
-      if (process.env.NODE_ENV === 'production') res.send(CONFIG.hostUrl + insertedId);
-      else res.send('localhost:3000/' + insertedId); //Direct to the React server
+      if (process.env.NODE_ENV === 'production') res.send(CONFIG.hostUrl + 'record/' + insertedId);
+      else res.send('localhost:3000/record/' + insertedId); //Direct to the React server
     });
 });
 

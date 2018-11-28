@@ -13,13 +13,12 @@ function Graph (props) {
     }
   */
   if (props.curGraph == null) {
-    return <div id="canvasRoot"><svg style={{ display: 'none' }} /></div>;
+    return <div id="canvasRoot" style={{ display: "none" }} />;
   }
   else {
     drawTreeGraph(props.root, props.options, props.curGraph);
+    return <div id="canvasRoot" style={{ display: "block" }} />;
   }
-
-  return <div id="canvasRoot"><svg style={{ display: 'block' }} /></div>;
 }
 
 
