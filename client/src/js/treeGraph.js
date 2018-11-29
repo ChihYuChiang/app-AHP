@@ -22,7 +22,7 @@ function main(root, options, graphType) {
 
   //Generate tree layout
   root.dx = 40; //The min distance between 2 nodes at the same level (vertically in this graph)
-  root.dy = 500 / root.height; //The distance between levels (horizontally in this graph)
+  root.dy = 400 / root.height; //The distance between levels (horizontally in this graph)
   let treeLayout = d3.tree().nodeSize([root.dx, root.dy]);
   treeLayout(root);
 
@@ -35,7 +35,7 @@ function main(root, options, graphType) {
   });
 
   //Setup svg
-  const width_svg = 650;
+  const width_svg = 550;
   const height_svg = x1 - x0 + root.dx * 2 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
   const svg = d3.select("#canvasRoot")
     .append("svg")
@@ -47,7 +47,9 @@ function main(root, options, graphType) {
   let dashboard = d3
     .select("#canvasRoot")
     .append("div")
-    .attr("id", "dashboard");
+    .attr("id", "dashboard")
+    .classed("float-left", true)
+    .classed("position-sticky", true);
 
   let legend = dashboard
     .append("div")
@@ -124,11 +126,6 @@ function produceTreeGraph(root, options, inter) {
     .append("g")
     .classed("node", true);
   nodeGs_enter
-    .append("text")
-    .classed("node_text", true)
-    .attr("fill", styles.gray900)
-    .attr("text-anchor", "middle");
-  nodeGs_enter
     .append("circle")
     .classed("node_circle", true);
   nodeGs_enter
@@ -137,6 +134,11 @@ function produceTreeGraph(root, options, inter) {
     .style("opacity", 0)
     .on("mouseover", (d) => {interaction.resumeClicked_legend(); interaction.highlightHovered(d);})
     .on("mouseleave", interaction.resumeHovered);
+  nodeGs_enter
+    .append("text")
+    .classed("node_text", true)
+    .attr("fill", styles.gray900)
+    .attr("text-anchor", "middle");
 
   let nodeGs_enter8Update = nodeGs_enter.merge(nodeGs); //Under current design, no update will be made
   nodeGs_enter8Update

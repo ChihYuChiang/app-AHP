@@ -31,7 +31,7 @@ class Comparison extends Component {
       if (!this.state.confirmation) {
         return (
           <div>
-            <Button className="btn-wide mr-5" onClick={this.confirmCriteria}>Confirm</Button>
+            <Button className="btn-wide" onClick={this.confirmCriteria}>Confirm</Button>
             {/* <Button className="btn-medium">Modify</Button> */}
           </div>
         );

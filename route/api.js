@@ -18,7 +18,9 @@ router.get('/template', (req, res) => {
 
 router.get('/demo', (req, res) => {
   //Plain version 5bfb6a51bc4c4763540525cf
-  dbOps.getCompare("5bfe91c168bf4cd8cca7f18f")
+  //Short version 5bffacbebcfacd21fce8563c
+  //Long version 5bffb14ffaca310e183c503c
+  dbOps.getCompare("5bffacbebcfacd21fce8563c")
     .then((data) => {res.send(data);});
 });
 
