@@ -13,7 +13,7 @@ router.get('/hello', (req, res) => {
 });
 
 router.get('/template', (req, res) => {
-  res.download('./ref/criterion-template.xlsx', 'criterion-template.xlsx');
+  res.download('./file/criterion-template.xlsx', 'criterion-template.xlsx');
 });
 
 router.get('/demo', (req, res) => {
