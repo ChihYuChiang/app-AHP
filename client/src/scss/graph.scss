@@ -3,6 +3,10 @@
   font-family: sans-serif;
   font-size: 10px;
   margin-left: -50px;
+
+  > svg {
+    overflow: visible;
+  }
 }
 
 #dashboard {
@@ -20,7 +24,7 @@
 }
 
 #legend {
-  margin-bottom: 50px;
+  margin-bottom: 20px;
   margin-left: 10%;
 
   p {
