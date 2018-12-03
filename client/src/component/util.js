@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from "react";
 import { PoseGroup } from 'react-pose';
 
 import { DivPosed } from './pose';
@@ -22,3 +22,32 @@ const LoadingContent = (
     >Loading ...</p>
   </DivPosed>
 );
+
+
+export class AbsFixTopDiv extends Component {
+  constructor(props) {
+    super(props);
+
+    //Create a ref to store the DOM element
+    this.domElement = React.createRef();
+  }
+  
+  render() {
+    return (
+      <div ref={this.domElement}></div>
+    );
+  }
+
+  componentDidMount() {
+    window.onscroll = function() {
+      let box = this.domElement.current.getBoundingClientRect();
+      let fixStyle = JSON.stringify({
+        position: "fixed",
+        top: 0,
+        left: box.left
+      });
+      if (window.scrollY >= box.top) this.domElement.current.setAttribute("style", fixStyle);
+      else this.domElement.current.removeAttribute("style");
+    };
+  }
+}
