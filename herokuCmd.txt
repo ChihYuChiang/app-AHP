@@ -4,5 +4,7 @@ git push heroku production:master
 git push heroku --force production:master
 heroku logs --tail
 
+cd D:\Dropbox\Ongoing - Dropbox\app-AHP
+
 https://dashboard.heroku.com/apps/app-ahp/activity
 https://app-ahp.herokuapp.com/

@@ -11,10 +11,26 @@ import Comparison from "./comparison";
 import Graph from "./graph";
 import Control from "./control";
 import Footer from "./footer";
-//'https://popmotion.io/pose/'
+import { Loading } from "./util";
 //font awesome as button
 
-import { Loading } from "./util";
+
+const buildDefaultState = () => ({
+  option: {
+    items: [],
+    pairs: [],
+    compares: []
+  },
+  criterion: {
+    items: [],
+    pairs: {},
+    compares: [],
+    root: [],
+    id2Name: {}
+  },
+  pairDataGenerator: {},
+  curPairData: {}
+});
 
 
 class Main extends Component {
@@ -140,6 +156,7 @@ class Main extends Component {
 
     var response, targetControl;
     switch (graphType) {
+      default:
       case CONST.GRAPH_TYPE.TREE_DEMO:
       case CONST.GRAPH_TYPE.TREE_ENTRY:
         response = await fetch('/api/demo');
@@ -200,24 +217,6 @@ class Main extends Component {
     return body;
   };
 }
-
-
-const buildDefaultState = () => ({
-  option: {
-    items: [],
-    pairs: [],
-    compares: []
-  },
-  criterion: {
-    items: [],
-    pairs: {},
-    compares: [],
-    root: [],
-    id2Name: {}
-  },
-  pairDataGenerator: {},
-  curPairData: {}
-});
 
 
 export default Main;
