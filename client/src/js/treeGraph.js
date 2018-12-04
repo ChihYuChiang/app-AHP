@@ -34,14 +34,6 @@ function main(root, options, graphType) {
     if (d.x < x0) x0 = d.x;
   });
 
-  //Setup svg
-  const width_svg = 550;
-  const height_svg = x1 - x0 + root.dx * 2 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
-  const svg = d3.select("#canvasRoot")
-    .append("svg")
-    .style("width", width_svg)
-    .style("height", height_svg);
-
   //Dashboard
   //#canvasRoot -> #dashboard -> #information and #legend
   let dashboard = d3
@@ -72,6 +64,14 @@ function main(root, options, graphType) {
   information
     .append("span")
     .attr("id", "sub-information");
+
+  //Setup svg
+  const width_svg = 550;
+  const height_svg = x1 - x0 + root.dx * 2 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
+  const svg = d3.select("#canvasRoot")
+    .append("svg")
+    .style("width", width_svg)
+    .style("height", height_svg);
 
   //Graph root
   //#canvasRoot -> svg -> g -> g.links and g.nodes

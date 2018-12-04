@@ -2,7 +2,7 @@
   position: relative;
   font-family: sans-serif;
   font-size: 10px;
-  margin-left: -50px;
+  padding-left: 50px;
 
   &>svg {
     overflow: visible;
@@ -10,6 +10,7 @@
 }
 
 #dashboard {
+  margin-right: -120px; //Makes the graph entirely overlaps on it
   width: 120px;
   top: 50px;
   left: 20%;

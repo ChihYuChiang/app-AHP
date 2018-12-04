@@ -8,7 +8,7 @@ import styles from '../scss/variable.scss';
 function main(datum) {
   //Graph root
   let [height, width] = [CONST.GRAPH_MEASURE.BAR_HEIGHT, CONST.GRAPH_MEASURE.BAR_WIDTH];
-  let gr = d3.select("svg")
+  let gr = d3.select("#canvasRoot>svg")
     .append("g")
     .attr("id", "barRoot")
     //(0, 0) is the root node, (dx, dy) is the shift of the tree from the origin
