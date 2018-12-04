@@ -39,12 +39,12 @@ class Comparison extends Component {
         );
       }
 
-      let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION
+      let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION //TODO: Split text animation
         ? 'Criterion Importance' //TODO: Show breadcrumb
         : <p>Regarding <span className="prompt-highlight">{this.props.id2Name[this.props.pairData.gId]}</span></p>;
       
-      let pairs = this.props.pairData.pairs.map((pair) => ( //Shuffle the order of the prompts
-        <DivPosedTransY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest}>
+      let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
+        <DivPosedTransY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i}>
           <Pair
             type={this.props.pairData.type}
             data={pair}
