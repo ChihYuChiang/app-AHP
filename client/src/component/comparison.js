@@ -100,7 +100,7 @@ class Comparison extends Component {
 }
 
 
-class Pair extends Component { //TODO: Stagger in
+class Pair extends Component {
   /*
     props = {
       data //A pair data, with source, dest
