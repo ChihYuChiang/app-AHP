@@ -7,6 +7,7 @@ import { DivPosedTransY } from './pose';
 import { genMatrix, genWeight, computeCR } from "../js/com8Matrix";
 import util from "../js/util";
 import CONST from "../js/const";
+import styles from "../scss/variable.scss";
 
 
 class Comparison extends Component {
@@ -129,6 +130,8 @@ class Pair extends Component {
         <p className="prompt">{destName}<span id="vs"> vs </span>{sourceName}</p>
         <div className="slider-wrapper">
           <input name="range-slider" type="range" className="fluid-slider" max="8" min="-8" step="1"
+            data-source={sourceName}
+            data-dest={destName}
             value={this.state.value}
             onChange={this.handleChange}
             onInput={this.genSliderLabel}
@@ -150,13 +153,7 @@ class Pair extends Component {
     let labelElement = this.labelElement.current;
     let labelPosition = (sliderElement.value - sliderElement.min) / (sliderElement.max - sliderElement.min);
   
-    if (sliderElement.value === sliderElement.min) {
-      labelElement.style.left = labelPosition * 100 + 2 - 43.5 + "%";
-    } else if (sliderElement.value === sliderElement.max) {
-      labelElement.style.left = labelPosition * 100 - 2 - 43.5 + "%";
-    } else {
-      labelElement.style.left = labelPosition * 100 - 43.5 + "%";
-    }
+    labelElement.style.left = labelPosition * (styles.sliderWidth - 19) - 120 + "px";
   }
   
   handleChange = (event) => { //Arrow functions always gets the context from where they have been defined.

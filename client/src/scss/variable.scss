@@ -11,6 +11,16 @@ $gray-800 : #343a40   !default;
 $gray-900 : #212529   !default;
 $black    : #000      !default;
 
+$gray-r100 : #faf8f8   !default;
+$gray-r200 : #efe9e9   !default;
+$gray-r300 : #e6dede   !default;
+$gray-r400 : #dacece   !default;
+$gray-r500 : #bdadad   !default;
+$gray-r600 : #968686   !default;
+$gray-r700 : #574949   !default;
+$gray-r800 : #403434   !default;
+$gray-r900 : #292121   !default;
+
 $blue     : #007bff   !default;
 $indigo   : #6610f2   !default;
 $purple   : #6f42c1   !default;
@@ -31,6 +41,8 @@ $danger   : $red        !default;
 $light    : $gray-100   !default;
 $dark     : $gray-800   !default;
 
+$slider-width: 300px;
+
 
 :export {
     white: $white;
@@ -44,6 +56,16 @@ $dark     : $gray-800   !default;
     gray800: $gray-800; 
     gray900: $gray-900; 
     black: $black;
+
+    grayr100: $gray-r100; 
+    grayr300: $gray-r300; 
+    grayr400: $gray-r400; 
+    grayr200: $gray-r200; 
+    grayr500: $gray-r500; 
+    grayr600: $gray-r600; 
+    grayr700: $gray-r700; 
+    grayr800: $gray-r800; 
+    grayr900: $gray-r900; 
 
     blue: $blue;     
     indigo: $indigo;   
@@ -63,5 +85,7 @@ $dark     : $gray-800   !default;
     warning: $warning;  
     danger: $danger;   
     light: $light;    
-    dark: $dark     
+    dark: $dark;
+
+    sliderWidth: 300;
 }

@@ -1,5 +1,5 @@
 .slider-wrapper {
-  width: 300px;
+  width: $slider-width;
   margin: 10px auto;
 }
 
@@ -61,27 +61,29 @@
 .fluid-slider:before,
 .fluid-slider:after {
   position: absolute;
-  content: "";
-  width: 40px;
-  padding: 0.5em;
-  background: #d0d0d0;
+  width: 100px;
+  padding: 0.35em 0.5em 0.47em;
+  background: $gray-r400;
   color: $gray-800;
   top: 50%;
-  transform: translateY(-50%);
   box-sizing: border-box;
   text-align: center;
-  font-weight: bold;
-  border-radius: 2px;
+  font-weight: normal;
+  font-size: 1rem;
+  line-height: 135%;
+  border-radius: 3px;
 }
 
 .fluid-slider:before {
-  left: -50px;
-  content: attr(min);
+  transform: translate(-100%, -50%);
+  left: -15px;
+  content: attr(data-source);
 }
 
 .fluid-slider:after {
-  right: -50px;
-  content: attr(max);
+  transform: translate(100%, -50%);
+  right: -15px;
+  content: attr(data-dest);
 }
 
 .range-label {
