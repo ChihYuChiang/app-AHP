@@ -179,7 +179,7 @@ function produceTreeGraph(root, options, inter) {
 }
 
 function produceLegend(root, options) {
-  let [hueScale, lightnessScale] = genScales(root);
+  let [hueScale] = genScales(root); //TODO: lightness legend
 
   d3.select("#legend > p")
     .text("Options");

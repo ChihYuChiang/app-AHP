@@ -139,6 +139,7 @@ class Main extends Component {
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
       state.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
+      if (!util.isEmpty(this.state.curPairData)) util.shuffle(state.curPairData.pairs); //Shuffle the pair order (for display)
 
       return state;
     }, async () => {

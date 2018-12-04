@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Button } from 'reactstrap';
+import { PoseGroup } from 'react-pose';
+
+import { DivPosedTransY } from './pose';
 
 import { genMatrix, genWeight, computeCR } from "../js/com8Matrix";
 import util from "../js/util";
@@ -11,7 +14,6 @@ class Comparison extends Component {
     props = {
       enterComparison //Update graph (app) state
       handleComData //Add comData into the store
-      hideGraph //As the name suggests
       pairData
       //.gId, The id of this pair group, also the parent node's name in the root
       //.pairs, Multiple pair entries, each with source, dest
@@ -29,7 +31,7 @@ class Comparison extends Component {
     if (!util.isEmpty(this.props.pairData)) {
       
       if (!this.state.confirmation) {
-        return (
+        return ( //TODO: Modify criteria
           <div>
             <Button className="btn-wide" onClick={this.confirmCriteria}>Confirm</Button>
             {/* <Button className="btn-medium">Modify</Button> */}
@@ -40,21 +42,25 @@ class Comparison extends Component {
       let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION
         ? 'Criterion Importance' //TODO: Show breadcrumb
         : <p>Regarding <span className="prompt-highlight">{this.props.id2Name[this.props.pairData.gId]}</span></p>;
-
-      let pairs = this.props.pairData.pairs.map((pair) => (
-        <Pair key={this.props.pairData.gId + pair.source + '_' + pair.dest}
-          type={this.props.pairData.type}
-          data={pair}
-          updateComData={this.updateComData}
-          id2Name={this.props.id2Name}
-          options={this.props.options}
-        />
+      
+      let pairs = this.props.pairData.pairs.map((pair) => ( //Shuffle the order of the prompts
+        <DivPosedTransY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest}>
+          <Pair
+            type={this.props.pairData.type}
+            data={pair}
+            updateComData={this.updateComData}
+            id2Name={this.props.id2Name}
+            options={this.props.options}
+          />
+        </DivPosedTransY>
       ));
   
-      return (
+      return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
         <div className="comparison mt-4">
           <h6>{groupLabel}</h6>
-          {pairs}
+          <PoseGroup animateOnMount={true}>
+            {pairs}
+          </PoseGroup>
           <Button className="btn-wide" onClick={this.handleComData8Reset}>Submit</Button>
         </div>
       );
@@ -94,7 +100,7 @@ class Comparison extends Component {
 }
 
 
-class Pair extends Component {
+class Pair extends Component { //TODO: Stagger in
   /*
     props = {
       data //A pair data, with source, dest
@@ -121,15 +127,15 @@ class Pair extends Component {
     return (
       <div>
         <p className="prompt">{destName}<span id="vs"> vs </span>{sourceName}</p>
-          <div className="slider-wrapper">
-            <input name="range-slider" type="range" className="fluid-slider" max="8" min="-8" step="1"
-              value={this.state.value}
-              onChange={this.handleChange}
-              onInput={this.genSliderLabel}
-              ref={this.sliderElement}
-              />
-            <span className="range-label" ref={this.labelElement}>{this.state.value}</span>
-          </div>
+        <div className="slider-wrapper">
+          <input name="range-slider" type="range" className="fluid-slider" max="8" min="-8" step="1"
+            value={this.state.value}
+            onChange={this.handleChange}
+            onInput={this.genSliderLabel}
+            ref={this.sliderElement}
+            />
+          <span className="range-label" ref={this.labelElement}>{this.state.value}</span>
+        </div>
       </div>
     );
   }
