@@ -1,5 +1,7 @@
 import React from "react";
 
+import { DivPosed } from './pose';
+
 import drawTreeGraph from "../js/treeGraph";
 import CONST from "../js/const";
 
@@ -13,11 +15,11 @@ function Graph (props) {
     }
   */
   if ([CONST.GRAPH_TYPE.NULL, CONST.GRAPH_TYPE.COMPARISON].includes(props.curGraph)) {
-    return <div id="canvasRoot" style={{ display: "none" }} />;
+    return <DivPosed id="canvasRoot" style={{ display: "none" }} pose='exit'/>;
   }
   else {
     drawTreeGraph(props.root, props.options, props.curGraph);
-    return <div id="canvasRoot" style={{ display: "block" }} />;
+    return <DivPosed id="canvasRoot" style={{ display: "block" }} pose='enter'/>;
   }
 }
 

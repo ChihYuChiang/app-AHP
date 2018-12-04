@@ -95,6 +95,14 @@ class Main extends Component {
         input.addEventListener("change", () => {
           readXlsxFile(input.files[0])
             .then(preprocessData)
+            .then(async (data) => {
+              this.setState({
+                curGraph: CONST.GRAPH_TYPE.NULL,
+                isLoading: true
+              });
+              await util.sleep(1000);
+              return data;
+            })
             .then((data) => { //items, root, pairs, id2Name, generator
               this.setState({
                 option: {
@@ -108,12 +116,12 @@ class Main extends Component {
                 pairDataGenerator: data.pairDataGenerator,
                 curPairData: data.pairDataGenerator.next().value,
                 curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
-                curControl: CONST.CONTROL_TYPE.NULL
+                curControl: CONST.CONTROL_TYPE.NULL,
+                isLoading: false
               });
             });
         });
       });
-  
     }
 
     //Test server connection
@@ -132,14 +140,27 @@ class Main extends Component {
       });
       state.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
 
-      //If all pairs are displayed, compute score and produce report
-      if (util.isEmpty(state.curPairData)) {
-        let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
-        state.criterion.root = root;
-        state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
-        state.curControl = CONST.CONTROL_TYPE.UPDATE;
-      }
       return state;
+    }, async () => {
+      //If all pairs are displayed, compute score and produce report
+      if (util.isEmpty(this.state.curPairData)) {
+        //Fake loading
+        this.setState({
+          curGraph: CONST.GRAPH_TYPE.NULL,
+          isLoading: true
+        });
+        await util.sleep(2000);
+  
+        this.setState((state, _) => {
+          let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
+          state.criterion.root = root;
+          state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
+          state.curControl = CONST.CONTROL_TYPE.UPDATE;
+          state.isLoading = false;
+  
+          return state;
+        });
+      }
     });
   };
 
