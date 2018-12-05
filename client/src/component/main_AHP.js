@@ -73,6 +73,9 @@ class Main extends Component {
             />
           </div>
           <div className="fixed-bottom">
+            <div className="mb-2 ml-3" id="escape-simple">
+              <a href="/simple"><i className="fas fa-sign-out-alt" /></a>
+            </div>
             <Footer />
           </div>
           <div id="bottom-spacer"></div>

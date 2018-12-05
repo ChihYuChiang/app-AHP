@@ -15,11 +15,25 @@ html { //For rem, which Bootstrap 4 bases on
 }
 
 .btn-medium {
-  width: 150px
+  width: 150px;
 }
 
 #head-spacer, #bottom-spacer {
   margin: 100px;
+}
+
+#escape-simple {
+  text-align: left;
+
+  i {
+    transform: rotate(180deg);
+    color: $gray-300;
+    font-size: 1.5rem;
+    transition: all ease-in 0.05s;
+  }
+  i:hover {
+    color: $gray-500;
+  }
 }
 
 #signature {

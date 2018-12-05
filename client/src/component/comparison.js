@@ -125,6 +125,7 @@ class Pair extends Component {
       ? this.props.id2Name[this.props.data.dest]
       : this.props.options.filter((op) => op.id + '' === this.props.data.dest)[0].name;
 
+    //TODO: different types of input in /ref
     return (
       <div>
         <p className="prompt">{destName}<span id="vs"> vs </span>{sourceName}</p>
@@ -137,9 +138,10 @@ class Pair extends Component {
             onInput={this.genSliderLabel}
             ref={this.sliderElement}
             />
-          <span className="range-label" ref={this.labelElement}>{this.state.value}</span>
+          <span className="range-label" ref={this.labelElement}>{Math.abs(this.state.value) / 2}</span>
         </div>
       </div>
+      //Transform the label for better readability
     );
   }
   

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import MainAHP from './component/main_AHP';
-import MainRandom from './component/main_random';
+import MainSimple from './component/main_simple';
 
 
 class App extends Component {
@@ -14,7 +14,7 @@ class App extends Component {
           <Switch>
             <Route exact path="/" component={MainAHP} />
             <Route path="/record/:recordId" component={MainAHP} />
-            <Route path="/random" component={MainRandom} />
+            <Route path="/simple" component={MainSimple} />
           </Switch>
         </div>
       </BrowserRouter> //TODO: deal with 404

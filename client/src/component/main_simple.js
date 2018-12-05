@@ -19,7 +19,7 @@ class Main extends Component {
         <div className="col-12" align="center">
           <div id="head-spacer"></div>
           <h1>Random</h1>
-          <p className="col-8">This is a random decision maker.</p>
+          <p className="col-8">This is a random decision maker. It makes life much easier.</p>
           <div className="mt-4">
             <Control
               curControl={this.state.curControl}
