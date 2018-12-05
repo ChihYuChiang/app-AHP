@@ -52,7 +52,7 @@ export class ButtonWTip extends Component {
           isOpen={this.state.tooltipOpen}
           target={this.props.buttonId}
           toggle={this.toggle}
-          delay={{ show: 1500, hide: 200 }}
+          delay={{ show: 2000, hide: 200 }}
           offset="40px, 5px">
           {this.props.tipContent}
         </Tooltip>
@@ -107,7 +107,7 @@ export class ComponentWTip extends Component {
           isOpen={this.state.tooltipOpen}
           target={this.props.componentId}
           toggle={this.toggle}
-          delay={{ show: 1500, hide: 200 }}
+          delay={{ show: 2000, hide: 200 }}
           offset={this.props.tipOffset}>
           {this.props.tipContent}
         </Tooltip>
