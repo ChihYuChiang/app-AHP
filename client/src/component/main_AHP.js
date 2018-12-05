@@ -6,13 +6,13 @@ import util from "../js/util";
 import score from "../js/score";
 import { genRoot } from '../js/preData';
 import CONST from "../js/const";
+import CONTENT from "../js/content";
 
 import Comparison from "./comparison";
 import Graph from "./graph";
 import Control from "./control";
 import Footer from "./footer";
-import { Loading } from "./util";
-//font awesome as button
+import { Loading, ComponentWTip } from "./util";
 
 
 const buildDefaultState = () => ({
@@ -74,7 +74,15 @@ class Main extends Component {
           </div>
           <div className="fixed-bottom">
             <div className="mb-2 ml-3" id="escape-simple">
-              <a href="/simple"><i className="fas fa-sign-out-alt" /></a>
+              <ComponentWTip
+                component={
+                  <a id="a-escapeSimple" href="/simple"><i className="fas fa-sign-out-alt" /></a>
+                }
+                componentId="a-escapeSimple"
+                tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
+                tipPlacement="top"
+                tipOffset="0px, 5px"
+              />
             </div>
             <Footer />
           </div>

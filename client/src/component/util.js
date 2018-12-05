@@ -32,8 +32,8 @@ export class ButtonWTip extends Component {
       buttonId //The id of the button element
       buttonContent //Content for the button
       buttonOnClick //As name
-      popContent //Content for the popover
-      popPlacement //Position of the popover
+      tipContent //Content for the tooltip
+      tipPlacement //Position of the tooltip
     }
   */
   state = {
@@ -44,17 +44,72 @@ export class ButtonWTip extends Component {
     return (
       <span className={this.props.className}>
         <Button id={this.props.buttonId}
-          onClick={this.props.buttonOnClick}>
+          onClick={this.buttonOnClick8Toggle}>
           {this.props.buttonContent}
         </Button>
-        <Tooltip innerClassName="tip-tip" arrowClassName="tip-arrow"
-          placement={this.props.popPlacement}
+        <Tooltip innerClassName="tip-tip" arrowClassName="tip-arrow-bottom"
+          placement={this.props.tipPlacement}
           isOpen={this.state.tooltipOpen}
           target={this.props.buttonId}
           toggle={this.toggle}
-          delay={{ show: 1000, hide: 200 }}
-          offset="0px, 5px">
-          {this.props.popContent}
+          delay={{ show: 1500, hide: 200 }}
+          offset="40px, 5px">
+          {this.props.tipContent}
+        </Tooltip>
+      </span>
+    );
+  }
+
+
+  buttonOnClick8Toggle = () => { //Toggle tip when click button
+    if (typeof(this.props.buttonOnClick) === 'function') this.props.buttonOnClick();
+    this.toggle();
+  }
+
+  toggle = () => {
+    this.setState({
+      tooltipOpen: !this.state.tooltipOpen
+    });
+  }
+}
+
+
+export class ComponentWTip extends Component {
+  /*
+    props = {
+      className //Classes for the wrapper
+      componentId //The id of the component
+      component //Content of the component
+      tipContent //Content for the tooltip
+      tipPlacement //Position of the tooltip
+      tipOffset //Refer to Popper config
+    }
+  */
+  state = {
+    tooltipOpen: false
+  };
+
+  render() {
+    let arrowClassName; //Deal with the arrow style
+    switch (this.props.tipPlacement) {
+      default:
+      case "bottom": arrowClassName = "tip-arrow-bottom"; break;
+      case "top"   : arrowClassName = "tip-arrow-top";    break;
+      case "right" : arrowClassName = "tip-arrow-right";  break;
+      case "left"  : arrowClassName = "tip-arrow-left";   break;
+    }
+
+    return (
+      <span className={this.props.className}>
+        {this.props.component}
+        <Tooltip innerClassName="tip-tip" arrowClassName={arrowClassName}
+          placement={this.props.tipPlacement}
+          isOpen={this.state.tooltipOpen}
+          target={this.props.componentId}
+          toggle={this.toggle}
+          delay={{ show: 1500, hide: 200 }}
+          offset={this.props.tipOffset}>
+          {this.props.tipContent}
         </Tooltip>
       </span>
     );

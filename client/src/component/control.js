@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 
-import { Button, ButtonGroup, ButtonToolbar, Label, Input } from "reactstrap";
+import { Button, ButtonToolbar, Label, Input } from "reactstrap";
 
 import { ButtonWTip } from "./util";
 
 import CONST from "../js/const";
+import CONTENT from "../js/content";
+
 
 class Control extends Component {
   /*
@@ -60,32 +62,42 @@ class Control extends Component {
                 buttonId="btn-demoResult"
                 buttonContent="Demo Result"
                 buttonOnClick={this.props.renderDemoGraph}
-                popPlacement="bottom"
-                popContent="This is explanation for this button."
+                tipPlacement="bottom"
+                tipContent={CONTENT.TIP_BTN.DEMO_RESULT}
               />
-              <ButtonGroup>
-                <Button>
+              <ButtonWTip className="btnGroup-left"
+                buttonId="btn-downloadTemplate"
+                buttonContent={
                   <a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>
                     Download Template
                   </a>
-                </Button>
-                <Button>
+                }
+                tipPlacement="bottom"
+                tipContent={CONTENT.TIP_BTN.DOWNLOAD_TEMPLATE}>
+              </ButtonWTip>
+              <ButtonWTip className="btnGroup-right"
+                buttonId="btn-uploadCriteria"
+                buttonContent={
                   <label htmlFor="inputCriterionFile" className="file-label">
                     Upload Your Criteria
                   </label>
-                </Button>
-              </ButtonGroup>
+                }
+                tipPlacement="bottom"
+                tipContent={CONTENT.TIP_BTN.UPLOAD_CRITERIA}>
+              </ButtonWTip>
             </ButtonToolbar>
           </div>
         );
     }
   }
 
+  
   record8GetUrl = async () => {
     let recordUrl = await this.props.recordResult();
     this.setState({ recordUrl: recordUrl });
   };
 }
+
 
 //Copy the url into clipboard when clicking the element
 function copyRecordUrl() {
@@ -93,5 +105,6 @@ function copyRecordUrl() {
   urlElement.select(); //https://developer.mozilla.org/en-US/docs/Web/API/HTMLInputElement/select
   document.execCommand("copy");
 }
+
 
 export default Control;
