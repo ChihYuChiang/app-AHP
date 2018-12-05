@@ -13,6 +13,7 @@ import Graph from "./graph";
 import Control from "./control";
 import Footer from "./footer";
 import { Loading, ComponentWTip } from "./util";
+//TODO: landing
 
 
 const buildDefaultState = () => ({

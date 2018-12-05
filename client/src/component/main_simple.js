@@ -1,15 +1,12 @@
 import React, { Component } from "react";
 
-import CONST from "../js/const";
-
-import Control from "./control";
+import DynamicInput from "./dynamic-input";
 import Footer from "./footer";
 import { Loading } from "./util";
 
 
 class Main extends Component {
   state = {
-    curControl: CONST.CONTROL_TYPE.NULL,
     isLoading: false
   };
 
@@ -20,15 +17,11 @@ class Main extends Component {
           <div id="head-spacer"></div>
           <h1>Random</h1>
           <p className="col-8">This is a random decision maker. It makes life much easier.</p>
-          <div className="mt-4">
-            <Control
-              curControl={this.state.curControl}
-            />
-          </div>
           <div className="content mt-4">
             <Loading
               isLoading={this.state.isLoading}/>
           </div>
+          <DynamicInput />
           <div className="fixed-bottom">
             <Footer />
           </div>

@@ -126,7 +126,7 @@ class Pair extends Component {
       : this.props.options.filter((op) => op.id + '' === this.props.data.dest)[0].name;
 
     //TODO: different types of input in /ref
-    return (
+    return ( //TODO: dynamic prompt with score
       <div>
         <p className="prompt">{destName}<span id="vs"> vs </span>{sourceName}</p>
         <div className="slider-wrapper">
