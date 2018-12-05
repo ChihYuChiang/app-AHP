@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 import { Button, ButtonGroup, ButtonToolbar, Label, Input } from "reactstrap";
 
+import { ButtonWTip } from "./util";
+
 import CONST from "../js/const";
 
 class Control extends Component {
@@ -54,9 +56,13 @@ class Control extends Component {
               className="file-input"
             />
             <ButtonToolbar className="justify-content-center">
-              <Button className="mr-2" onClick={this.props.renderDemoGraph}>
-                Demo Result
-              </Button>
+              <ButtonWTip className="mr-2"
+                buttonId="btn-demoResult"
+                buttonContent="Demo Result"
+                buttonOnClick={this.props.renderDemoGraph}
+                popPlacement="bottom"
+                popContent="This is explanation for this button."
+              />
               <ButtonGroup>
                 <Button>
                   <a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>

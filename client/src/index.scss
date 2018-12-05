@@ -10,6 +10,15 @@ html { //For rem, which Bootstrap 4 bases on
   font-size: 14px;
 }
 
+.tip-tip {
+  background-color: $gray-r200;
+  color: $gray-700;
+
+  + .tip-arrow::before { //::before is the real arrow
+    border-bottom-color: $gray-r200;
+  }
+}
+
 .btn-wide {
   width: 300px;
 }
