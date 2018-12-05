@@ -53,7 +53,8 @@ export class ButtonWTip extends Component {
           target={this.props.buttonId}
           toggle={this.toggle}
           delay={{ show: 2000, hide: 200 }}
-          offset="40px, 5px">
+          offset="40px, 5px"
+          trigger="hover">
           {this.props.tipContent}
         </Tooltip>
       </span>
@@ -61,9 +62,11 @@ export class ButtonWTip extends Component {
   }
 
 
-  buttonOnClick8Toggle = () => { //Toggle tip when click button
+  buttonOnClick8Toggle = () => { //Close tip when click button
     if (typeof(this.props.buttonOnClick) === 'function') this.props.buttonOnClick();
-    this.toggle();
+    this.setState({
+      tooltipOpen: false
+    });
   }
 
   toggle = () => {
@@ -108,7 +111,8 @@ export class ComponentWTip extends Component {
           target={this.props.componentId}
           toggle={this.toggle}
           delay={{ show: 2000, hide: 200 }}
-          offset={this.props.tipOffset}>
+          offset={this.props.tipOffset}
+          trigger="hover">
           {this.props.tipContent}
         </Tooltip>
       </span>
