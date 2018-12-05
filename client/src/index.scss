@@ -10,6 +10,14 @@ html { //For rem, which Bootstrap 4 bases on
   font-size: 14px;
 }
 
+.vis-hidden {
+  visibility: hidden;
+}
+
+.vis-visible {
+  visibility: visible;
+}
+
 .tip-tip {
   background-color: $gray-r200;
   color: $gray-700;

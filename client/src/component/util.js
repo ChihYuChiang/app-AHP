@@ -4,6 +4,7 @@ import { PoseGroup } from 'react-pose';
 
 import { DivPosed } from './pose';
 
+import util from '../js/util';
 import styles from '../scss/variable.scss';
 
 
@@ -21,7 +22,7 @@ const LoadingContent = (
       className="d-flex justify-content-center small mt-1"
       style={{ color: styles.gray800 }}
     >Loading ...</p>
-  </DivPosed>
+  </DivPosed> //TODO: Random loading message
 );
 
 
@@ -37,24 +38,25 @@ export class ButtonWTip extends Component {
     }
   */
   state = {
-    tooltipOpen: false
+    tooltipOpen: false,
+    tooltipVisible: "vis-hidden"
   };
 
   render() {
     return (
       <span className={this.props.className}>
         <Button id={this.props.buttonId}
-          onClick={this.buttonOnClick8Toggle}>
+          onMouseOver={this.openTip}
+          onMouseLeave={this.closeTip}
+          onClick={this.buttonOnClick8Close}>
           {this.props.buttonContent}
         </Button>
-        <Tooltip innerClassName="tip-tip" arrowClassName="tip-arrow-bottom"
+        <Tooltip className={this.state.tooltipVisible} innerClassName="tip-tip" arrowClassName="tip-arrow-bottom"
           placement={this.props.tipPlacement}
           isOpen={this.state.tooltipOpen}
           target={this.props.buttonId}
-          toggle={this.toggle}
-          delay={{ show: 2000, hide: 200 }}
-          offset="40px, 5px"
-          trigger="hover">
+          offset="40px, 5px" //Use manual and element visibility to make the transition smoother
+          trigger="manual">
           {this.props.tipContent}
         </Tooltip>
       </span>
@@ -62,16 +64,28 @@ export class ButtonWTip extends Component {
   }
 
 
-  buttonOnClick8Toggle = () => { //Close tip when click button
+  buttonOnClick8Close = () => { //Close tip when click button
     if (typeof(this.props.buttonOnClick) === 'function') this.props.buttonOnClick();
+    this.closeTip();
+  }
+
+  openTip = () => {
     this.setState({
-      tooltipOpen: false
+      tooltipOpen: true,
+      tooltipVisible: "vis-hidden"
+    }, async () => {
+      await util.sleep(1500);
+      this.setState({
+        tooltipVisible: "vis-visible"
+      });
     });
   }
 
-  toggle = () => {
+  closeTip = async () => {
+    await util.sleep(200);
     this.setState({
-      tooltipOpen: !this.state.tooltipOpen
+      tooltipOpen: false,
+      tooltipVisible: "vis-hidden"
     });
   }
 }
@@ -110,7 +124,7 @@ export class ComponentWTip extends Component {
           isOpen={this.state.tooltipOpen}
           target={this.props.componentId}
           toggle={this.toggle}
-          delay={{ show: 2000, hide: 200 }}
+          delay={{ show: 1500, hide: 200 }}
           offset={this.props.tipOffset}
           trigger="hover">
           {this.props.tipContent}
