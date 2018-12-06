@@ -3,6 +3,7 @@ import { Button } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
 import { DivPosedFadeY } from './pose';
+import BreadCrumbC from './bread-crumb';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
 import util from "../js/util";
@@ -17,6 +18,7 @@ class Comparison extends Component {
       handleComData //Add comData into the store
       pairData
       //.gId, The id of this pair group, also the parent node's name in the root
+      //.breadCrumb, The ids of the ancestor elements (excluding root)
       //.pairs, Multiple pair entries, each with source, dest
       //.type, option or criterion
       id2Name //A dict translate node id to the name to be displayed
@@ -58,6 +60,7 @@ class Comparison extends Component {
   
       return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
         <div className="comparison mt-4">
+          <BreadCrumbC ancestors = {this.props.pairData.breadCrumb.map((id) => this.props.id2Name[id])} />
           <h6>{groupLabel}</h6>
           <PoseGroup animateOnMount={true}>
             {pairs}

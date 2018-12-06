@@ -60,6 +60,7 @@ async function main(rows) {
 }
 
 
+//Create hierarchy data (the root)
 function genRoot(data) {
   return d3
     .stratify()
@@ -71,6 +72,7 @@ function genRoot(data) {
     })(data);
 }
 
+//Identify parent item in the xlsx structure
 function searchParent(rows, i, j) {
   if (j === 1) {
     return "0-0";
@@ -81,6 +83,22 @@ function searchParent(rows, i, j) {
   }
 }
 
+//Get the node obj
+function getNodeById(root, id) {
+  let allNodes = root.descendants();
+  return allNodes.filter((item) => item.id === id)[0];
+}
+
+//Get ancestor ids (only ids) of a n, ode id
+function getAncestorIds(root, id) {
+  let targetNode = getNodeById(root, id);
+  let ancestorNodes = targetNode.ancestors();
+  let ancestorIds = ancestorNodes.map((node) => node.id);
+  ancestorIds.pop(); //Remove root
+  return ancestorIds;
+}
+
+//Generate pairs from an array
 function genPair(data) {
   let combination = [];
 
@@ -93,6 +111,7 @@ function genPair(data) {
   return combination;
 }
 
+//Generate pairs from a root obj
 function extractPairs(root) {
   let pairsObj = {};
   let id2Name = {};
@@ -119,11 +138,13 @@ function extractPairs(root) {
   return [pairsObj, id2Name];
 }
 
-function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //Generator
+//A generator prepares all info to be used in AHP comparison stage
+function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //* for generator
   for (let gId8pairs of Object.entries(criterionPairs)) { //Yield can't be used in forEach callback
     yield ({
       type: CONST.DATA_TYPE.CRITERION,
       gId: gId8pairs[0],
+      breadCrumb: getAncestorIds(criterionRoot, gId8pairs[0]),
       pairs: gId8pairs[1]
     });
   }
@@ -132,9 +153,11 @@ function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //Generator
     yield ({
       type: CONST.DATA_TYPE.OPTION,
       gId: leaf.id,
+      breadCrumb: getAncestorIds(criterionRoot, leaf.id),
       pairs: optionPairs
     });
   }
 }
+
 
 export { main as default, genRoot };

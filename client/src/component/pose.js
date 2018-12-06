@@ -89,7 +89,7 @@ export const DivPosedFade = posed.div({
     }
   */    
   enter: {
-    delay: (props) => (props.delay + props.i * props.delay) || props.delay || 150,
+    delay: (props) => (props.delay + props.i * props.delay) || props.delay || 0,
     opacity: 1
   },
   exit: {

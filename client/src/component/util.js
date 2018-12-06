@@ -28,7 +28,7 @@ export function Title(props) {
 }
 
 
-export function Loading(props) {
+export function Loading(props) { //TODO: split text effect ...
   const loadingContent = (
     <DivPosedFade key="loading">
       <div className="d-flex justify-content-center">
