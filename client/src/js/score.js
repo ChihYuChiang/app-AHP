@@ -1,4 +1,4 @@
-import { genRoot } from './preData';
+import { genRoot } from './pre-data';
 
 
 class main {

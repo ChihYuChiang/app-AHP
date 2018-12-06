@@ -17,9 +17,7 @@ class Main extends Component {
       <div className="container">
         <div className="col-12" align="center">
           <div id="head-spacer"></div>
-          <Title
-            title="Random"
-            subTitle={CONTENT.SUBTITLE.SIMPLE} />
+          <Title title="Random" subTitle={CONTENT.SUBTITLE.SIMPLE} />
           <div className="content mt-4">
             <Loading isLoading={this.state.isLoading}/>
           </div>

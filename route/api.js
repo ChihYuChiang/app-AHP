@@ -4,7 +4,7 @@ const yaml = require('js-yaml');
 const fs   = require('fs');
 
 const CONFIG = yaml.safeLoad(fs.readFileSync('./config.yml', 'utf8'));
-const dbOps = require('../module/dbOps'); //The path in require start from this file; the path in the code starts from project root
+const dbOps = require('../module/db-ops'); //The path in require start from this file; the path in the code starts from project root
 
 
 //api/

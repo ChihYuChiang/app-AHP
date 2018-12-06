@@ -2,7 +2,7 @@ import React from "react";
 
 import { DivPosedFadeY } from './pose';
 
-import drawTreeGraph from "../js/treeGraph";
+import drawTreeGraph from "../js/treegraph";
 import CONST from "../js/const";
 
 

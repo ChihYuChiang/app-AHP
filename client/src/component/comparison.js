@@ -4,7 +4,7 @@ import { PoseGroup } from 'react-pose';
 
 import { DivPosedFadeY } from './pose';
 
-import { genMatrix, genWeight, computeCR } from "../js/com8Matrix";
+import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
 import util from "../js/util";
 import CONST from "../js/const";
 import styles from "../scss/variable.scss";

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 
-import preprocessData from "../js/preData";
+import preprocessData, { genRoot } from "../js/pre-data";
 import util from "../js/util";
 import score from "../js/score";
-import { genRoot } from '../js/preData';
 import CONST from "../js/const";
 import CONTENT from "../js/content";
 
@@ -12,7 +11,7 @@ import Comparison from "./comparison";
 import Graph from "./graph";
 import Control from "./control";
 import Footer from "./footer";
-import { Loading, ComponentWTip } from "./util";
+import { Loading, ComponentWTip, Title } from "./util";
 //TODO: landing
 
 
@@ -48,8 +47,7 @@ class Main extends Component {
       <div className="container">
         <div className="col-12" align="center">
           <div id="head-spacer"></div>
-          <h1>AHP</h1>
-          <p className="col-8">{this.state.serverResponse}</p>
+          <Title title="AHP" subTitle={this.state.serverResponse} />
           <div className="mt-4">
             <Control
               curControl={this.state.curControl}
@@ -58,8 +56,7 @@ class Main extends Component {
             />
           </div>
           <div className="content mt-4">
-            <Loading
-              isLoading={this.state.isLoading}/>
+            <Loading isLoading={this.state.isLoading} />
             <Graph
               curGraph={this.state.curGraph}
               root={this.state.criterion.root}

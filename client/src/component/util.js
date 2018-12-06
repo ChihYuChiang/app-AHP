@@ -19,6 +19,8 @@ export function Title(props) {
     <PoseGroup animateOnMount={true}>
       <DivPosedFade key="title" delay={200}>
         <h1>{props.title}</h1>
+      </DivPosedFade>
+      <DivPosedFade key="subTitle" delay={400}>
         <p className="col-8">{props.subTitle}</p>
       </DivPosedFade>
     </PoseGroup>

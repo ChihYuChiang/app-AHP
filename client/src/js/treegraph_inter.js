@@ -1,8 +1,8 @@
 import * as d3 from "d3";
 
 import CONST from "./const";
-import drawBarChart from './barChart';
-import { getCircleR } from './treeGraph';
+import drawBarChart from './barchart';
+import { getCircleR } from './treegraph';
 
 
 class main {
