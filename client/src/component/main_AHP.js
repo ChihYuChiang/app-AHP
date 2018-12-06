@@ -38,8 +38,7 @@ class Main extends Component {
     ...buildDefaultState(),
     curGraph: CONST.GRAPH_TYPE.NULL,
     curControl: CONST.CONTROL_TYPE.NULL,
-    isLoading: false,
-    serverResponse: ''
+    isLoading: false
   };
 
   render() {
@@ -47,7 +46,7 @@ class Main extends Component {
       <div className="container">
         <div className="col-12" align="center">
           <div className="spacer-100"></div>
-          <Title title="AHP" subTitle={this.state.serverResponse} />
+          <Title title="AHP" subTitle={CONTENT.SUBTITLE.AHP} />
           <div className="mt-4">
             <Control
               curControl={this.state.curControl}
@@ -132,11 +131,6 @@ class Main extends Component {
         });
       });
     }
-
-    //Test server connection
-    this.testApi()
-      .then((res) => this.setState({ serverResponse: res.express }))
-      .catch((err) => console.log(err));
   }
 
 
@@ -239,13 +233,6 @@ class Main extends Component {
 
     this.setState({ isLoading: false });
     return recordId;
-  };
-
-  testApi = async () => { //TODO: remove
-    const response = await fetch('/api/hello');
-    const body = await response.json();
-    if (response.status !== 200) throw Error(body.message);
-    return body;
   };
 }
 

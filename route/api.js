@@ -8,10 +8,6 @@ const dbOps = require('../module/db-ops'); //The path in require start from this
 
 
 //api/
-router.get('/hello', (req, res) => {
-  res.send({ express: 'The analytic hierarchy process (AHP) is a structured technique for organizing and analyzing complex decisions, based on mathematics and psychology. It was developed by Thomas L. Saaty in the 1970s and has been extensively studied and refined since then.' });
-});
-
 router.get('/template', (req, res) => {
   res.download('./file/criterion-template.xlsx', 'criterion-template.xlsx');
 });
