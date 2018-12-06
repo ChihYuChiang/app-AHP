@@ -94,7 +94,7 @@ function getAncestorIds(root, id) {
   let targetNode = getNodeById(root, id);
   let ancestorNodes = targetNode.ancestors();
   let ancestorIds = ancestorNodes.map((node) => node.id);
-  ancestorIds.pop(); //Remove root
+  // ancestorIds.pop(); //Remove root
   return ancestorIds;
 }
 

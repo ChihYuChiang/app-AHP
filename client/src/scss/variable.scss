@@ -1,91 +1,128 @@
 //When add new var, add into export as well to be used in js
-$white    : #fff      !default;
-$gray-100 : #f8f9fa   !default;
-$gray-200 : #e9ecef   !default;
-$gray-300 : #dee2e6   !default;
-$gray-400 : #ced4da   !default;
-$gray-500 : #adb5bd   !default;
-$gray-600 : #868e96   !default;
-$gray-700 : #495057   !default;
-$gray-800 : #343a40   !default;
-$gray-900 : #212529   !default;
-$black    : #000      !default;
+$white    : #fff   ;
+$gray-100 : #f8f9fa;
+$gray-200 : #e9ecef;
+$gray-300 : #dee2e6;
+$gray-400 : #ced4da;
+$gray-500 : #adb5bd;
+$gray-600 : #868e96;
+$gray-700 : #495057;
+$gray-800 : #343a40;
+$gray-900 : #212529;
+$black    : #000   ;
 
-$gray-r100 : #faf8f8   !default;
-$gray-r200 : #efe9e9   !default;
-$gray-r300 : #e6dede   !default;
-$gray-r400 : #dacece   !default;
-$gray-r500 : #bdadad   !default;
-$gray-r600 : #968686   !default;
-$gray-r700 : #574949   !default;
-$gray-r800 : #403434   !default;
-$gray-r900 : #292121   !default;
+$gray-r100: #faf8f8;
+$gray-r200: #efe9e9;
+$gray-r300: #e6dede;
+$gray-r400: #dacece;
+$gray-r500: #bdadad;
+$gray-r600: #968686;
+$gray-r700: #574949;
+$gray-r800: #403434;
+$gray-r900: #292121;
 
-$blue     : #007bff   !default;
-$indigo   : #6610f2   !default;
-$purple   : #6f42c1   !default;
-$pink     : #e83e8c   !default;
-$red      : #dc3545   !default;
-$orange   : #fd7e14   !default;
-$yellow   : #ffc107   !default;
-$green    : #28a745   !default;
-$teal     : #20c997   !default;
-$cyan     : #17a2b8   !default;
+$blue     : #007bff;
+$indigo   : #6610f2;
+$purple   : #6f42c1;
+$pink     : #e83e8c;
+$red      : #dc3545;
+$orange   : #fd7e14;
+$yellow   : #ffc107;
+$green    : #28a745;
+$teal     : #20c997;
+$cyan     : #17a2b8;
 
-$primary  : #F05F40   !default;
-$secondary: $gray-600   !default;
-$success  : $green      !default;
-$info     : $cyan       !default;
-$warning  : $yellow     !default;
-$danger   : $red        !default;
-$light    : $gray-100   !default;
-$dark     : $gray-800   !default;
+$primary  : #F05F40;
+$secondary: $gray-600;
+$success  : $green   ;
+$info     : $cyan    ;
+$warning  : $yellow  ;
+$danger   : $red     ;
+$light    : $gray-100;
+$dark     : $gray-800;
+
+//Extend/override Bootstrap maps
+$theme-colors: (
+  primary:    $primary,
+  secondary:  $secondary,
+  success:    $success,
+  info:       $info,
+  warning:    $warning,
+  danger:     $danger,
+  light:      $light,
+  dark:       $dark
+);
+
+$spacer: 1rem;
+$spacers: (
+  6: ($spacer * 4.5),
+  7: ($spacer * 6)
+);
+
+//Potentially useful way to manage z index
+$z-layers: (
+  bottomless-pit: -9999,
+  default: 1,
+  dropdown: 3000,
+  overlay: 4000,
+  modal: 4001
+);
+
+$spacer-breakpoints: (
+  100: 100px,
+  150: 150px,
+  200: 200px,
+  250: 250px,
+  300: 300px,
+  350: 350px,
+  400: 400px
+);
 
 $slider-width: 300;
 
 
 :export {
-    white: $white;
-    gray100: $gray-100; 
-    gray200: $gray-200; 
-    gray300: $gray-300; 
-    gray400: $gray-400; 
-    gray500: $gray-500; 
-    gray600: $gray-600; 
-    gray700: $gray-700; 
-    gray800: $gray-800; 
-    gray900: $gray-900; 
-    black: $black;
+  white: $white;
+  gray100: $gray-100; 
+  gray200: $gray-200; 
+  gray300: $gray-300; 
+  gray400: $gray-400; 
+  gray500: $gray-500; 
+  gray600: $gray-600; 
+  gray700: $gray-700; 
+  gray800: $gray-800; 
+  gray900: $gray-900; 
+  black: $black;
 
-    grayr100: $gray-r100; 
-    grayr200: $gray-r200; 
-    grayr300: $gray-r300; 
-    grayr400: $gray-r400; 
-    grayr500: $gray-r500; 
-    grayr600: $gray-r600; 
-    grayr700: $gray-r700; 
-    grayr800: $gray-r800; 
-    grayr900: $gray-r900; 
+  grayr100: $gray-r100; 
+  grayr200: $gray-r200; 
+  grayr300: $gray-r300; 
+  grayr400: $gray-r400; 
+  grayr500: $gray-r500; 
+  grayr600: $gray-r600; 
+  grayr700: $gray-r700; 
+  grayr800: $gray-r800; 
+  grayr900: $gray-r900; 
 
-    blue: $blue;     
-    indigo: $indigo;   
-    purple: $purple;   
-    pink: $pink;     
-    red: $red;      
-    orange: $orange;   
-    yellow: $yellow;   
-    green: $green;   
-    teal: $teal;     
-    cyan: $cyan;
+  blue: $blue;     
+  indigo: $indigo;   
+  purple: $purple;   
+  pink: $pink;     
+  red: $red;      
+  orange: $orange;   
+  yellow: $yellow;   
+  green: $green;   
+  teal: $teal;     
+  cyan: $cyan;
 
-    primary: $primary;  
-    secondary: $secondary;
-    success: $success;  
-    info: $info;     
-    warning: $warning;  
-    danger: $danger;   
-    light: $light;    
-    dark: $dark;
+  primary: $primary;  
+  secondary: $secondary;
+  success: $success;  
+  info: $info;     
+  warning: $warning;  
+  danger: $danger;   
+  light: $light;    
+  dark: $dark;
 
-    sliderWidth: $slider-width;
+  sliderWidth: $slider-width;
 }

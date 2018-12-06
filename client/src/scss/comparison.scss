@@ -1,7 +1,10 @@
-.prompt-highlight {
-    color: $primary;
-}
-
 .prompt {
     width: $slider-width;
 }
+
+.breadcrumb > .breadcrumb-item + .breadcrumb-item::before {
+    content: "\f105";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    padding: 0 0.5em 0 0;
+  }

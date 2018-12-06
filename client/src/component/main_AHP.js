@@ -46,7 +46,7 @@ class Main extends Component {
     return (
       <div className="container">
         <div className="col-12" align="center">
-          <div id="head-spacer"></div>
+          <div className="spacer-100"></div>
           <Title title="AHP" subTitle={this.state.serverResponse} />
           <div className="mt-4">
             <Control
@@ -84,7 +84,7 @@ class Main extends Component {
             </div>
             <Footer />
           </div>
-          <div id="bottom-spacer"></div>
+          <div className="spacer-100"></div>
         </div>
       </div>
     );

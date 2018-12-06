@@ -1,0 +1,25 @@
+//--From Bootstrap
+//color(black);
+//gray(100);
+//theme-color(primary);
+//theme-color-level(primary, -10);
+//color-yiq(theme-color(dark));
+
+@function z($key) {
+  @if map-has-key($z-layers, $key) {
+    @return map-get($z-layers, $key);
+  }
+
+  @warn "Unknown `#{$key}` in $z-layers.";
+  @return null;
+}
+
+//Generate `.spacer-*` class utilities
+//.spacer-100 -> 100px padding space (50px each side)
+@each $breakpoint in map-keys($spacer-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $spacer-breakpoints); //bs function
+
+  .spacer#{$infix} {
+    padding: map-get($spacer-breakpoints, $breakpoint) / 2;
+  }
+}

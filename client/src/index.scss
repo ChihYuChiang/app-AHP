@@ -1,5 +1,10 @@
+//Customized var has to go before bs (bs uses defaults)
+//Useful bs documentation with scss functions https://getbootstrap.com/docs/4.0/getting-started/theming/
 @import "scss/variable.scss";
-@import "scss/mixin.scss";
+@import "node_modules/bootstrap/scss/bootstrap.scss";
+
+@import "scss/function.scss";
+@import "scss/mixin-extend.scss";
 @import "scss/fluid-slider.scss";
 @import "scss/control.scss";
 @import "scss/graph.scss";
@@ -8,68 +13,6 @@
 
 html { //For rem, which Bootstrap 4 bases on
   font-size: 14px;
-}
-
-.vis-hidden {
-  visibility: hidden;
-}
-
-.vis-visible {
-  visibility: visible;
-}
-
-.breadcrumb > .breadcrumb-item + .breadcrumb-item::before {
-  content: "\f105";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  padding: 0 0.5em 0 0;
-}
-
-.breadcrumb .active {
-  color: $primary;
-}
-
-.tip-tip {
-  background-color: $gray-r200;
-  color: $gray-700;
-  pointer-events: none;
-
-  + .tip-arrow-bottom::before { //::before is the real arrow
-    border-bottom-color: $gray-r200;
-  }
-  + .tip-arrow-top::before { //::before is the real arrow
-    border-top-color: $gray-r200;
-  }
-  + .tip-arrow-right::before { //::before is the real arrow
-    border-right-color: $gray-r200;
-  }
-  + .tip-arrow-left::before { //::before is the real arrow
-    border-left-color: $gray-r200;
-  }
-}
-
-.btn-wide {
-  width: 300px;
-}
-
-.btn-medium {
-  width: 150px;
-}
-
-.btnGroup-left > button {
-  border-radius: .25rem 0px 0px .25rem;
-}
-
-.btnGroup-right > button {
-  border-radius: 0px .25rem .25rem 0px;
-}
-
-.btnGroup-middle > button {
-  border-radius: 0px;
-}
-
-#head-spacer, #bottom-spacer {
-  margin: 100px;
 }
 
 #escape-simple {
@@ -94,8 +37,4 @@ html { //For rem, which Bootstrap 4 bases on
   padding-bottom: 12px;
   padding-right: 40px;
   text-align: right;
-}
-
-#vs {
-  color: $gray-500;
 }

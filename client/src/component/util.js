@@ -63,7 +63,7 @@ export class ButtonWTip extends Component {
   */
   state = {
     tooltipOpen: false,
-    tooltipVisible: "vis-hidden"
+    tooltipVisible: "invisible" //Bootstrap class
   };
 
   render() {
@@ -96,11 +96,11 @@ export class ButtonWTip extends Component {
   openTip = () => {
     this.setState({
       tooltipOpen: true,
-      tooltipVisible: "vis-hidden"
+      tooltipVisible: "invisible"
     }, async () => {
       await util.sleep(1500);
       this.setState({
-        tooltipVisible: "vis-visible"
+        tooltipVisible: "visible"
       });
     });
   }

@@ -10,6 +10,7 @@
 }
 
 #dashboard {
+  @extend .mt-4;
   margin-right: -120px; //Makes the graph entirely overlaps on it
   width: 120px;
   top: 50px;

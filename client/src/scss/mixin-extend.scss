@@ -15,7 +15,8 @@
 @mixin sans-serif-font() {
   font-family: "Open Sans", "Helvetica Neue", Arial, sans-serif;
 }
-@mixin remove-a-effect() {
+
+%remove-a-effect {
   color: $white;
   text-decoration: none;
 }
