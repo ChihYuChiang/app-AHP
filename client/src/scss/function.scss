@@ -5,6 +5,15 @@
 //theme-color-level(primary, -10);
 //color-yiq(theme-color(dark));
 
+//--From SCSS
+//lighten(color, 10)
+//darken
+//saturate
+//desaturate
+//opacify
+//transparentize
+
+
 @function z($key) {
   @if map-has-key($z-layers, $key) {
     @return map-get($z-layers, $key);
@@ -21,5 +30,15 @@
 
   .spacer#{$infix} {
     padding: map-get($spacer-breakpoints, $breakpoint) / 2;
+  }
+}
+
+//Generate `.fs-*` class utilities
+//.fs-55 -> font-size 0.55rem
+@each $breakpoint in map-keys($fontsize-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $fontsize-breakpoints); //bs function
+
+  .fs#{$infix} {
+    font-size: map-get($fontsize-breakpoints, $breakpoint);
   }
 }

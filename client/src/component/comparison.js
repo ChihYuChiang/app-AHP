@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
 import { DivPosedFadeY } from './pose';
-import BreadCrumbC from './bread-crumb';
+import BreadCrumbC from './breadcrumb';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
 import util from "../js/util";
@@ -33,6 +33,7 @@ class Comparison extends Component {
   render() {    
     if (!util.isEmpty(this.props.pairData)) {
       
+      //--For confirmation stage
       if (!this.state.confirmation) {
         return ( //TODO: Modify criteria
           <div>
@@ -41,11 +42,9 @@ class Comparison extends Component {
           </div>
         );
       }
-
-      let groupLabel = this.props.pairData.type === CONST.DATA_TYPE.CRITERION //TODO: Split text animation
-        ? 'Criterion Importance' //TODO: Show breadcrumb
-        : <p>Regarding <span className="prompt-highlight">{this.props.id2Name[this.props.pairData.gId]}</span></p>;
       
+
+      //--For real comparison
       let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
         <DivPosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} delay={150}>
           <Pair
@@ -60,8 +59,14 @@ class Comparison extends Component {
   
       return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
         <div className="comparison mt-4">
-          <BreadCrumbC ancestors = {this.props.pairData.breadCrumb.map((id) => this.props.id2Name[id])} />
-          <h6>{groupLabel}</h6>
+          <BreadCrumbC className="justify-content-center col-8"
+            ancestors={this.props.pairData.breadCrumb.map((id) => this.props.id2Name[id])}
+          />
+          <GroupLabel className="mb-4 mt-5 fs-115"
+            pairDataType={this.props.pairData.type}
+            pairDataGId={this.props.pairData.gId}
+            id2Name={this.props.id2Name}
+          />
           <PoseGroup animateOnMount={true}>
             {pairs}
           </PoseGroup>
@@ -69,6 +74,8 @@ class Comparison extends Component {
         </div>
       );
 
+
+    //--If not in either confirmation or comparison
     } else return <div />;
   }
 
@@ -104,6 +111,39 @@ class Comparison extends Component {
 }
 
 
+function GroupLabel(props) {
+  /*
+    props = { //As in the parent
+      pairDataType
+      pairDataGId
+      id2Name
+      className
+    }
+  */
+  if (props.pairDataType === CONST.DATA_TYPE.CRITERION) {
+    return (
+      <p className={props.className}>
+        {"Regarding "}
+        <span className="text-primary">
+          {props.pairDataGId === "0-0" ? "the base criteria" : props.id2Name[props.pairDataGId]}
+        </span>
+        {", what is more important?"}
+      </p>
+    );
+  } else {
+    return (
+      <p className={props.className}>
+        {"Regarding "}
+        <span className="text-primary">
+          {props.id2Name[props.pairDataGId]}
+        </span>
+        {", which option has advantage?"}
+      </p>
+    );
+  }
+}
+
+
 class Pair extends Component {
   /*
     props = {
@@ -128,10 +168,11 @@ class Pair extends Component {
       ? this.props.id2Name[this.props.data.dest]
       : this.props.options.filter((op) => op.id + '' === this.props.data.dest)[0].name;
 
-    //TODO: different types of input in /ref
-    return ( //TODO: dynamic prompt with score
+    return ( //TODO: sticky score explanation
       <div>
-        <p className="prompt">{destName}<span id="vs"> vs </span>{sourceName}</p>
+        <p className="prompt">
+          {destName}<span className="text-secondary ml-2 mr-2">or</span>{sourceName}
+        </p>
         <div className="slider-wrapper">
           <input name="range-slider" type="range" className="fluid-slider" max="8" min="-8" step="1"
             data-source={sourceName}
