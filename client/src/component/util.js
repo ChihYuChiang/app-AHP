@@ -8,22 +8,45 @@ import util from '../js/util';
 import styles from '../scss/variable.scss';
 
 
-export const Loading = (props) => <PoseGroup>{props.isLoading && LoadingContent}</PoseGroup>; //&& operator returns the right one if both true
+export function Title(props) {
+  /*
+    props = {
+      title
+      subTitle
+    }
+  */
 
-const LoadingContent = (
-  <DivPosed key="loading">
-    <div className="d-flex justify-content-center">
-      <i
-        className="fas fa-cog fa-spin fa-3x"
+  return (
+    <PoseGroup animateOnMount={true}>
+      <DivPosed key="title">
+        <h1>{props.title}</h1>
+        <p className="col-8">{props.subTitle}</p>
+      </DivPosed>
+    </PoseGroup>
+  );
+}
+
+
+export function Loading(props) {
+  const loadingContent = (
+    <DivPosed key="loading">
+      <div className="d-flex justify-content-center">
+        <i
+          className="fas fa-cog fa-spin fa-3x"
+          style={{ color: styles.gray800 }}
+          />
+      </div>
+      <p
+        className="d-flex justify-content-center small mt-1"
         style={{ color: styles.gray800 }}
-      />
-    </div>
-    <p
-      className="d-flex justify-content-center small mt-1"
-      style={{ color: styles.gray800 }}
-    >Loading ...</p>
-  </DivPosed> //TODO: Random loading message
-);
+        >Loading ...</p>
+    </DivPosed> //TODO: Random loading message
+  );
+  
+  return (
+    <PoseGroup>{props.isLoading && loadingContent}</PoseGroup> //&& operator returns the right one if both true
+  );
+}
 
 
 export class ButtonWTip extends Component {

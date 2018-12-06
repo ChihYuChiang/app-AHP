@@ -21,6 +21,14 @@ const main = {
   },
   TIP_OTHER: {
     A_ESCAPE_SIMPLE: "Let's not bother with the complicated reality.."
+  },
+  SUBTITLE: {
+    SIMPLE: "This is a random decision maker. It makes life much easier.",
+    AHP:
+      `
+      The analytic hierarchy process (AHP) is a structured technique for organizing and analyzing complex decisions, based on mathematics and psychology. 
+      It was developed by Thomas L. Saaty in the 1970s and has been extensively studied and refined since then.
+      `
   }
 }
 

@@ -2,7 +2,9 @@ import React, { Component } from "react";
 
 import DynamicInput from "./dynamic-input";
 import Footer from "./footer";
-import { Loading } from "./util";
+import { Loading, Title } from "./util";
+
+import CONTENT from "../js/content";
 
 
 class Main extends Component {
@@ -15,11 +17,11 @@ class Main extends Component {
       <div className="container">
         <div className="col-12" align="center">
           <div id="head-spacer"></div>
-          <h1>Random</h1>
-          <p className="col-8">This is a random decision maker. It makes life much easier.</p>
+          <Title
+            title="Random"
+            subTitle={CONTENT.SUBTITLE.SIMPLE} />
           <div className="content mt-4">
-            <Loading
-              isLoading={this.state.isLoading}/>
+            <Loading isLoading={this.state.isLoading}/>
           </div>
           <DynamicInput />
           <div className="fixed-bottom">
