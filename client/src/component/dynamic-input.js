@@ -20,7 +20,7 @@ class DynamicInput extends Component {
         <h4>Shareholders</h4>
 
         {this.state.shareholders.map((shareholder, idx) => (
-          <div className="shareholder">
+          <div className="shareholder" key={idx}>
             <input
               type="text"
               placeholder={`Shareholder #${idx + 1} name`}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { DivPosedTransY } from './pose';
+import { DivPosedFadeY } from './pose';
 
 import { genMatrix, genWeight, computeCR } from "../js/com8Matrix";
 import util from "../js/util";
@@ -45,7 +45,7 @@ class Comparison extends Component {
         : <p>Regarding <span className="prompt-highlight">{this.props.id2Name[this.props.pairData.gId]}</span></p>;
       
       let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
-        <DivPosedTransY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i}>
+        <DivPosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} delay={150}>
           <Pair
             type={this.props.pairData.type}
             data={pair}
@@ -53,7 +53,7 @@ class Comparison extends Component {
             id2Name={this.props.id2Name}
             options={this.props.options}
           />
-        </DivPosedTransY>
+        </DivPosedFadeY>
       ));
   
       return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)

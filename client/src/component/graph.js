@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DivPosedTransY } from './pose';
+import { DivPosedFadeY } from './pose';
 
 import drawTreeGraph from "../js/treeGraph";
 import CONST from "../js/const";
@@ -15,11 +15,11 @@ function Graph (props) {
     }
   */
   if ([CONST.GRAPH_TYPE.NULL, CONST.GRAPH_TYPE.COMPARISON].includes(props.curGraph)) {
-    return <DivPosedTransY id="canvasRoot" style={{ display: "none" }} pose='exit'/>;
+    return <DivPosedFadeY id="canvasRoot" style={{ display: "none" }} pose='exit'/>;
   }
   else {
     drawTreeGraph(props.root, props.options, props.curGraph);
-    return <DivPosedTransY id="canvasRoot" style={{ display: "block" }} pose='enter'/>;
+    return <DivPosedFadeY id="canvasRoot" style={{ display: "block" }} pose='enter'/>;
   }
 }
 

@@ -1,24 +1,51 @@
 import posed from 'react-pose';
 
-
-export const DivPosedTransY = posed.div({
+export const DivPosedPop = posed.div({
+  /*
+    props = {
+      color //In #FFFFFF format
+    }
+  */
   enter: {
-    delay: (props) => (150 + props.i * 150) || 150,
-    y: 0,
-    opacity: 1
+    x: -10,
+    y: -10,
+    opacity: 1,
+    boxShadow: (props) => '10px 10px 20px ' + props.color,
+    transition: { duration: 700 }
   },
   exit: {
-    y: 50,
+    x: 0,
+    y: 0,
     opacity: 0,
-    transition: {
-      duration: 100
-    }
+    boxShadow: '0px 0px 0px #FFFFFF',
   }
 });
 
-export const DivPosedTransX = posed.div({
+
+export const SpanPosedAttention = posed.span({
+  attention: {
+    scale: 1.3,
+    transition: {
+      type: 'spring',
+      stiffness: 200,
+      damping: 0
+    }
+  },
+  offAttention: {
+    scale: 1
+  }
+});
+
+
+export const DivPosedFadeX = posed.div({
+  /*
+    props = {
+      i //Optional, element id for staggering
+      delay //Option, delay when enter
+    }
+  */  
   enter: {
-    delay: (props) => (150 + props.i * 150) || 150,
+    delay: (props) => (props.delay + props.i * props.delay) || props.delay || 150,
     x: 0,
     opacity: 1
   },
@@ -31,11 +58,41 @@ export const DivPosedTransX = posed.div({
   }
 });
 
-export const DivPosed = posed.div({
+
+export const DivPosedFadeY = posed.div({
+  /*
+    props = {
+      i //Optional, element id for staggering
+      delay //Option, delay when enter
+    }
+  */    
   enter: {
+    delay: (props) => (props.delay + props.i * props.delay) || props.delay || 150,
+    y: 0,
     opacity: 1
   },
   exit: {
-    opacity: 0
+    y: 50,
+    opacity: 0,
+    transition: {
+      duration: 100
+    }
+  }
+});
+
+
+export const DivPosedFade = posed.div({
+  /*
+    props = {
+      i //Optional, element id for staggering
+      delay //Option, delay when enter
+    }
+  */    
+  enter: {
+    delay: (props) => (props.delay + props.i * props.delay) || props.delay || 150,
+    opacity: 1
+  },
+  exit: {
+    opacity: 0,
   }
 });

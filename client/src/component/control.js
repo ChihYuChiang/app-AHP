@@ -21,7 +21,7 @@ class Control extends Component {
   };
 
   render() {
-    //TODO popover instruction
+    //TODO: popover instruction
     switch (this.props.curControl) {
       
       case CONST.CONTROL_TYPE.NULL:

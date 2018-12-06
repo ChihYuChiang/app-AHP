@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Tooltip } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { DivPosed } from './pose';
+import { DivPosedFade } from './pose';
 
 import util from '../js/util';
 import styles from '../scss/variable.scss';
@@ -15,13 +15,12 @@ export function Title(props) {
       subTitle
     }
   */
-
   return (
     <PoseGroup animateOnMount={true}>
-      <DivPosed key="title">
+      <DivPosedFade key="title" delay={200}>
         <h1>{props.title}</h1>
         <p className="col-8">{props.subTitle}</p>
-      </DivPosed>
+      </DivPosedFade>
     </PoseGroup>
   );
 }
@@ -29,7 +28,7 @@ export function Title(props) {
 
 export function Loading(props) {
   const loadingContent = (
-    <DivPosed key="loading">
+    <DivPosedFade key="loading">
       <div className="d-flex justify-content-center">
         <i
           className="fas fa-cog fa-spin fa-3x"
@@ -40,11 +39,12 @@ export function Loading(props) {
         className="d-flex justify-content-center small mt-1"
         style={{ color: styles.gray800 }}
         >Loading ...</p>
-    </DivPosed> //TODO: Random loading message
+    </DivPosedFade> //TODO: Random loading message
   );
   
   return (
-    <PoseGroup>{props.isLoading && loadingContent}</PoseGroup> //&& operator returns the right one if both true
+    //&& operator returns the right one if both true
+    <PoseGroup animateOnMount={true}>{props.isLoading && loadingContent}</PoseGroup>
   );
 }
 
