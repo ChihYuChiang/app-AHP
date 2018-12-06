@@ -34,7 +34,6 @@ export class ButtonWTip extends Component {
       buttonContent //Content for the button
       buttonOnClick //As name
       tipContent //Content for the tooltip
-      tipPlacement //Position of the tooltip
     }
   */
   state = {
@@ -52,7 +51,7 @@ export class ButtonWTip extends Component {
           {this.props.buttonContent}
         </Button>
         <Tooltip className={this.state.tooltipVisible} innerClassName="tip-tip" arrowClassName="tip-arrow-bottom"
-          placement={this.props.tipPlacement}
+          placement="bottom"
           isOpen={this.state.tooltipOpen}
           target={this.props.buttonId}
           offset="40px, 5px" //Use manual and element visibility to make the transition smoother

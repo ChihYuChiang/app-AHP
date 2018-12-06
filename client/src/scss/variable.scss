@@ -41,7 +41,7 @@ $danger   : $red        !default;
 $light    : $gray-100   !default;
 $dark     : $gray-800   !default;
 
-$slider-width: 300px;
+$slider-width: 300;
 
 
 :export {
@@ -87,5 +87,5 @@ $slider-width: 300px;
     light: $light;    
     dark: $dark;
 
-    sliderWidth: 300;
+    sliderWidth: $slider-width;
 }

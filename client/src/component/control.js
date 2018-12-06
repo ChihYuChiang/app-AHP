@@ -58,31 +58,25 @@ class Control extends Component {
               className="file-input"
             />
             <ButtonToolbar className="justify-content-center">
-              <ButtonWTip className="mr-2"
-                buttonId="btn-demoResult"
+              <ButtonWTip buttonId="btn-demoResult" className="mr-2"
                 buttonContent="Demo Result"
                 buttonOnClick={this.props.renderDemoGraph}
-                tipPlacement="bottom"
                 tipContent={CONTENT.TIP_BTN.DEMO_RESULT}
               />
-              <ButtonWTip className="btnGroup-left"
-                buttonId="btn-downloadTemplate"
+              <ButtonWTip buttonId="btn-downloadTemplate" className="btnGroup-left"
                 buttonContent={
                   <a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>
                     Download Template
                   </a>
                 }
-                tipPlacement="bottom"
                 tipContent={CONTENT.TIP_BTN.DOWNLOAD_TEMPLATE}>
               </ButtonWTip>
-              <ButtonWTip className="btnGroup-right"
-                buttonId="btn-uploadCriteria"
+              <ButtonWTip buttonId="btn-uploadCriteria" className="btnGroup-right"
                 buttonContent={
                   <label htmlFor="inputCriterionFile" className="file-label">
                     Upload Your Criteria
                   </label>
                 }
-                tipPlacement="bottom"
                 tipContent={CONTENT.TIP_BTN.UPLOAD_CRITERIA}>
               </ButtonWTip>
             </ButtonToolbar>
