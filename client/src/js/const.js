@@ -3,6 +3,12 @@ const main = {
     AHP: 'AHP',
     SIMPLE: 'simple'
   },
+  SIMPLE_STAGE: {
+    INPUT: 'input',
+    MAGIC: 'magic',
+    RESULT: 'result',
+    LOADING: 'loading'
+  },
   DATA_TYPE: {
     CRITERION: 'criterion',
     OPTION: 'option'

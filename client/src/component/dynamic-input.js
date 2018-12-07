@@ -1,54 +1,68 @@
 import React, { Component } from "react";
 import { Button, Form, Input } from 'reactstrap';
 
+
+const buildDefaultState = () => ({
+  problem: '',
+  options: [{ name: '' }, { name: '' }]
+});
+
+
 class DynamicInput extends Component {
+  /*
+    props = {
+      show //Show or hide this component
+      submitInput //Submit input to `main` and update app stage
+    }
+  */
   state = {
-    name: '',
-    options: [{ option: '' }, { option: '' }],
+    ...buildDefaultState()
   };
 
   render() { //TODO: content check
-    return (
-      <Form onSubmit={this.submit}>
-        <Input className="mb-6 w-75"
-          type="text"
-          placeholder="Company name, e.g. Magic Everywhere LLC"
-          value={this.state.name}
-          onChange={this.updateProblem}
-        />
-
-        <p className="fs-115">Options</p>
-
-        {this.state.options.map((option, idx) => (
-          <div key={idx} className="mb-4">
-            <Input className="d-inline w-50"
-              type="text"
-              placeholder={`option #${idx + 1} name`}
-              value={option.name}
-              onChange={this.updateOption(idx)}
-            />
-            <span className="close float-none ml-2" onClick={this.removeOption(idx)}>&times;</span>
-          </div>
-        ))}
-
-        <div>
-          <Button onClick={this.addOption}>Add option</Button>
-          <Button className="ml-5">Incorporate</Button>
+    if (this.props.show) {
+      let inputItems = this.state.options.map((option, idx) => (
+        <div key={"option_" + idx} className="mb-4">
+          <Input className="d-inline w-50"
+            type="text"
+            placeholder={`Option #${idx + 1}`}
+            value={option.name}
+            onChange={this.updateOption(idx)}
+          />
+          <span className="close float-none ml-2" onClick={this.removeOption(idx)}>&times;</span>
         </div>
-      </Form>
-    ) //The last one is the submit btn
+      ));
+
+      return (
+        <Form onSubmit={this.submit}>
+          <Input className="mb-6 w-75"
+            autoFocus
+            type="text"
+            placeholder="A problem, e.g. What for my lunch?"
+            value={this.state.problem}
+            onChange={this.updateProblem}
+          />
+          <p className="fs-115">Options</p>
+          {inputItems}
+          <div>
+            <Button onClick={this.addOption}>Add Option</Button>
+            <Button className="ml-5">Submit</Button>
+          </div>
+        </Form>
+      ); //The last one is the submit btn
+    } else return <div />;
   }
 
 
   updateProblem = (evt) => {
-    this.setState({ name: evt.target.value });
+    this.setState({ problem: evt.target.value });
   }
 
   submit = (evt) => {
-    evt.preventDefault();
+    evt.preventDefault(); //Default is to refresh page
 
-    const { name, options } = this.state;
-    alert(`Incorporated: ${name} with ${options.length} options`);
+    this.props.submitInput(this.state);
+    this.setState(buildDefaultState()) //Reset state (and the presentation as well)
   }
 
   updateOption = (idx) => (evt) => {
@@ -65,7 +79,7 @@ class DynamicInput extends Component {
   }
 
   removeOption = (idx) => () => {
-    this.setState({ options: this.state.options.filter((s, sidx) => idx !== sidx) });
+    this.setState({ options: this.state.options.filter((_, sidx) => idx !== sidx) });
   }
 }
 
