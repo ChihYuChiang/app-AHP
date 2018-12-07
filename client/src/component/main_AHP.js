@@ -44,7 +44,7 @@ class Main extends Component {
       <div className="container">
         <div className="col-12" align="center">
           <div className="spacer-100"></div>
-          {/* <Header location={CONST.LOCATION.AHP} /> */}
+          <Header location={CONST.LOCATION.AHP} />
           <div className="mt-4">
             <Control
               curControl={this.state.curControl}
