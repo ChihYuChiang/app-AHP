@@ -7,18 +7,23 @@ const main = {
     CRITERION: 'criterion',
     OPTION: 'option'
   },
+  CONTROL_TYPE: {
+    UPDATE: 'update',
+    DEFAULT: 'default',
+    NULL: 'null'
+  },
   GRAPH_TYPE: {
     TREE_UPLOAD: 'tree_upload',
     TREE_UPDATE: 'tree_update',
     TREE_DEMO: 'tree_demo',
     TREE_ENTRY: 'tree_entry',
     TREE_RECORD: 'tree_record',
-    COMPARISON: 'comparison',
     NULL: 'null'
   },
-  CONTROL_TYPE: {
-    UPDATE: 'update',
-    DEFAULT: 'default',
+  COM_TYPE: {
+    CONFIRM_PRE: 'confirm_pre',
+    CONFIRM_POST: 'confirm_post',
+    COMPARISON: 'comparison',
     NULL: 'null'
   },
   GRAPH_MEASURE: {

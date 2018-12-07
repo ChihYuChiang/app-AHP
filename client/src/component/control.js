@@ -10,7 +10,8 @@ import CONTENT from "../js/content";
 class Control extends Component {
   /*
     props = {
-      curGraph //App state marker
+      curControl //App state marker
+      handleCriterionFile //Deliver the uploaded criterion file to be handled by main
       getDemoData //Get from db the specified data for demo
       recordResult //Record to db the current comparison data
     }
@@ -51,10 +52,11 @@ class Control extends Component {
         return (
           <div>
             <input
-              type="file"
-              id="inputCriterionFile"
-              accept=".xlsx"
               className="file-input"
+              id="fileInput-criteria"
+              type="file"
+              accept=".xlsx"
+              onChange={(evt) => {this.props.handleCriterionFile(evt.target.files[0]);}}
             />
             <ButtonToolbar className="justify-content-center">
               <ButtonWTip buttonId="btn-demoResult" className="mr-2"
@@ -72,7 +74,7 @@ class Control extends Component {
               </ButtonWTip>
               <ButtonWTip buttonId="btn-uploadCriteria" className="btnGroup-right"
                 buttonContent={
-                  <label htmlFor="inputCriterionFile" className="file-label">
+                  <label htmlFor="fileInput-criteria" className="file-label">
                     Upload Your Criteria
                   </label>
                 }

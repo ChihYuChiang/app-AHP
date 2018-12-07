@@ -14,12 +14,13 @@ function Graph (props) {
       root //Data for the hierarchical graph
     }
   */
-  if ([CONST.GRAPH_TYPE.NULL, CONST.GRAPH_TYPE.COMPARISON].includes(props.curGraph)) {
-    return <DivPosedFadeY id="canvasRoot" style={{ display: "none" }} pose='exit'/>;
-  }
-  else {
-    drawTreeGraph(props.root, props.options, props.curGraph);
-    return <DivPosedFadeY id="canvasRoot" style={{ display: "block" }} pose='enter'/>;
+  switch (props.curGraph) {
+    case CONST.GRAPH_TYPE.NULL:
+      return <DivPosedFadeY id="canvasRoot" style={{ display: "none" }} pose='exit'/>;
+    
+    default:
+      drawTreeGraph(props.root, props.options, props.curGraph);
+      return <DivPosedFadeY id="canvasRoot" style={{ display: "block" }} pose='enter'/>;
   }
 }
 

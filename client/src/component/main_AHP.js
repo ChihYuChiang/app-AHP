@@ -36,6 +36,7 @@ class Main extends Component {
     ...buildDefaultState(),
     curGraph: CONST.GRAPH_TYPE.NULL,
     curControl: CONST.CONTROL_TYPE.NULL,
+    curComparison: CONST.COM_TYPE.NULL,
     isLoading: false
   };
 
@@ -48,6 +49,7 @@ class Main extends Component {
           <div className="mt-4">
             <Control
               curControl={this.state.curControl}
+              handleCriterionFile={this.handleCriterionFile}
               renderDemoGraph={() => {this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_DEMO);}}
               recordResult={this.recordResult}
             />
@@ -60,8 +62,11 @@ class Main extends Component {
               options={this.state.option.items}
             />
             <Comparison
+              curComparison={this.state.curComparison}
+              handleCriterionFile={this.handleCriterionFile}
               enterComparison={this.enterComparison}
               handleComData={this.handleComData}
+              // exitComparison={this.exitComparison}
               pairData={this.state.curPairData}
               id2Name={this.state.criterion.id2Name}
               options={this.state.option.items}
@@ -82,43 +87,42 @@ class Main extends Component {
 
     } else {
       //Render entry graph
-      this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_ENTRY).then(() => {
-        //TODO: deal with the bad file input listener
-        //Listen to file input
-        const input = document.getElementById("inputCriterionFile");
-        input.addEventListener("change", () => {
-          readXlsxFile(input.files[0])
-            .then(preprocessData)
-            .then(async (data) => {
-              this.setState({
-                curGraph: CONST.GRAPH_TYPE.NULL,
-                isLoading: true
-              });
-              await util.sleep(1000);
-              return data;
-            })
-            .then((data) => { //items, root, pairs, id2Name, generator
-              this.setState({
-                option: {
-                  ...this.state.option,
-                  ...data.option
-                },
-                criterion: {
-                  ...this.state.criterion,
-                  ...data.criterion
-                },
-                pairDataGenerator: data.pairDataGenerator,
-                curPairData: data.pairDataGenerator.next().value,
-                curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
-                curControl: CONST.CONTROL_TYPE.NULL,
-                isLoading: false
-              });
-            });
-        });
-      });
+      this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_ENTRY);
     }
   }
 
+
+  handleCriterionFile = (file) => {
+    readXlsxFile(file)
+      .then(preprocessData)
+      .then(async (data) => {
+        this.setState({
+          curGraph: CONST.GRAPH_TYPE.NULL,
+          curComparison: CONST.COM_TYPE.NULL,
+          isLoading: true
+        });
+        await util.sleep(1000);
+        return data;
+      })
+      .then((data) => { //items, root, pairs, id2Name, generator
+        this.setState({
+          option: {
+            ...this.state.option,
+            ...data.option
+          },
+          criterion: {
+            ...this.state.criterion,
+            ...data.criterion
+          },
+          pairDataGenerator: data.pairDataGenerator,
+          curPairData: data.pairDataGenerator.next().value,
+          curControl: CONST.CONTROL_TYPE.NULL,
+          curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
+          curComparison: CONST.COM_TYPE.CONFIRM_PRE,
+          isLoading: false
+        });
+      });
+  }
 
   handleComData = (comData) => {
     //Accept batch compare data and update App state
@@ -128,25 +132,30 @@ class Main extends Component {
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
       state.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
-      if (!util.isEmpty(this.state.curPairData)) util.shuffle(state.curPairData.pairs); //Shuffle the pair order (for display)
 
+      //Shuffle the pair order (for display)
+      if (!util.isEmpty(this.state.curPairData)) util.shuffle(state.curPairData.pairs);
+      
+      //If all pairs are displayed, compute score and produce report
+      else {
+        //Fake loading
+        state.curGraph = CONST.GRAPH_TYPE.NULL;
+        state.curComparison = CONST.COM_TYPE.NULL;
+        state.isLoading = true;
+      }
+      
       return state;
     }, async () => {
-      //If all pairs are displayed, compute score and produce report
-      if (util.isEmpty(this.state.curPairData)) {
-        //Fake loading
-        this.setState({
-          curGraph: CONST.GRAPH_TYPE.NULL,
-          isLoading: true
-        });
+      if (this.state.isLoading) {
         await util.sleep(2000);
-  
+        
+        //Update the real content
         this.setState((state, _) => {
           let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
           state.criterion.root = root;
-          state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
-          state.curControl = CONST.CONTROL_TYPE.UPDATE;
           state.isLoading = false;
+          state.curControl = CONST.CONTROL_TYPE.UPDATE;
+          state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
   
           return state;
         });
@@ -154,16 +163,25 @@ class Main extends Component {
     });
   };
 
+  exitComparison = () => {
+
+  }
+
   enterComparison = () => {
     this.setState({
-      curGraph: CONST.GRAPH_TYPE.COMPARISON,
-      curControl: CONST.CONTROL_TYPE.NULL
+      curControl: CONST.CONTROL_TYPE.NULL,
+      curGraph: CONST.GRAPH_TYPE.NULL,
+      curComparison: CONST.COM_TYPE.COMPARISON
     });
   };
 
   fetch8RenderGraph = async (graphType) => {
     //Hide graph and display loading spinner
-    this.setState({ curGraph: CONST.GRAPH_TYPE.NULL, isLoading: true });
+    this.setState({
+      curGraph: CONST.GRAPH_TYPE.NULL,
+      curComparison: CONST.COM_TYPE.NULL,
+      isLoading: true
+    });
 
     var response, targetControl;
     switch (graphType) {

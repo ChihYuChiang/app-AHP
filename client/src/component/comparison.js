@@ -6,7 +6,6 @@ import { DivPosedFadeY } from './pose';
 import BreadCrumbC from './breadcrumb';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
-import util from "../js/util";
 import CONST from "../js/const";
 import styles from "../scss/variable.scss";
 
@@ -14,6 +13,8 @@ import styles from "../scss/variable.scss";
 class Comparison extends Component {
   /*
     props = {
+      curComparison //App state marker
+      handleCriterionFile //Deliver the uploaded criterion file to be handled by main
       enterComparison //Update graph (app) state
       handleComData //Add comData into the store
       pairData
@@ -27,69 +28,80 @@ class Comparison extends Component {
     }
   */
   state = {
-    compares: [],
-    confirmation: false
+    compares: [] //Store the pair data and comparison result
   }
 
-  render() {    
-    if (!util.isEmpty(this.props.pairData)) {
-      
-      //--For confirmation stage
-      if (!this.state.confirmation) {
-        //TODO: Modify criteria
+  render() {
+    switch (this.props.curComparison) {
+
+      case CONST.COM_TYPE.CONFIRM_PRE:
         //Present a rounded int to 10th digit
         let nQuestion = this.props.nQuestion <= 10 ? 10 : Math.round(this.props.nQuestion / 10) * 10;
         let secPerQ = 8;
         let nMin = Math.round(this.props.nQuestion * secPerQ / 60) === 0 ? 1 : Math.round(this.props.nQuestion * secPerQ / 60);
+        
         return (
           <div className="col-8">
+            <input
+              className="file-input"
+              id="fileInput-criteria"
+              type="file"
+              accept=".xlsx"
+              onChange={(evt) => {this.props.handleCriterionFile(evt.target.files[0]);}}
+            />          
             <p className="mt--3 fs-85">
               Regarding the provided criteria and options, you will answer about <span className="text-primary">{nQuestion} questions</span>.
               This process takes around <span className="text-primary">{nMin} minutes</span>.
             </p>
             <Button className="btn-medium mr-5" onClick={this.confirmCriteria}>Confirm</Button>
-            <Button className="btn-medium" disabled>Modify</Button>
+            <Button className="btn-medium">
+              <label htmlFor="fileInput-criteria" className="file-label">
+                Modify
+              </label>
+            </Button>
+          </div>
+          //TODO: after confirm, a fake loading stage
+        );
+      
+      case CONST.COM_TYPE.COMPARISON:
+        //TODO: progress bar
+        //TODO: hide submit after each submit
+        let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
+          <DivPosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} delay={150}>
+            <Pair
+              type={this.props.pairData.type}
+              data={pair}
+              updateComData={this.updateComData}
+              id2Name={this.props.id2Name}
+              options={this.props.options}
+            />
+          </DivPosedFadeY>
+        ));
+    
+        return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
+          <div className="comparison mt-4">
+            <BreadCrumbC className="justify-content-center col-8"
+              ancestors={this.props.pairData.breadCrumb.map((id) => this.props.id2Name[id])}
+            />
+            <GroupLabel className="mb-5 mt-4 fs-115"
+              pairDataType={this.props.pairData.type}
+              pairDataGId={this.props.pairData.gId}
+              id2Name={this.props.id2Name}
+            />
+            <PoseGroup animateOnMount={true}>
+              {pairs}
+            </PoseGroup>
+            <Button className="mt-2 btn-wide" onClick={this.handleComData8Reset}>Submit</Button>
           </div>
         );
-      }
       
+      case CONST.COM_TYPE.CONFIRM_POST:
+      case CONST.COM_TYPE.NULL:
+      default:
+        //TODO:--After answering questions, a fake confirmation stage
+        return <div />;
+    }
 
-      //--For real comparison
-      //TODO: progress bar
-      //TODO: hide submit after each submit
-      let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
-        <DivPosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} delay={150}>
-          <Pair
-            type={this.props.pairData.type}
-            data={pair}
-            updateComData={this.updateComData}
-            id2Name={this.props.id2Name}
-            options={this.props.options}
-          />
-        </DivPosedFadeY>
-      ));
-  
-      return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
-        <div className="comparison mt-4">
-          <BreadCrumbC className="justify-content-center col-8"
-            ancestors={this.props.pairData.breadCrumb.map((id) => this.props.id2Name[id])}
-          />
-          <GroupLabel className="mb-5 mt-4 fs-115"
-            pairDataType={this.props.pairData.type}
-            pairDataGId={this.props.pairData.gId}
-            id2Name={this.props.id2Name}
-          />
-          <PoseGroup animateOnMount={true}>
-            {pairs}
-          </PoseGroup>
-          <Button className="mt-2 btn-wide" onClick={this.handleComData8Reset}>Submit</Button>
-        </div>
-      );
-    
-    
-    //TODO:--After answering questions, a fake confirmation stage
-    //--If not in either confirmation or comparison
-    } else return <div />;
   }
 
 
@@ -118,7 +130,7 @@ class Comparison extends Component {
   }
 
   confirmCriteria = () => {
-    this.setState({ confirmation: true });
+    this.setState({ confirmed: true });
     this.props.enterComparison();
   }
 }
@@ -218,5 +230,6 @@ class Pair extends Component {
     });
   }
 }
+
 
 export default Comparison;
