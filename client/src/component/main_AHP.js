@@ -72,6 +72,8 @@ class Main extends Component {
           <div className="fixed-bottom">
             <div className="mb-2 ml-3" id="escape-simple">
               <ComponentWTip
+                //TODO: combine exit into footer
+                //TODO: popover instruction with ? icon
                 component={
                   <a id="a-escapeSimple" href="/simple"><i className="fas fa-sign-out-alt" /></a>
                 }
@@ -83,7 +85,7 @@ class Main extends Component {
             </div>
             <Footer />
           </div>
-          <div className="spacer-100"></div>
+          <div className="spacer-150"></div>
         </div>
       </div>
     );

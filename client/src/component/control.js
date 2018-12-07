@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-
 import { Button, ButtonToolbar, Label, Input } from "reactstrap";
 
 import { ButtonWTip } from "./util";

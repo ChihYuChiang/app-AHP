@@ -1,66 +1,71 @@
 import React, { Component } from "react";
-
+import { Button, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
 
 class DynamicInput extends Component {
   state = {
     name: '',
-    shareholders: [{ name: '' }],
+    options: [{ name: '' }],
   };
 
-  render() {
+  render() { //TODO: content check
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input
+      <Form onSubmit={this.submit}>
+        <Input className="mb-6 w-75"
           type="text"
           placeholder="Company name, e.g. Magic Everywhere LLC"
           value={this.state.name}
-          onChange={this.handleNameChange}
+          onChange={this.updateProblem}
         />
 
-        <h4>Shareholders</h4>
+        <p className="fs-115">Options</p>
 
-        {this.state.shareholders.map((shareholder, idx) => (
-          <div className="shareholder" key={idx}>
-            <input
+        {this.state.options.map((option, idx) => (
+          <div key={idx} className="mb-4">
+            <Input className="d-inline w-50"
               type="text"
-              placeholder={`Shareholder #${idx + 1} name`}
-              value={shareholder.name}
-              onChange={this.handleShareholderNameChange(idx)}
+              placeholder={`option #${idx + 1} name`}
+              value={option.name}
+              onChange={this.updateOption(idx)}
             />
-            <button type="button" onClick={this.handleRemoveShareholder(idx)} className="small">-</button>
+            <span className="close float-none ml-2" onClick={this.removeOption(idx)}>&times;</span>
           </div>
         ))}
-        <button type="button" onClick={this.handleAddShareholder} className="small">Add Shareholder</button>
-        <button>Incorporate</button>
-      </form>
-    )
+
+        <div>
+          <Button onClick={this.addOption}>Add option</Button>
+          <Button className="ml-5">Incorporate</Button>
+        </div>
+      </Form>
+    ) //The last one is the submit btn
   }
 
 
-  handleNameChange = (evt) => {
+  updateProblem = (evt) => {
     this.setState({ name: evt.target.value });
   }
 
-  handleShareholderNameChange = (idx) => (evt) => {
-    const newShareholders = this.state.shareholders.map((shareholder, sidx) => {
-      if (idx !== sidx) return shareholder;
-      return { ...shareholder, name: evt.target.value };
+  submit = (evt) => {
+    evt.preventDefault();
+
+    const { name, options } = this.state;
+    alert(`Incorporated: ${name} with ${options.length} options`);
+  }
+
+  updateOption = (idx) => (evt) => {
+    const newOptions = this.state.options.map((option, sidx) => {
+      if (idx !== sidx) return option;
+      return { ...option, name: evt.target.value };
     });
 
-    this.setState({ shareholders: newShareholders });
+    this.setState({ options: newOptions });
   }
 
-  handleSubmit = (evt) => {
-    const { name, shareholders } = this.state;
-    alert(`Incorporated: ${name} with ${shareholders.length} shareholders`);
+  addOption = () => {
+    this.setState({ options: this.state.options.concat([{ name: '' }]) });
   }
 
-  handleAddShareholder = () => {
-    this.setState({ shareholders: this.state.shareholders.concat([{ name: '' }]) });
-  }
-
-  handleRemoveShareholder = (idx) => () => {
-    this.setState({ shareholders: this.state.shareholders.filter((s, sidx) => idx !== sidx) });
+  removeOption = (idx) => () => {
+    this.setState({ options: this.state.options.filter((s, sidx) => idx !== sidx) });
   }
 }
 

@@ -16,7 +16,7 @@ class Main extends Component {
     return (
       <div className="container">
         <div className="col-12" align="center">
-          <div id="head-spacer"></div>
+          <div className="spacer-100"></div>
           <Title title="Random" subTitle={CONTENT.SUBTITLE.SIMPLE} />
           <div className="content mt-4">
             <Loading isLoading={this.state.isLoading}/>
@@ -25,7 +25,7 @@ class Main extends Component {
           <div className="fixed-bottom">
             <Footer />
           </div>
-          <div id="bottom-spacer"></div>
+          <div className="spacer-100"></div>
         </div>
       </div>
     );

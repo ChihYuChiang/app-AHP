@@ -35,16 +35,19 @@ class Comparison extends Component {
       
       //--For confirmation stage
       if (!this.state.confirmation) {
-        return ( //TODO: Modify criteria
+        //TODO: calculate number of questions
+        //TODO: Modify criteria
+        return (
           <div>
-            <Button className="btn-wide" onClick={this.confirmCriteria}>Confirm</Button>
-            {/* <Button className="btn-medium">Modify</Button> */}
+            <Button className="btn-medium mr-5" onClick={this.confirmCriteria}>Confirm</Button>
+            <Button className="btn-medium" disabled>Modify</Button>
           </div>
         );
       }
       
 
       //--For real comparison
+      //TODO: progress bar
       let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
         <DivPosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} delay={150}>
           <Pair

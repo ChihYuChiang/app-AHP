@@ -4,6 +4,7 @@ import util from "./util";
 import CONST from "./const";
 
 
+//TODO: show % in bar
 function main(datum) {
   //Graph root
   let [height, width] = [CONST.GRAPH_MEASURE.BAR_HEIGHT, CONST.GRAPH_MEASURE.BAR_WIDTH];
