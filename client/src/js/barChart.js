@@ -2,9 +2,9 @@ import * as d3 from "d3";
 
 import util from "./util";
 import CONST from "./const";
+import styles from "../scss/variable.scss";
 
 
-//TODO: show % in bar
 function main(datum) {
   //Graph root
   let [height, width] = [CONST.GRAPH_MEASURE.BAR_HEIGHT, CONST.GRAPH_MEASURE.BAR_WIDTH];
@@ -45,7 +45,19 @@ function main(datum) {
     .transition(barTransition)
     .delay((_, i) => i * 150)
     .attr("y", (d) => height - yScale(d))
-    .attr("height", (d) => yScale(d))
+    .attr("height", (d) => yScale(d));
+  barGs
+    .append("text")
+    .text((d) => Math.round(d * 100) + "%")
+    .attr("x", (_, i) => xScale(i + 1) + 0.5 * xScale.bandwidth())
+    .attr("y", (d) => CONST.GRAPH_MEASURE.BAR_HEIGHT - 0.5 * yScale(d) + 4)
+    .attr("fill", styles.gray700)
+    .attr("text-anchor", "middle")
+    .style("font-size", 8)
+    .style("opacity", 0)
+    .transition("barText")
+    .delay(600 + (datum.data.score.length - 1) * 150 + 50)
+    .style("opacity", 1);
 }
 
 
