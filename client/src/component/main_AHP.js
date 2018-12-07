@@ -5,14 +5,12 @@ import preprocessData, { genRoot, countQuestion } from "../js/pre-data";
 import util from "../js/util";
 import score from "../js/score";
 import CONST from "../js/const";
-import CONTENT from "../js/content";
 
 import Comparison from "./comparison";
 import Graph from "./graph";
 import Control from "./control";
-import Footer from "./footer";
-import { Loading, ComponentWTip, Title } from "./util";
-//TODO: landing
+import { Header, Footer } from "./header-footer";
+import { Loading } from "./util";
 
 
 const buildDefaultState = () => ({
@@ -46,7 +44,7 @@ class Main extends Component {
       <div className="container">
         <div className="col-12" align="center">
           <div className="spacer-100"></div>
-          <Title title="AHP" subTitle={CONTENT.SUBTITLE.AHP} />
+          {/* <Header location={CONST.LOCATION.AHP} /> */}
           <div className="mt-4">
             <Control
               curControl={this.state.curControl}
@@ -70,22 +68,7 @@ class Main extends Component {
               nQuestion={countQuestion(this.state.criterion.root, this.state.option.items.length)}
             />
           </div>
-          <div className="fixed-bottom">
-            <div className="mb-2 ml-3" id="escape-simple">
-              <ComponentWTip
-                //TODO: combine exit into footer
-                //TODO: popover instruction with ? icon
-                component={
-                  <a id="a-escapeSimple" href="/simple"><i className="fas fa-sign-out-alt" /></a>
-                }
-                componentId="a-escapeSimple"
-                tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
-                tipPlacement="top"
-                tipOffset="0px, 5px"
-              />
-            </div>
-            <Footer />
-          </div>
+          <Footer />
           <div className="spacer-150"></div>
         </div>
       </div>

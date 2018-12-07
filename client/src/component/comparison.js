@@ -39,7 +39,8 @@ class Comparison extends Component {
         //TODO: Modify criteria
         //Present a rounded int to 10th digit
         let nQuestion = this.props.nQuestion <= 10 ? 10 : Math.round(this.props.nQuestion / 10) * 10;
-        let nMin = Math.round(this.props.nQuestion * 10 / 60) === 0 ? 1 : Math.round(this.props.nQuestion * 10 / 60);
+        let secPerQ = 8;
+        let nMin = Math.round(this.props.nQuestion * secPerQ / 60) === 0 ? 1 : Math.round(this.props.nQuestion * secPerQ / 60);
         return (
           <div className="col-8">
             <p className="mt--3 fs-85">

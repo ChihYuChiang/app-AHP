@@ -1,4 +1,8 @@
 const main = {
+  LOCATION: {
+    AHP: 'AHP',
+    SIMPLE: 'simple'
+  },
   DATA_TYPE: {
     CRITERION: 'criterion',
     OPTION: 'option'

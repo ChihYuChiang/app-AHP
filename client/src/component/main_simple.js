@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
 import DynamicInput from "./dynamic-input";
-import Footer from "./footer";
-import { Loading, Title } from "./util";
+import { Header, Footer } from "./header-footer";
+import { Loading } from "./util";
 
-import CONTENT from "../js/content";
+import CONST from "../js/const";
 
 
 class Main extends Component {
@@ -19,14 +19,12 @@ class Main extends Component {
       <div className="container">
         <div className="col-12" align="center">
           <div className="spacer-100"></div>
-          <Title title="Random" subTitle={CONTENT.SUBTITLE.SIMPLE} />
+          <Header location={CONST.LOCATION.SIMPLE} />
           <div className="content mt-4">
             <Loading isLoading={this.state.isLoading}/>
           </div>
           <DynamicInput />
-          <div className="fixed-bottom">
-            <Footer />
-          </div>
+          <Footer />
           <div className="spacer-100"></div>
         </div>
       </div>

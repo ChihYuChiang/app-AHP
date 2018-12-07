@@ -5,36 +5,14 @@
 
 @import "scss/function.scss";
 @import "scss/mixin-extend.scss";
+
 @import "scss/fluid-slider.scss";
 @import "scss/control.scss";
 @import "scss/graph.scss";
 @import "scss/comparison.scss";
+@import "scss/header-footer.scss";
 
 
 html { //For rem, which Bootstrap 4 bases on
   font-size: 14px;
-}
-
-#escape-simple {
-  text-align: left;
-
-  i {
-    transform: rotate(180deg);
-    color: $gray-300;
-    font-size: 1.5rem;
-    transition: all ease-in 0.05s;
-  }
-  i:hover {
-    color: $gray-500;
-  }
-}
-
-#signature {
-  color: $gray-200;
-  font-size: 0.75rem;
-  background-color: $gray-700;
-  padding-top: 10px;
-  padding-bottom: 12px;
-  padding-right: 40px;
-  text-align: right;
 }
