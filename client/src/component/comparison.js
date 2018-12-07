@@ -39,9 +39,13 @@ class Comparison extends Component {
         //TODO: Modify criteria
         //Present a rounded int to 10th digit
         let nQuestion = this.props.nQuestion <= 10 ? 10 : Math.round(this.props.nQuestion / 10) * 10;
+        let nMin = Math.round(this.props.nQuestion * 10 / 60) === 0 ? 1 : Math.round(this.props.nQuestion * 10 / 60);
         return (
           <div className="col-8">
-            <p className="mt--3">You will answer {nQuestion} questions about the provided criteria and options for AHP evaluation.</p>
+            <p className="mt--3 fs-85">
+              Regarding the provided criteria and options, you will answer about <span className="text-primary">{nQuestion} questions</span>.
+              This process takes around <span className="text-primary">{nMin} minutes</span>.
+            </p>
             <Button className="btn-medium mr-5" onClick={this.confirmCriteria}>Confirm</Button>
             <Button className="btn-medium" disabled>Modify</Button>
           </div>
@@ -51,6 +55,7 @@ class Comparison extends Component {
 
       //--For real comparison
       //TODO: progress bar
+      //TODO: hide submit after each submit
       let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
         <DivPosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} delay={150}>
           <Pair
@@ -68,7 +73,7 @@ class Comparison extends Component {
           <BreadCrumbC className="justify-content-center col-8"
             ancestors={this.props.pairData.breadCrumb.map((id) => this.props.id2Name[id])}
           />
-          <GroupLabel className="mb-4 mt-5 fs-115"
+          <GroupLabel className="mb-5 mt-4 fs-115"
             pairDataType={this.props.pairData.type}
             pairDataGId={this.props.pairData.gId}
             id2Name={this.props.id2Name}
@@ -76,7 +81,7 @@ class Comparison extends Component {
           <PoseGroup animateOnMount={true}>
             {pairs}
           </PoseGroup>
-          <Button className="btn-wide" onClick={this.handleComData8Reset}>Submit</Button>
+          <Button className="mt-2 btn-wide" onClick={this.handleComData8Reset}>Submit</Button>
         </div>
       );
     
@@ -177,10 +182,8 @@ class Pair extends Component {
 
     return ( //TODO: sticky score explanation
       <div>
-        <p className="prompt">
-          {destName}<span className="text-secondary ml-2 mr-2">or</span>{sourceName}
-        </p>
-        <div className="slider-wrapper">
+        <p>{destName}<span className="text-secondary ml-2 mr-2">or</span>{sourceName}</p>
+        <div>
           <input name="range-slider" type="range" className="fluid-slider" max="8" min="-8" step="1"
             data-source={sourceName}
             data-dest={destName}
@@ -192,7 +195,6 @@ class Pair extends Component {
           <span className="range-label" ref={this.labelElement}>{Math.abs(this.state.value) / 2}</span>
         </div>
       </div>
-      //Transform the label for better readability
     );
   }
   
