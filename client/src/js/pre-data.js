@@ -1,6 +1,7 @@
 import * as d3 from "d3";
 
 import CONST from "./const";
+import util from "./util";
 
 
 async function main(rows) {
@@ -89,12 +90,11 @@ function getNodeById(root, id) {
   return allNodes.filter((item) => item.id === id)[0];
 }
 
-//Get ancestor ids (only ids) of a n, ode id
+//Get ancestor ids (only ids) of a node id
 function getAncestorIds(root, id) {
   let targetNode = getNodeById(root, id);
   let ancestorNodes = targetNode.ancestors();
   let ancestorIds = ancestorNodes.map((node) => node.id);
-  // ancestorIds.pop(); //Remove root
   return ancestorIds;
 }
 
@@ -159,5 +159,18 @@ function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //* for gene
   }
 }
 
+function countQuestion(root, nOption) {
+  if (!util.isEmpty(root)) {
+    let optionQ = root.leaves().length * util.combinations(nOption, 2);
+    let criterionQ = 0;
+    for (let node of root.descendants()) {
+      if (node.children !== undefined && node.children.length >= 2) {
+        criterionQ += util.combinations(node.children.length, 2);
+      }
+    }
+    return optionQ + criterionQ;
+  } else return "";
+}
 
-export { main as default, genRoot };
+
+export { main as default, genRoot, countQuestion };

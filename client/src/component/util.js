@@ -15,6 +15,7 @@ export function Title(props) {
       subTitle
     }
   */
+  //TODO: remove subtitle when not needed
   return (
     <PoseGroup animateOnMount={true}>
       <DivPosedFade key="title" delay={200}>

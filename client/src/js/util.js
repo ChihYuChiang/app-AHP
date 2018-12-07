@@ -28,6 +28,41 @@ class main {
   }
 
   /**
+   * Series product of all numbers between a and b
+   * 
+   * @param {Number} lowerBound An int. 
+   * @param {Number} upperBound An int.
+   * 
+   * @return {Number}
+   */
+  static rangeProduct(lowerBound, upperBound) {
+    var prd = lowerBound, i = lowerBound;
+   
+    while (i++ < upperBound) {
+      prd *= i;
+    }
+    return prd;
+  }
+  
+  /**
+   * C n get r
+   * 
+   * @param {Number} n An int. 
+   * @param {Number} r An int.
+   * 
+   * @return {Number} Number of combination.
+   */
+  static combinations(n, r) {
+    if (n === r) {
+      return 1;
+    } 
+    else {
+      r = (r < n - r) ? n - r : r;
+      return this.rangeProduct(r + 1, n) / this.rangeProduct(1, n - r);
+    }
+  }
+  
+  /**
    * A `setTimeout` Promise wrapper.
    * 
    * @param {Number} ms Duration.

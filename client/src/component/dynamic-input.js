@@ -1,10 +1,10 @@
 import React, { Component } from "react";
-import { Button, Form, FormGroup, Label, Input, Row, Col } from 'reactstrap';
+import { Button, Form, Input } from 'reactstrap';
 
 class DynamicInput extends Component {
   state = {
     name: '',
-    options: [{ name: '' }],
+    options: [{ option: '' }, { option: '' }],
   };
 
   render() { //TODO: content check

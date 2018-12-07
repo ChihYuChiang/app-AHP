@@ -12,6 +12,8 @@ class Main extends Component {
     isLoading: false
   };
 
+  //TODO: shuffle current options
+  //TODO: mysterious keyword
   render() {
     return (
       <div className="container">

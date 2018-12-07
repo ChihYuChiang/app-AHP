@@ -23,6 +23,7 @@ class Comparison extends Component {
       //.type, option or criterion
       id2Name //A dict translate node id to the name to be displayed
       options //Aa array of option items
+      nQuestion //Number of questions the user will encounter
     }
   */
   state = {
@@ -35,10 +36,12 @@ class Comparison extends Component {
       
       //--For confirmation stage
       if (!this.state.confirmation) {
-        //TODO: calculate number of questions
         //TODO: Modify criteria
+        //Present a rounded int to 10th digit
+        let nQuestion = this.props.nQuestion <= 10 ? 10 : Math.round(this.props.nQuestion / 10) * 10;
         return (
-          <div>
+          <div className="col-8">
+            <p className="mt--3">You will answer {nQuestion} questions about the provided criteria and options for AHP evaluation.</p>
             <Button className="btn-medium mr-5" onClick={this.confirmCriteria}>Confirm</Button>
             <Button className="btn-medium" disabled>Modify</Button>
           </div>
@@ -76,8 +79,9 @@ class Comparison extends Component {
           <Button className="btn-wide" onClick={this.handleComData8Reset}>Submit</Button>
         </div>
       );
-
-
+    
+    
+    //TODO:--After answering questions, a fake confirmation stage
     //--If not in either confirmation or comparison
     } else return <div />;
   }

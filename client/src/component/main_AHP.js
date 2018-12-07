@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 
-import preprocessData, { genRoot } from "../js/pre-data";
+import preprocessData, { genRoot, countQuestion } from "../js/pre-data";
 import util from "../js/util";
 import score from "../js/score";
 import CONST from "../js/const";
@@ -25,7 +25,7 @@ const buildDefaultState = () => ({
     items: [],
     pairs: {},
     compares: [],
-    root: [],
+    root: {},
     id2Name: {}
   },
   pairDataGenerator: {},
@@ -67,6 +67,7 @@ class Main extends Component {
               pairData={this.state.curPairData}
               id2Name={this.state.criterion.id2Name}
               options={this.state.option.items}
+              nQuestion={countQuestion(this.state.criterion.root, this.state.option.items.length)}
             />
           </div>
           <div className="fixed-bottom">
