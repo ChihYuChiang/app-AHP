@@ -55,6 +55,13 @@ $theme-colors: (
 
 $spacer: 1rem;
 $spacers: (
+  -1: ($spacer * -0.25),
+  -2: ($spacer * -0.5),
+  -3: ($spacer * -1),
+  -4: ($spacer * -1.5),
+  -5: ($spacer * -3),
+  -6: ($spacer * -4.5),
+  -7: ($spacer * -6),
   6: ($spacer * 4.5),
   7: ($spacer * 6)
 );
