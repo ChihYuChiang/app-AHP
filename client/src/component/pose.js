@@ -1,16 +1,24 @@
 import posed from 'react-pose';
 
+
+//An empty Posed component to pass pose stages to its children
+export const DivPosedNull = posed.div({
+  enter: {},
+  exit: {}
+});
+
+
 export const DivPosedPop = posed.div({
   /*
     props = {
-      color //In #FFFFFF format
+      cColor //In #FFFFFF format
     }
   */
   enter: {
     x: -10,
     y: -10,
     opacity: 1,
-    boxShadow: (props) => '10px 10px 20px ' + props.color,
+    boxShadow: (props) => '10px 10px 20px ' + props.cColor,
     transition: { duration: 700 }
   },
   exit: {
@@ -41,11 +49,11 @@ export const DivPosedFadeX = posed.div({
   /*
     props = {
       i //Optional, element id for staggering
-      delay //Option, delay when enter
+      cDelay //Option, delay when enter (keyword `delay` is used by Pose module)
     }
   */  
   enter: {
-    delay: (props) => (props.delay + props.i * props.delay) || props.delay || 150,
+    delay: (props) => (props.cDelay + props.i * props.cDelay) || props.cDelay || 150,
     x: 0,
     opacity: 1
   },
@@ -63,11 +71,11 @@ export const DivPosedFadeY = posed.div({
   /*
     props = {
       i //Optional, element id for staggering
-      delay //Option, delay when enter
+      cDelay //Option, delay when enter
     }
   */    
   enter: {
-    delay: (props) => (props.delay + props.i * props.delay) || props.delay || 150,
+    delay: (props) => (props.cDelay + props.i * props.cDelay) || props.cDelay || 150,
     y: 0,
     opacity: 1
   },
@@ -85,11 +93,11 @@ export const DivPosedFade = posed.div({
   /*
     props = {
       i //Optional, element id for staggering
-      delay //Option, delay when enter
+      cDelay //Option, delay when enter
     }
   */    
   enter: {
-    delay: (props) => (props.delay + props.i * props.delay) || props.delay || 0,
+    delay: (props) => (props.cDelay + props.i * props.cDelay) || props.cDelay || 0,
     opacity: 1
   },
   exit: {

@@ -67,7 +67,7 @@ class Comparison extends Component {
         //TODO: progress bar
         //TODO: hide submit after each submit
         let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
-          <DivPosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} delay={150}>
+          <DivPosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} cDelay={150}>
             <Pair
               type={this.props.pairData.type}
               data={pair}
