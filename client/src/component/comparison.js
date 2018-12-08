@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { DivPosedFadeY } from './pose';
+import { PosedFadeY } from './pose';
 import BreadCrumbC from './breadcrumb';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
@@ -67,7 +67,7 @@ class Comparison extends Component {
         //TODO: progress bar
         //TODO: hide submit after each submit
         let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
-          <DivPosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} cDelay={150}>
+          <PosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} cDelay={150}>
             <Pair
               type={this.props.pairData.type}
               data={pair}
@@ -75,7 +75,7 @@ class Comparison extends Component {
               id2Name={this.props.id2Name}
               options={this.props.options}
             />
-          </DivPosedFadeY>
+          </PosedFadeY>
         ));
     
         return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)

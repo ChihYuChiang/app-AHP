@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DivPosedFadeY } from './pose';
+import { PosedFadeY } from './pose';
 
 import drawTreeGraph from "../js/treegraph";
 import CONST from "../js/const";
@@ -16,11 +16,11 @@ function Graph (props) {
   */
   switch (props.curGraph) {
     case CONST.GRAPH_TYPE.NULL:
-      return <DivPosedFadeY id="canvasRoot" style={{ display: "none" }} pose='exit'/>;
+      return <PosedFadeY id="canvasRoot" style={{ display: "none" }} pose='exit'/>;
     
     default:
       drawTreeGraph(props.root, props.options, props.curGraph);
-      return <DivPosedFadeY id="canvasRoot" style={{ display: "block" }} pose='enter'/>;
+      return <PosedFadeY id="canvasRoot" style={{ display: "block" }} pose='enter'/>;
   }
 }
 

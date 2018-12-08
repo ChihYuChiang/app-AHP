@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { Button, Input } from "reactstrap";
+import { PoseGroup } from 'react-pose';
 
+import { PosedNull, PosedFadeY } from './pose';
 import DynamicInput from "./dynamic-input";
 import { Header, Footer } from "./header-footer";
 import { Loading } from "./util";
@@ -86,22 +88,30 @@ function MagicInput(props) {
   if (props.show) {
     return (
       //Use DOM element value attribute to maintain input state
-      //(instead of maintaining by component states) 
-      <div>
-        <p>What's your favorite movie?</p>
-        <Input className="mb-6 w-75"
-          //`autoFocus` with `onFocus` resets `main`'s magic state
-          autoFocus
-          type="text"
-          onChange={props.updateMagic}
-          onFocus={props.updateMagic}
-        />        
-        <Button onClick={props.computeResult}>
-          Submit
-        </Button>
-      </div>
+      //(instead of maintaining by component states)
+      //The `PosedNull` layer suffices the key requirement by PoseGroup and enables the sub-components to be posed or not
+      <PoseGroup>
+        <PosedNull key="magicInput">
+          <div className="spacer-100" />
+          <PosedFadeY>
+            <p className="fs-115">What's your favorite movie?</p>
+            <Input className="w-75"
+              //`autoFocus` with `onFocus` resets `main`'s magic state
+              autoFocus
+              type="text"
+              onChange={props.updateMagic}
+              onFocus={props.updateMagic}
+            />        
+          </PosedFadeY>
+          <PosedFadeY cDelay={400}>
+            <Button className="btn-medium mt-6" onClick={props.computeResult}>
+              Submit
+            </Button>
+          </PosedFadeY>
+        </PosedNull>
+      </PoseGroup>
     );
-  } else return <div />;
+  } else return <PoseGroup />;
 }
 
 function Output(props) {
@@ -114,14 +124,21 @@ function Output(props) {
 
   if (props.show) {
     return (
-      <div>
-        <p>Hello!</p>
-        <Button onClick={props.createNew}>
-          New Problem
-        </Button>
-      </div>
+      <PoseGroup>
+        <PosedNull key="output">
+          <div className="spacer-100" />
+          <PosedFadeY>
+            <p className="fs-115">Hello! You should choose this one.</p>
+          </PosedFadeY>
+          <PosedFadeY cDelay={2000}>
+            <Button className="btn-medium mt-6" onClick={props.createNew}>
+              New Problem
+            </Button>
+          </PosedFadeY>
+        </PosedNull>
+      </PoseGroup>
     );
-  } else return <div />;
+  } else return <PoseGroup />;
 }
 
 

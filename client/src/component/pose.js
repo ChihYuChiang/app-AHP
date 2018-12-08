@@ -1,14 +1,15 @@
 import posed from 'react-pose';
+//Note: PoseGroup can only be used locally, within each React component
 
 
 //An empty Posed component to pass pose stages to its children
-export const DivPosedNull = posed.div({
+export const PosedNull = posed.div({
   enter: {},
   exit: {}
 });
 
 
-export const DivPosedPop = posed.div({
+export const PosedPop = posed.div({
   /*
     props = {
       cColor //In #FFFFFF format
@@ -45,7 +46,7 @@ export const SpanPosedAttention = posed.span({
 });
 
 
-export const DivPosedFadeX = posed.div({
+export const PosedFadeX = posed.div({
   /*
     props = {
       i //Optional, element id for staggering
@@ -67,7 +68,7 @@ export const DivPosedFadeX = posed.div({
 });
 
 
-export const DivPosedFadeY = posed.div({
+export const PosedFadeY = posed.div({
   /*
     props = {
       i //Optional, element id for staggering
@@ -89,7 +90,7 @@ export const DivPosedFadeY = posed.div({
 });
 
 
-export const DivPosedFade = posed.div({
+export const PosedFade = posed.div({
   /*
     props = {
       i //Optional, element id for staggering

@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import { Button, Form, Input } from 'reactstrap';
+import { PoseGroup } from 'react-pose';
+
+import { PosedNull, PosedFadeY } from './pose';
 
 
 const buildDefaultState = () => ({
@@ -44,22 +47,28 @@ class DynamicInput extends Component {
       ));
 
       return (
-        <Form onSubmit={this.submit}>
-          <Input className="mb-6 w-75"
-            autoFocus
-            type="text"
-            placeholder="A problem, e.g. What for my lunch?"
-            value={this.state.problem}
-            onChange={this.updateProblem}
-          />
-          <p className="fs-115">Options</p>
-          {inputItems}
-          <div>
-            <Button className="btn-medium">Submit</Button>
-          </div>
-        </Form>
+        <PoseGroup>
+          <PosedNull key="dynamicInput">
+            <Form onSubmit={this.submit}>
+              <PosedFadeY>
+                <Input className="mb-6 w-75"
+                  autoFocus
+                  type="text"
+                  placeholder="A problem, e.g. What's for lunch?"
+                  value={this.state.problem}
+                  onChange={this.updateProblem}
+                />
+                <p className="fs-115">Options</p>
+                {inputItems}
+              </PosedFadeY>
+              <PosedFadeY cDelay={400}>
+                <Button className="btn-medium mt-4">Submit</Button>
+              </PosedFadeY>
+            </Form>
+          </PosedNull>
+        </PoseGroup>
       ); //The last one is the submit btn
-    } else return <div />;
+    } else return <PoseGroup />;
   }
 
 

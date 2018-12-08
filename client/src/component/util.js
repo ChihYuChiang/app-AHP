@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Tooltip } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { DivPosedFade } from './pose';
+import { PosedFade } from './pose';
 
 import util from '../js/util';
 import styles from '../scss/variable.scss';
@@ -18,12 +18,12 @@ export function Title(props) {
   //TODO: remove subtitle when not needed
   return (
     <PoseGroup animateOnMount={true}>
-      <DivPosedFade key="title" cDelay={200}>
+      <PosedFade key="title" cDelay={200}>
         <h1>{props.title}</h1>
-      </DivPosedFade>
-      <DivPosedFade key="subTitle" cDelay={1000}>
+      </PosedFade>
+      <PosedFade key="subTitle" cDelay={600}>
         <p className="col-8">{props.subTitle}</p>
-      </DivPosedFade>
+      </PosedFade>
     </PoseGroup>
   );
 }
@@ -31,7 +31,7 @@ export function Title(props) {
 
 export function Loading(props) { //TODO: split text effect ...
   const loadingContent = (
-    <DivPosedFade key="loading">
+    <PosedFade key="loading">
       <div className="d-flex justify-content-center">
         <i
           className="fas fa-cog fa-spin fa-3x"
@@ -42,7 +42,7 @@ export function Loading(props) { //TODO: split text effect ...
         className="d-flex justify-content-center small mt-1"
         style={{ color: styles.gray800 }}
         >Loading ...</p>
-    </DivPosedFade> //TODO: Random loading message
+    </PosedFade> //TODO: Random loading message
   );
   
   return (
