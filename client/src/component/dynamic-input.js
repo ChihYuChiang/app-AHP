@@ -19,17 +19,27 @@ class DynamicInput extends Component {
     ...buildDefaultState()
   };
 
-  render() { //TODO: content check
+  render() {
+    //TODO: content check
+    //TODO: maximum number of options
+    //TODO: input checks
     if (this.props.show) {
-      let inputItems = this.state.options.map((option, idx) => (
-        <div key={"option_" + idx} className="mb-4">
-          <Input className="d-inline w-50"
-            type="text"
-            placeholder={`Option #${idx + 1}`}
-            value={option.name}
-            onChange={this.updateOption(idx)}
-          />
-          <span className="close float-none ml-2" onClick={this.removeOption(idx)}>&times;</span>
+      let inputItems = this.state.options.map((option, idx, array) => (
+        <div key={"option_" + idx} className="mb-4 w-75 row no-gutters">
+          <span className="col-1" />
+          <span className="col-9">
+            <Input className="d-inline mr--4"
+              type="text"
+              placeholder={`Option #${idx + 1}`}
+              value={option.name}
+              onChange={this.updateOption(idx)}
+            />
+            <span className="close float-none" onClick={this.removeOption(idx)}>&times;</span>
+          </span>
+          {idx + 1 === array.length //Using character entity https://dev.w3.org/html5/html-author/charref
+            ? <span className="close float-none col" style={{ marginTop: 4 }} onClick={this.addOption}>&#43;</span>
+            : <span className="col" /> //`col` fill the rest; `col-auto` fit the content width
+          }
         </div>
       ));
 
@@ -45,8 +55,7 @@ class DynamicInput extends Component {
           <p className="fs-115">Options</p>
           {inputItems}
           <div>
-            <Button onClick={this.addOption}>Add Option</Button>
-            <Button className="ml-5">Submit</Button>
+            <Button className="btn-medium">Submit</Button>
           </div>
         </Form>
       ); //The last one is the submit btn

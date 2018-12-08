@@ -5,6 +5,8 @@ import interaction from "./treegraph_inter";
 import util from "./util";
 import styles from "../scss/variable.scss";
 
+
+//TODO: separate hover and click on circle
 function main(root, options, graphType) {
   //If there's additional interaction
   let inter = [
@@ -137,7 +139,7 @@ function produceTreeGraph(root, options, inter) {
   nodeGs_enter
     .append("text")
     .classed("node_text", true)
-    .attr("fill", styles.gray900)
+    .attr("fill", styles.gray800)
     .attr("text-anchor", "middle");
 
   let nodeGs_enter8Update = nodeGs_enter.merge(nodeGs); //Under current design, no update will be made

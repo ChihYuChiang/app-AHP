@@ -73,7 +73,7 @@ class Main extends Component {
               nQuestion={countQuestion(this.state.criterion.root, this.state.option.items.length)}
             />
           </div>
-          <Footer />
+          <Footer location={CONST.LOCATION.AHP} />
           <div className="spacer-150"></div>
         </div>
       </div>

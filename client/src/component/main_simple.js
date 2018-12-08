@@ -39,7 +39,7 @@ class Main extends Component {
             show={this.state.stage === CONST.SIMPLE_STAGE.RESULT}
             createNew={this.createNew}
           />
-          <Footer />
+          <Footer location={CONST.LOCATION.SIMPLE} />
           <div className="spacer-100"></div>
         </div>
       </div>
