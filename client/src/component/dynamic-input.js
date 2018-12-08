@@ -4,6 +4,8 @@ import { PoseGroup } from 'react-pose';
 
 import { PosedNull, PosedFadeY } from './pose';
 
+import Validator from "../js/validate";
+
 
 const buildDefaultState = () => ({
   problem: '',
@@ -73,7 +75,13 @@ class DynamicInput extends Component {
 
 
   updateProblem = (evt) => {
+    let validate = new Validator(evt.target.value)
+      .isntEmpty()
+      .longerThan(3)
+      .removeSpace()
+      .isAlpha()
     this.setState({ problem: evt.target.value });
+    console.log(validate.verdict, validate.comment)
   }
 
   submit = (evt) => {

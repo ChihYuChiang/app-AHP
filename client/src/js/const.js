@@ -37,6 +37,15 @@ const main = {
     BAR_WIDTH: 100,
     LEGEND_ITEM_HEIGHT: 22
   },
+  VAL_CMT: {
+    EMPTY: 'empty',
+    TOO_SHORT: 'too_short',
+    TOO_LONG: 'too_long',
+    NOT_EQUAL: 'not_equal',
+    NOT_ALPHA: 'not_alpha',
+    NOT_NUMBER: 'not_number',
+    NOT_ALPHA_NUMBER: 'not_alpha_number'
+  },
   PATH: {
     TEMPLATE_SERVER: process.env.NODE_ENV === 'production' ? '.' : 'http://localhost:5000'
   }
