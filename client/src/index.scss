@@ -16,3 +16,15 @@
 html { //For rem, which Bootstrap 4 bases on
   font-size: 14px;
 }
+
+
+.black-hole { //Contains elements won't take any space, like doesn't exist
+  @extend .m-0;
+  @extend .p-0;
+  @extend .border-0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: z(bottomless-pit);
+  pointer-events: none;
+}

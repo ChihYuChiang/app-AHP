@@ -85,6 +85,22 @@ class main {
     }
     return a;
   }
+
+  /**
+   * A handler for EnterKey events.
+   * 
+   * @param {Event} evt KeyPress/KeyUp/KeyDown event.
+   * @param {Function} cb Callback function. Usually the onClick handler of the corresponding button.
+   */
+  static handleEnterKey(evt, cb) {
+    //Some browsers use keyCode, others use which.
+    //13 is the "Enter" key on the keyboard
+    const keyCode = evt.keyCode || evt.which;
+    if (keyCode === 13) {
+      cb();
+    }
+  }
 }
+
 
 export default main;

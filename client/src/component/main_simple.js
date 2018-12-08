@@ -72,7 +72,6 @@ class Main extends Component {
   }
 
   getRec = () => {
-    console.log("yy")
     this.setState({
       stage: CONST.SIMPLE_STAGE.RESULT,
       rec: this.state.options[randomDecide(this.state.options, this.state.magic)]
@@ -105,7 +104,7 @@ function MagicInput(props) {
       //The `PosedNull` layer suffices the key requirement by PoseGroup and enables the sub-components to be posed or not
       <PoseGroup>
         <PosedNull key="magicInput">
-          <div className="spacer-100" />
+          <div className="mb-6" />
           <PosedFadeY>
             <p className="fs-115">{CONTENT.MAGIC_PROMPTS[props.magicId]}</p>
             <Input className="w-75"
@@ -120,8 +119,7 @@ function MagicInput(props) {
           <PosedFadeY cDelay={400}>
             <Button className="btn-medium mt-6"
               onClick={props.getRec}
-            >
-              Submit
+            >Submit
             </Button>
           </PosedFadeY>
         </PosedNull>
@@ -143,7 +141,15 @@ function Output(props) {
     return (
       <PoseGroup>
         <PosedNull key="output">
-          <div className="spacer-100" />
+          <div className="black-hole">
+            <input
+              //For accepting keyboard events
+              autoFocus
+              type="checkbox"
+              onKeyPress={(evt) => {util.handleEnterKey(evt, props.createNew)}}
+            />    
+          </div>
+          <div className="mb-6" />
           <PosedFadeY>
             <p className="fs-115">Hello! You should choose this one.</p>
           </PosedFadeY>
