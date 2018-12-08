@@ -29,7 +29,19 @@ const main = {
       The analytic hierarchy process (AHP) is a structured technique for organizing and analyzing complex decisions, based on mathematics and psychology. 
       It was developed by Thomas L. Saaty in the 1970s and has been extensively studied and refined since then.
       `
-  }
+  },
+  MAGIC_PROMPTS: [
+    "Name a celebrity off the top of your head.",
+    "Name a politician off the top of your head.",
+    "Name a major brand you like.",
+    "What's your favorite color?",
+    "What's your favorite fruit?",
+    "What's your favorite movie? (accept TV series as well)",
+    "Use one word to describe today's weather.",
+    "Use one word to describe your current mood.",
+    "Who do you like more, Donald or Hillary?",
+    "Are people born good or bad?"
+  ]
 }
 
 

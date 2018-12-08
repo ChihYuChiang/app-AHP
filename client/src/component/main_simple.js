@@ -7,7 +7,10 @@ import DynamicInput from "./dynamic-input";
 import { Header, Footer } from "./header-footer";
 import { Loading } from "./util";
 
+import randomDecide from "../js/random-decision";
+import util from "../js/util";
 import CONST from "../js/const";
+import CONTENT from "../js/content";
 
 
 class Main extends Component {
@@ -15,7 +18,11 @@ class Main extends Component {
     stage: CONST.SIMPLE_STAGE.INPUT,
     problem: '',
     options: [],
-    magic: ''
+    //TODO: refreshed by date
+    //Only renewed when the whole page refreshed
+    magicId: Math.floor(Math.random() * CONTENT.MAGIC_PROMPTS.length),
+    magic: '',
+    rec: ''
   };
 
   //TODO: shuffle current options
@@ -34,11 +41,13 @@ class Main extends Component {
           />
           <MagicInput
             show={this.state.stage === CONST.SIMPLE_STAGE.MAGIC}
+            magicId={this.state.magicId}
             updateMagic={this.updateMagic}
-            computeResult={this.computeResult}
+            getRec={this.getRec}
           />
           <Output
             show={this.state.stage === CONST.SIMPLE_STAGE.RESULT}
+            rec={this.state.rec}
             createNew={this.createNew}
           />
           <Footer location={CONST.LOCATION.SIMPLE} />
@@ -62,9 +71,11 @@ class Main extends Component {
     });
   }
 
-  computeResult = () => {
+  getRec = () => {
+    console.log("yy")
     this.setState({
-      stage: CONST.SIMPLE_STAGE.RESULT
+      stage: CONST.SIMPLE_STAGE.RESULT,
+      rec: this.state.options[randomDecide(this.state.options, this.state.magic)]
     });
   }
 
@@ -77,11 +88,13 @@ class Main extends Component {
 
 
 function MagicInput(props) {
+  //TODO: validate input
   /*
     props = {
       show //Show or hide this component
+      magicId //The id for CONTENT's magic prompt array
       updateMagic //Update magic word to `main`
-      computeResult //Update app stage to result
+      getRec //Compute rec and update app stage to result
     }
   */
   
@@ -94,17 +107,20 @@ function MagicInput(props) {
         <PosedNull key="magicInput">
           <div className="spacer-100" />
           <PosedFadeY>
-            <p className="fs-115">What's your favorite movie?</p>
+            <p className="fs-115">{CONTENT.MAGIC_PROMPTS[props.magicId]}</p>
             <Input className="w-75"
               //`autoFocus` with `onFocus` resets `main`'s magic state
               autoFocus
               type="text"
               onChange={props.updateMagic}
               onFocus={props.updateMagic}
+              onKeyPress={(evt) => {util.handleEnterKey(evt, props.getRec)}}
             />        
           </PosedFadeY>
           <PosedFadeY cDelay={400}>
-            <Button className="btn-medium mt-6" onClick={props.computeResult}>
+            <Button className="btn-medium mt-6"
+              onClick={props.getRec}
+            >
               Submit
             </Button>
           </PosedFadeY>
@@ -119,6 +135,7 @@ function Output(props) {
     props = {
       show //Show or hide this component
       createNew //Update app stage back to `input`
+      rec //Computed recommendation
     }
   */
 
@@ -130,7 +147,10 @@ function Output(props) {
           <PosedFadeY>
             <p className="fs-115">Hello! You should choose this one.</p>
           </PosedFadeY>
-          <PosedFadeY cDelay={2000}>
+          <PosedFadeY cDelay={1000}>
+            <h3 className="text-primary">{props.rec}</h3>
+          </PosedFadeY>
+          <PosedFadeY cDelay={3000}>
             <Button className="btn-medium mt-6" onClick={props.createNew}>
               New Problem
             </Button>

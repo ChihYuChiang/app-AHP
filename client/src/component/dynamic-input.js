@@ -7,7 +7,7 @@ import { PosedNull, PosedFadeY } from './pose';
 
 const buildDefaultState = () => ({
   problem: '',
-  options: [{ name: '' }, { name: '' }]
+  options: ['', '']
 });
 
 
@@ -34,7 +34,7 @@ class DynamicInput extends Component {
             <Input className="d-inline mr--4"
               type="text"
               placeholder={`Option #${idx + 1}`}
-              value={option.name}
+              value={option}
               onChange={this.updateOption(idx)}
             />
             <span className="close float-none" onClick={this.removeOption(idx)}>&times;</span>
@@ -86,14 +86,14 @@ class DynamicInput extends Component {
   updateOption = (idx) => (evt) => {
     const newOptions = this.state.options.map((option, sidx) => {
       if (idx !== sidx) return option;
-      return { ...option, name: evt.target.value };
+      return evt.target.value;
     });
 
     this.setState({ options: newOptions });
   }
 
   addOption = () => {
-    this.setState({ options: this.state.options.concat([{ name: '' }]) });
+    this.setState({ options: this.state.options.concat(['']) });
   }
 
   removeOption = (idx) => () => {
