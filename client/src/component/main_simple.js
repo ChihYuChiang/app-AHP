@@ -155,18 +155,19 @@ function Output(props) {
               onKeyPress={(evt) => {util.handleEnterKey(evt, props.createNew)}}
             />    
           </div>
-          <div className="mb-6" />
-          <p>{props.problem}</p>
-          <PosedFadeY>
-            <p className="fs-115 mb-1">{CONTENT.MAGIC_PROMPTS[props.magicId][1].replace(/\{\}/, props.magic)}</p>
+          <div className="mb-4" />
+          <p className="text-muted mb-4">{props.problem}</p>
+          <PosedFadeY cDelay={1000}>
+            <p className="fs-115 mb-1">
+              {CONTENT.MAGIC_PROMPTS[props.magicId][1].replace(/\{\}/, props.magic)}
+              <br />
+              You should choose this one.
+            </p>
           </PosedFadeY>
-          <PosedFadeY cDelay={2000}>
-            <p className="fs-115">You should choose this one.</p>
-          </PosedFadeY>
-          <PosedFade cDelay={4000}>
+          <PosedFade cDelay={3000}>
             <h3 className="text-primary mt-5">{props.rec}</h3>
           </PosedFade>
-          <PosedFadeY cDelay={7000}>
+          <PosedFadeY cDelay={5500}>
             <Button className="btn-medium mt-6" onClick={props.createNew}>
               New Problem
             </Button>
