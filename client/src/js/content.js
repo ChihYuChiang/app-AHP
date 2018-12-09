@@ -22,8 +22,15 @@ const main = {
   TIP_OTHER: {
     A_ESCAPE_SIMPLE: "Let's not bother with the complicated reality.."
   },
+  INSTRUCTION: {
+    SIMPLE: "Remember, to make this really works, answer the question sincerely."
+  },
   SUBTITLE: {
-    SIMPLE: "This is a random decision maker. It makes life much easier.",
+    SIMPLE:
+      `
+      This is a simple decision maker that makes life much easier.
+      Fill up your problem, options, and a little magic question, and you'll know the way you should go.
+      `,
     AHP:
       `
       The analytic hierarchy process (AHP) is a structured technique for organizing and analyzing complex decisions, based on mathematics and psychology. 
@@ -35,11 +42,11 @@ const main = {
     ["Name a politician off the top of your head.", "While you have seen so much about {},"],
     ["Name a major brand you like.", "While you like {} products,"],
     ["What's your favorite color?", "While you like {} color,"],
-    ["What's your favorite fruit?", "While you often eat {},"],
+    ["What's your favorite fruit?", "While you eat {} often,"],
     ["What's your favorite movie? (accept TV series as well)", "While you love {},"],
     ["Use one word to describe today's weather.", "While it's {} today,"],
     ["Use one word to describe your current mood.", "While you are feeling {},"],
-    ["Who do you like more, Donald or Hillary?", "While you think {} is a little bit better,"],
+    ["Who do you like more, Donald or Hillary?", "While you think {} is a bit better,"],
     ["Are people born good or bad?", "While we are naturally {},"]
   ]
 }

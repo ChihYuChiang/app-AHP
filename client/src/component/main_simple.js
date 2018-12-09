@@ -124,6 +124,7 @@ function MagicInput(props) {
               onClick={props.getRec}
             >Submit
             </Button>
+            <p className="text-muted fs-85 mt-3 w-75">{CONTENT.INSTRUCTION.SIMPLE}</p>
           </PosedFadeY>
         </PosedNull>
       </PoseGroup>

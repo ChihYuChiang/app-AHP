@@ -69,7 +69,7 @@ function Header(props) {
     }
     case CONST.LOCATION.SIMPLE: {
       content = {
-        title: "Random",
+        title: "Simple",
         subTitle: CONTENT.SUBTITLE.SIMPLE
       };     
     }

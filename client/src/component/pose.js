@@ -31,17 +31,18 @@ export const PosedPop = posed.div({
 });
 
 
-export const SpanPosedAttention = posed.span({
+export const PosedAttX = posed.div({
   attention: {
-    scale: 1.3,
+    applyAtStart: { x: 5 },
+    x: -5,
     transition: {
       type: 'spring',
-      stiffness: 200,
+      stiffness: 600,
       damping: 0
     }
   },
   offAttention: {
-    scale: 1
+    x: 0
   }
 });
 

@@ -2,14 +2,16 @@ import React, { Component } from "react";
 import { Button, Form, Input } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { PosedNull, PosedFadeY } from './pose';
+import { PosedNull, PosedFadeY, PosedAttX } from './pose';
 
+import util from "../js/util";
 import Validator from "../js/validate";
 
 
 const buildDefaultState = () => ({
   problem: '',
-  options: ['', '']
+  options: ['', ''],
+  pose_prob: '',
 });
 
 
@@ -53,13 +55,16 @@ class DynamicInput extends Component {
           <PosedNull key="dynamicInput">
             <Form onSubmit={this.submit}>
               <PosedFadeY>
-                <Input className="mb-6 w-75"
-                  autoFocus
-                  type="text"
-                  placeholder="A problem, e.g. What's for lunch?"
-                  value={this.state.problem}
-                  onChange={this.updateProblem}
-                />
+                <PosedAttX pose={this.state.pose_prob}>
+                  <Input className="mb-6 w-75"
+                    autoFocus
+                    type="text"
+                    placeholder="A problem, e.g. What's for lunch?"
+                    value={this.state.problem}
+                    onChange={this.updateProblem}
+                    innerRef={(element) => {this.ref_problem = element;}}
+                  />
+                </PosedAttX>
                 <p className="fs-115">Options</p>
                 {inputItems}
               </PosedFadeY>
@@ -74,18 +79,27 @@ class DynamicInput extends Component {
   }
 
 
+  attProblem = () => {
+    this.ref_problem.focus();
+    this.setState({pose_prob: "attention"}, () => {
+      util.sleep(300).then(() => {
+        this.setState({pose_prob: "offAttention"});
+      });
+    })
+  }
+
   updateProblem = (evt) => {
-    let validate = new Validator(evt.target.value)
-      .isntEmpty()
-      .longerThan(3)
-      .removeSpace()
-      .isAlpha()
     this.setState({ problem: evt.target.value });
-    console.log(validate.verdict, validate.comment)
   }
 
   submit = (evt) => {
     evt.preventDefault(); //Default is to refresh page
+
+    let validate = new Validator(this.state.problem).longerThan(3)
+    if (!validate.pass) {
+      this.attProblem();
+      return;
+    }
 
     //Inject default texts
     this.setState((state) => {
