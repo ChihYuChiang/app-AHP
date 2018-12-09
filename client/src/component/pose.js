@@ -37,7 +37,7 @@ export const PosedAttX = posed.div({
     x: -5,
     transition: {
       type: 'spring',
-      stiffness: 600,
+      stiffness: 700,
       damping: 0
     }
   },

@@ -7,6 +7,7 @@ import CONST from "../js/const";
 import CONTENT from "../js/content";
 
 
+//TODO: share social media
 class Control extends Component {
   /*
     props = {

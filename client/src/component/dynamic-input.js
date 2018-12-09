@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, Input } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { PosedNull, PosedFadeY, PosedAttX, PosedFade } from './pose';
+import { PosedNull, PosedFade, PosedFadeY, PosedAttX } from './pose';
 
 import util from "../js/util";
 import Validator from "../js/validate";
@@ -32,8 +32,8 @@ class DynamicInput extends Component {
       let inputItems = this.state.options.map((option, idx, array) => (
         <PosedFade key={"option_" + idx} cDurEx={0}>
           <div className="mb-4 w-75 row no-gutters">
-            <span className="col-1" />
-            <span className="col-9">
+            <div className="col-1" />
+            <div className="col-9">
               <Input className="d-inline mr--4"
                 type="text"
                 placeholder={`Option #${idx + 1}`}
@@ -41,13 +41,13 @@ class DynamicInput extends Component {
                 onChange={this.updateOption(idx)}
               />
               {array.length > 2 //Limit the number of options
-                ? <span className="close float-none" onClick={this.removeOption(idx)}>&times;</span>
+                ? <span className="close float-none" style={{ verticalAlign: "-10%" }} onClick={this.removeOption(idx)}>&times;</span>
                 : <span className="close float-none no-pointer text-white">&times;</span>
               }
-            </span>
+            </div>
             {idx + 1 === array.length && array.length < 7 //Limit the number of options
               //Using character entity https://dev.w3.org/html5/html-author/charref
-              ? <span className="close float-none col" style={{ marginTop: 4 }} onClick={this.addOption}>&#43;</span>
+              ? <span className="close text-primary float-none col" style={{ marginTop: 5 }} onClick={this.addOption}>&#43;</span>
               : <span className="col" /> //`col` fill the rest; `col-auto` fit the content width
             }
           </div>
@@ -60,7 +60,7 @@ class DynamicInput extends Component {
             <Form onSubmit={this.submit}>
               <PosedFadeY>
                 <PosedAttX pose={this.state.pose_prob}>
-                  <Input className="mb-6 w-75"
+                  <Input className="mb-6 mt-4 w-75"
                     autoFocus
                     type="text"
                     placeholder="A problem, e.g. What's for lunch?"
@@ -99,7 +99,7 @@ class DynamicInput extends Component {
   submit = (evt) => {
     evt.preventDefault(); //Default is to refresh page
 
-    let validate = new Validator(this.state.problem).longerThan(3)
+    let validate = new Validator(this.state.problem).removeSpace().longerThan(3)
     if (!validate.pass) {
       this.attProblem();
       return;

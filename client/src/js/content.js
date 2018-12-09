@@ -40,12 +40,12 @@ const main = {
   MAGIC_PROMPTS: [
     ["Name a celebrity off the top of your head.", "While you've followed {}'s activity"],
     ["Name a politician off the top of your head.", "While you have seen so much about {}"],
-    ["Name a major brand you like.", "While you like {} products"],
+    ["Name a major brand you like.", "While you like {}'s products"],
     ["What's your favorite color?", "While you like {} color"],
     ["What's your favorite fruit?", "While you eat {} often"],
     ["What's your favorite movie? (accept TV series as well)", "While you love {}"],
     ["Use one word to describe today's weather.", "While it's {} today"],
-    ["Use one word to describe your current mood.", "While you are feeling {}"],
+    ["Use one word to describe your current mood.", "While you feel {} today"],
     ["Who do you like more, Donald or Hillary?", "While you think {} is a bit better"],
     ["Are people born good or bad?", "While we are naturally {}"]
   ]
