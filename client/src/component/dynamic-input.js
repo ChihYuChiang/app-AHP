@@ -43,7 +43,7 @@ class DynamicInput extends Component {
             />
             <span className="close float-none" onClick={this.removeOption(idx)}>&times;</span>
           </span>
-          {idx + 1 === array.length //Using character entity https://dev.w3.org/html5/html-author/charref
+          {idx + 1 === array.length && array.length < 7 //Using character entity https://dev.w3.org/html5/html-author/charref
             ? <span className="close float-none col" style={{ marginTop: 4 }} onClick={this.addOption}>&#43;</span>
             : <span className="col" /> //`col` fill the rest; `col-auto` fit the content width
           }
