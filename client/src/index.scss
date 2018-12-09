@@ -28,3 +28,7 @@ html { //For rem, which Bootstrap 4 bases on
   z-index: z(bottomless-pit);
   pointer-events: none;
 }
+
+.no-pointer {
+  pointer-events: none;
+}

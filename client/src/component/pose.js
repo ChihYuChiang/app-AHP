@@ -96,6 +96,7 @@ export const PosedFade = posed.div({
     props = {
       i //Optional, element id for staggering
       cDelay //Option, delay when enter
+      cDurEx //Option, duration when exit
     }
   */    
   enter: {
@@ -104,8 +105,8 @@ export const PosedFade = posed.div({
   },
   exit: {
     opacity: 0,
-    transition: {
-      duration: 100
-    }
+    transition: (props) => ({
+      duration: props.cDurEx || 100
+    })
   }
 });

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Form, Input } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { PosedNull, PosedFadeY, PosedAttX } from './pose';
+import { PosedNull, PosedFadeY, PosedAttX, PosedFade } from './pose';
 
 import util from "../js/util";
 import Validator from "../js/validate";
@@ -28,30 +28,34 @@ class DynamicInput extends Component {
 
   render() {
     //TODO: content check
-    //TODO: maximum number of options
-    //TODO: input checks
     if (this.props.show) {
       let inputItems = this.state.options.map((option, idx, array) => (
-        <div key={"option_" + idx} className="mb-4 w-75 row no-gutters">
-          <span className="col-1" />
-          <span className="col-9">
-            <Input className="d-inline mr--4"
-              type="text"
-              placeholder={`Option #${idx + 1}`}
-              value={option}
-              onChange={this.updateOption(idx)}
-            />
-            <span className="close float-none" onClick={this.removeOption(idx)}>&times;</span>
-          </span>
-          {idx + 1 === array.length && array.length < 7 //Using character entity https://dev.w3.org/html5/html-author/charref
-            ? <span className="close float-none col" style={{ marginTop: 4 }} onClick={this.addOption}>&#43;</span>
-            : <span className="col" /> //`col` fill the rest; `col-auto` fit the content width
-          }
-        </div>
+        <PosedFade key={"option_" + idx} cDurEx={0}>
+          <div className="mb-4 w-75 row no-gutters">
+            <span className="col-1" />
+            <span className="col-9">
+              <Input className="d-inline mr--4"
+                type="text"
+                placeholder={`Option #${idx + 1}`}
+                value={option}
+                onChange={this.updateOption(idx)}
+              />
+              {array.length > 2 //Limit the number of options
+                ? <span className="close float-none" onClick={this.removeOption(idx)}>&times;</span>
+                : <span className="close float-none no-pointer text-white">&times;</span>
+              }
+            </span>
+            {idx + 1 === array.length && array.length < 7 //Limit the number of options
+              //Using character entity https://dev.w3.org/html5/html-author/charref
+              ? <span className="close float-none col" style={{ marginTop: 4 }} onClick={this.addOption}>&#43;</span>
+              : <span className="col" /> //`col` fill the rest; `col-auto` fit the content width
+            }
+          </div>
+        </PosedFade>
       ));
 
       return (
-        <PoseGroup>
+        <PoseGroup animateOnMount={true}>
           <PosedNull key="dynamicInput">
             <Form onSubmit={this.submit}>
               <PosedFadeY>
@@ -66,7 +70,7 @@ class DynamicInput extends Component {
                   />
                 </PosedAttX>
                 <p className="fs-115">Options</p>
-                {inputItems}
+                <PoseGroup>{inputItems}</PoseGroup>
               </PosedFadeY>
               <PosedFadeY cDelay={400}>
                 <Button className="btn-medium mt-4">Submit</Button>
