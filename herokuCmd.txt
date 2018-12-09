@@ -1,11 +1,28 @@
+heroku git:remote -a app-ahp
+cd D:\Dropbox\Ongoing - Dropbox\app-AHP
+
 heroku login
 git push heroku production:master
 
 git push heroku --force production:master
+
+
+//--Handle failure
 heroku logs --tail
+heroku builds -a app-ahp
+heroku builds:cancel c62c0b39-1590-4365-844c-b9f433e4eb44 -a app-ahp
+heroku builds:cache:purge -a app-ahp
 
-cd D:\Dropbox\Ongoing - Dropbox\app-AHP
+heroku repo:purge_cache -a app-ahp
+heroku repo:reset -a app-ahp
 
+
+//--Relavent links
 https://dashboard.heroku.com/apps/app-ahp/activity
 https://app-ahp.herokuapp.com/
 https://app-ahp.herokuapp.com/record/5bffb14ffaca310e183c503c
+
+
+//--Heroku CLI plug-ins
+https://github.com/heroku/heroku-builds
+https://github.com/heroku/heroku-repo

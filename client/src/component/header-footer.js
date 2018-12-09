@@ -6,6 +6,7 @@ import CONST from "../js/const";
 import { ComponentWTip, Title } from "./util";
 
 
+//TODO: when mobile, footer not sticky
 function Footer(props) {
   /*
     props = {

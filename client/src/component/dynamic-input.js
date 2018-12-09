@@ -27,7 +27,6 @@ class DynamicInput extends Component {
   };
 
   render() {
-    //TODO: content check
     if (this.props.show) {
       let inputItems = this.state.options.map((option, idx, array) => (
         <PosedFade key={"option_" + idx} cDurEx={0}>

@@ -14,13 +14,13 @@ import CONST from "../js/const";
 import CONTENT from "../js/content";
 
 
+//TODO: no autofocus when mobile
 //TODO: database record input
 class Main extends Component {
   state = {
     stage: CONST.SIMPLE_STAGE.INPUT,
     problem: '',
     options: [],
-    //TODO: refreshed by date
     //Only renewed when the whole page refreshed
     magicId: Math.floor(Math.random() * CONTENT.MAGIC_PROMPTS.length),
     magic: '',
