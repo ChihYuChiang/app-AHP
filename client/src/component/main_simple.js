@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Button, Input } from "reactstrap";
 import { PoseGroup } from 'react-pose';
 
-import { PosedNull, PosedFadeY } from './pose';
+import { PosedNull, PosedFade, PosedFadeY } from './pose';
 import DynamicInput from "./dynamic-input";
 import { Header, Footer } from "./header-footer";
 import { Loading } from "./util";
@@ -47,6 +47,9 @@ class Main extends Component {
           />
           <Output
             show={this.state.stage === CONST.SIMPLE_STAGE.RESULT}
+            magicId={this.state.magicId}
+            magic={this.state.magic}
+            problem={this.state.problem}   
             rec={this.state.rec}
             createNew={this.createNew}
           />
@@ -106,7 +109,7 @@ function MagicInput(props) {
         <PosedNull key="magicInput">
           <div className="mb-6" />
           <PosedFadeY>
-            <p className="fs-115">{CONTENT.MAGIC_PROMPTS[props.magicId]}</p>
+            <p className="fs-115">{CONTENT.MAGIC_PROMPTS[props.magicId][0]}</p>
             <Input className="w-75"
               //`autoFocus` with `onFocus` resets `main`'s magic state
               autoFocus
@@ -132,6 +135,8 @@ function Output(props) {
   /*
     props = {
       show //Show or hide this component
+      magicId //The id for CONTENT's magic prompt array
+      magic //The magic entered
       createNew //Update app stage back to `input`
       rec //Computed recommendation
     }
@@ -150,13 +155,17 @@ function Output(props) {
             />    
           </div>
           <div className="mb-6" />
+          <p>{props.problem}</p>
           <PosedFadeY>
-            <p className="fs-115">Hello! You should choose this one.</p>
+            <p className="fs-115 mb-1">{CONTENT.MAGIC_PROMPTS[props.magicId][1].replace(/\{\}/, props.magic)}</p>
           </PosedFadeY>
-          <PosedFadeY cDelay={1000}>
-            <h3 className="text-primary">{props.rec}</h3>
+          <PosedFadeY cDelay={2000}>
+            <p className="fs-115">You should choose this one.</p>
           </PosedFadeY>
-          <PosedFadeY cDelay={3000}>
+          <PosedFade cDelay={4000}>
+            <h3 className="text-primary mt-5">{props.rec}</h3>
+          </PosedFade>
+          <PosedFadeY cDelay={7000}>
             <Button className="btn-medium mt-6" onClick={props.createNew}>
               New Problem
             </Button>

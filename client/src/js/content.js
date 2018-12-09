@@ -31,16 +31,16 @@ const main = {
       `
   },
   MAGIC_PROMPTS: [
-    "Name a celebrity off the top of your head.",
-    "Name a politician off the top of your head.",
-    "Name a major brand you like.",
-    "What's your favorite color?",
-    "What's your favorite fruit?",
-    "What's your favorite movie? (accept TV series as well)",
-    "Use one word to describe today's weather.",
-    "Use one word to describe your current mood.",
-    "Who do you like more, Donald or Hillary?",
-    "Are people born good or bad?"
+    ["Name a celebrity off the top of your head.", "While you are following {}'s news,"],
+    ["Name a politician off the top of your head.", "While you have seen so much about {},"],
+    ["Name a major brand you like.", "While you like {} products,"],
+    ["What's your favorite color?", "While you like {} color,"],
+    ["What's your favorite fruit?", "While you often eat {},"],
+    ["What's your favorite movie? (accept TV series as well)", "While you love {},"],
+    ["Use one word to describe today's weather.", "While it's {} today,"],
+    ["Use one word to describe your current mood.", "While you are feeling {},"],
+    ["Who do you like more, Donald or Hillary?", "While you think {} is a little bit better,"],
+    ["Are people born good or bad?", "While we are naturally {},"]
   ]
 }
 

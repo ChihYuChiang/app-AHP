@@ -103,5 +103,8 @@ export const PosedFade = posed.div({
   },
   exit: {
     opacity: 0,
+    transition: {
+      duration: 100
+    }
   }
 });

@@ -87,8 +87,13 @@ class DynamicInput extends Component {
   submit = (evt) => {
     evt.preventDefault(); //Default is to refresh page
 
-    this.props.submitInput(this.state);
-    this.setState(buildDefaultState()) //Reset state (and the presentation as well)
+    //Inject default texts
+    this.setState((state) => {
+      state.options = state.options.map((option, i) => option || "Option #" + (i + 1));
+      this.props.submitInput(state);
+      state = buildDefaultState(); //Reset state (and the presentation as well)
+      return state;
+    });
   }
 
   updateOption = (idx) => (evt) => {
