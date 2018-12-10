@@ -40,7 +40,7 @@ class Control extends Component {
             </div>
         return (
           <div>
-            <Button onClick={this.record8GetUrl}>Record Result</Button>
+            <Button onClick={this.record8GetUrl}>Record Report</Button>
             <Button className="ml-5" disabled>
               Upload New Criteria
             </Button>
