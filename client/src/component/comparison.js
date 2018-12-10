@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import { Button } from 'reactstrap';
+import { Button, Progress } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { PosedFadeY } from './pose';
+import { PosedFade, PosedFadeY } from './pose';
 import BreadCrumbC from './breadcrumb';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
@@ -10,13 +10,16 @@ import CONST from "../js/const";
 import styles from "../scss/variable.scss";
 
 
+//TODO: prop type module
 class Comparison extends Component {
   /*
     props = {
       curComparison //App state marker
+      curPairProgress //0-100, the completed percentage (not including this batch)
       handleCriterionFile //Deliver the uploaded criterion file to be handled by main
-      enterComparison //Update graph (app) state
+      enterComparison //Update graph (app) state, leave pre confirmation
       handleComData //Add comData into the store
+      exitComparison //Update graph (app) state, leave post confirmation
       pairData
       //.gId, The id of this pair group, also the parent node's name in the root
       //.breadCrumb, The ids of the ancestor elements (excluding root)
@@ -53,7 +56,7 @@ class Comparison extends Component {
               Regarding the provided criteria and options, you will answer about <span className="text-primary">{nQuestion} questions</span>.
               This process takes around <span className="text-primary">{nMin} minutes</span>.
             </p>
-            <Button className="btn-medium mr-5" onClick={this.confirmCriteria}>Confirm</Button>
+            <Button className="btn-medium mr-5" onClick={this.props.enterComparison}>Confirm</Button>
             <Button className="btn-medium">
               <label htmlFor="fileInput-criteria" className="file-label">
                 Modify
@@ -64,10 +67,8 @@ class Comparison extends Component {
         );
       
       case CONST.COM_TYPE.COMPARISON:
-        //TODO: progress bar
-        //TODO: hide submit after each submit
         let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
-          <PosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i} cDelay={150}>
+          <PosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i}>
             <Pair
               type={this.props.pairData.type}
               data={pair}
@@ -80,6 +81,10 @@ class Comparison extends Component {
     
         return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
           <div className="comparison mt-4">
+            <Progress className="col-8 p-0 pbar-thin"
+              value={this.props.curPairProgress}
+              color="info"
+            />
             <BreadCrumbC className="justify-content-center col-8"
               ancestors={this.props.pairData.breadCrumb.map((id) => this.props.id2Name[id])}
             />
@@ -90,15 +95,37 @@ class Comparison extends Component {
             />
             <PoseGroup animateOnMount={true}>
               {pairs}
+              <PosedFadeY key={this.props.pairData.gId + '_submit'} i={this.props.pairData.pairs.length}>
+                <Button className="mt-2 btn-wide" onClick={this.handleComData8Reset}>Submit
+                </Button>
+              </PosedFadeY>
             </PoseGroup>
-            <Button className="mt-2 btn-wide" onClick={this.handleComData8Reset}>Submit</Button>
           </div>
         );
       
       case CONST.COM_TYPE.CONFIRM_POST:
+        return (
+          <div className="comparison mt-4">
+            <Progress className="col-8 p-0 pbar-thin"
+              value={100}
+              color="info"
+            />
+            <BreadCrumbC className="justify-content-center col-8"
+              ancestors={[""]}
+            />
+            <PoseGroup animateOnMount={true}>
+              <PosedFade key="msg">
+                <p className="mt-6 fs-115">Required information collected.</p>
+              </PosedFade>
+              <PosedFadeY key="btn" cDelay={1000}>
+                <Button className="mt-6 btn-wide" onClick={this.props.exitComparison}>Generate Report</Button>
+              </PosedFadeY>
+            </PoseGroup>
+          </div>
+        );
+
       case CONST.COM_TYPE.NULL:
       default:
-        //TODO:--After answering questions, a fake confirmation stage
         return <div />;
     }
 
@@ -127,11 +154,6 @@ class Comparison extends Component {
       curState.compares = compares;
       return curState;
     });
-  }
-
-  confirmCriteria = () => {
-    this.setState({ confirmed: true });
-    this.props.enterComparison();
   }
 }
 

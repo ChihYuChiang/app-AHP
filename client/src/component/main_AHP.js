@@ -27,7 +27,9 @@ const buildDefaultState = () => ({
     id2Name: {}
   },
   pairDataGenerator: {},
-  curPairData: {}
+  curPairData: {},
+  curPairProgress: 0,
+  nQuestion: 0
 });
 
 
@@ -63,14 +65,15 @@ class Main extends Component {
             />
             <Comparison
               curComparison={this.state.curComparison}
+              curPairProgress={this.state.curPairProgress}
               handleCriterionFile={this.handleCriterionFile}
               enterComparison={this.enterComparison}
               handleComData={this.handleComData}
-              // exitComparison={this.exitComparison}
+              exitComparison={this.exitComparison}
               pairData={this.state.curPairData}
               id2Name={this.state.criterion.id2Name}
               options={this.state.option.items}
-              nQuestion={countQuestion(this.state.criterion.root, this.state.option.items.length)}
+              nQuestion={this.state.nQuestion}
             />
           </div>
           <Footer location={CONST.LOCATION.AHP} />
@@ -121,6 +124,9 @@ class Main extends Component {
           curComparison: CONST.COM_TYPE.CONFIRM_PRE,
           isLoading: false
         });
+      }) //`.then()` uses its cb to create a promise. When this promise resolved, executes next then and creates next promise
+      .then(() => {
+        this.setState({ nQuestion: countQuestion(this.state.criterion.root, this.state.option.items.length) })
       });
   }
 
@@ -131,24 +137,37 @@ class Main extends Component {
         ...comData,
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
+      state.curPairProgress += state.curPairData.pairs.length / state.nQuestion * 100;
       state.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
 
       //Shuffle the pair order (for display)
       if (!util.isEmpty(this.state.curPairData)) util.shuffle(state.curPairData.pairs);
       
-      //If all pairs are displayed, compute score and produce report
+      //If all pairs are displayed, enter post confirm
       else {
-        //Fake loading
-        state.curGraph = CONST.GRAPH_TYPE.NULL;
-        state.curComparison = CONST.COM_TYPE.NULL;
-        state.isLoading = true;
+        state.curComparison = CONST.COM_TYPE.CONFIRM_POST;
       }
-      
+
       return state;
-    }, async () => {
+    });
+  };
+
+  enterComparison = () => {
+    this.setState({
+      curGraph: CONST.GRAPH_TYPE.NULL,
+      curComparison: CONST.COM_TYPE.COMPARISON
+    });
+  };
+
+  exitComparison = () => {
+    this.setState({
+      //Fake loading
+      curComparison: CONST.COM_TYPE.NULL,
+      isLoading: true
+    }, async () => { //compute score and produce report
       if (this.state.isLoading) {
         await util.sleep(2000);
-        
+
         //Update the real content
         this.setState((state, _) => {
           let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
@@ -156,22 +175,10 @@ class Main extends Component {
           state.isLoading = false;
           state.curControl = CONST.CONTROL_TYPE.UPDATE;
           state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
-  
+
           return state;
         });
       }
-    });
-  };
-
-  exitComparison = () => {
-
-  }
-
-  enterComparison = () => {
-    this.setState({
-      curControl: CONST.CONTROL_TYPE.NULL,
-      curGraph: CONST.GRAPH_TYPE.NULL,
-      curComparison: CONST.COM_TYPE.COMPARISON
     });
   };
 

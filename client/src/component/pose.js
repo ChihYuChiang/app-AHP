@@ -2,6 +2,11 @@ import posed from 'react-pose';
 //Note: PoseGroup can only be used locally, within each React component
 
 
+export const POSE_MEASURE = {
+  DELAY_INTERVAL: 150
+}
+
+
 //An empty Posed component to pass pose stages to its children
 export const PosedNull = posed.div({
   enter: {},
@@ -55,7 +60,7 @@ export const PosedFadeX = posed.div({
     }
   */  
   enter: {
-    delay: (props) => (props.cDelay + props.i * props.cDelay) || props.cDelay || 150,
+    delay: (props) => (props.cDelay + props.i * props.cDelay) || (POSE_MEASURE.DELAY_INTERVAL + props.i * POSE_MEASURE.DELAY_INTERVAL) || props.cDelay || POSE_MEASURE.DELAY_INTERVAL,
     x: 0,
     opacity: 1
   },
@@ -77,7 +82,7 @@ export const PosedFadeY = posed.div({
     }
   */    
   enter: {
-    delay: (props) => (props.cDelay + props.i * props.cDelay) || props.cDelay || 150,
+    delay: (props) => (props.cDelay + props.i * props.cDelay) || (POSE_MEASURE.DELAY_INTERVAL + props.i * POSE_MEASURE.DELAY_INTERVAL) || props.cDelay || POSE_MEASURE.DELAY_INTERVAL,
     y: 0,
     opacity: 1
   },

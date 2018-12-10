@@ -32,7 +32,7 @@ const main = {
     COMPARISON: 'comparison',
     NULL: 'null'
   },
-  GRAPH_MEASURE: {
+  GRAPH_MEASURE: { //TODO: move these to scss var, maybe another js const
     BAR_HEIGHT: 67,
     BAR_WIDTH: 100,
     LEGEND_ITEM_HEIGHT: 22

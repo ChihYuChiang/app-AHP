@@ -32,3 +32,10 @@ html { //For rem, which Bootstrap 4 bases on
 .no-pointer {
   pointer-events: none;
 }
+
+.pbar-thin {
+  height: 2px;
+  border-radius: .25rem .25rem 0px 0px;
+  margin-bottom: -2px;
+  z-index: z(default) + 1;
+}
