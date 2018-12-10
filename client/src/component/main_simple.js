@@ -14,7 +14,6 @@ import CONST from "../js/const";
 import CONTENT from "../js/content";
 
 
-//TODO: no autofocus when mobile
 //TODO: database record input
 class Main extends Component {
   state = {

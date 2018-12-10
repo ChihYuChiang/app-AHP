@@ -63,7 +63,6 @@ class Comparison extends Component {
               </label>
             </Button>
           </div>
-          //TODO: after confirm, a fake loading stage
         );
       
       case CONST.COM_TYPE.COMPARISON:

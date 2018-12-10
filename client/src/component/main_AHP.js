@@ -152,33 +152,39 @@ class Main extends Component {
     });
   };
 
-  enterComparison = () => {
+  enterComparison = () => { //From pre confirm into real comparison
     this.setState({
+      //Fake loading
       curGraph: CONST.GRAPH_TYPE.NULL,
-      curComparison: CONST.COM_TYPE.COMPARISON
+      curComparison: CONST.COM_TYPE.NULL,
+      isLoading: true
+    }, async () => {
+      await util.sleep(1500);
+
+      //Update the real content
+      this.setState({
+        curComparison: CONST.COM_TYPE.COMPARISON,
+        isLoading: false
+      });
     });
   };
 
-  exitComparison = () => {
+  exitComparison = () => { //From post confirm (showing 100% progress) into report 
     this.setState({
-      //Fake loading
       curComparison: CONST.COM_TYPE.NULL,
       isLoading: true
     }, async () => { //compute score and produce report
-      if (this.state.isLoading) {
-        await util.sleep(2000);
+      await util.sleep(2000);
 
-        //Update the real content
-        this.setState((state, _) => {
-          let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
-          state.criterion.root = root;
-          state.isLoading = false;
-          state.curControl = CONST.CONTROL_TYPE.UPDATE;
-          state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
+      this.setState((state, _) => {
+        let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
+        state.criterion.root = root;
+        state.isLoading = false;
+        state.curControl = CONST.CONTROL_TYPE.UPDATE;
+        state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
 
-          return state;
-        });
-      }
+        return state;
+      });
     });
   };
 
@@ -228,7 +234,10 @@ class Main extends Component {
   };
 
   recordResult = async () => {
-    this.setState({ isLoading: true });
+    this.setState({
+      curControl: CONST.CONTROL_TYPE.NULL, 
+      isLoading: true
+    });
 
     const response = await fetch('/api/create', {
       method: 'POST',
@@ -242,7 +251,11 @@ class Main extends Component {
     });
     const recordId = await response.text();
 
-    this.setState({ isLoading: false });
+    this.setState({
+      curControl: CONST.CONTROL_TYPE.RECORDED, 
+      isLoading: false
+    });
+
     return recordId;
   };
 }

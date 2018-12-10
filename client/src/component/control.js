@@ -29,22 +29,27 @@ class Control extends Component {
         return <div />;
 
       case CONST.CONTROL_TYPE.UPDATE:
-        let recordUrl4Copy = !this.state.recordUrl
-          ? <div></div>
-          : <div className="col-8 mt-4">
-              <Label for="recordUrl">Click to copy the record url</Label >
-              <Input type="text" id="recordUrl" readOnly
-                onClick={copyRecordUrl}
-                value={this.state.recordUrl}
-              />
-            </div>
         return (
           <div>
-            <Button onClick={this.record8GetUrl}>Record Report</Button>
-            <Button className="ml-5" disabled>
+            <ButtonWTip buttonId="btn-recordReport"
+              buttonContent="Save Your Report"
+              buttonOnClick={this.record8GetUrl}
+              tipContent={CONTENT.TIP_BTN.RECORD_REPORT}
+            />            
+            <Button className="ml-4" disabled>
               Upload New Criteria
             </Button>
-            {recordUrl4Copy}
+          </div>
+        );
+      
+      case CONST.CONTROL_TYPE.RECORDED:
+        return (
+          <div className="col-8 mt-4">
+            <Label for="recordUrl" className="text-secondary">Click to copy report URL</Label >
+            <Input type="text" id="recordUrl" readOnly
+              onClick={copyRecordUrl}
+              value={this.state.recordUrl}
+            />
           </div>
         );
       

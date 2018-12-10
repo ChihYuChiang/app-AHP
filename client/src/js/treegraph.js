@@ -6,6 +6,7 @@ import util from "./util";
 import styles from "../scss/variable.scss";
 
 
+//TODO: when graph too small (only few criteria), the legend overlaps the root node -> if no of leaves <= x, legend not sticky and in the normal flow
 //TODO: separate hover and click on circle
 function main(root, options, graphType) {
   //If there's additional interaction

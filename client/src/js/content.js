@@ -17,6 +17,10 @@ const main = {
       <div>
         The criteria have to be edited in an <b>Excel file</b> in a particular format.
         Please refer to the template file via <b>Download Template</b>.
+      </div>,
+    RECORD_REPORT:
+      <div>
+        This will save your report, this entire interactive graph, to the <b>cloud</b> and give you an <b>unique URL</b> to share and access this report in any later time.
       </div>
   },
   TIP_OTHER: {
