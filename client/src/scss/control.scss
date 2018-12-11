@@ -57,6 +57,8 @@
 //--Only in `control` component
 #control-wrapper {
 
+  @extend %i-control;
+
   a:link, a:visited, a:hover, a:active {
     @extend %remove-a-effect;
   }

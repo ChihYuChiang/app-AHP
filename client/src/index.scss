@@ -52,3 +52,15 @@ a:hover {
   margin-bottom: -2px;
   z-index: z(default) + 1;
 }
+
+.modal-header button:focus { //Modify the default bs focus stye
+  outline-color: $gray-500;
+}
+
+.modal-body img {
+  width: 100%;
+}
+
+.modal-header {
+  color: theme-color(primary);
+}

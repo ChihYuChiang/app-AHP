@@ -3,7 +3,7 @@ import React from "react";
 
 const main = {
   TIP_BTN: {
-    DEMO_RESULT:
+    DEMO_REPORT:
       <div>
         This shows what we'll have after the <b>AHP procedure</b>,
         which evaluates the importance of each <b>decision criterion</b> and the performance of each <b>option</b>.
@@ -27,7 +27,10 @@ const main = {
     A_ESCAPE_SIMPLE: "Let's not bother with the complicated reality.."
   },
   INSTRUCTION: {
-    SIMPLE: "Remember, to make this really works, answer the question sincerely."
+    SIMPLE: "Remember, to make this really works, answer the question sincerely.",
+    STEP_0: "Do you have a difficult decision that you can't make up your mind? It can be whether to accept an admission offer, to hire a candidate, to change your career track, or to date a charming young man. Research shows that all these tough decisions have too much at stake, too many to consider, and ",
+    STEP_1: "Download the template and modify the options and criteria according to your problem at hand.",
+    STEP_2: "Upload your options and criteria"
   },
   SUBTITLE: {
     SIMPLE:

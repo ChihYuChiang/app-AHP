@@ -52,6 +52,22 @@ export const PosedAttX = posed.div({
 });
 
 
+export const PosedAttY = posed.div({
+  attention: {
+    applyAtStart: { y: 2 },
+    y: -2,
+    transition: {
+      type: 'spring',
+      stiffness: 700,
+      damping: 0
+    }
+  },
+  offAttention: {
+    y: 0
+  }
+});
+
+
 export const PosedFadeX = posed.div({
   /*
     props = {

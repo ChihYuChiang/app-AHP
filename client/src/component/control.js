@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Button, ButtonToolbar, Label, Input } from "reactstrap";
 
 import { ButtonWTip } from "./util";
+import Instruction from "./instruction";
 
 import CONST from "../js/const";
 import CONTENT from "../js/content";
@@ -65,7 +66,8 @@ class Control extends Component {
               onChange={(evt) => {this.props.handleCriterionFile(evt.target.files[0]);}}
             />
             <ButtonToolbar className="justify-content-center">
-              <ButtonWTip buttonId="btn-demoResult" className="mr-2"
+              <ButtonWTip buttonId="btn-demoResult"
+                className="mr-2"
                 buttonContent="Demo Result"
                 buttonOnClick={this.props.renderDemoGraph}
                 tipContent={CONTENT.TIP_BTN.DEMO_RESULT}
@@ -78,7 +80,7 @@ class Control extends Component {
                 }
                 tipContent={CONTENT.TIP_BTN.DOWNLOAD_TEMPLATE}>
               </ButtonWTip>
-              <ButtonWTip buttonId="btn-uploadCriteria" className="btnGroup-right"
+              <ButtonWTip buttonId="btn-uploadCriteria" className="btnGroup-right mr-2"
                 buttonContent={
                   <label htmlFor="fileInput-criteria" className="file-label">
                     Upload Your Criteria
@@ -86,6 +88,7 @@ class Control extends Component {
                 }
                 tipContent={CONTENT.TIP_BTN.UPLOAD_CRITERIA}>
               </ButtonWTip>
+              <Instruction className="align-self-center"/>
             </ButtonToolbar>
           </div>
         );

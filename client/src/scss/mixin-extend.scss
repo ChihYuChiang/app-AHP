@@ -21,3 +21,15 @@
   text-decoration: none;
   border: none;
 }
+
+%i-control {
+  i {
+    color: $gray-300;
+    font-size: 1.5rem;
+    transition: all ease-in 0.05s;
+    cursor: pointer;
+  }
+  i:hover {
+    color: $gray-500;
+  }
+} 

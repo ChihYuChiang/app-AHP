@@ -1,14 +1,9 @@
 .footer-control {
   text-align: left;
 
+  @extend %i-control;
   i {
     transform: rotate(180deg);
-    color: $gray-300;
-    font-size: 1.5rem;
-    transition: all ease-in 0.05s;
-  }
-  i:hover {
-    color: $gray-500;
   }
 }
 
