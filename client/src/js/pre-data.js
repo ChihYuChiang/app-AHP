@@ -11,8 +11,8 @@ async function main(rows) {
   //--Option
   //Get data
   let items_option = [];
-  for (let i = 1; rows[i][0]; i++) {
-    items_option.push({ id: i, name: rows[i][0] });
+  for (let i = 2; rows[i][0]; i++) {
+    items_option.push({ id: i - 1, name: rows[i][0] });
   }
 
   //Get pairwise data
@@ -26,7 +26,7 @@ async function main(rows) {
   //--Criterion
   //Get hierarchy data
   let items_criterion = [{ id: "0-0", name: "Decision", parent: "", level: 0 }];
-  for (let i = 1; i < nRow; i++) {
+  for (let i = 2; i < nRow; i++) {
     for (let j = nCol - 1; j > 0; j--) {
       if (rows[i][j]) {
         items_criterion.push({
