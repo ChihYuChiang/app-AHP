@@ -26,11 +26,11 @@ class Control extends Component {
     switch (this.props.curControl) {
       
       case CONST.CONTROL_TYPE.NULL:
-        return <div />;
+        return <div id="control-wrapper"/>;
 
       case CONST.CONTROL_TYPE.UPDATE:
         return (
-          <div>
+          <div id="control-wrapper">
             <ButtonWTip buttonId="btn-recordReport"
               buttonContent="Save Your Report"
               buttonOnClick={this.record8GetUrl}
@@ -44,7 +44,7 @@ class Control extends Component {
       
       case CONST.CONTROL_TYPE.RECORDED:
         return (
-          <div className="col-8 mt-4">
+          <div id="control-wrapper" className="col-8 mt-4">
             <Label for="recordUrl" className="text-secondary">Click to copy report URL</Label >
             <Input type="text" id="recordUrl" readOnly
               onClick={copyRecordUrl}
@@ -56,7 +56,7 @@ class Control extends Component {
       case CONST.CONTROL_TYPE.DEFAULT:
       default:
         return (
-          <div>
+          <div id="control-wrapper">
             <input
               className="file-input"
               id="fileInput-criteria"

@@ -36,10 +36,10 @@ const main = {
       Fill up your problem, options, and a little magic question, and you'll know the way you should go.
       `,
     AHP:
-      `
-      The analytic hierarchy process (AHP) is a structured technique for organizing and analyzing complex decisions, based on mathematics and psychology. 
-      It was developed by Thomas L. Saaty in the 1970s and has been extensively studied and refined since then.
-      `
+      <div>
+        The <a href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process" target="_blank" rel="noopener noreferrer">analytic hierarchy process (AHP)</a> is a structured technique for organizing and analyzing complex decisions, based on mathematics and psychology. 
+        It was developed by <a href="https://en.wikipedia.org/wiki/Thomas_L._Saaty" target="_blank" rel="noopener noreferrer">Thomas L. Saaty</a> in the 1970s and has been extensively studied and refined since then.
+      </div>
   },
   MAGIC_PROMPTS: [
     ["Name a celebrity off the top of your head.", "While you've followed {}'s activity"],

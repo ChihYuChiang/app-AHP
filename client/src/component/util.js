@@ -22,7 +22,7 @@ export function Title(props) {
         <h1>{props.title}</h1>
       </PosedFade>
       <PosedFade key="subTitle" cDelay={600}>
-        <p className="col-8">{props.subTitle}</p>
+        <div className="col-8">{props.subTitle}</div>
       </PosedFade>
     </PoseGroup>
   );

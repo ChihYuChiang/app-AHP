@@ -21,3 +21,9 @@
   padding-right: 40px;
   text-align: right;
 }
+
+#footer-wrapper {
+  a:link, a:visited, a:hover, a:active {
+    @extend %remove-a-effect;
+  }
+}

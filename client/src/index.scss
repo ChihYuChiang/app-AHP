@@ -17,6 +17,19 @@ html { //For rem, which Bootstrap 4 bases on
   font-size: 14px;
 }
 
+a:link, a:visited, a:hover, a:active {
+  @extend %remove-a-effect;
+}
+
+a:link, a:visited {
+  color: theme-color-level(primary, 5);
+}
+
+a:hover {
+  color: theme-color(primary);
+  border-bottom: 1px solid theme-color-level(primary, -8);
+}
+
 
 .black-hole { //Contains elements won't take any space, like doesn't exist
   @extend .m-0;

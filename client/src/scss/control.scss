@@ -1,3 +1,4 @@
+//--Global setting
 .file-input {
   width: 0.1px;
   height: 0.1px;
@@ -11,10 +12,6 @@
   font-weight: normal;
   margin: 0;
   cursor: pointer; /* "hand" cursor */
-}
-
-a:link, a:visited, a:hover, a:active {
-  @extend %remove-a-effect;
 }
 
 .tip-tip {
@@ -54,4 +51,14 @@ a:link, a:visited, a:hover, a:active {
 
 .btnGroup-middle > button {
   border-radius: 0px;
+}
+
+
+//--Only in `control` component
+#control-wrapper {
+
+  a:link, a:visited, a:hover, a:active {
+    @extend %remove-a-effect;
+  }
+
 }

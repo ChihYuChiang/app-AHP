@@ -36,7 +36,7 @@ function Footer(props) {
   }
 
   return (
-    <div className="fixed-bottom">
+    <div id="footer-wrapper" className="fixed-bottom">
       <div className="footer-control mb-2 ml-3">
         {controls}
       </div>
