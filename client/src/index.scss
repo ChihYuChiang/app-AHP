@@ -53,8 +53,19 @@ a:hover {
   z-index: z(default) + 1;
 }
 
-.modal-header button:focus { //Modify the default bs focus stye
-  outline-color: $gray-500;
+.modal-header {
+  .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .close {
+    margin-top: -0.7rem;
+
+    &:focus { //Modify the default bs focus stye
+      outline-color: $gray-500;
+    }
+  }
+  
 }
 
 .modal-body {

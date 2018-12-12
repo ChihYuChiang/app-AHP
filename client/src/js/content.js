@@ -3,7 +3,7 @@ import React from "react";
 
 const main = {
   TIP_BTN: {
-    DEMO_REPORT:
+    DEMO_RESULT:
       <div>
         This shows what we'll have after the <b>AHP procedure</b>,
         which evaluates the importance of each <b>decision criterion</b> and the performance of each <b>option</b>.
