@@ -7,6 +7,7 @@ import BreadCrumbC from './breadcrumb';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
 import CONST from "../js/const";
+import CONTENT from "../js/content";
 import styles from "../scss/variable.scss";
 
 
@@ -44,7 +45,7 @@ class Comparison extends Component {
         let nMin = Math.round(this.props.nQuestion * secPerQ / 60) === 0 ? 1 : Math.round(this.props.nQuestion * secPerQ / 60);
         
         return (
-          <div className="col-8">
+          <div className="comparison-wrapper col-8">
             <input
               className="file-input"
               id="fileInput-criteria"
@@ -79,7 +80,7 @@ class Comparison extends Component {
         ));
     
         return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
-          <div className="comparison mt-4">
+          <div className="comparison-wrapper mt-4">
             <Progress className="col-8 p-0 pbar-thin"
               value={this.props.curPairProgress}
               color="info"
@@ -104,7 +105,7 @@ class Comparison extends Component {
       
       case CONST.COM_TYPE.CONFIRM_POST:
         return (
-          <div className="comparison mt-4">
+          <div className="comparison-wrapper mt-4">
             <Progress className="col-8 p-0 pbar-thin"
               value={100}
               color="info"
@@ -168,23 +169,33 @@ function GroupLabel(props) {
   */
   if (props.pairDataType === CONST.DATA_TYPE.CRITERION) {
     return (
-      <p className={props.className}>
-        {"Regarding "}
-        <span className="text-primary">
-          {props.pairDataGId === "0-0" ? "the base criteria" : props.id2Name[props.pairDataGId]}
-        </span>
-        {", what is more important?"}
-      </p>
+      <div className={props.className}>
+        <p>
+          {"Regarding "}
+          <span className="text-primary">
+            {props.pairDataGId === "0-0" ? "the base criteria" : props.id2Name[props.pairDataGId]}
+          </span>
+          {", what is more important?"}
+        </p>
+        <div className="instruction mt-2">
+          {CONTENT.INSTRUCTION.COM_CRITERION}
+        </div>
+      </div>
     );
   } else {
     return (
-      <p className={props.className}>
-        {"Regarding "}
-        <span className="text-primary">
-          {props.id2Name[props.pairDataGId]}
-        </span>
-        {", which option has advantage?"}
-      </p>
+      <div className={props.className}>
+        <p>
+          {"Regarding "}
+          <span className="text-primary">
+            {props.id2Name[props.pairDataGId]}
+          </span>
+          {", which option has advantage?"}
+        </p>
+        <div className="instruction mt-2">
+          {CONTENT.INSTRUCTION.COM_OPTION}
+        </div>
+      </div>
     );
   }
 }
