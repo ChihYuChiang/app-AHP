@@ -11,12 +11,13 @@ import CONTENT from '../js/content';
 class Instruction extends Component {
   /*
     props = {
+      freshman //`true` to use grabAtt
+      becomeOld //Set freshman to false
       className //For formatting the icon
     }
   */
   state = {
     modal: false,
-    freshman: true,
     iconPose: "offAttention"
   };
 
@@ -29,17 +30,25 @@ class Instruction extends Component {
           />
         </PosedAttY>
         <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
-          <ModalHeader toggle={this.toggleModal}>3 Simple Steps to Use AHP</ModalHeader>
+          <ModalHeader toggle={this.toggleModal}>Instruction</ModalHeader>
           <ModalBody>
-            <h5>STEP 1</h5>
-            <img src="asset/instruction_1.png" alt="instruction 1" />
+            {CONTENT.INSTRUCTION.STEP_INTRO}
+            <h5 className="mt-3">Step 1</h5>
             {CONTENT.INSTRUCTION.STEP_1}
-            <h5>STEP 2</h5>
-            <img src="asset/instruction_2.png" alt="instruction 2" />
+            <div><img src="asset/instruction_1.png" alt="step 1 illustration" /></div>
+            <h5 className="mt-3">Step 2</h5>
             {CONTENT.INSTRUCTION.STEP_2}
-            <h5>STEP 3</h5>
-            <img src="asset/instruction_3.png" alt="instruction 3" />
+            <div><img src="asset/instruction_2.png" alt="step 2 illustration" /></div>
+            <h5 className="mt-3">Step 3</h5>
             {CONTENT.INSTRUCTION.STEP_3}
+            <div><img src="asset/instruction_3.png" alt="step 3 illustration" /></div>
+            <h5 className="mt-3">Step 4</h5>
+            {CONTENT.INSTRUCTION.STEP_4}
+            <div><img src="asset/instruction_4.png" alt="step 4 illustration" /></div>
+            <h5 className="mt-3">Interpret the report</h5>
+            <small>(You can retrieve a sample report by the Demo Result button)</small>
+            <div><img src="asset/instruction_demo.png" alt="demo illustration" /></div>
+            {CONTENT.INSTRUCTION.INTERPRET}
           </ModalBody>
         </Modal>
       </div>
@@ -49,11 +58,11 @@ class Instruction extends Component {
   async componentDidMount() {
     let i = 0;
     await util.sleep(4000); //Repeat every 3 sec; end after 30 secs
-    while (this.state.freshman) {
+    while (this.props.freshman) {
       this.grabAtt();
       i++;
-      if (i === 8) this.setState({ freshman: false });
-      await util.sleep(4000); //This structure ensures the `graAtt` wont be triggered after freshman ends
+      if (i === 8) this.props.becomeOld();
+      await util.sleep(4000); //This structure ensures the `grabAtt` wont be triggered after freshman ends
     }
   }
 
@@ -61,8 +70,8 @@ class Instruction extends Component {
   toggleModal = () => { //When clicked first time, end freshman status as well
     this.setState({
       modal: !this.state.modal,
-      freshman: false
     });
+    this.props.becomeOld();
   };
 
   grabAtt = async () => {

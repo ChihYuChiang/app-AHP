@@ -29,7 +29,8 @@ const buildDefaultState = () => ({
   pairDataGenerator: {},
   curPairData: {},
   curPairProgress: 0,
-  nQuestion: 0
+  nQuestion: 0,
+  freshman: true
 });
 
 
@@ -54,6 +55,8 @@ class Main extends Component {
               handleCriterionFile={this.handleCriterionFile}
               renderDemoGraph={() => {this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_DEMO);}}
               recordResult={this.recordResult}
+              freshman={this.state.freshman}
+              becomeOld={this.becomeOld}
             />
           </div>
           <div className="content mt-4">
@@ -258,6 +261,10 @@ class Main extends Component {
 
     return recordId;
   };
+
+  becomeOld = () => {
+    this.setState({ freshman: false });
+  }
 }
 
 

@@ -44,12 +44,22 @@ const main = {
         <p><b>3</b> - this option performs <b>very strongly</b> better than the opposite one</p>
         <p><b>4</b> - this option performs <b>extremely</b> better than the opposite one</p>        
       </div>,
-    STEP_INTRO: "AHP is a powerful technique but at the same time complex and arduous to implement. It employs knowledge of Linear Algebra, cumbersome questionnaire logistics, and series of matrix computations. This app handles all these technical details for you and streamlines AHP into 3 simple steps:",
-    STEP_1: "Download the template of the options and criteria and follow the template's instructions modifying its content according to your problem at hand.",
+    STEP_INTRO:
+      <div>
+        <p>The AHP is powerful but complex. This app handles all the technical difficulties you'll encounter when implementing the AHP and streamlines the process into 4 simple steps.</p>
+      </div>,
+    STEP_1: "Download the template for decision options and criteria. Follow the template's instruction and modify its content.",
     STEP_2: "Upload your personalized options and criteria.",
-    STEP_3: "Answer a few questions regarding your options and criteria. Follow the questions and walk through each aspects and alternatives worth considering.",
-    STEP_4: "Get the evaluative report generated for your decision.",
-    INTERPRET: ""
+    STEP_3: "Answer questions regarding the options and criteria.",
+    STEP_4: "Acquire your AHP report.",
+    INTERPRET:
+      <ul>
+        <li>Your report will be presented in a form of tree graph where each node represents a decision criterion. The nodes are connected to show their hierarchical relations. In addition, the <b>size of a node</b> represents how important is this criterion to the evaluation.</li>
+        <li>The <b>Decision node</b> summarizes consideration of all criteria and is the summary of your report. Its color shows the <b>final recommended option</b> by the AHP for your underlying decision.</li>
+        <li>Each color in the graph represents one option. The <b>color of a node</b> represents the dominant option regarding that particular criterion. In addition, the more <b>colorful</b> (less pale) a node is, the more dominant that dominant option is.</li>
+        <li>Click the items in the <b>legend</b> to filter criteria by their dominant option.</li>
+        <li>Move your cursor over a node, you'll see the actual <b>percentage</b> this criteria represents in the consideration, which is reflected in the size of the nodes. You'll also be able to observe <b>bar charts</b> that show each option's performance (in a percentage score) regarding this criterion. The option with the highest score will dominate (occupy) this node, and this node will be colored by the same color of that option.</li>
+      </ul>
   },
   SUBTITLE: {
     SIMPLE:

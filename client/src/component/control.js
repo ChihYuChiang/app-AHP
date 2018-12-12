@@ -16,6 +16,8 @@ class Control extends Component {
       handleCriterionFile //Deliver the uploaded criterion file to be handled by main
       getDemoData //Get from db the specified data for demo
       recordResult //Record to db the current comparison data
+      freshman //To be used in `Instruction`
+      becomeOld //Set freshman to `false`
     }
   */
   state = {
@@ -23,7 +25,6 @@ class Control extends Component {
   };
 
   render() {
-    //TODO: popover instruction
     switch (this.props.curControl) {
       
       case CONST.CONTROL_TYPE.NULL:
@@ -31,16 +32,21 @@ class Control extends Component {
 
       case CONST.CONTROL_TYPE.UPDATE:
         return (
-          <div id="control-wrapper">
+          <ButtonToolbar id="control-wrapper" className="justify-content-center">
             <ButtonWTip buttonId="btn-recordReport"
               buttonContent="Save Your Report"
               buttonOnClick={this.record8GetUrl}
               tipContent={CONTENT.TIP_BTN.RECORD_REPORT}
             />            
-            <Button className="ml-4" disabled>
+            <Button className="ml-2 mr-2" disabled>
               Upload New Criteria
             </Button>
-          </div>
+            <Instruction
+              className="align-self-center"
+              freshMan={this.props.freshMan}
+              becomeOld={this.props.becomeOld}
+            />
+          </ButtonToolbar>
         );
       
       case CONST.CONTROL_TYPE.RECORDED:
@@ -88,7 +94,11 @@ class Control extends Component {
                 }
                 tipContent={CONTENT.TIP_BTN.UPLOAD_CRITERIA}>
               </ButtonWTip>
-              <Instruction className="align-self-center"/>
+              <Instruction
+                className="align-self-center"
+                freshman={this.props.freshman}
+                becomeOld={this.props.becomeOld}
+              />
             </ButtonToolbar>
           </div>
         );

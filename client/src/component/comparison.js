@@ -225,7 +225,7 @@ class Pair extends Component {
       ? this.props.id2Name[this.props.data.dest]
       : this.props.options.filter((op) => op.id + '' === this.props.data.dest)[0].name;
 
-    return ( //TODO: sticky score explanation
+    return (
       <div>
         <p>{destName}<span className="text-secondary ml-2 mr-2">or</span>{sourceName}</p>
         <div>

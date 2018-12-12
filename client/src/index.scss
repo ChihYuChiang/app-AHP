@@ -57,10 +57,21 @@ a:hover {
   outline-color: $gray-500;
 }
 
-.modal-body img {
-  width: 100%;
-}
+.modal-body {
+  h5 {
+    margin-top: 1.5rem !important;
+  }
 
-.modal-header {
-  color: theme-color(primary);
+  b {
+    font-weight: 400;
+    color: theme-color-level(primary, 3);
+  }
+
+  img {
+    width: 66%;
+  }
+
+  li {
+    margin-top: 0.4rem;
+  }
 }
