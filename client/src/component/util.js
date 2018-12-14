@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { Button, Tooltip } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
@@ -8,13 +9,11 @@ import util from '../js/util';
 import styles from '../scss/variable.scss';
 
 
+Title.propTypes = {
+  title: PropTypes.node.isRequired,
+  subTitle: PropTypes.node
+};
 export function Title(props) {
-  /*
-    props = {
-      title
-      subTitle
-    }
-  */
   //TODO: remove subtitle when not needed
   return (
     <PoseGroup animateOnMount={true}>
@@ -29,6 +28,9 @@ export function Title(props) {
 }
 
 
+Loading.propTypes = {
+  isLoading: PropTypes.bool
+};
 export function Loading(props) { //TODO: split text effect ...
   const loadingContent = (
     <PosedFade key="loading">
@@ -52,17 +54,15 @@ export function Loading(props) { //TODO: split text effect ...
 }
 
 
+ButtonWTip.propTypes = {
+  className: PropTypes.string, //Classes for the wrapper
+  buttonId: PropTypes.string.isRequired, //The id of the button element
+  buttonContent: PropTypes.node.isRequired, //Content for the button
+  buttonOnClick: PropTypes.func, //As name
+  tipContent: PropTypes.node.isRequired, //Content for the tooltip
+};
 //TODO: can't perform react update warning
 export class ButtonWTip extends Component {
-  /*
-    props = {
-      className //Classes for the wrapper
-      buttonId //The id of the button element
-      buttonContent //Content for the button
-      buttonOnClick //As name
-      tipContent //Content for the tooltip
-    }
-  */
   state = {
     tooltipOpen: false,
     tooltipVisible: "invisible" //Bootstrap class
@@ -117,17 +117,15 @@ export class ButtonWTip extends Component {
 }
 
 
+ComponentWTip.propTypes = {
+  className: PropTypes.string, //Classes for the wrapper
+  componentId: PropTypes.string.isRequired, //The id of the component
+  component: PropTypes.element.isRequired, //Content of the component
+  tipContent: PropTypes.node.isRequired, //Content for the tooltip
+  tipPlacement: PropTypes.string, //Position of the tooltip
+  tipOffset: PropTypes.number //Refer to Popper config
+};
 export class ComponentWTip extends Component {
-  /*
-    props = {
-      className //Classes for the wrapper
-      componentId //The id of the component
-      component //Content of the component
-      tipContent //Content for the tooltip
-      tipPlacement //Position of the tooltip
-      tipOffset //Refer to Popper config
-    }
-  */
   state = {
     tooltipOpen: false
   };
