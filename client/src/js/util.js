@@ -100,6 +100,23 @@ class main {
       cb();
     }
   }
+
+  /**
+   * Makes function chainable: the function calls happen in-order after calls before that.
+   * https://dev.to/chromiumdev/cancellable-async-functions-in-javascript-5gp7
+   * 
+   * @param {Function} fn function to be decorated.
+   * 
+   * @return {Promise} A promise with fn calls appended to it
+   */
+  static makeChainable(fn) {
+    let p = Promise.resolve(true); //This starts this line of async execution
+
+    return (...args) => {
+      p = p.then(() => fn(...args)); //This updates the above `p` every time the `fn` is called
+      return p; //This makes sure the return from the `fn` is returned when the promise resolved
+    };
+  }
 }
 
 
