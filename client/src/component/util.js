@@ -62,6 +62,8 @@ export class ButtonWTip extends Component {
     tooltipOpen: false,
     tooltipVisible: "invisible" //Bootstrap class
   };
+  _isMounted = false; //Avoid updating states of unmounted elements
+  //https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html
 
   render() {
     return (
@@ -84,11 +86,15 @@ export class ButtonWTip extends Component {
     );
   }
 
+  componentDidMount() {this._isMounted = true;}
+  
+  componentWillUnmount() {this._isMounted = false;}
+
 
   buttonOnClick8Close = () => { //Close tip when click button
     if (typeof(this.props.buttonOnClick) === 'function') this.props.buttonOnClick();
     this.closeTip();
-  }
+  };
 
   openTip = () => {
     this.setState({
@@ -96,19 +102,23 @@ export class ButtonWTip extends Component {
       tooltipVisible: "invisible"
     }, async () => {
       await util.sleep(1500);
-      this.setState({
-        tooltipVisible: "visible"
-      });
+      if (this._isMounted) {
+        this.setState({
+          tooltipVisible: "visible"
+        });
+      }
     });
-  }
+  };
 
   closeTip = async () => {
     await util.sleep(200);
-    this.setState({
-      tooltipOpen: false,
-      tooltipVisible: "vis-hidden"
-    });
-  }
+    if (this._isMounted) {
+      this.setState({
+        tooltipOpen: false,
+        tooltipVisible: "vis-hidden"
+      });
+    }
+  };
 }
 
 ButtonWTip.propTypes = {
@@ -157,7 +167,7 @@ export class ComponentWTip extends Component {
     this.setState({
       tooltipOpen: !this.state.tooltipOpen
     });
-  }
+  };
 }
 
 ComponentWTip.propTypes = {

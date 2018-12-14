@@ -12,7 +12,6 @@ import CONTENT from "../js/content";
 import styles from "../scss/variable.scss";
 
 
-//TODO: prop type module
 class Comparison extends Component {
   state = {
     compares: [] //Store the pair data and comparison result

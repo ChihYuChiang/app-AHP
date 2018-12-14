@@ -14,6 +14,7 @@ class Instruction extends Component {
     modal: false,
     iconPose: "offAttention"
   };
+  _isMounted = false;
 
   render() {
     return (
@@ -50,6 +51,8 @@ class Instruction extends Component {
   }
 
   async componentDidMount() {
+    this._isMounted = true;
+
     let i = 0;
     await util.sleep(4000); //Repeat every 3 sec; end after 30 secs
     while (this.props.freshman) {
@@ -60,6 +63,8 @@ class Instruction extends Component {
     }
   }
 
+  componentWillUnmount() {this._isMounted = false;}
+
 
   toggleModal = () => { //When clicked first time, end freshman status as well
     this.setState({
@@ -69,9 +74,9 @@ class Instruction extends Component {
   };
 
   grabAtt = async () => {
-    this.setState({ iconPose: "attention" });
+    if (this._isMounted) this.setState({ iconPose: "attention" });
     await util.sleep(600);
-    this.setState({ iconPose: "offAttention" });
+    if (this._isMounted) this.setState({ iconPose: "offAttention" });
   };
 }
 
