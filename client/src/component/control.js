@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { Button, ButtonToolbar, Label, Input } from "reactstrap";
 
 import { ButtonWTip } from "./util";
@@ -10,16 +11,6 @@ import CONTENT from "../js/content";
 
 //TODO: share social media
 class Control extends Component {
-  /*
-    props = {
-      curControl //App state marker
-      handleCriterionFile //Deliver the uploaded criterion file to be handled by main
-      getDemoData //Get from db the specified data for demo
-      recordResult //Record to db the current comparison data
-      freshman //To be used in `Instruction`
-      becomeOld //Set freshman to `false`
-    }
-  */
   state = {
     recordUrl: "" //Set when the user record the result
   };
@@ -43,7 +34,7 @@ class Control extends Component {
             </Button>
             <Instruction
               className="align-self-center"
-              freshMan={this.props.freshMan}
+              freshman={this.props.freshman}
               becomeOld={this.props.becomeOld}
             />
           </ButtonToolbar>
@@ -105,12 +96,21 @@ class Control extends Component {
     }
   }
 
-  
+
   record8GetUrl = async () => {
     let recordUrl = await this.props.recordResult();
     this.setState({ recordUrl: recordUrl });
   };
 }
+
+Control.propTypes = {
+  curControl: PropTypes.string.isRequired, //App state marker
+  handleCriterionFile: PropTypes.func.isRequired, //Deliver the uploaded criterion file to be handled by main
+  renderDemoGraph: PropTypes.func.isRequired,
+  recordResult: PropTypes.func.isRequired, //Record to db the current comparison data
+  freshman: PropTypes.bool.isRequired, //To be used in `Instruction`
+  becomeOld: PropTypes.func.isRequired //Set freshman to `false`
+};
 
 
 //Copy the url into clipboard when clicking the element

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { Button, Form, Input } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
@@ -14,14 +15,7 @@ const buildDefaultState = () => ({
   pose_prob: '',
 });
 
-
 class DynamicInput extends Component {
-  /*
-    props = {
-      show //Show or hide this component
-      submitInput //Submit input to `main` and update app stage
-    }
-  */
   state = {
     ...buildDefaultState()
   };
@@ -130,6 +124,11 @@ class DynamicInput extends Component {
     this.setState({ options: this.state.options.filter((_, sidx) => idx !== sidx) });
   }
 }
+
+DynamicInput.propTypes = {
+  show: PropTypes.bool.isRequired, //Show or hide this component
+  submitInput: PropTypes.func.isRequired //Submit input to `main` and update app stage
+};
 
 
 export default DynamicInput;

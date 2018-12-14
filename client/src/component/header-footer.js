@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 
 import CONTENT from "../js/content";
 import CONST from "../js/const";
@@ -8,11 +9,6 @@ import { ComponentWTip, Title } from "./util";
 
 //TODO: when mobile, footer not sticky
 function Footer(props) {
-  /*
-    props = {
-      location //AHP or simple
-    }
-  */
   let controls = {};
   switch (props.location) {
     default:
@@ -46,14 +42,13 @@ function Footer(props) {
   );
 }
 
+Footer.propTypes = {
+  location: PropTypes.string.isRequired //AHP or simple
+};
+
 
 //TODO: menu
 function Header(props) {
-  /*
-    props = {
-      location //AHP or simple
-    }
-  */
   let content = {
     title: "",
     subTitle: ""
@@ -80,6 +75,10 @@ function Header(props) {
     <Title {...content} />
   );
 }
+
+Header.propTypes = {
+  location: PropTypes.string.isRequired //AHP or simple
+};
 
 
 export { Header, Footer };

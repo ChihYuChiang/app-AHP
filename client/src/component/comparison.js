@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { Button, Progress } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
@@ -13,24 +14,6 @@ import styles from "../scss/variable.scss";
 
 //TODO: prop type module
 class Comparison extends Component {
-  /*
-    props = {
-      curComparison //App state marker
-      curPairProgress //0-100, the completed percentage (not including this batch)
-      handleCriterionFile //Deliver the uploaded criterion file to be handled by main
-      enterComparison //Update graph (app) state, leave pre confirmation
-      handleComData //Add comData into the store
-      exitComparison //Update graph (app) state, leave post confirmation
-      pairData
-      //.gId, The id of this pair group, also the parent node's name in the root
-      //.breadCrumb, The ids of the ancestor elements (excluding root)
-      //.pairs, Multiple pair entries, each with source, dest
-      //.type, option or criterion
-      id2Name //A dict translate node id to the name to be displayed
-      options //Aa array of option items
-      nQuestion //Number of questions the user will encounter
-    }
-  */
   state = {
     compares: [] //Store the pair data and comparison result
   }
@@ -144,7 +127,7 @@ class Comparison extends Component {
       mIndex: mIndex
     });
     this.setState({ compares: [] });
-  }
+  };
 
   updateComData = (value, data) => {
     data.value = value;
@@ -154,19 +137,33 @@ class Comparison extends Component {
       curState.compares = compares;
       return curState;
     });
-  }
+  };
 }
+
+Comparison.propTypes = {
+  curComparison: PropTypes.string.isRequired, //App state marker
+  curPairProgress: PropTypes.number.isRequired, //0-100, the completed percentage (not including this batch)
+  handleCriterionFile: PropTypes.func.isRequired, //Deliver the uploaded criterion file to be handled by main
+  enterComparison: PropTypes.func.isRequired, //Update graph (app) state, leave pre confirmation
+  handleComData: PropTypes.func.isRequired, //Add comData into the store
+  exitComparison: PropTypes.func.isRequired, //Update graph (app) state, leave post confirmation
+  pairData: PropTypes.exact({
+    gId: PropTypes.string, //The id of this pair group, also the parent node's name in the root
+    breadCrumb: PropTypes.arrayOf(PropTypes.string), //The ids of the ancestor elements (excluding root)
+    pairs: PropTypes.arrayOf(PropTypes.exact({
+     source: PropTypes.string,
+     dest: PropTypes.string,
+     value: PropTypes.number //Will be inserted after comparison
+    })), //Multiple pair entries, each with source, dest
+    type: PropTypes.string //option or criterion
+  }).isRequired,
+  id2Name: PropTypes.objectOf(PropTypes.string).isRequired, //A dict translate node id to the name to be displayed
+  options: PropTypes.arrayOf(PropTypes.object).isRequired, //Aa array of option items
+  nQuestion: PropTypes.number.isRequired //Number of questions the user will encounter
+};
 
 
 function GroupLabel(props) {
-  /*
-    props = { //As in the parent
-      pairDataType
-      pairDataGId
-      id2Name
-      className
-    }
-  */
   if (props.pairDataType === CONST.DATA_TYPE.CRITERION) {
     return (
       <div className={props.className}>
@@ -200,16 +197,15 @@ function GroupLabel(props) {
   }
 }
 
+GroupLabel.propTypes = { //As in the parent
+  pairDataType: PropTypes.string.isRequired,
+  pairDataGId: PropTypes.string.isRequired,
+  id2Name: PropTypes.objectOf(PropTypes.string).isRequired,
+  className: PropTypes.string
+};
+
 
 class Pair extends Component {
-  /*
-    props = {
-      data //A pair data, with source, dest
-      updateComData //Update the comData state in the parent company
-      id2Name //A dict translate node id to the name to be displayed
-      options //Aa array of option items
-    }
-  */
   state = {
     value: 0
   };
@@ -262,6 +258,17 @@ class Pair extends Component {
     });
   }
 }
+
+Pair.propTypes = {
+  data: PropTypes.exact({
+    source: PropTypes.string.isRequired,
+    dest: PropTypes.string.isRequired,
+    value: PropTypes.number //Will be inserted after comparison
+  }).isRequired,  //A pair data, with source, dest
+  updateComData: PropTypes.func.isRequired, //Update the comData state in the parent company
+  id2Name: PropTypes.objectOf(PropTypes.string).isRequired, //A dict translate node id to the name to be displayed
+  options: PropTypes.arrayOf(PropTypes.object).isRequired //Aa array of option items
+};
 
 
 export default Comparison;

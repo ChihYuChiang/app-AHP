@@ -9,10 +9,6 @@ import util from '../js/util';
 import styles from '../scss/variable.scss';
 
 
-Title.propTypes = {
-  title: PropTypes.node.isRequired,
-  subTitle: PropTypes.node
-};
 export function Title(props) {
   //TODO: remove subtitle when not needed
   return (
@@ -27,10 +23,12 @@ export function Title(props) {
   );
 }
 
-
-Loading.propTypes = {
-  isLoading: PropTypes.bool
+Title.propTypes = {
+  title: PropTypes.node.isRequired,
+  subTitle: PropTypes.node
 };
+
+
 export function Loading(props) { //TODO: split text effect ...
   const loadingContent = (
     <PosedFade key="loading">
@@ -53,14 +51,11 @@ export function Loading(props) { //TODO: split text effect ...
   );
 }
 
-
-ButtonWTip.propTypes = {
-  className: PropTypes.string, //Classes for the wrapper
-  buttonId: PropTypes.string.isRequired, //The id of the button element
-  buttonContent: PropTypes.node.isRequired, //Content for the button
-  buttonOnClick: PropTypes.func, //As name
-  tipContent: PropTypes.node.isRequired, //Content for the tooltip
+Loading.propTypes = {
+  isLoading: PropTypes.bool.isRequired
 };
+
+
 //TODO: can't perform react update warning
 export class ButtonWTip extends Component {
   state = {
@@ -116,15 +111,15 @@ export class ButtonWTip extends Component {
   }
 }
 
-
-ComponentWTip.propTypes = {
+ButtonWTip.propTypes = {
   className: PropTypes.string, //Classes for the wrapper
-  componentId: PropTypes.string.isRequired, //The id of the component
-  component: PropTypes.element.isRequired, //Content of the component
+  buttonId: PropTypes.string.isRequired, //The id of the button element
+  buttonContent: PropTypes.node.isRequired, //Content for the button
+  buttonOnClick: PropTypes.func, //As name
   tipContent: PropTypes.node.isRequired, //Content for the tooltip
-  tipPlacement: PropTypes.string, //Position of the tooltip
-  tipOffset: PropTypes.number //Refer to Popper config
 };
+
+
 export class ComponentWTip extends Component {
   state = {
     tooltipOpen: false
@@ -164,3 +159,12 @@ export class ComponentWTip extends Component {
     });
   }
 }
+
+ComponentWTip.propTypes = {
+  className: PropTypes.string, //Classes for the wrapper
+  componentId: PropTypes.string.isRequired, //The id of the component
+  component: PropTypes.element.isRequired, //Content of the component
+  tipContent: PropTypes.node.isRequired, //Content for the tooltip
+  tipPlacement: PropTypes.string, //Position of the tooltip
+  tipOffset: PropTypes.string //Refer to Popper config; "5px"
+};

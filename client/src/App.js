@@ -4,9 +4,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import MainAHP from './component/main_AHP';
 import MainSimple from './component/main_simple';
 
-
+//TODO: redux
 class App extends Component {
-
   render() {
     return (
       <BrowserRouter>

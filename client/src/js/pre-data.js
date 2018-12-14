@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import * as d3 from "d3"; //TODO: include only used modules
 
 import CONST from "./const";
 import util from "./util";

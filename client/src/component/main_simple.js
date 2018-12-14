@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import { Button, Input } from "reactstrap";
 import { PoseGroup } from 'react-pose';
 
@@ -91,15 +92,6 @@ class Main extends Component {
 
 
 class MagicInput extends Component {
-  /*
-    props = {
-      show //Show or hide this component
-      magic //Magic keyword from `main`
-      magicId //The id for CONTENT's magic prompt array
-      updateMagic //Update magic word to `main`
-      getRec //Compute rec and update app stage to result
-    }
-  */
   state = {
     pose_magic: ''
   }; 
@@ -160,18 +152,16 @@ class MagicInput extends Component {
   }
 }
 
+MagicInput.propTypes = {
+  show: PropTypes.bool.isRequired, //Show or hide this component
+  magic: PropTypes.string.isRequired, //Magic keyword from `main`
+  magicId: PropTypes.number.isRequired, //The id for CONTENT's magic prompt array
+  updateMagic: PropTypes.func.isRequired, //Update magic word to `main`
+  getRec: PropTypes.func.isRequired //Compute rec and update app stage to result
+};
+
 
 function Output(props) {
-  /*
-    props = {
-      show //Show or hide this component
-      magicId //The id for CONTENT's magic prompt array
-      magic //The magic entered
-      createNew //Update app stage back to `input`
-      rec //Computed recommendation
-    }
-  */
-
   if (props.show) {
     return (
       <PoseGroup>
@@ -208,6 +198,14 @@ function Output(props) {
     );
   } else return <PoseGroup />;
 }
+
+Output.propTypes = {
+  show: PropTypes.bool.isRequired, //Show or hide this component
+  magic: PropTypes.string.isRequired, //The magic entered
+  magicId: PropTypes.number.isRequired, //The id for CONTENT's magic prompt array
+  createNew: PropTypes.func.isRequired, //Update app stage back to `input`
+  rec: PropTypes.string.isRequired //Computed recommendation
+};
 
 
 export default Main;

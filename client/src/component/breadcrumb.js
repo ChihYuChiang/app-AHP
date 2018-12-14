@@ -1,15 +1,9 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import { Breadcrumb, BreadcrumbItem } from 'reactstrap';
 
 
 function BreadCrumbC(props) {
-  /*
-    props = {
-      className //For listClassName
-      ancestors //Ancestor names
-    }
-  */
-
   let breadItems = props.ancestors.reverse().map((ancestor, i, ancestors) => {
     switch (i) {
       case 0:
@@ -27,6 +21,11 @@ function BreadCrumbC(props) {
     </Breadcrumb>
   );
 }
+
+BreadCrumbC.propTypes = {
+  className: PropTypes.string, //For listClassName
+  ancestors: PropTypes.arrayOf(PropTypes.string).isRequired //Ancestor names
+};
 
 
 export default BreadCrumbC;

@@ -16,6 +16,7 @@ const main = {
   CONTROL_TYPE: {
     UPDATE: 'update',
     DEFAULT: 'default',
+    RECORDED: 'recorded',
     NULL: 'null'
   },
   GRAPH_TYPE: {

@@ -1,6 +1,6 @@
 import posed from 'react-pose';
 //Note: PoseGroup can only be used locally, within each React component
-
+//TODO: pose + prop type?
 
 export const POSE_MEASURE = {
   DELAY_INTERVAL: 150

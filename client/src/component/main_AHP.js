@@ -32,8 +32,6 @@ const buildDefaultState = () => ({
   nQuestion: 0,
   freshman: true
 });
-
-
 class Main extends Component {
   state = {
     ...buildDefaultState(),
@@ -148,6 +146,7 @@ class Main extends Component {
       
       //If all pairs are displayed, enter post confirm
       else {
+        state.curPairData = {};
         state.curComparison = CONST.COM_TYPE.CONFIRM_POST;
       }
 

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 
@@ -9,13 +10,6 @@ import CONTENT from '../js/content';
 
 
 class Instruction extends Component {
-  /*
-    props = {
-      freshman //`true` to use grabAtt
-      becomeOld //Set freshman to false
-      className //For formatting the icon
-    }
-  */
   state = {
     modal: false,
     iconPose: "offAttention"
@@ -80,6 +74,12 @@ class Instruction extends Component {
     this.setState({ iconPose: "offAttention" });
   };
 }
+
+Instruction.propTypes = {
+  freshman: PropTypes.bool.isRequired, //`true` to use grabAtt
+  becomeOld: PropTypes.func.isRequired, //Set freshman to false
+  className: PropTypes.string //For formatting the icon
+};
 
 
 export default Instruction;
