@@ -68,14 +68,20 @@ $spacers: (
 
 //Potentially useful way to manage z index
 $z-layers: (
-  bottomless-pit: -9999,
-  default: 0,
+  bottomless-pit: -10000,
+  -3 : -3,
+  -2 : -2,
+  -1 : -1,
+  0 : 0,
+  1 : 1,
+  2 : 2,
+  3 : 3,
   hover: 100,
   active: 200,
   focus: 300,
-  dropdown: 3000,
-  overlay: 4000,
-  modal: 4001
+  dropdown: 1000,
+  overlay: 2000,
+  modal: 3000
 );
 
 $spacer-breakpoints: (
