@@ -22,8 +22,10 @@ class DynamicInput extends Component {
 
   render() {
     if (this.props.show) {
+      //The cDurEx can't be too small when applying flipMove to the parent (auto-compute surrounding element and move)
+      //https://popmotion.io/pose/api/posegroup/#posegroup-usage-passing-props-to-children
       let inputItems = this.state.options.map((option, idx, array) => (
-        <PosedFade key={"option_" + idx} cDurEx={0}>
+        <PosedFade key={"option_" + idx} cDurEx={450}>
           <div className="mb-4 w-75 row no-gutters">
             <div className="col-1" />
             <div className="col-9">
@@ -63,10 +65,12 @@ class DynamicInput extends Component {
                   />
                 </PosedAttX>
                 <p className="fs-115">Options</p>
-                <PoseGroup>{inputItems}</PoseGroup>
-              </PosedFadeY>
-              <PosedFadeY cDelay={400}>
-                <Button className="btn-medium mt-4">Submit</Button>
+                <PoseGroup>
+                  {inputItems}
+                  <PosedFadeY cDelay={400} key="btn">
+                    <Button className="btn-medium mt-4">Submit</Button>
+                  </PosedFadeY>
+                </PoseGroup>
               </PosedFadeY>
             </Form>
           </PosedNull>

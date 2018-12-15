@@ -56,7 +56,6 @@ Loading.propTypes = {
 };
 
 
-//TODO: can't perform react update warning
 export class ButtonWTip extends Component {
   state = {
     tooltipOpen: false,
@@ -87,7 +86,7 @@ export class ButtonWTip extends Component {
   }
 
   componentDidMount() {this._isMounted = true;}
-  
+
   componentWillUnmount() {this._isMounted = false;}
 
 

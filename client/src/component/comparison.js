@@ -12,6 +12,7 @@ import CONTENT from "../js/content";
 import styles from "../scss/variable.scss";
 
 
+//TODO: implement CR
 class Comparison extends Component {
   state = {
     compares: [] //Store the pair data and comparison result
