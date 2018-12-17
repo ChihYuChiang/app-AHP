@@ -183,43 +183,54 @@ function produceTreeGraph(root, options, inter) {
 
 function produceLegend(root, options) {
   let [hueScale] = genScales(root); //TODO: lightness legend
+  let [rectSize, nRects] = [10, 1];
 
+  //Title
   d3.select("#legend > p")
     .text("Options");
 
+  //Item base and interaction
   var legendItems = d3.select("#legend > svg")
     .selectAll(".legendItem")
     .data(options)
     .enter()
     .append("g")
     .classed("legendItem", true)
+    .each(function(d) {d3.select(this).classed("topOptId_" + d.id, true);})
     .attr("transform", (_, i) => "translate(0," + i * CONST.GRAPH_MEASURE.LEGEND_ITEM_HEIGHT + ")")
     .on("click", interaction.highlightClicked_legend);
   d3.select("#canvasRoot > svg") //Click the svg to resume
     .on("click", interaction.resumeClicked_legend);
-  legendItems
-    .append("rect")
-    .attr("rx", "2px")
-    .attr("ry", "2px")    
-    .attr("x", 0)
-    .attr("y", 0)
-    .attr("width", 10)
-    .attr("height", 10)
-    .style("fill", (_, i) => {
-      let color = d3.hsl(hueScale(i + 1));
-      color.l = 0.7;
-      return color;
-    });
+
+  //Option names
   legendItems
     .append("text")
-    .attr("x", 20)
-    .attr("y", 10)
+    .attr("x", rectSize * (nRects + 1))
+    .attr("y", rectSize)
     .attr("dy", "-1px")
     .attr("dx", "-5px")
     .text((d) => d.name)
     .style("text-anchor", "start")
     .style("fill", styles.gray800)
     .style("font-size", 12);
+  
+  //Option color
+  function createTiles(n) {
+    legendItems
+      .append("rect")
+      .attr("rx", "2px")
+      .attr("ry", "2px")    
+      .attr("x", n * rectSize)
+      .attr("y", 0)
+      .attr("width", rectSize)
+      .attr("height", rectSize)
+      .style("fill", (_, i) => {
+        let color = d3.hsl(hueScale(i + 1));
+        color.l = nRects === 1 ? 0.7 : 0.5 + 0.4 / nRects * (nRects - n);
+        return color;
+      });
+  }
+  for (let n = 0; n <= nRects - 1; n++) createTiles(n);
 }
 
 

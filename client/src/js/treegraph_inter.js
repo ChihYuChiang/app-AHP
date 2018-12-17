@@ -143,15 +143,23 @@ class main {
     }
   }
 
-  static highlightClicked_legend(datum) { //If not bright or dim, then react
-    d3.selectAll(".node")
+  static highlightClicked_legend(datum) {
+    //If self is not dimmed and others are dimmed, toggle
+    let selfOpacity = +d3.select(".topOptId_" + datum.id).style("opacity");
+    let otherOpacity = +d3.select(".topOptId_" + (!(datum.id - 1) + 1)).style("opacity");
+    if (selfOpacity === 1 && otherOpacity !== 1) {
+      main.resumeClicked_legend();
+      return;
+    }
+
+    d3.selectAll(".node, .legendItem")
       .style("opacity", 0.3);
     d3.selectAll(".topOptId_" + datum.id)
       .style("opacity", 1);
   }
   
   static resumeClicked_legend() {
-    d3.selectAll(".node").style("opacity", 1);
+    d3.selectAll(".node, .legendItem").style("opacity", 1);
   }
 }
 
