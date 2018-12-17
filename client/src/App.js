@@ -5,6 +5,7 @@ import MainAHP from './component/main_AHP';
 import MainSimple from './component/main_simple';
 
 //TODO: redux
+//TODO: logging fluentd logging layer lightsail after ML app
 class App extends Component {
   render() {
     return (

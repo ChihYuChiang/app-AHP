@@ -67,6 +67,7 @@ $spacers: (
 );
 
 //Potentially useful way to manage z index
+//only works on positioned elements (e.g. position:absolute, position:relative).
 $z-layers: (
   bottomless-pit: -10000,
   -3 : -3,
