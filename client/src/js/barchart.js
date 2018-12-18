@@ -31,8 +31,8 @@ function main(datum) {
     .ease(d3.easeQuadOut);
   barGs
     .append("rect")
-    .attr("rx", "3px")
-    .attr("ry", "3px")
+    .attr("rx", "2px")
+    .attr("ry", "2px")
     .attr("fill", (_, i) => {
       let color = d3.hsl(hueScale(i + 1));
       color.l = 0.7;
@@ -43,7 +43,7 @@ function main(datum) {
     .attr("height", 0)
     .attr("width", xScale.bandwidth())
     .transition(barTransition)
-    .delay((_, i) => i * 150)
+    .delay((_, i) => i * 100)
     .attr("y", (d) => height - yScale(d))
     .attr("height", (d) => yScale(d));
   barGs
@@ -56,7 +56,7 @@ function main(datum) {
     .style("font-size", 8)
     .style("opacity", 0)
     .transition("barText")
-    .delay(600 + (datum.data.score.length - 1) * 150 + 50)
+    .delay(600 + (datum.data.score.length - 1) * 100 - 50)
     .style("opacity", 1);
 }
 

@@ -9,7 +9,7 @@ class main {
   
   static highlightHovered(datum) {
 
-    //--Base interaction
+    //--Base interaction (not updated graph)
     d3.select("#information").style("visibility", () =>
       datum.inter ? "visible" : "hidden"
     );
@@ -58,8 +58,12 @@ class main {
   
 
     //--Rich interaction
-    // if (typeof datum.data.score !== "undefined") { //Add util
     if (datum.inter) {
+      let crown = d3.select(".node_crown").filter(d => datum.id === d.id);
+      crown
+        .transition()
+        .duration(200)
+        .style("opacity", 0);
       let curCircle = d3.selectAll(".node_circle")
         .filter(d => datum.id === d.id)
       curCircle  
@@ -92,7 +96,7 @@ class main {
   
   static resumeHovered(datum) {
     
-    //--Base interaction
+    //--Base interaction (not updated graph)
     d3.select("#information").style("visibility", "hidden");
   
     let circles = d3.selectAll(".node_circle");
@@ -110,10 +114,14 @@ class main {
       .transition()
       .duration(300)
       .style("opacity", 1);
-
     
     //--Rich interaction
     if (datum.inter) {
+      let crown = d3.select(".node_crown");
+      crown
+        .transition()
+        .duration(300)
+        .style("opacity", 1);
       let curCircle = d3.selectAll(".node_circle")
         .filter(d => datum.id === d.id)
       curCircle  

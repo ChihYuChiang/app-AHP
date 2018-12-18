@@ -179,6 +179,25 @@ function produceTreeGraph(root, options, inter) {
   nodeGs_enter8Update //Mouse event listener
     .select(".node_listener")
     .attr("r", d => getCircleR(d.data.parWeight, inter) + 10);
+  nodeGs_enter8Update //The crown
+    .select(function(d) {
+      if (d.id === "0-0" && d.inter) return this;
+    })
+    .append("text")
+    .classed("fas node_crown", true)
+    .attr("transform", "rotate(-40)")
+    .attr("dy", d => -getCircleR(d.data.parWeight, inter) + 5)
+    .attr("dx", d => -getCircleR(d.data.parWeight, inter) + 15)
+    .attr("fill", d => {
+      let [hueScale] = genScales(root);
+      let colorHue = hueScale(d.topOptId);
+      let color = d3.hsl(colorHue);
+      color.l = 0.95;
+      return color;
+    })
+    .style("font-size", 16)
+    .text('\uf521'); //d3 accepts this form of unicode instead of &#xf040
+    //https://stackoverflow.com/questions/14984007/how-do-i-include-a-font-awesome-icon-in-my-svg
 }
 
 function produceLegend(root, options) {
