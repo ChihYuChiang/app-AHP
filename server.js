@@ -12,7 +12,9 @@ app.use(morgan('combined'))
 
 
 const apiRouter = require('./route/api');
+const infoRouter = require('./route/info');
 app.use('/api', apiRouter);
+app.use('/info', infoRouter);
 
 
 if (process.env.NODE_ENV === 'production') {

@@ -1,5 +1,6 @@
 .footer-control {
-  text-align: left;
+  font-size: 0.75rem;
+  padding: 0px 15px 3px;
 
   @extend %i-control;
   i {
@@ -11,10 +12,7 @@
   color: $gray-200;
   font-size: 0.75rem;
   background-color: $gray-700;
-  padding-top: 10px;
-  padding-bottom: 12px;
-  padding-right: 40px;
-  text-align: right;
+  padding: 12px 15px;
 }
 
 #footer-wrapper {
