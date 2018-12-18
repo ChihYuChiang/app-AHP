@@ -20,7 +20,7 @@ const main = {
       </div>,
     RECORD_REPORT:
       <div>
-        This will save your report, this entire interactive graph, to the <b>cloud</b> and give you an <b>unique URL</b> to share and access this report in any later time.
+        This saves your report to the cloud and produces an unique <b>URL</b> for later access.
       </div>
   },
   TIP_OTHER: {
