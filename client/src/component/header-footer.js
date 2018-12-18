@@ -23,7 +23,6 @@ class Footer extends Component {
             component={
               <a id="a-escapeSimple" href="/simple"><i className="fas fa-sign-out-alt" /></a>
             }
-            componentId="a-escapeSimple"
             tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
             tipPlacement="top"
             tipOffset="0px, 5px"

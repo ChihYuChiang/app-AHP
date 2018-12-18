@@ -14,24 +14,13 @@
   cursor: pointer; /* "hand" cursor */
 }
 
-.tip-tip {
-  z-index: z(hover);
-  background-color: $gray-r200;
+.tippy-tooltip .tippy-content {
   color: $gray-700;
-  pointer-events: none;
 
-  + .tip-arrow-bottom::before { //::before is the real arrow
-    border-bottom-color: $gray-r200;
-  }
-  + .tip-arrow-top::before { //::before is the real arrow
-    border-top-color: $gray-r200;
-  }
-  + .tip-arrow-right::before { //::before is the real arrow
-    border-right-color: $gray-r200;
-  }
-  + .tip-arrow-left::before { //::before is the real arrow
-    border-left-color: $gray-r200;
-  }
+  b {
+    font-weight: 400;
+    color: theme-color-level(primary, 5);
+  };
 }
 
 .btn-wide {
@@ -42,15 +31,15 @@
   width: 150px;
 }
 
-.btnGroup-left > button {
+.btnGroup-left {
   border-radius: .25rem 0px 0px .25rem;
 }
 
-.btnGroup-right > button {
+.btnGroup-right {
   border-radius: 0px .25rem .25rem 0px;
 }
 
-.btnGroup-middle > button {
+.btnGroup-middle {
   border-radius: 0px;
 }
 

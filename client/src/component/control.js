@@ -24,7 +24,7 @@ class Control extends Component {
       case CONST.CONTROL_TYPE.UPDATE:
         return (
           <ButtonToolbar id="control-wrapper" className="justify-content-center">
-            <ButtonWTip buttonId="btn-recordReport"
+            <ButtonWTip
               buttonContent="Save Your Report"
               buttonOnClick={this.record8GetUrl}
               tipContent={CONTENT.TIP_BTN.RECORD_REPORT}
@@ -63,13 +63,14 @@ class Control extends Component {
               onChange={(evt) => {this.props.handleCriterionFile(evt.target.files[0]);}}
             />
             <ButtonToolbar className="justify-content-center">
-              <ButtonWTip buttonId="btn-demoResult"
+              <ButtonWTip
                 className="mr-2"
                 buttonContent="Demo Result"
                 buttonOnClick={this.props.renderDemoGraph}
                 tipContent={CONTENT.TIP_BTN.DEMO_RESULT}
               />
-              <ButtonWTip buttonId="btn-downloadTemplate" className="btnGroup-left"
+              <ButtonWTip
+                className="btnGroup-left"
                 buttonContent={
                   <a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>
                     Download Template
@@ -77,7 +78,8 @@ class Control extends Component {
                 }
                 tipContent={CONTENT.TIP_BTN.DOWNLOAD_TEMPLATE}>
               </ButtonWTip>
-              <ButtonWTip buttonId="btn-uploadCriteria" className="btnGroup-right mr-2"
+              <ButtonWTip
+                className="btnGroup-right mr-2"
                 buttonContent={
                   <label htmlFor="fileInput-criteria" className="file-label">
                     Upload Your Criteria
