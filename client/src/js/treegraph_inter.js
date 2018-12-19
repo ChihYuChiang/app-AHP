@@ -59,13 +59,8 @@ class main {
 
     //--Rich interaction
     if (datum.inter) {
-      let crown = d3.select(".node_crown").filter(d => datum.id === d.id);
-      crown
-        .transition()
-        .duration(200)
-        .style("opacity", 0);
-      let curCircle = d3.selectAll(".node_circle")
-        .filter(d => datum.id === d.id)
+      let curCircle = d3.selectAll(".node_circleWrapper")
+        .filter(d => datum.id === d.id);
       curCircle  
         .transition()
         .duration(350)
@@ -117,13 +112,8 @@ class main {
     
     //--Rich interaction
     if (datum.inter) {
-      let crown = d3.select(".node_crown");
-      crown
-        .transition()
-        .duration(300)
-        .style("opacity", 1);
-      let curCircle = d3.selectAll(".node_circle")
-        .filter(d => datum.id === d.id)
+      let curCircle = d3.selectAll(".node_circleWrapper")
+        .filter(d => datum.id === d.id);
       curCircle  
         .transition()
         .duration(300)

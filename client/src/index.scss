@@ -19,14 +19,10 @@ html { //For rem, which Bootstrap 4 bases on
 
 a:link, a:visited, a:hover, a:active {
   @extend %remove-a-effect;
-}
-
-a:link, a:visited {
-  color: theme-color-level(primary, 5);
+  color: theme-color-level(primary, 3);
 }
 
 a:hover {
-  color: theme-color(primary);
   border-bottom: 1px solid theme-color-level(primary, -8);
 }
 

@@ -7,6 +7,7 @@ import drawTreeGraph from "../js/treegraph";
 import CONST from "../js/const";
 
 
+//TODO: text report: decision barchart + most important criteria + best-performing criteria for each option (hover)
 function Graph (props) {
   //In React DOM, there's always <svg /> only (no change at all), the d3 code implements on top of that 
   switch (props.curGraph) {

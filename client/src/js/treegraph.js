@@ -129,6 +129,8 @@ function produceTreeGraph(root, options, inter) {
     .append("g")
     .classed("node", true);
   nodeGs_enter
+    .append("g")
+    .classed("node_circleWrapper", true)
     .append("circle")
     .classed("node_circle", true);
   nodeGs_enter
@@ -180,24 +182,17 @@ function produceTreeGraph(root, options, inter) {
     .select(".node_listener")
     .attr("r", d => getCircleR(d.data.parWeight, inter) + 10);
   nodeGs_enter8Update //The crown
-    .select(function(d) {
-      if (d.id === "0-0" && d.inter) return this;
-    })
-    .append("text")
-    .classed("fas node_crown", true)
-    .attr("transform", "rotate(-40)")
-    .attr("dy", d => -getCircleR(d.data.parWeight, inter) + 5)
-    .attr("dx", d => -getCircleR(d.data.parWeight, inter) + 15)
+    .selectAll(".node_circleWrapper")
+    .filter(d => d.id === "0-0" && d.inter)
+    .insert("circle", ":first-child")
+    .attr("r", d => getCircleR(d.data.parWeight, inter) * 1.3)
     .attr("fill", d => {
       let [hueScale] = genScales(root);
       let colorHue = hueScale(d.topOptId);
       let color = d3.hsl(colorHue);
       color.l = 0.95;
       return color;
-    })
-    .style("font-size", 16)
-    .text('\uf521'); //d3 accepts this form of unicode instead of &#xf040
-    //https://stackoverflow.com/questions/14984007/how-do-i-include-a-font-awesome-icon-in-my-svg
+    });
 }
 
 function produceLegend(root, options) {
@@ -255,9 +250,10 @@ function produceLegend(root, options) {
 
 function genScales(root) {
   let nOptions = root.data.score.length;
+  let adjustBound = 0.8; //Make the difference more obvious for the middle numbers
   let lightnessScale = d3
     .scaleLinear()
-    .domain([1 / nOptions, (nOptions * 0.8) / nOptions])
+    .domain([1 / nOptions * adjustBound, (nOptions * adjustBound) / nOptions])
     .range([0.9, 0.5])
     .clamp(true);
   let hueScale = d3 //1, 2, .., nOptions
