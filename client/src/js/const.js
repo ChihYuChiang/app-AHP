@@ -19,6 +19,11 @@ const main = {
     RECORDED: 'recorded',
     NULL: 'null'
   },
+  PROMPT_TYPE: {
+    DEFAULT: 'default',
+    INPUT: 'input',
+    NULL: 'null'
+  },
   GRAPH_TYPE: {
     TREE_UPLOAD: 'tree_upload',
     TREE_UPDATE: 'tree_update',

@@ -9,11 +9,16 @@ import CONST from "../js/const";
 import Comparison from "./comparison";
 import Graph from "./graph";
 import Control from "./control";
+import Prompt from "./prompt";
 import { Header, Footer } from "./header-footer";
 import { Loading } from "./util";
 
 
 const buildDefaultState = () => ({
+  prompt: {
+    content: "Which job should I take? Many things to be considered.",
+    identity: "A famous prodigy"
+  },
   option: {
     items: [],
     pairs: [],
@@ -35,8 +40,9 @@ const buildDefaultState = () => ({
 class Main extends Component {
   state = {
     ...buildDefaultState(),
-    curGraph: CONST.GRAPH_TYPE.NULL,
     curControl: CONST.CONTROL_TYPE.NULL,
+    curPrompt: CONST.PROMPT_TYPE.NULL,
+    curGraph: CONST.GRAPH_TYPE.NULL,
     curComparison: CONST.COM_TYPE.NULL,
     isLoading: false
   };
@@ -47,7 +53,7 @@ class Main extends Component {
         <div className="col-12" align="center">
           <div className="spacer-100"></div>
           <Header location={CONST.LOCATION.AHP} />
-          <div className="mt-4">
+          <div className="mt-7">
             <Control
               curControl={this.state.curControl}
               handleCriterionFile={this.handleCriterionFile}
@@ -59,6 +65,10 @@ class Main extends Component {
           </div>
           <div className="content mt-4">
             <Loading isLoading={this.state.isLoading} />
+            <Prompt
+              curPrompt={this.state.curPrompt}
+              prompt={this.state.prompt}
+            />
             <Graph
               curGraph={this.state.curGraph}
               root={this.state.criterion.root}
@@ -102,6 +112,7 @@ class Main extends Component {
       .then(async (data) => {
         this.setState({
           curGraph: CONST.GRAPH_TYPE.NULL,
+          curPrompt: CONST.PROMPT_TYPE.NULL,
           curComparison: CONST.COM_TYPE.NULL,
           isLoading: true
         });
@@ -121,6 +132,7 @@ class Main extends Component {
           pairDataGenerator: data.pairDataGenerator,
           curPairData: data.pairDataGenerator.next().value,
           curControl: CONST.CONTROL_TYPE.NULL,
+          curPrompt: CONST.PROMPT_TYPE.DEFAULT,
           curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
           curComparison: CONST.COM_TYPE.CONFIRM_PRE,
           isLoading: false
@@ -158,6 +170,7 @@ class Main extends Component {
     this.setState({
       //Fake loading
       curGraph: CONST.GRAPH_TYPE.NULL,
+      curPrompt: CONST.PROMPT_TYPE.NULL,
       curComparison: CONST.COM_TYPE.NULL,
       isLoading: true
     }, async () => {
@@ -184,6 +197,7 @@ class Main extends Component {
         state.isLoading = false;
         state.curControl = CONST.CONTROL_TYPE.UPDATE;
         state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
+        state.curPrompt = CONST.PROMPT_TYPE.DEFAULT;
 
         return state;
       });
@@ -194,6 +208,7 @@ class Main extends Component {
     //Hide graph and display loading spinner
     this.setState({
       curGraph: CONST.GRAPH_TYPE.NULL,
+      curPrompt: CONST.PROMPT_TYPE.NULL,
       curComparison: CONST.COM_TYPE.NULL,
       isLoading: true
     });
@@ -228,6 +243,7 @@ class Main extends Component {
       curState.criterion.root = root;
       curState.curGraph = graphType;
       curState.curControl = targetControl;
+      curState.curPrompt = CONST.PROMPT_TYPE.DEFAULT;
   
       curState.isLoading = false;
   
