@@ -24,7 +24,14 @@ const main = {
       </div>
   },
   TIP_OTHER: {
-    A_ESCAPE_SIMPLE: "Let's not bother with the complicated reality.."
+    A_ESCAPE_SIMPLE: "Let's not bother with the complicated reality..",
+    CARD_PROMPT_CONTENT:
+      <div>
+        <p>This is a sample decision to be made.</p>
+          The <b>decision criteria</b> are presented in the graph.
+          From left to right, criteria contain sub-criteria
+          and gets more specific and detailed along the paths.
+      </div>
   },
   INSTRUCTION: {
     SIMPLE: "Remember, to make this really works, answer the question sincerely.",

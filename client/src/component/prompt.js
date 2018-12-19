@@ -7,6 +7,7 @@ import { PosedFadeY } from './pose';
 import { ComponentWTip } from './util';
 
 import CONST from "../js/const";
+import CONTENT from "../js/content";
 
 
 function Prompt(props) {
@@ -32,7 +33,7 @@ function Prompt(props) {
           <PosedFadeY key="prompt">
             <ComponentWTip
               component={prompt}
-              tipContent="The decision to be made. This one is a sample."
+              tipContent={CONTENT.TIP_OTHER.CARD_PROMPT_CONTENT}
               tippyConfig={{
                 placement: "bottom",
                 offset: "40px"
