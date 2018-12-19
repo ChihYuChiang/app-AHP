@@ -15,10 +15,7 @@ import { Loading } from "./util";
 
 
 const buildDefaultState = () => ({
-  prompt: {
-    content: "Which job should I take? Many things to be considered.",
-    identity: "A famous prodigy"
-  },
+  prompt: "Which company to work for?",
   option: {
     items: [],
     pairs: [],
@@ -197,7 +194,7 @@ class Main extends Component {
         state.isLoading = false;
         state.curControl = CONST.CONTROL_TYPE.UPDATE;
         state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
-        state.curPrompt = CONST.PROMPT_TYPE.DEFAULT;
+        state.curPrompt = CONST.PROMPT_TYPE.REPORT;
 
         return state;
       });
@@ -213,18 +210,20 @@ class Main extends Component {
       isLoading: true
     });
 
-    var response, targetControl;
+    var response, targetControl, targetPrompt;
     switch (graphType) {
       default:
       case CONST.GRAPH_TYPE.TREE_DEMO:
       case CONST.GRAPH_TYPE.TREE_ENTRY:
         response = await fetch('/api/demo');
         targetControl = CONST.CONTROL_TYPE.DEFAULT;
+        targetPrompt = CONST.PROMPT_TYPE.DEFAULT;
         break;
       
       case CONST.GRAPH_TYPE.TREE_RECORD:
         response = await fetch('/api/record/' + this.props.match.params.recordId);
         targetControl = CONST.CONTROL_TYPE.NULL;
+        targetPrompt = CONST.PROMPT_TYPE.REPORT;
     }
 
     const body = await response.json();
@@ -243,7 +242,7 @@ class Main extends Component {
       curState.criterion.root = root;
       curState.curGraph = graphType;
       curState.curControl = targetControl;
-      curState.curPrompt = CONST.PROMPT_TYPE.DEFAULT;
+      curState.curPrompt = targetPrompt;
   
       curState.isLoading = false;
   

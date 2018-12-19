@@ -24,8 +24,10 @@ class Footer extends Component {
               <a id="a-escapeSimple" href="/simple"><i className="fas fa-sign-out-alt" /></a>
             }
             tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
-            tipPlacement="top"
-            tipOffset="0px, 5px"
+            tippyConfig={{
+              placement: "top",
+              offset: "0px, 5px"
+            }}
           />
         );
         break;

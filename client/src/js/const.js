@@ -21,7 +21,7 @@ const main = {
   },
   PROMPT_TYPE: {
     DEFAULT: 'default',
-    INPUT: 'input',
+    REPORT: 'report',
     NULL: 'null'
   },
   GRAPH_TYPE: {

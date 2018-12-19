@@ -86,9 +86,10 @@ export function ComponentWTip(props) {
     <Tippy
       content={props.tipContent}
       theme="light"
-      placement={props.tipPlacement} offset={props.tipOffset} arrow={true} maxWidth="200px"
+      placement="bottom" arrow={true} maxWidth="200px"
       animation="shift-toward" duration={[350, 200]} delay={[1000, 50]} inertia={true}
-      performance={true}>
+      performance={true}
+      {...props.tippyConfig}>
       {props.component}
     </Tippy>
   );
@@ -97,6 +98,5 @@ export function ComponentWTip(props) {
 ComponentWTip.propTypes = {
   component: PropTypes.element.isRequired, //Content of the component
   tipContent: PropTypes.node.isRequired, //Content for the tooltip
-  tipPlacement: PropTypes.string, //Position of the tooltip
-  tipOffset: PropTypes.string //Refer to Popper config; "5px"
+  tippyConfig: PropTypes.object //Overwrite the default settings in Tippy and in this component
 };
