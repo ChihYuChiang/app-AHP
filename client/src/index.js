@@ -7,7 +7,8 @@ import 'tippy.js/dist/themes/light.css'
 import './index.scss'; //Including bootstrap
 
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
+import unregister from './registerServiceWorker';
+
 
 ReactDOM.render(<App />, document.getElementById('root'));
-registerServiceWorker();
+unregister();
