@@ -11,6 +11,7 @@ import CONTENT from "../js/content";
 
 
 function Prompt(props) {
+  let promptContent;
   let prompt = (
     <Card id="prompt" className="mt-4">
       <CardBody>
@@ -21,28 +22,41 @@ function Prompt(props) {
       </CardBody>
     </Card>
   );
+  let withTip = (tipContent) => (
+    <PosedFadeY key="prompt">
+      <ComponentWTip
+        component={prompt}
+        tipContent={tipContent}
+        tippyConfig={{
+          placement: "bottom",
+          offset: "40px"
+        }}
+      />
+    </PosedFadeY>
+  );
 
   switch (props.curPrompt) {
     default:
-    case CONST.PROMPT_TYPE.NULL:
-      return <PoseGroup></PoseGroup>
+    case CONST.PROMPT_TYPE.NULL: //Empty
+      promptContent = false;
+      break;
+
+    case CONST.PROMPT_TYPE.UPLOAD: //No tip
     case CONST.PROMPT_TYPE.REPORT:
-    case CONST.PROMPT_TYPE.DEFAULT:
-      return (
-        <PoseGroup>
-          <PosedFadeY key="prompt">
-            <ComponentWTip
-              component={prompt}
-              tipContent={CONTENT.TIP_OTHER.CARD_PROMPT_CONTENT}
-              tippyConfig={{
-                placement: "bottom",
-                offset: "40px"
-              }}
-            />
-          </PosedFadeY>
-        </PoseGroup>
+      promptContent = (
+        <PosedFadeY key="prompt">
+          {prompt}
+        </PosedFadeY>
       );
+      break;
+      
+    case CONST.PROMPT_TYPE.DEMO: //With tip
+      promptContent = withTip(CONTENT.TIP_OTHER.CARD_PROMPT_DEMO); break;
+    case CONST.PROMPT_TYPE.ENTRY:
+      promptContent = withTip(CONTENT.TIP_OTHER.CARD_PROMPT_ENTRY);
   }
+
+  return <PoseGroup>{promptContent}</PoseGroup>;
 }
 
 Prompt.propTypes = {

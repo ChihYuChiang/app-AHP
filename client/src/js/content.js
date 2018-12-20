@@ -25,12 +25,16 @@ const main = {
   },
   TIP_OTHER: {
     A_ESCAPE_SIMPLE: "Let's not bother with the complicated reality..",
-    CARD_PROMPT_CONTENT:
+    CARD_PROMPT_ENTRY:
       <div>
-        <p>This is a sample decision to be made.</p>
-          The <b>decision criteria</b> are presented in the graph.
+        <p>This is an example <b>decision</b> to be made.</p>
+          The decision <b>criteria</b> are presented in the graph.
           From left to right, criteria contain sub-criteria
           and gets more specific and detailed along the paths.
+      </div>,
+    CARD_PROMPT_DEMO:
+      <div>
+        The AHP result.
       </div>
   },
   INSTRUCTION: {
@@ -84,6 +88,7 @@ const main = {
         </p>
       </div>
   },
+  DEMO_PROMPT: "Which company to work for?",
   MAGIC_PROMPTS: [
     ["Name a celebrity off the top of your head.", "While you've followed {}'s activity"],
     ["Name a politician off the top of your head.", "While you have seen so much about {}"],

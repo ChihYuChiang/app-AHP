@@ -81,6 +81,7 @@ ButtonWTip.propTypes = {
 };
 
 
+//TODO: use props.children
 export function ComponentWTip(props) {
   return (
     <Tippy

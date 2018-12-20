@@ -5,6 +5,7 @@ import preprocessData, { genRoot, countQuestion } from "../js/pre-data";
 import util from "../js/util";
 import score from "../js/score";
 import CONST from "../js/const";
+import CONTENT from "../js/content";
 
 import Comparison from "./comparison";
 import Graph from "./graph";
@@ -15,7 +16,7 @@ import { Loading } from "./util";
 
 
 const buildDefaultState = () => ({
-  prompt: "Which company to work for?",
+  prompt: "",
   option: {
     items: [],
     pairs: [],
@@ -129,7 +130,7 @@ class Main extends Component {
           pairDataGenerator: data.pairDataGenerator,
           curPairData: data.pairDataGenerator.next().value,
           curControl: CONST.CONTROL_TYPE.NULL,
-          curPrompt: CONST.PROMPT_TYPE.DEFAULT,
+          curPrompt: CONST.PROMPT_TYPE.UPLOAD,
           curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
           curComparison: CONST.COM_TYPE.CONFIRM_PRE,
           isLoading: false
@@ -213,11 +214,16 @@ class Main extends Component {
     var response, targetControl, targetPrompt;
     switch (graphType) {
       default:
-      case CONST.GRAPH_TYPE.TREE_DEMO:
-      case CONST.GRAPH_TYPE.TREE_ENTRY:
-        response = await fetch('/api/demo');
+      case CONST.GRAPH_TYPE.TREE_DEMO: //TODO: remove the server call; reuse the entry response
+        targetPrompt = CONST.PROMPT_TYPE.DEMO;
         targetControl = CONST.CONTROL_TYPE.DEFAULT;
-        targetPrompt = CONST.PROMPT_TYPE.DEFAULT;
+        response = await fetch('/api/demo');
+        break;
+
+      case CONST.GRAPH_TYPE.TREE_ENTRY:
+        targetPrompt = CONST.PROMPT_TYPE.ENTRY;
+        targetControl = CONST.CONTROL_TYPE.DEFAULT;
+        response = await fetch('/api/demo');
         break;
       
       case CONST.GRAPH_TYPE.TREE_RECORD:
@@ -229,24 +235,26 @@ class Main extends Component {
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
 
-    this.setState((curState) => {
+    this.setState((state) => {
       //Clear cur state
-      curState = {
-        ...curState,
+      state = {
+        ...state,
         ...buildDefaultState()
       };
-  
-      curState.option.items = body.items_option;
-      curState.criterion.items = body.items_criterion;
+      
+      state.prompt = body.prompt || CONTENT.DEMO_PROMPT; //TODO: remove the need of fallback
+      state.option.items = body.items_option;
+      state.criterion.items = body.items_criterion;
       let root = genRoot(body.items_criterion);
-      curState.criterion.root = root;
-      curState.curGraph = graphType;
-      curState.curControl = targetControl;
-      curState.curPrompt = targetPrompt;
+
+      state.criterion.root = root;
+      state.curGraph = graphType;
+      state.curControl = targetControl;
+      state.curPrompt = targetPrompt;
   
-      curState.isLoading = false;
+      state.isLoading = false;
   
-      return curState;
+      return state;
     });
   };
 

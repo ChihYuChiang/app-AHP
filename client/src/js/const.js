@@ -20,7 +20,9 @@ const main = {
     NULL: 'null'
   },
   PROMPT_TYPE: {
-    DEFAULT: 'default',
+    UPLOAD: 'upload',
+    DEMO: 'demo',
+    ENTRY: 'entry',
     REPORT: 'report',
     NULL: 'null'
   },
