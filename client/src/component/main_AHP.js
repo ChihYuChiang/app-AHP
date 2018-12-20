@@ -274,10 +274,9 @@ class Main extends Component {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        items_criterion: this.state.criterion.items,
-        items_option: this.state.option.items,
-        compares_criterion: this.state.criterion.compares,
-        compares_option: this.state.option.compares
+        prompt: this.state.prompt,
+        items_criterion: this.state.criterion.items, //To recreate the graph, we need only items, which contain scores and can recreates root
+        items_option: this.state.option.items
       }),
     });
     const recordId = await response.text();

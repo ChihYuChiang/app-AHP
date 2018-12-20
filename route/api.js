@@ -20,7 +20,7 @@ router.get('/demo', (req, res) => {
     .then((data) => {res.send(data);});
 });
 
-router.get('/record/:id', (req, res) => { //TODO: handle error (no record)
+router.get('/record/:id', (req, res) => { //TODO: handle error https://nemethgergely.com/error-handling-express-async-await/
   dbOps.getCompare(req.params.id)
     .then((data) => {res.send(data);});
 });

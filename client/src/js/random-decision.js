@@ -27,7 +27,6 @@ function rand2Adjs(options, prompt) {
   let curDay = new Date().getDay();
 
   let adjIds = [(optionScores + curDate * curDay) % CONTENT.ADJECTIVES.length, (promptScore + curDate * curDay) % CONTENT.ADJECTIVES.length];
-  console.log(adjIds);
 
   //Alter duplication
   let [adjIds_rDupe, dupe] = [adjIds, false];
@@ -42,7 +41,7 @@ function rand2Adjs(options, prompt) {
       return acc;
     }, [[], false]);
   } while (dupe);
-  console.log(adjIds_rDupe);
+  
   let adjs = [
     CONTENT.ADJECTIVES[adjIds_rDupe[0]], //From options
     CONTENT.ADJECTIVES[adjIds_rDupe[1]] //From prompt
