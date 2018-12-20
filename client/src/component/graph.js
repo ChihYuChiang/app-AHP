@@ -14,9 +14,10 @@ function Graph (props) {
     case CONST.GRAPH_TYPE.NULL:
       return <PosedFadeY id="canvasRoot" style={{ display: "none" }} pose='exit'/>;
     
+    case CONST.GRAPH_TYPE.TREE_UPLOAD:
     default:
       drawTreeGraph(props.root, props.options, props.curGraph);
-      return <PosedFadeY id="canvasRoot" style={{ display: "block" }} pose='enter'/>;
+      return <PosedFadeY id="canvasRoot" style={{ display: "block" }} pose='enter' cDelay={1000}/>;
   }
 }
 

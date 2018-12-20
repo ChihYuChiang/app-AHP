@@ -64,19 +64,25 @@ class Comparison extends Component {
     
         return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
           <div className="comparison-wrapper mt-4">
-            <Progress className="col-8 p-0 pbar-thin"
-              value={this.props.curPairProgress}
-              color="info"
-            />
-            <BreadCrumbC className="justify-content-center col-8"
-              ancestors={this.props.pairData.breadCrumb.map((id) => this.props.id2Name[id])}
-            />
-            <GroupLabel className="mb-5 mt-4 fs-115"
-              pairDataType={this.props.pairData.type}
-              pairDataGId={this.props.pairData.gId}
-              id2Name={this.props.id2Name}
-            />
             <PoseGroup animateOnMount={true}>
+              <PosedFadeY key="breadCrumb">
+                <Progress className="col-8 p-0 pbar-thin"
+                  value={this.props.curPairProgress}
+                  color="info"
+                />
+                <BreadCrumbC className="justify-content-center col-8"
+                  ancestors={this.props.pairData.breadCrumb.map((id) => this.props.id2Name[id])}
+                />
+              </PosedFadeY>
+
+              <PosedFadeY key="groupLabel">
+                <GroupLabel className="mb-5 mt-4 fs-115"
+                  pairDataType={this.props.pairData.type}
+                  pairDataGId={this.props.pairData.gId}
+                  id2Name={this.props.id2Name}
+                />
+              </PosedFadeY>
+
               {pairs}
               <PosedFadeY key={this.props.pairData.gId + '_submit'} i={this.props.pairData.pairs.length}>
                 <Button className="mt-2 btn-wide" onClick={this.handleComData8Reset}>Submit
@@ -89,14 +95,17 @@ class Comparison extends Component {
       case CONST.COM_TYPE.CONFIRM_POST:
         return (
           <div className="comparison-wrapper mt-4">
-            <Progress className="col-8 p-0 pbar-thin"
-              value={100}
-              color="info"
-            />
-            <BreadCrumbC className="justify-content-center col-8"
-              ancestors={[""]}
-            />
             <PoseGroup animateOnMount={true}>
+              <PosedFadeY key="breadCrumb">
+                <Progress className="col-8 p-0 pbar-thin"
+                  value={100}
+                  color="info"
+                />
+                <BreadCrumbC className="justify-content-center col-8"
+                  ancestors={[""]}
+                />
+              </PosedFadeY>
+              
               <PosedFade key="msg">
                 <p className="mt-6 fs-115">Required information collected.</p>
               </PosedFade>

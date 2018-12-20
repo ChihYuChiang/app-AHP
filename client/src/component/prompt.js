@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Card, CardBody, CardText } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { PosedFadeY } from './pose';
+import { PosedFadeY, PosedNull } from './pose';
 import { ComponentWTip } from './util';
 
 import CONST from "../js/const";
@@ -41,8 +41,22 @@ function Prompt(props) {
       promptContent = false;
       break;
 
-    case CONST.PROMPT_TYPE.UPLOAD: //No tip
-    case CONST.PROMPT_TYPE.REPORT:
+    case CONST.PROMPT_TYPE.UPLOAD:
+      promptContent = (
+        <PosedNull key="prompt">
+          <PosedFadeY>
+            <div className="col-8 fs-115">
+              Please review and confirm the following information and criteria hierarchy are correct.
+            </div>
+          </PosedFadeY>
+          <PosedFadeY cDelay={1000}>
+            {prompt}
+          </PosedFadeY>
+        </PosedNull>
+      );
+      break;
+
+    case CONST.PROMPT_TYPE.REPORT: //No tip
       promptContent = (
         <PosedFadeY key="prompt">
           {prompt}
