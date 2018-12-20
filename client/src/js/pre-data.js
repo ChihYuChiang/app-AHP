@@ -1,20 +1,21 @@
 import * as d3 from "d3"; //TODO: include only used modules
+import isNull from "lodash/isNull";
 
 import CONST from "./const";
 import util from "./util";
 
 
-async function main(rows) {
-  const nRow = rows.length;
-  const nCol = rows[0].length;
+async function main(rows) { //The excel module removes empty row or column
+  //--Prompt
+  let prompt = rows[0][1];
+
 
   //--Option
   //Get data
-  let items_option = [];
-  for (let i = 2; rows[i][0]; i++) {
-    items_option.push({ id: i - 1, name: rows[i][0] });
-  }
-
+  let items_option = rows[1].filter((i) => !isNull(i));
+  items_option.shift(); //Remove the "option" title
+  items_option = items_option.map((item, i) => ({id: i + 1, name: item})); //id starts from 1
+  
   //Get pairwise data
   let pairs_option = genPair(items_option);
   pairs_option = pairs_option.map((pair) => ({
@@ -25,9 +26,21 @@ async function main(rows) {
 
   //--Criterion
   //Get hierarchy data
+  const nRow = rows.length - 2; //The area of the criteria input (including the 'criteria' title column)
+  const nCol = Math.max(...rows.slice(2).map((row) => {
+    let nullLen = row.reduceRight((acc, cur) => { //Count how many null appended at the end of each row
+      if (acc[1]) {
+        if (isNull(cur)) acc[0]++
+        else acc[1] = false;
+      }
+      return acc;
+    }, [0, true])[0];
+    let contentLen = row.length - nullLen;
+    return contentLen;
+  }));
   let items_criterion = [{ id: "0-0", name: "Decision", parent: "", level: 0 }];
-  for (let i = 2; i < nRow; i++) {
-    for (let j = nCol - 1; j > 0; j--) {
+  for (let i = 2; i < nRow + 2; i++) {
+    for (let j = nCol; j > 0; j--) {
       if (rows[i][j]) {
         items_criterion.push({
           id: i + "-" + j,
@@ -38,6 +51,7 @@ async function main(rows) {
       }
     }
   }
+  console.log(nCol)
   let root = genRoot(items_criterion);
 
   //Get pairwise data and id to name dict
@@ -46,6 +60,7 @@ async function main(rows) {
 
   //--Return
   return {
+    prompt,
     option: {
       items: items_option,
       pairs: pairs_option

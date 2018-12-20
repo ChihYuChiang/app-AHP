@@ -117,8 +117,9 @@ class Main extends Component {
         await util.sleep(1000);
         return data;
       })
-      .then((data) => { //items, root, pairs, id2Name, generator
+      .then((data) => { //prompt, items, root, pairs, id2Name, generator
         this.setState({
+          prompt: data.prompt,
           option: {
             ...this.state.option,
             ...data.option
