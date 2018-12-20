@@ -12,12 +12,13 @@ import CONTENT from "../js/content";
 
 function Prompt(props) {
   let promptContent;
+  let adj2 = (['a', 'e', 'i', 'o', 'u'].includes(props.prompt.adjs[1][0]) ? "an " : "a ") + props.prompt.adjs[1]; //Add a proper determinant
   let prompt = (
     <Card id="prompt" className="mt-4">
       <CardBody>
-        <CardText>{props.prompt}</CardText>
+        <CardText>{props.prompt.text}</CardText>
         <CardText className="blockquote-footer">
-          Someone famous asked in <cite>a nice way</cite>
+          Someone {props.prompt.adjs[0]} asked in <cite>{adj2} way</cite>
         </CardText>
       </CardBody>
     </Card>
@@ -75,7 +76,10 @@ function Prompt(props) {
 
 Prompt.propTypes = {
   curPrompt: PropTypes.string.isRequired,
-  prompt: PropTypes.string.isRequired //Current prompt to be displayed
+  prompt: PropTypes.exact({
+    text: PropTypes.string, //Current prompt to be displayed
+    adjs: PropTypes.arrayOf(PropTypes.string) //Adjs used in signature
+  })
 };
 
 

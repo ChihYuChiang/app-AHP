@@ -1,8 +1,9 @@
 import * as d3 from "d3"; //TODO: include only used modules
 import isNull from "lodash/isNull";
 
-import CONST from "./const";
+import { rand2Adjs } from "../js/random-decision";
 import util from "./util";
+import CONST from "./const";
 
 
 async function main(rows) { //The excel module removes empty row or column
@@ -51,7 +52,6 @@ async function main(rows) { //The excel module removes empty row or column
       }
     }
   }
-  console.log(nCol)
   let root = genRoot(items_criterion);
 
   //Get pairwise data and id to name dict
@@ -60,7 +60,10 @@ async function main(rows) { //The excel module removes empty row or column
 
   //--Return
   return {
-    prompt,
+    prompt: {
+      text: prompt,
+      adjs: rand2Adjs(items_option, prompt)
+    },
     option: {
       items: items_option,
       pairs: pairs_option

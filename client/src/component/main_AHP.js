@@ -5,7 +5,6 @@ import preprocessData, { genRoot, countQuestion } from "../js/pre-data";
 import util from "../js/util";
 import score from "../js/score";
 import CONST from "../js/const";
-import CONTENT from "../js/content";
 
 import Comparison from "./comparison";
 import Graph from "./graph";
@@ -16,7 +15,10 @@ import { Loading } from "./util";
 
 
 const buildDefaultState = () => ({
-  prompt: "",
+  prompt: {
+    text: "",
+    adjs: ["", ""]
+  },
   option: {
     items: [],
     pairs: [],
@@ -243,7 +245,10 @@ class Main extends Component {
         ...buildDefaultState()
       };
       
-      state.prompt = body.prompt || CONTENT.DEMO_PROMPT; //TODO: remove the need of fallback
+      state.prompt = body.prompt || {
+        text: "Which company to work for?", //TODO: remove the need of fallback
+        adjs: ["famous", "nice"]
+      };
       state.option.items = body.items_option;
       state.criterion.items = body.items_criterion;
       let root = genRoot(body.items_criterion);

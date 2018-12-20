@@ -54,12 +54,12 @@ class Instruction extends Component {
     this._isMounted = true;
 
     let i = 0;
-    await util.sleep(4000); //Repeat every 3 sec; end after 30 secs
+    await util.sleep(8000); //Repeat every 7 sec; end after 1 min
     while (this.props.freshman) {
       this.grabAtt();
       i++;
-      if (i === 8) this.props.becomeOld();
-      await util.sleep(4000); //This structure ensures the `grabAtt` wont be triggered after freshman ends
+      if (i === 7) this.props.becomeOld();
+      await util.sleep(7000); //This structure ensures the `grabAtt` wont be triggered after freshman ends
     }
   }
 

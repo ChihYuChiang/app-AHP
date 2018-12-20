@@ -15,6 +15,7 @@ import CONST from "../js/const";
 import CONTENT from "../js/content";
 
 
+//TODO: simple instruction
 //TODO: database record input
 class Main extends Component {
   state = {
