@@ -214,7 +214,7 @@ GroupLabel.propTypes = { //As in the parent
 };
 
 
-class Pair extends Component {
+class Pair extends Component { //TODO: better comparison format? tip when sliding?
   state = {
     value: 0
   };

@@ -33,3 +33,10 @@
     color: $gray-500;
   }
 } 
+
+%themed-b {
+  b {
+    font-weight: 400;
+    color: theme-color-level(primary, 3);
+  }
+}

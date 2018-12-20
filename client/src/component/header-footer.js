@@ -7,6 +7,40 @@ import CONST from "../js/const";
 import { ComponentWTip, Title } from "./util";
 
 
+//TODO: menu
+function Header(props) {
+  let content = {
+    title: "",
+    subTitle: ""
+  };
+
+  switch (props.location) {
+    default:
+    case CONST.LOCATION.AHP: {
+      content = {
+        title: "AHP",
+        subTitle: CONTENT.SUBTITLE.AHP
+      };
+      break;
+    }
+    case CONST.LOCATION.SIMPLE: {
+      content = {
+        title: "Simple",
+        subTitle: CONTENT.SUBTITLE.SIMPLE
+      };     
+    }
+  }
+
+  return (
+    <Title {...content} />
+  );
+}
+
+Header.propTypes = {
+  location: PropTypes.string.isRequired //AHP or simple
+};
+
+
 //TODO: when mobile, footer not sticky
 class Footer extends Component {
   state = {
@@ -67,40 +101,6 @@ class Footer extends Component {
 }
 
 Footer.propTypes = {
-  location: PropTypes.string.isRequired //AHP or simple
-};
-
-
-//TODO: menu
-function Header(props) {
-  let content = {
-    title: "",
-    subTitle: ""
-  };
-
-  switch (props.location) {
-    default:
-    case CONST.LOCATION.AHP: {
-      content = {
-        title: "AHP",
-        subTitle: CONTENT.SUBTITLE.AHP
-      };
-      break;
-    }
-    case CONST.LOCATION.SIMPLE: {
-      content = {
-        title: "Simple",
-        subTitle: CONTENT.SUBTITLE.SIMPLE
-      };     
-    }
-  }
-
-  return (
-    <Title {...content} />
-  );
-}
-
-Header.propTypes = {
   location: PropTypes.string.isRequired //AHP or simple
 };
 

@@ -27,13 +27,22 @@ a:hover {
 }
 
 
-#prompt {
-  border: 0px;
-  
+.remove-focus-effect {
   &:focus {
     outline: 0px;
-  };
+  }
+}
 
+.tippy-tooltip.light-theme .tippy-content {
+  @extend %themed-b;
+
+  color: $gray-700;
+}
+
+#prompt {
+  @extend .remove-focus-effect;
+  border: 0px;
+  
   .card-body {
     padding: 0.75rem;
     color: $gray-600;
@@ -41,8 +50,8 @@ a:hover {
 
     .blockquote-footer {
       font-size: 0.85rem;
-    };
-  };
+    }
+  }
 }
 
 .black-hole { //Contains elements won't take any space, like doesn't exist
@@ -83,13 +92,10 @@ a:hover {
 }
 
 .modal-body {
+  @extend %themed-b;
+
   h5 {
     margin-top: 1.5rem !important;
-  }
-
-  b {
-    font-weight: 400;
-    color: theme-color-level(primary, 3);
   }
 
   img {

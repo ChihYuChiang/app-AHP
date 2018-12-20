@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
@@ -6,6 +6,7 @@ import Tippy from '@tippy.js/react';
 
 import { PosedFade } from './pose';
 
+import util from '../js/util';
 import styles from '../scss/variable.scss';
 
 
@@ -98,6 +99,45 @@ export function ComponentWTip(props) {
 
 ComponentWTip.propTypes = {
   component: PropTypes.element.isRequired, //Content of the component
+  tipContent: PropTypes.node.isRequired, //Content for the tooltip
+  tippyConfig: PropTypes.object //Overwrite the default settings in Tippy and in this component
+};
+
+
+export class ComponentWTipFb extends Component  {
+  tip = {}; //Store tippy instance
+
+  render() {
+    return (
+      <Tippy
+        content={this.props.tipContent}
+        theme="darker" trigger="click" hideOnClick={false}
+        placement="top" arrow={false} maxWidth="200px"
+        animation="shift-away" duration={[350, 200]} delay={[0, 0]} inertia={false}
+        performance={true}
+        onCreate={this.storeTippyInstance}
+        onShown={this.hideAfterSometime}
+        {...this.props.tippyConfig}>
+        <div className="remove-focus-effect">
+          {this.props.children}
+        </div> 
+      </Tippy>
+    );
+  }
+
+
+  storeTippyInstance = (tip) => {
+    this.tip = tip;
+  };
+
+  hideAfterSometime = async () => {
+    await util.sleep(this.props.hideAfter || 1500);
+    this.tip.hide();
+  };
+}
+
+ComponentWTip.propTypes = {
+  hideAfter: PropTypes.number, //ms after which the tip will hide
   tipContent: PropTypes.node.isRequired, //Content for the tooltip
   tippyConfig: PropTypes.object //Overwrite the default settings in Tippy and in this component
 };

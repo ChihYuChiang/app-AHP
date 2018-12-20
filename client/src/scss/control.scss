@@ -14,15 +14,6 @@
   cursor: pointer; /* "hand" cursor */
 }
 
-.tippy-tooltip .tippy-content {
-  color: $gray-700;
-
-  b {
-    font-weight: 400;
-    color: theme-color-level(primary, 5);
-  };
-}
-
 .btn-wide {
   width: 300px;
 }
@@ -43,6 +34,18 @@
   border-radius: 0px;
 }
 
+#recordUrl {
+  &::selection {
+    color: inherit; 
+    background: inherit;
+  }
+  
+  &::selection {
+    color: inherit; 
+    background: inherit;
+  }
+}
+
 
 //--Only in `control` component
 #control-wrapper {
@@ -51,6 +54,5 @@
 
   a:link, a:visited, a:hover, a:active {
     @extend %remove-a-effect;
-  }
-
+  };
 }

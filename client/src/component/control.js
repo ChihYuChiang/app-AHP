@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Button, ButtonToolbar, Label, Input } from "reactstrap";
 
-import { ButtonWTip } from "./util";
+import { ButtonWTip, ComponentWTipFb } from "./util";
 import Instruction from "./instruction";
 
 import CONST from "../js/const";
@@ -43,11 +43,13 @@ class Control extends Component {
       case CONST.CONTROL_TYPE.RECORDED: //TODO: add tip: copy succeeds
         return (
           <div id="control-wrapper" className="col-8 mt-4">
-            <Label for="recordUrl" className="text-secondary">Click to copy report URL</Label >
-            <Input type="text" id="recordUrl" readOnly
-              onClick={copyRecordUrl}
-              value={this.state.recordUrl}
-            />
+            <Label for="recordUrl">Click to copy report URL</Label >
+            <ComponentWTipFb tipContent="Copied">
+              <Input type="text" id="recordUrl" readOnly
+                onClick={copyRecordUrl}
+                value={this.state.recordUrl}
+              />
+            </ComponentWTipFb>
           </div>
         );
       
