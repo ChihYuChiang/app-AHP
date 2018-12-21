@@ -6,6 +6,7 @@ class main {
    * 
    * @return {boolean} True if empty.
    */
+  //TODO: remove this one; use lodash
   static isEmpty(obj) {
     for (var key in obj) {
       if(obj.hasOwnProperty(key))
@@ -116,6 +117,19 @@ class main {
       p = p.then(() => fn(...args)); //This updates the above `p` every time the `fn` is called
       return p; //This makes sure the return from the `fn` is returned when the promise resolved
     };
+  }
+
+  /**
+   * Scroll window to a specified topOffset.
+   * 
+   * @param {Number} topOffset Y offset from the top of the page.
+   * @param {String} behavior "smooth" or "auto" (jump to location). Default to "smooth".
+   */
+  static scrollTo(topOffset, behavior="smooth") {
+    window.scroll({
+      top: topOffset,
+      behavior: behavior
+    });
   }
 }
 

@@ -34,7 +34,8 @@ const main = {
       </div>,
     CARD_PROMPT_DEMO:
       <div>
-        The AHP result.
+        <p>The AHP result will be presented in an <b>interactive tree graph</b> visualizing all aspects of considerations.</p>
+        Click the <b>?</b> button for more about how to interpret the tree graph.
       </div>
   },
   INSTRUCTION: {

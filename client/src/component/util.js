@@ -9,6 +9,8 @@ import { PosedFade } from './pose';
 import util from '../js/util';
 import styles from '../scss/variable.scss';
 
+const maxTipWidth = "250px";
+
 
 export function Title(props) {
   //TODO: remove subtitle when not needed
@@ -62,7 +64,7 @@ export function ButtonWTip(props) {
     <Tippy
       content={props.tipContent}
       theme="light"
-      placement="bottom" offset="40px, 5px" arrow={true} maxWidth="200px"
+      placement="bottom" offset="40px, 5px" arrow={true} maxWidth={maxTipWidth}
       animation="shift-toward" duration={[350, 200]} delay={[1000, 50]} inertia={true}
       performance={true}>
       <Button
@@ -88,7 +90,7 @@ export function ComponentWTip(props) {
     <Tippy
       content={props.tipContent}
       theme="light"
-      placement="bottom" arrow={true} maxWidth="200px"
+      placement="bottom" arrow={true} maxWidth={maxTipWidth}
       animation="shift-toward" duration={[350, 200]} delay={[1000, 50]} inertia={true}
       performance={true}
       {...props.tippyConfig}>
@@ -112,7 +114,7 @@ export class ComponentWTipFb extends Component  {
       <Tippy
         content={this.props.tipContent}
         theme="darker" trigger="click" hideOnClick={false}
-        placement="top" arrow={false} maxWidth="200px"
+        placement="top" arrow={false} maxWidth={maxTipWidth}
         animation="shift-away" duration={[350, 200]} delay={[0, 0]} inertia={false}
         performance={true}
         onCreate={this.storeTippyInstance}

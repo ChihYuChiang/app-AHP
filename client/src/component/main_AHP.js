@@ -46,6 +46,7 @@ class Main extends Component {
     curComparison: CONST.COM_TYPE.NULL,
     isLoading: false
   };
+  controlElement = React.createRef();
 
   render() {
     return (
@@ -53,7 +54,7 @@ class Main extends Component {
         <div className="col-12" align="center">
           <div className="spacer-100"></div>
           <Header location={CONST.LOCATION.AHP} />
-          <div className="mt-7">
+          <div className="mt-7" ref={this.controlElement}>
             <Control
               curControl={this.state.curControl}
               handleCriterionFile={this.handleCriterionFile}
@@ -140,7 +141,8 @@ class Main extends Component {
         });
       }) //`.then()` uses its cb to create a promise. When this promise resolved, executes next then and creates next promise
       .then(() => {
-        this.setState({ nQuestion: countQuestion(this.state.criterion.root, this.state.option.items.length) })
+        this.setState({ nQuestion: countQuestion(this.state.criterion.root, this.state.option.items.length) });
+        util.scrollTo(this.controlElement.current.offsetTop - 30);
       });
   }
 
@@ -165,6 +167,8 @@ class Main extends Component {
 
       return state;
     });
+
+      util.scrollTo(this.controlElement.current.offsetTop - 20, "auto");
   };
 
   enterComparison = () => { //From pre confirm into real comparison
@@ -182,6 +186,8 @@ class Main extends Component {
         curComparison: CONST.COM_TYPE.COMPARISON,
         isLoading: false
       });
+
+      util.scrollTo(this.controlElement.current.offsetTop - 20);
     });
   };
 
@@ -202,6 +208,8 @@ class Main extends Component {
 
         return state;
       });
+
+      util.scrollTo(this.controlElement.current.offsetTop - 30);
     });
   };
 
@@ -262,6 +270,9 @@ class Main extends Component {
   
       return state;
     });
+
+    //When demo, scroll to graph
+    if (this.state.curGraph === CONST.GRAPH_TYPE.TREE_DEMO) util.scrollTo(this.controlElement.current.offsetTop - 30);
   };
 
   recordResult = async () => {
