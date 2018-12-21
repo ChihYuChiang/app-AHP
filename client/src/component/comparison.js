@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Button, Progress } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { PosedFade, PosedFadeY } from './pose';
+import { PosedFade, PosedFadeY, PosedExpandY, PosedRotate180 } from './pose';
 import BreadCrumbC from './breadcrumb';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
@@ -13,9 +13,8 @@ import styles from "../scss/variable.scss";
 
 
 //TODO: take note for each comparison
-//TODO: save comparison for each page, when leaving, prompt
+//TODO: save comparison for each page, when leaving, prompt  https://docs.mongodb.com/manual/core/index-ttl/
 //TODO: a tree to be able to click, to go back and modify
-//TODO: move to top when submit
 //TODO: implement CR
 class Comparison extends Component {
   state = {
@@ -90,7 +89,7 @@ class Comparison extends Component {
 
               {pairs}
               <PosedFadeY key={this.props.pairData.gId + '_submit'} i={this.props.pairData.pairs.length + 1}>
-                <Button className="mt-2 btn-wide" onClick={this.handleComData8Reset}>Submit
+                <Button className="mt-4 btn-wide" onClick={this.handleComData8Reset}>Submit
                 </Button>
               </PosedFadeY>
             </PoseGroup>
@@ -178,38 +177,65 @@ Comparison.propTypes = {
 };
 
 
-function GroupLabel(props) {
-  if (props.pairDataType === CONST.DATA_TYPE.CRITERION) {
-    return (
-      <div className={props.className}>
-        <p>
-          {"Regarding "}
-          <span className="text-primary">
-            {props.pairDataGId === "0-0" ? "the base criteria" : props.id2Name[props.pairDataGId]}
-          </span>
-          {", what is more important?"}
-        </p>
-        <div className="instruction mt-2">
-          {CONTENT.INSTRUCTION.COM_CRITERION}
-        </div>
-      </div>
+class GroupLabel extends Component {
+  state = {
+    instructExpand: true //Control showing or hiding the score explanation
+  };
+
+  render() {
+    let flipper = (
+      <PosedRotate180 pose={this.state.instructExpand ? "upright" : "upSideDown"} className="expand-flipper">
+        <i className="fas fa-caret-down fs-115" onClick={this.toggleInstruct} />
+      </PosedRotate180>
     );
-  } else {
-    return (
-      <div className={props.className}>
-        <p>
-          {"Regarding "}
-          <span className="text-primary">
-            {props.id2Name[props.pairDataGId]}
-          </span>
-          {", which option has advantage?"}
-        </p>
-        <div className="instruction mt-2">
-          {CONTENT.INSTRUCTION.COM_OPTION}
+
+    if (this.props.pairDataType === CONST.DATA_TYPE.CRITERION) {
+      return (
+        <div className={this.props.className}>
+          <div>
+            {"Regarding "}
+            <span className="text-primary">
+              {this.props.pairDataGId === "0-0" ? "the base criteria" : this.props.id2Name[this.props.pairDataGId]}
+            </span>
+            <span className="mr-sucker">
+              {", what is more important?"}
+            </span>
+            {flipper}
+          </div>
+          <PosedExpandY pose={this.state.instructExpand ? "expanded" : "collapsed"}>
+            <div className="instruction">
+              {CONTENT.INSTRUCTION.COM_CRITERION}
+            </div>
+          </PosedExpandY>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className={this.props.className}>
+          <div>
+            {"Regarding "}
+            <span className="text-primary">
+              {this.props.id2Name[this.props.pairDataGId]}
+            </span>
+            <span className="mr-sucker">
+              {", which option has advantage?"}
+            </span>
+            {flipper}
+          </div>
+          <PosedExpandY pose={this.state.instructExpand ? "expanded" : "collapsed"}>
+            <div className="instruction">
+              {CONTENT.INSTRUCTION.COM_OPTION}
+            </div>
+          </PosedExpandY>          
+        </div>
+      );
+    }
   }
+
+
+  toggleInstruct = () => {
+    this.setState({ instructExpand: !this.state.instructExpand });
+  };
 }
 
 GroupLabel.propTypes = { //As in the parent

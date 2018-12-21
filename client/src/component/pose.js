@@ -1,6 +1,9 @@
+import React from "react";
 import posed from 'react-pose';
+import PropTypes from 'prop-types';
 //Note: PoseGroup can only be used locally, within each React component
 //TODO: pose + prop type?
+
 
 export const POSE_MEASURE = {
   DELAY_INTERVAL: 150
@@ -130,4 +133,33 @@ export const PosedFade = posed.div({
       duration: props.cDurEx || 100
     })
   }
+});
+
+
+const _PosedExpandY = posed.div({
+  collapsed: { height: 0 },
+  expanded: { height: 'auto' }
+});
+
+export function PosedExpandY(props) {
+  return (
+    //eslint-disable-next-line
+    <_PosedExpandY style={{ overflow: "hidden" }} pose={props.pose}>
+      {props.children}
+    </_PosedExpandY>
+  );
+}
+
+PosedExpandY.propTypes = {
+  pose: PropTypes.oneOf(['collapsed', 'expanded']).isRequired
+};
+
+
+export const PosedRotate180 = posed.div({
+  /*
+    props = {
+    }
+  */    
+  upright: { rotate: 0, transition: { type: "tween", ease: "easeOut" } },
+  upSideDown: { rotate: 180, transition: { type: "tween", ease: "easeOut" } }
 });

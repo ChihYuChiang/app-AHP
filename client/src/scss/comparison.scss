@@ -22,15 +22,25 @@
   }
 }
 
-.comparison-wrapper .instruction {
-  p {
-    margin: 0.1rem 0;
-    font-size: 0.85rem;
-    color: $gray-500;
-  };
+.comparison-wrapper {
+  .instruction {
+    p {
+      margin: 0.1rem 0;
+      font-size: 0.85rem;
+      color: $gray-500;
+    }
+  
+    b {
+      color: $gray-600;
+      font-weight: 400;
+    }
+  }
 
-  b {
-    color: $gray-600;
-    font-weight: 400;
+  .expand-flipper {
+    i {
+      color: $gray-600;
+      font-size: 1.15rem;
+      cursor: pointer;
+    }
   }
 }

@@ -69,6 +69,10 @@ a:hover {
   pointer-events: none;
 }
 
+.no-overflow {
+  overflow: hidden;
+}
+
 .pbar-thin {
   height: 2px;
   border-radius: .25rem .25rem 0px 0px;
