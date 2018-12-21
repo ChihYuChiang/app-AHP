@@ -21,6 +21,7 @@ class Comparison extends Component {
   state = {
     compares: [] //Store the pair data and comparison result
   }
+  ref_progressBar = null; //For auto-scrolling when submitting a page of comparison 
 
   render() {
     switch (this.props.curComparison) {
@@ -55,7 +56,8 @@ class Comparison extends Component {
       
       case CONST.COM_TYPE.COMPARISON:
         let pairs = this.props.pairData.pairs.map((pair, i) => ( //`key` is for both array React Components and Pose identification; `i` is for staggering delay
-          <PosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i}>
+          //i = i + 2 to leave some time for scrolling back to top
+          <PosedFadeY key={this.props.pairData.gId + '_' + pair.source + '_' + pair.dest} i={i + 2}>
             <Pair
               type={this.props.pairData.type}
               data={pair}
@@ -70,6 +72,7 @@ class Comparison extends Component {
           <div className="comparison-wrapper mt-4">
             <PoseGroup animateOnMount={true}>
               <PosedFadeY key="breadCrumb">
+                <div ref={(ref) => {this.ref_progressBar = ref;}} />
                 <Progress className="col-8 p-0 pbar-thin"
                   value={this.props.curPairProgress}
                   color="info"
@@ -88,7 +91,7 @@ class Comparison extends Component {
               </PosedFadeY>
 
               {pairs}
-              <PosedFadeY key={this.props.pairData.gId + '_submit'} i={this.props.pairData.pairs.length}>
+              <PosedFadeY key={this.props.pairData.gId + '_submit'} i={this.props.pairData.pairs.length + 2}>
                 <Button className="mt-2 btn-wide" onClick={this.handleComData8Reset}>Submit
                 </Button>
               </PosedFadeY>
@@ -101,6 +104,7 @@ class Comparison extends Component {
           <div className="comparison-wrapper mt-4">
             <PoseGroup animateOnMount={true}>
               <PosedFadeY key="breadCrumb">
+                <div ref={(ref) => {this.ref_progressBar = ref;}} />
                 <Progress className="col-8 p-0 pbar-thin"
                   value={100}
                   color="info"
@@ -140,6 +144,8 @@ class Comparison extends Component {
       mIndex: mIndex
     });
     this.setState({ compares: [] });
+
+    this.scroll2ProgressBar();
   };
 
   updateComData = (value, data) => {
@@ -149,6 +155,13 @@ class Comparison extends Component {
       compares.push(data);
       curState.compares = compares;
       return curState;
+    });
+  };
+
+  scroll2ProgressBar = () => {
+    window.scroll({
+      top: this.ref_progressBar.offsetTop - 20,
+      behavior: "smooth"
     });
   };
 }
