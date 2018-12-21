@@ -48,7 +48,7 @@ class Main extends Component {
   };
 
   render() {
-    return ( //TODO: input the underlying problem
+    return (
       <div className="container">
         <div className="col-12" align="center">
           <div className="spacer-100"></div>

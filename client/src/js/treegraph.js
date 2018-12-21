@@ -196,7 +196,7 @@ function produceTreeGraph(root, options, inter) {
 }
 
 function produceLegend(root, options) {
-  let [hueScale] = genScales(root); //TODO: lightness legend
+  let [hueScale] = genScales(root);
   let [rectSize, nRects] = [10, 1];
 
   //Title

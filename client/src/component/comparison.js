@@ -12,6 +12,10 @@ import CONTENT from "../js/content";
 import styles from "../scss/variable.scss";
 
 
+//TODO: take note for each comparison
+//TODO: save comparison for each page, when leaving, prompt
+//TODO: a tree to be able to click, to go back and modify
+//TODO: move to top when submit
 //TODO: implement CR
 class Comparison extends Component {
   state = {

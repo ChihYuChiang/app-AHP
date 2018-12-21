@@ -40,7 +40,7 @@ class Control extends Component {
           </ButtonToolbar>
         );
       
-      case CONST.CONTROL_TYPE.RECORDED: //TODO: add tip: copy succeeds
+      case CONST.CONTROL_TYPE.RECORDED:
         return (
           <div id="control-wrapper" className="col-8 mt-4">
             <Label for="recordUrl">Click to copy report URL</Label >
