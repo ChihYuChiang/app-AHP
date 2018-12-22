@@ -17,6 +17,11 @@ html { //For rem, which Bootstrap 4 bases on
   font-size: 14px;
 }
 
+.container {
+  padding-right: 25px;
+  padding-left: 25px;
+}
+
 a:link, a:visited, a:hover, a:active {
   @extend %remove-a-effect;
   color: theme-color-level(primary, 3);
@@ -33,17 +38,13 @@ a:hover {
   }
 }
 
-.tippy-tooltip.light-theme .tippy-content {
-  @extend %themed-b;
-
-  color: $gray-700;
-}
-
+.tippy-tooltip.light-theme .tippy-content,
 .tippy-tooltip.light-border-theme .tippy-content {
   @extend %themed-b;
 
   color: $gray-700;
 }
+
 
 #prompt {
   @extend .remove-focus-effect;

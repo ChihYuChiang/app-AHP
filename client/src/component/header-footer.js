@@ -52,36 +52,50 @@ class Footer extends Component {
     version: "",
   };
 
-  //[CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(curComparison)
-
   render() {
     let controls = {};
     switch (this.props.location.pathname) {
       default:
-      case CONST.LOCATION.AHP:
-        controls = (
-          <div className="d-inline-flex">
-            <ComponentWTip
-              component={<Link to="/simple"><i className="fas fa-sign-out-alt" /></Link>}
-              tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
-              tippyConfig={{
-                placement: "top",
-                offset: "0px, 5px"
-              }}
-            />
-            <ComponentWTipCf
-              //Imperative routing https://tylermcginnis.com/react-router-programmatically-navigate/
-              action={() => this.props.history.push('/home')}
-              component={<i className="fas fa-home pl-3" />}
-              tipContent={<div>Progress you made will <b>not</b> be saved.<br />Proceed anyway?</div>}
-            />
-          </div>
-        );
+      case CONST.LOCATION.AHP: //When comparing, give confirm if trying to leave
+        if ([CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(this.props.curComparison)) {
+          let confirmMsg = <div>Progress you made will <b>not</b> be saved.<br />Proceed anyway?</div>;
+          controls = (
+            //TODO: tip + click confirm
+            <div className="d-inline-flex">
+              <ComponentWTipCf
+                multiple={true}
+                action={() => this.props.history.push('/simple')}
+                component={<i className="fas fa-sign-out-alt" />}
+                tipContent={confirmMsg}
+              />
+              <ComponentWTipCf
+                //Imperative routing https://tylermcginnis.com/react-router-programmatically-navigate/
+                action={() => this.props.history.push('/home')}
+                component={<i className="fas fa-home pl-3" />}
+                tipContent={confirmMsg}
+              />
+            </div>
+          );
+        } else {
+          controls = (
+            <div className="d-inline-flex">
+              <ComponentWTip
+                component={<Link to="/simple"><i className="fas fa-sign-out-alt" /></Link>}
+                tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
+                tippyConfig={{
+                  placement: "top",
+                  offset: "0px, 5px"
+                }}
+              />
+              <Link to="/home"><i className="fas fa-home pl-3" /></Link>
+            </div>
+          );
+        }
         break;
   
       case CONST.LOCATION.SIMPLE:
         controls = (
-          <div classNAme="d-inline-flex">
+          <div className="d-inline-flex">
             <Link to="/"><i className="fas fa-home" /></Link>
           </div>
         );
@@ -119,7 +133,7 @@ class Footer extends Component {
 
 Footer = withRouter(Footer);
 Footer.propTypes = {
-  curComparison: PropTypes.string.isRequired //Used to decide if pop confirms when clicking routing icons
+  curComparison: PropTypes.string //Used to decide if pop confirms when clicking routing icons
 };
 
 

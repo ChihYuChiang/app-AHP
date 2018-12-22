@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import { Button, Input } from "reactstrap";
 import { PoseGroup } from 'react-pose';
 
+import { Header, Footer } from "./header-footer";
 import { PosedNull, PosedFade, PosedFadeY, PosedAttX } from './pose';
 import DynamicInput from "./dynamic-input";
-import { Header, Footer } from "./header-footer";
 import { Loading } from "./util";
 
 import Validator from "../js/validate";
@@ -30,28 +30,32 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="content mt-4">
-        <Loading isLoading={this.state.stage === CONST.SIMPLE_STAGE.LOADING}/>
-        <DynamicInput
-          show={this.state.stage === CONST.SIMPLE_STAGE.INPUT}
-          submitInput={this.submitInput}
-        />
-        <MagicInput
-          show={this.state.stage === CONST.SIMPLE_STAGE.MAGIC}
-          magicId={this.state.magicId}
-          magic={this.state.magic}
-          updateMagic={this.updateMagic}
-          getRec={this.getRec}
-        />
-        <Output
-          show={this.state.stage === CONST.SIMPLE_STAGE.RESULT}
-          magicId={this.state.magicId}
-          magic={this.state.magic}
-          problem={this.state.problem}   
-          rec={this.state.rec}
-          createNew={this.createNew}
-        />
+      <div className="container" align="center">
+        <Header />
+        <div className="content mt-4">
+          <Loading isLoading={this.state.stage === CONST.SIMPLE_STAGE.LOADING}/>
+          <DynamicInput
+            show={this.state.stage === CONST.SIMPLE_STAGE.INPUT}
+            submitInput={this.submitInput}
+          />
+          <MagicInput
+            show={this.state.stage === CONST.SIMPLE_STAGE.MAGIC}
+            magicId={this.state.magicId}
+            magic={this.state.magic}
+            updateMagic={this.updateMagic}
+            getRec={this.getRec}
+          />
+          <Output
+            show={this.state.stage === CONST.SIMPLE_STAGE.RESULT}
+            magicId={this.state.magicId}
+            magic={this.state.magic}
+            problem={this.state.problem}   
+            rec={this.state.rec}
+            createNew={this.createNew}
+          />
+        </div>
         <div className="spacer-100"></div>
+        <Footer />
       </div>
     );
   }

@@ -32,6 +32,9 @@
   i:hover {
     color: $gray-500;
   }
+  i:focus {
+    outline: 0px;
+  }
 } 
 
 %themed-b {

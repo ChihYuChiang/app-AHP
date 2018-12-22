@@ -16,10 +16,10 @@ export function Title(props) {
   //TODO: remove subtitle when not needed
   return (
     <PoseGroup animateOnMount={true}>
-      <PosedFade key="title" cDelay={200}>
+      <PosedFade key={"title_" + props.title} cDelay={200}>
         <h1>{props.title}</h1>
       </PosedFade>
-      <PosedFade key="subTitle" cDelay={600}>
+      <PosedFade key={"subTitle_" + props.title} cDelay={600}>
         <div className="col-8">{props.subTitle}</div>
       </PosedFade>
     </PoseGroup>

@@ -6,11 +6,11 @@ import util from "../js/util";
 import score from "../js/score";
 import CONST from "../js/const";
 
+import { Header, Footer } from "./header-footer";
 import Comparison from "./comparison";
 import Graph from "./graph";
 import Control from "./control";
 import Prompt from "./prompt";
-import { Header, Footer } from "./header-footer";
 import { Loading } from "./util";
 
 
@@ -52,7 +52,8 @@ class Main extends Component {
     let { curComparison } = this.state;
 
     return (
-      <div>
+      <div className="container" align="center">
+        <Header />
         <div className="mt-7" ref={this.controlElement}>
           <Control
             curControl={this.state.curControl}
@@ -88,6 +89,7 @@ class Main extends Component {
           />
         </div>
         <div className="spacer-150"></div>
+        <Footer curComparison={curComparison} />
       </div>
     );
   }
@@ -103,16 +105,22 @@ class Main extends Component {
     }
 
     //Prevent accidental leaving when working on long comparison
-    window.addEventListener('beforeunload', (evt) => {
-      if ([CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(this.state.curComparison)) {
-        //Cancel the leaving event
-        evt.preventDefault();
-        //Chrome requires returnValue to be set
-        evt.returnValue = '';
-      }
-    });
+    window.addEventListener('beforeunload', this.leavingHandler)
   }
 
+  componentWillUnmount() { //Unmount the listener for simple version
+    window.removeEventListener("beforeunload", this.leavingHandler);
+  }
+
+
+  leavingHandler = (evt) => {
+    if ([CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(this.state.curComparison)) {
+      //Cancel the leaving event
+      evt.preventDefault();
+      //Chrome requires returnValue to be set
+      evt.returnValue = '';
+    }
+  };
 
   handleCriterionFile = (file) => {
     readXlsxFile(file)
