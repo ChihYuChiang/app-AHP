@@ -104,6 +104,16 @@ class Main extends Component {
       //Render entry graph
       this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_ENTRY);
     }
+
+    //Prevent accidental leaving when working on long comparison
+    window.addEventListener('beforeunload', (evt) => {
+      if ([CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(this.state.curComparison)) {
+        //Cancel the leaving event
+        evt.preventDefault();
+        //Chrome requires returnValue to be set
+        evt.returnValue = '';
+      }
+    });
   }
 
 

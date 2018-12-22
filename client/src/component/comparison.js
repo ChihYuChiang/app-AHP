@@ -12,7 +12,7 @@ import CONTENT from "../js/content";
 import styles from "../scss/variable.scss";
 
 
-//TODO: take note for each comparison
+//TODO: replace the slider bar form
 //TODO: save comparison for each page, when leaving, prompt  https://docs.mongodb.com/manual/core/index-ttl/
 //TODO: a tree to be able to click, to go back and modify
 //TODO: implement CR
