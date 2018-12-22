@@ -6,7 +6,7 @@ import util from "./util";
 import CONST from "./const";
 
 
-async function main(rows) { //The excel module removes empty row or column
+export function preprocessNew(rows) { //The excel module removes empty row or column
   //--Prompt
   let prompt = rows[0][1];
 
@@ -65,12 +65,10 @@ async function main(rows) { //The excel module removes empty row or column
       adjs: rand2Adjs(items_option, prompt)
     },
     option: {
-      items: items_option,
-      pairs: pairs_option
+      items: items_option
     },
     criterion: {
       items: items_criterion,
-      pairs: pairs_criterion,
       root: root,
       id2Name: id2Name
     },
@@ -78,9 +76,20 @@ async function main(rows) { //The excel module removes empty row or column
   };
 }
 
+export function preprocessSaved() {
+
+  // return {
+  //   criterion: {
+  //     root: root,
+  //     id2Name: id2Name
+  //   },
+  //   pairDataGenerator: genComPairs(pairs_criterion, root, pairs_option)
+  // };
+}
+
 
 //Create hierarchy data (the root)
-function genRoot(data) {
+export function genRoot(data) {
   return d3
     .stratify()
     .id(function(d) {
@@ -90,6 +99,20 @@ function genRoot(data) {
       return d.parent;
     })(data);
 }
+
+export function countQuestion(root, nOption) {
+  if (!util.isEmpty(root)) {
+    let optionQ = root.leaves().length * util.combinations(nOption, 2);
+    let criterionQ = 0;
+    for (let node of root.descendants()) {
+      if (node.children !== undefined && node.children.length >= 2) {
+        criterionQ += util.combinations(node.children.length, 2);
+      }
+    }
+    return optionQ + criterionQ;
+  } else return "";
+}
+
 
 //Identify parent item in the xlsx structure
 function searchParent(rows, i, j) {
@@ -176,19 +199,3 @@ function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //* for gene
     });
   }
 }
-
-function countQuestion(root, nOption) {
-  if (!util.isEmpty(root)) {
-    let optionQ = root.leaves().length * util.combinations(nOption, 2);
-    let criterionQ = 0;
-    for (let node of root.descendants()) {
-      if (node.children !== undefined && node.children.length >= 2) {
-        criterionQ += util.combinations(node.children.length, 2);
-      }
-    }
-    return optionQ + criterionQ;
-  } else return "";
-}
-
-
-export { main as default, genRoot, countQuestion };

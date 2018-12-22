@@ -24,9 +24,10 @@ const main = {
     DEMO: 'demo',
     ENTRY: 'entry',
     REPORT: 'report',
+    REPORT_PRE: 'report_pre',
     NULL: 'null'
   },
-  GRAPH_TYPE: {
+  GRAPH_TYPE: { //TODO: remove "tree" prefixes
     TREE_UPLOAD: 'tree_upload',
     TREE_UPDATE: 'tree_update',
     TREE_DEMO: 'tree_demo',
@@ -35,6 +36,7 @@ const main = {
     NULL: 'null'
   },
   COM_TYPE: {
+    REPORT_PRE: 'report_pre',
     CONFIRM_PRE: 'confirm_pre',
     CONFIRM_POST: 'confirm_post',
     COMPARISON: 'comparison',

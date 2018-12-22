@@ -56,6 +56,21 @@ function Prompt(props) {
         </PosedNull>
       );
       break;
+    
+    case CONST.PROMPT_TYPE.REPORT_PRE:
+      promptContent = (
+        <PosedNull key="prompt">
+          <PosedFadeY>
+            <div className="col-8 fs-115">
+              These are your decision and criteria hierarchy.
+            </div>
+          </PosedFadeY>
+          <PosedFadeY cDelay={1000}>
+            {prompt}
+          </PosedFadeY>
+        </PosedNull>
+      );
+      break;    
 
     case CONST.PROMPT_TYPE.REPORT: //No tip
       promptContent = (

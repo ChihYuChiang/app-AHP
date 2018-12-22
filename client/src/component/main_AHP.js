@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 
-import preprocessData, { genRoot, countQuestion } from "../js/pre-data";
+import { preprocessNew, preprocessSaved, genRoot, countQuestion } from "../js/pre-data";
 import util from "../js/util";
 import score from "../js/score";
 import CONST from "../js/const";
@@ -21,12 +21,10 @@ const buildDefaultState = () => ({
   },
   option: {
     items: [],
-    pairs: [],
     compares: []
   },
   criterion: {
     items: [],
-    pairs: {},
     compares: [],
     root: {},
     id2Name: {}
@@ -58,7 +56,7 @@ class Main extends Component {
           <Control
             curControl={this.state.curControl}
             handleCriterionFile={this.handleCriterionFile}
-            renderDemoGraph={() => {this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_DEMO);}}
+            renderDemoGraph={() => {this.fetch8Render(CONST.GRAPH_TYPE.TREE_DEMO);}}
             recordResult={this.recordResult}
             freshman={this.state.freshman}
             becomeOld={this.becomeOld}
@@ -97,23 +95,23 @@ class Main extends Component {
   componentDidMount() {
     if (this.props.match.params.recordId) {
       //Render the specific record graph
-      this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_RECORD);
+      this.fetch8Render(CONST.GRAPH_TYPE.TREE_RECORD);
 
     } else {
       //Render entry graph
-      this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_ENTRY);
+      this.fetch8Render(CONST.GRAPH_TYPE.TREE_ENTRY);
     }
 
     //Prevent accidental leaving when working on long comparison
-    window.addEventListener('beforeunload', this.leavingHandler)
+    window.addEventListener('beforeunload', this.handleLeaving)
   }
 
   componentWillUnmount() { //Unmount the listener for simple version
-    window.removeEventListener("beforeunload", this.leavingHandler);
+    window.removeEventListener("beforeunload", this.handleLeaving);
   }
 
 
-  leavingHandler = (evt) => {
+  handleLeaving = (evt) => {
     if ([CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(this.state.curComparison)) {
       //Cancel the leaving event
       evt.preventDefault();
@@ -124,7 +122,7 @@ class Main extends Component {
 
   handleCriterionFile = (file) => {
     readXlsxFile(file)
-      .then(preprocessData)
+      .then(preprocessNew)
       .then(async (data) => {
         this.setState({
           curGraph: CONST.GRAPH_TYPE.NULL,
@@ -135,7 +133,7 @@ class Main extends Component {
         await util.sleep(1000);
         return data;
       })
-      .then((data) => { //prompt, items, root, pairs, id2Name, generator
+      .then((data) => { //prompt, items, root, id2Name, generator
         this.setState({
           prompt: data.prompt,
           option: {
@@ -228,7 +226,12 @@ class Main extends Component {
     });
   };
 
-  fetch8RenderGraph = async (graphType) => {
+  fetch8Render = (graphType) => {
+    this.fetchRecordedResult(graphType)
+      .then(this.renderFetchedResult);
+  };
+
+  fetchRecordedResult = async (graphType) => {
     //Hide graph and display loading spinner
     this.setState({
       curGraph: CONST.GRAPH_TYPE.NULL,
@@ -237,7 +240,7 @@ class Main extends Component {
       isLoading: true
     });
 
-    var response, targetControl, targetPrompt;
+    let targetPrompt, targetControl, response;
     switch (graphType) {
       default:
       case CONST.GRAPH_TYPE.TREE_DEMO: //TODO: remove the server call; reuse the entry response
@@ -253,14 +256,24 @@ class Main extends Component {
         break;
       
       case CONST.GRAPH_TYPE.TREE_RECORD:
-        response = await fetch('/api/record/' + this.props.match.params.recordId);
-        targetControl = CONST.CONTROL_TYPE.NULL;
         targetPrompt = CONST.PROMPT_TYPE.REPORT;
+        targetControl = CONST.CONTROL_TYPE.NULL;
+        response = await fetch('/api/record/' + this.props.match.params.recordId);
     }
 
     const body = await response.json();
     if (response.status !== 200) throw Error(body.message);
 
+    let data = {
+      graphType: graphType,
+      targetPrompt: targetPrompt,
+      targetControl: targetControl,
+      body: body
+    };
+    return data;
+  };
+
+  renderFetchedResult = (data) => {
     this.setState((state) => {
       //Clear cur state
       state = {
@@ -268,18 +281,22 @@ class Main extends Component {
         ...buildDefaultState()
       };
       
-      state.prompt = body.prompt || {
+      //Retrieve data from the saved entry
+      state.prompt = data.body.prompt || {
         text: "Which company to work for?", //TODO: remove the need of fallback
         adjs: ["famous", "nice"]
       };
-      state.option.items = body.items_option;
-      state.criterion.items = body.items_criterion;
-      let root = genRoot(body.items_criterion);
+      state.option.items = data.body.items_option;
+      state.criterion.items = data.body.items_criterion;
+      state.option.compares = data.body.compares_option;
+      state.criterion.compares = data.body.compares_criterion;
+      let root = genRoot(data.body.items_criterion);
 
+      //Setup current context
       state.criterion.root = root;
-      state.curGraph = graphType;
-      state.curControl = targetControl;
-      state.curPrompt = targetPrompt;
+      state.curGraph = data.graphType;
+      state.curControl = data.targetControl;
+      state.curPrompt = data.targetPrompt;
   
       state.isLoading = false;
   
@@ -299,10 +316,12 @@ class Main extends Component {
     const response = await fetch('/api/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+      body: JSON.stringify({ //TODO: sync the format with what in the state
         prompt: this.state.prompt,
         items_criterion: this.state.criterion.items, //To recreate the graph, we need only items, which contain scores and can recreates root
-        items_option: this.state.option.items
+        items_option: this.state.option.items,
+        compares_criterion: this.state.criterion.compares, //For resuming progress
+        compares_option: this.state.option.compares
       }),
     });
     const recordId = await response.text();
