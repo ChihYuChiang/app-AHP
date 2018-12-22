@@ -71,7 +71,8 @@ const main = {
         <li>Each color in the graph represents one option. The <b>color of a node</b> represents the dominant option regarding that particular criterion. In addition, the more <b>colorful</b> (less pale) a node is, the more dominant that dominant option is.</li>
         <li>Click the items in the <b>legend</b> to filter criteria by their dominant option.</li>
         <li>Move your cursor over a node, you'll see the actual <b>percentage</b> this criteria represents in the consideration, which is reflected in the size of the nodes. You'll also be able to observe <b>bar charts</b> that show each option's performance (in a percentage score) regarding this criterion. The option with the highest score will dominate (occupy) this node, and this node will be colored by the same color of that option.</li>
-      </ul>
+      </ul>,
+    SUBJECT2CHANGE: "Please note that the app is in beta and subject to change. Reports could become invalid without further notice."
   },
   SUBTITLE: {
     SIMPLE:
