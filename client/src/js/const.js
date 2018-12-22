@@ -1,7 +1,7 @@
 const main = {
   LOCATION: {
-    AHP: 'AHP',
-    SIMPLE: 'simple'
+    AHP: '/',
+    SIMPLE: '/simple'
   },
   SIMPLE_STAGE: {
     INPUT: 'input',

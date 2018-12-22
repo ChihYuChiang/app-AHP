@@ -39,6 +39,12 @@ a:hover {
   color: $gray-700;
 }
 
+.tippy-tooltip.light-border-theme .tippy-content {
+  @extend %themed-b;
+
+  color: $gray-700;
+}
+
 #prompt {
   @extend .remove-focus-effect;
   border: 0px;

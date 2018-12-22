@@ -30,35 +30,28 @@ class Main extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="col-12" align="center">
-          <div className="spacer-100"></div>
-          <Header location={CONST.LOCATION.SIMPLE} />
-          <div className="content mt-4">
-            <Loading isLoading={this.state.stage === CONST.SIMPLE_STAGE.LOADING}/>
-          </div>
-          <DynamicInput
-            show={this.state.stage === CONST.SIMPLE_STAGE.INPUT}
-            submitInput={this.submitInput}
-          />
-          <MagicInput
-            show={this.state.stage === CONST.SIMPLE_STAGE.MAGIC}
-            magicId={this.state.magicId}
-            magic={this.state.magic}
-            updateMagic={this.updateMagic}
-            getRec={this.getRec}
-          />
-          <Output
-            show={this.state.stage === CONST.SIMPLE_STAGE.RESULT}
-            magicId={this.state.magicId}
-            magic={this.state.magic}
-            problem={this.state.problem}   
-            rec={this.state.rec}
-            createNew={this.createNew}
-          />
-          <Footer location={CONST.LOCATION.SIMPLE} />
-          <div className="spacer-100"></div>
-        </div>
+      <div className="content mt-4">
+        <Loading isLoading={this.state.stage === CONST.SIMPLE_STAGE.LOADING}/>
+        <DynamicInput
+          show={this.state.stage === CONST.SIMPLE_STAGE.INPUT}
+          submitInput={this.submitInput}
+        />
+        <MagicInput
+          show={this.state.stage === CONST.SIMPLE_STAGE.MAGIC}
+          magicId={this.state.magicId}
+          magic={this.state.magic}
+          updateMagic={this.updateMagic}
+          getRec={this.getRec}
+        />
+        <Output
+          show={this.state.stage === CONST.SIMPLE_STAGE.RESULT}
+          magicId={this.state.magicId}
+          magic={this.state.magic}
+          problem={this.state.problem}   
+          rec={this.state.rec}
+          createNew={this.createNew}
+        />
+        <div className="spacer-100"></div>
       </div>
     );
   }

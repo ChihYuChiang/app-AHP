@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Prompt as RoutingPrompt } from "react-router-dom";
 import readXlsxFile from "read-excel-file";
 
 import preprocessData, { genRoot, countQuestion } from "../js/pre-data";
@@ -53,51 +52,42 @@ class Main extends Component {
     let { curComparison } = this.state;
 
     return (
-      <div className="container">
-        <div className="col-12" align="center">
-          <RoutingPrompt
-            when={[CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(curComparison)}
-            message="Progress you made will not be saved. Proceed anyway?"
+      <div>
+        <div className="mt-7" ref={this.controlElement}>
+          <Control
+            curControl={this.state.curControl}
+            handleCriterionFile={this.handleCriterionFile}
+            renderDemoGraph={() => {this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_DEMO);}}
+            recordResult={this.recordResult}
+            freshman={this.state.freshman}
+            becomeOld={this.becomeOld}
           />
-          <div className="spacer-100"></div>
-          <Header location={CONST.LOCATION.AHP} />
-          <div className="mt-7" ref={this.controlElement}>
-            <Control
-              curControl={this.state.curControl}
-              handleCriterionFile={this.handleCriterionFile}
-              renderDemoGraph={() => {this.fetch8RenderGraph(CONST.GRAPH_TYPE.TREE_DEMO);}}
-              recordResult={this.recordResult}
-              freshman={this.state.freshman}
-              becomeOld={this.becomeOld}
-            />
-          </div>
-          <div className="content mt-4">
-            <Loading isLoading={this.state.isLoading} />
-            <Prompt
-              curPrompt={this.state.curPrompt}
-              prompt={this.state.prompt}
-            />
-            <Graph
-              curGraph={this.state.curGraph}
-              root={this.state.criterion.root}
-              options={this.state.option.items}
-            />
-            <Comparison
-              curComparison={this.state.curComparison}
-              curPairProgress={this.state.curPairProgress}
-              handleCriterionFile={this.handleCriterionFile}
-              enterComparison={this.enterComparison}
-              handleComData={this.handleComData}
-              exitComparison={this.exitComparison}
-              pairData={this.state.curPairData}
-              id2Name={this.state.criterion.id2Name}
-              options={this.state.option.items}
-              nQuestion={this.state.nQuestion}
-            />
-          </div>
-          <Footer location={CONST.LOCATION.AHP} />
-          <div className="spacer-150"></div>
         </div>
+        <div className="content mt-4">
+          <Loading isLoading={this.state.isLoading} />
+          <Prompt
+            curPrompt={this.state.curPrompt}
+            prompt={this.state.prompt}
+          />
+          <Graph
+            curGraph={this.state.curGraph}
+            root={this.state.criterion.root}
+            options={this.state.option.items}
+          />
+          <Comparison
+            curComparison={this.state.curComparison}
+            curPairProgress={this.state.curPairProgress}
+            handleCriterionFile={this.handleCriterionFile}
+            enterComparison={this.enterComparison}
+            handleComData={this.handleComData}
+            exitComparison={this.exitComparison}
+            pairData={this.state.curPairData}
+            id2Name={this.state.criterion.id2Name}
+            options={this.state.option.items}
+            nQuestion={this.state.nQuestion}
+          />
+        </div>
+        <div className="spacer-150"></div>
       </div>
     );
   }

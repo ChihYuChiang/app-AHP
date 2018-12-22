@@ -1,57 +1,62 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 
 import CONTENT from "../js/content";
 import CONST from "../js/const";
 
-import { ComponentWTip, Title } from "./util";
+import { ComponentWTip, ComponentWTipCf, Title } from "./util";
 
 
 //TODO: menu
-function Header(props) {
-  let content = {
-    title: "",
-    subTitle: ""
-  };
-
-  switch (props.location) {
-    default:
-    case CONST.LOCATION.AHP: {
-      content = {
-        title: "AHP",
-        subTitle: CONTENT.SUBTITLE.AHP
-      };
-      break;
+class Header extends Component {
+  render() {
+    let content = {
+      title: "",
+      subTitle: ""
+    };
+  
+    switch (this.props.location.pathname) {
+      default:
+      case CONST.LOCATION.AHP: {
+        content = {
+          title: "AHP",
+          subTitle: CONTENT.SUBTITLE.AHP
+        };
+        break;
+      }
+      case CONST.LOCATION.SIMPLE: {
+        content = {
+          title: "Simple",
+          subTitle: CONTENT.SUBTITLE.SIMPLE
+        };     
+      }
     }
-    case CONST.LOCATION.SIMPLE: {
-      content = {
-        title: "Simple",
-        subTitle: CONTENT.SUBTITLE.SIMPLE
-      };     
-    }
+  
+    return (
+      <div>
+        <div className="spacer-100"></div>
+        <Title {...content} />
+      </div>
+    );
   }
-
-  return (
-    <Title {...content} />
-  );
 }
 
-Header.propTypes = {
-  location: PropTypes.string.isRequired //AHP or simple
-};
+Header = withRouter(Header); //Acquire location info
 
 
 //TODO: when mobile, footer not sticky
 class Footer extends Component {
   state = {
-    version: ""
+    version: "",
   };
+
+  //[CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(curComparison)
 
   render() {
     let controls = {};
-    switch (this.props.location) {
+    switch (this.props.location.pathname) {
       default:
       case CONST.LOCATION.AHP:
         controls = (
@@ -64,7 +69,12 @@ class Footer extends Component {
                 offset: "0px, 5px"
               }}
             />
-            <Link to="/home"><i className="fas fa-home pl-3" /></Link>
+            <ComponentWTipCf
+              //Imperative routing https://tylermcginnis.com/react-router-programmatically-navigate/
+              action={() => this.props.history.push('/home')}
+              component={<i className="fas fa-home pl-3" />}
+              tipContent={<div>Progress you made will <b>not</b> be saved.<br />Proceed anyway?</div>}
+            />
           </div>
         );
         break;
@@ -107,8 +117,9 @@ class Footer extends Component {
   }
 }
 
+Footer = withRouter(Footer);
 Footer.propTypes = {
-  location: PropTypes.string.isRequired //AHP or simple
+  curComparison: PropTypes.string.isRequired //Used to decide if pop confirms when clicking routing icons
 };
 
 

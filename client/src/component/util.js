@@ -106,7 +106,60 @@ ComponentWTip.propTypes = {
 };
 
 
+export class ComponentWTipCf extends Component {
+  //Click produces tip, confirm or cancel the underlying action
+  tip={};
+
+  render() {
+    let tipContent8Btn = (
+      <div className="m-3">
+        <div>
+          {this.props.tipContent}
+        </div>
+        <div className="mt-4">
+          <Button size="sm" outline color="info" className="mr-4" onClick={() => {this.hideTip(); this.props.action();}}>
+            Proceed
+          </Button>
+          <Button size="sm" outline color="info" onClick={this.hideTip}>
+            Cancel
+          </Button>
+        </div>
+      </div>
+    );
+    return (
+      <Tippy
+        content={tipContent8Btn}
+        theme="light-border" trigger="click" interactive={true}
+        placement="top" distance={20} arrow={false} maxWidth="300px"
+        animation="shift-away" duration={[250, 100]} delay={[0, 0]} inertia={false}
+        performance={true}
+        onCreate={this.storeTippyInstance}
+        {...this.props.tippyConfig}>
+        {this.props.component}
+      </Tippy>
+    );
+  }
+
+
+  storeTippyInstance = (tip) => {
+    this.tip = tip;
+  };
+
+  hideTip = () => {
+    this.tip.hide();
+  };
+}
+
+ComponentWTipCf.propTypes = {
+  action: PropTypes.func.isRequired, //The action to be made (confirmed by tip)
+  component: PropTypes.element.isRequired, //Content of the component
+  tipContent: PropTypes.node.isRequired, //Content for the tooltip, except for the buttons
+  tippyConfig: PropTypes.object //Overwrite the default settings in Tippy and in this component
+};
+
+
 export class ComponentWTipFb extends Component  {
+  //Click produces tip, close tip after a while
   tip = {}; //Store tippy instance
 
   render() {
@@ -138,7 +191,7 @@ export class ComponentWTipFb extends Component  {
   };
 }
 
-ComponentWTip.propTypes = {
+ComponentWTipFb.propTypes = {
   hideAfter: PropTypes.number, //ms after which the tip will hide
   tipContent: PropTypes.node.isRequired, //Content for the tooltip
   tippyConfig: PropTypes.object //Overwrite the default settings in Tippy and in this component
