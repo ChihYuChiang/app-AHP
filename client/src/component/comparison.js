@@ -101,7 +101,6 @@ class Comparison extends Component {
           <div className="comparison-wrapper mt-4">
             <PoseGroup animateOnMount={true}>
               <PosedFadeY key="breadCrumb">
-                <div ref={(ref) => {this.ref_progressBar = ref;}} />
                 <Progress className="col-8 p-0 pbar-thin"
                   value={100}
                   color="info"
