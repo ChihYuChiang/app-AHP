@@ -14,7 +14,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <div className="App">
-          <div className="container col-12" align="center">
+          <div className="container" align="center">
             <Header />
             
             <Route exact path="/" component={MainAHP} />
