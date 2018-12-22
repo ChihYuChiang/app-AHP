@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
+import { Link } from "react-router-dom";
+
 
 import CONTENT from "../js/content";
 import CONST from "../js/const";
@@ -53,21 +55,26 @@ class Footer extends Component {
       default:
       case CONST.LOCATION.AHP:
         controls = (
-          <ComponentWTip
-            component={
-              <a id="a-escapeSimple" href="/simple"><i className="fas fa-sign-out-alt" /></a>
-            }
-            tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
-            tippyConfig={{
-              placement: "top",
-              offset: "0px, 5px"
-            }}
-          />
+          <div className="d-inline-flex">
+            <ComponentWTip
+              component={<Link to="/simple"><i className="fas fa-sign-out-alt" /></Link>}
+              tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
+              tippyConfig={{
+                placement: "top",
+                offset: "0px, 5px"
+              }}
+            />
+            <Link to="/home"><i className="fas fa-home pl-3" /></Link>
+          </div>
         );
         break;
   
       case CONST.LOCATION.SIMPLE:
-        controls = <div />
+        controls = (
+          <div classNAme="d-inline-flex">
+            <Link to="/"><i className="fas fa-home" /></Link>
+          </div>
+        );
     }
 
     let versionInfo = this.state.version ? "Version " + this.state.version : "";

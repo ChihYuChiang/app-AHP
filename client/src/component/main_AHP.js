@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Prompt as RoutingPrompt } from "react-router-dom";
 import readXlsxFile from "read-excel-file";
 
 import preprocessData, { genRoot, countQuestion } from "../js/pre-data";
@@ -46,12 +47,18 @@ class Main extends Component {
     curComparison: CONST.COM_TYPE.NULL,
     isLoading: false
   };
-  controlElement = React.createRef();
+  controlElement = React.createRef(); //For routing prompt, preventing accidental leaving the page
 
   render() {
+    let { curComparison } = this.state;
+
     return (
       <div className="container">
         <div className="col-12" align="center">
+          <RoutingPrompt
+            when={[CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(curComparison)}
+            message="Progress you made will not be saved. Proceed anyway?"
+          />
           <div className="spacer-100"></div>
           <Header location={CONST.LOCATION.AHP} />
           <div className="mt-7" ref={this.controlElement}>

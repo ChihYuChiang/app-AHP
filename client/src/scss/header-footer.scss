@@ -3,7 +3,7 @@
   padding: 0px 15px 3px;
 
   @extend %i-control;
-  i {
+  i.fa-sign-out-alt {
     transform: rotate(180deg);
   }
 }

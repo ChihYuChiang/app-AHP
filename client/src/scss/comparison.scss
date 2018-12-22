@@ -5,10 +5,10 @@
 .breadcrumb {
   padding: 0.5em;
 
-  > .breadcrumb-item {
+  >.breadcrumb-item {
     color: $gray-500;
 
-    + .breadcrumb-item::before { //The separator
+    +.breadcrumb-item::before { //The separator
       content: "\f105";
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
