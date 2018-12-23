@@ -160,13 +160,13 @@ ComponentWTipCf.propTypes = {
 
 export class ComponentWTipFb extends Component  {
   //Click produces tip, close tip after a while
-  tip = {}; //Store tippy instance
+  tip={};
 
   render() {
     return (
-      <Tippy
+      <Tippy isVisible={this.props.isVisible}
         content={this.props.tipContent}
-        theme="darker" trigger="click" hideOnClick={false}
+        theme="darker" trigger={this.props.trigger} hideOnClick={false}
         placement="top" arrow={false} maxWidth={maxTipWidth}
         animation="shift-away" duration={[350, 200]} delay={[0, 0]} inertia={false}
         performance={true}
@@ -175,7 +175,7 @@ export class ComponentWTipFb extends Component  {
         {...this.props.tippyConfig}>
         <div className="remove-focus-effect">
           {this.props.children}
-        </div> 
+        </div>
       </Tippy>
     );
   }
@@ -186,12 +186,22 @@ export class ComponentWTipFb extends Component  {
   };
 
   hideAfterSometime = async () => {
-    await util.sleep(this.props.hideAfter || 1500);
-    this.tip.hide();
+    await util.sleep(this.props.hideAfter);
+    if (this.props.trigger === "manual") this.props.toggleVisible();
+    else this.tip.hide();
   };
 }
 
+ComponentWTipFb.defaultProps = {
+  trigger: "click",
+  toggleVisible: () => {},
+  isVisible: false,
+  hideAfter: 1200,
+}
 ComponentWTipFb.propTypes = {
+  trigger: PropTypes.string, //Tippy trigger type
+  toggleVisible: PropTypes.func, //Prop control when showing the tip
+  isVisible: PropTypes.bool,
   hideAfter: PropTypes.number, //ms after which the tip will hide
   tipContent: PropTypes.node.isRequired, //Content for the tooltip
   tippyConfig: PropTypes.object //Overwrite the default settings in Tippy and in this component

@@ -82,16 +82,16 @@ class DynamicInput extends Component {
 
   attProblem = () => {
     this.ref_problem.focus();
-    this.setState({pose_prob: "attention"}, () => {
+    this.setState({ pose_prob: "attention" }, () => {
       util.sleep(300).then(() => {
-        this.setState({pose_prob: "offAttention"});
+        this.setState({ pose_prob: "offAttention" });
       });
     })
-  }
+  };
 
   updateProblem = (evt) => {
     this.setState({ problem: evt.target.value });
-  }
+  };
 
   submit = (evt) => {
     evt.preventDefault(); //Default is to refresh page
@@ -109,7 +109,7 @@ class DynamicInput extends Component {
       state = buildDefaultState(); //Reset state (and the presentation as well)
       return state;
     });
-  }
+  };
 
   updateOption = (idx) => (evt) => {
     const newOptions = this.state.options.map((option, sidx) => {
@@ -118,15 +118,15 @@ class DynamicInput extends Component {
     });
 
     this.setState({ options: newOptions });
-  }
+  };
 
   addOption = () => {
     this.setState({ options: this.state.options.concat(['']) });
-  }
+  };
 
   removeOption = (idx) => () => {
     this.setState({ options: this.state.options.filter((_, sidx) => idx !== sidx) });
-  }
+  };
 }
 
 DynamicInput.propTypes = {
