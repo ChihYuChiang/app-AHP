@@ -58,7 +58,7 @@ class Instruction extends Component {
     while (this.props.freshman) {
       this.grabAtt();
       i++;
-      if (i === 7) this.props.becomeOld();
+      if (i === 7 && this._isMounted) this.props.becomeOld();
       await util.sleep(7000); //This structure ensures the `grabAtt` wont be triggered after freshman ends
     }
   }
