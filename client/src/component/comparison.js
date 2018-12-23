@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import { Button, Progress } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 
-import { PosedFade, PosedFadeY } from './pose';
 import { GroupLabel, Pair } from './comparison_label-pair';
 import BreadCrumbC from './breadcrumb';
+import { PosedFade, PosedFadeY, PosedAttX } from './pose';
+import { ComponentWTipFb } from './util';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
+import util from "../js/util";
 import CONST from "../js/const";
+import CONTENT from "../js/content";
 
 
 //TODO: replace the slider bar form
@@ -17,7 +20,9 @@ import CONST from "../js/const";
 //TODO: implement CR
 class Comparison extends Component {
   state = {
-    compares: [] //Store the pair data and comparison result
+    compares: [], //Store the pair data and comparison result
+    pose_submitBtn: '',
+    crTipVisible: false
   }
 
   render() {
@@ -99,8 +104,20 @@ class Comparison extends Component {
 
               {pairs}
               <PosedFadeY key={this.props.pairData.gId + '_submit'} i={this.props.pairData.pairs.length + 1}>
-                <Button className="mt-4 btn-wide" onClick={this.handleComData8Reset}>Submit
-                </Button>
+                <div className="mt-4">
+                  <ComponentWTipFb tipContent={CONTENT.TIP_BTN.SUBMIT_COMPARISON}
+                    isVisible={this.state.crTipVisible}
+                    offset="0px, px"
+                    trigger="manual" toggleVisible={this.toggleCrTipVisible}
+                    hideAfter={3000}>
+                    <div className="anchor" />
+                  </ComponentWTipFb>
+                  <PosedAttX pose={this.state.pose_submitBtn}>
+                    <Button className="btn-wide" onClick={this.handleComData8Reset}>
+                      Submit
+                    </Button>
+                  </PosedAttX>
+                </div>
               </PosedFadeY>
             </PoseGroup>
           </div>
@@ -134,14 +151,31 @@ class Comparison extends Component {
       default:
         return <div />;
     }
-
   }
 
+
+  toggleCrTipVisible = () => {
+    this.setState({ crTipVisible: !this.state.crTipVisible })
+  };
+
+  attSubmitBtn = () => {
+    this.setState({ pose_submitBtn: "attention" }, () => {
+      util.sleep(300).then(() => {
+        this.setState({ pose_submitBtn: "offAttention" });
+      });
+    })
+  };
 
   handleComData8Reset = () => {
     let [matrix, mIndex] = genMatrix(this.state.compares);
     let weights = genWeight(matrix);
     let CR = computeCR(matrix, weights);
+    
+    if (CR > 0.2) { //TODO: adjust back to 0.1, but have to remodel the presentation
+      this.attSubmitBtn();
+      if (!this.state.crTipVisible) this.toggleCrTipVisible();
+      return;
+    }
 
     let comData = {
       type: this.props.pairData.type,
@@ -187,9 +221,6 @@ Comparison.propTypes = {
   options: PropTypes.arrayOf(PropTypes.object).isRequired, //Aa array of option items
   nQuestion: PropTypes.number.isRequired //Number of questions the user will encounter
 };
-
-
-
 
 
 export default Comparison;

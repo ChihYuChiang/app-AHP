@@ -21,6 +21,12 @@ const main = {
     RECORD_REPORT:
       <div>
         This saves your report to the cloud and produces an unique <b>URL</b> for later access.
+      </div>,
+    SUBMIT_COMPARISON:
+      <div>
+        <p>Inputs are not logically transitive.</p>
+        Please check your answers and try to be consistent.<br />
+        e.g. if <b>A</b> > <b>B</b>, <b>B</b> > <b>C</b>, then <b>A</b> can't {"<"} <b>C</b>.
       </div>
   },
   TIP_OTHER: {

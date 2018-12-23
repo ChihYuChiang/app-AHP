@@ -15,6 +15,7 @@ import { Loading } from "./util";
 
 
 const buildDefaultState = () => ({
+  //Data states here
   prompt: {
     text: "",
     adjs: ["", ""]
@@ -33,16 +34,17 @@ const buildDefaultState = () => ({
   curPairData: {},
   curPairProgress: 0,
   nQuestion: 0,
-  freshman: true
 });
 class Main extends Component {
+  //Marker states here
   state = {
     ...buildDefaultState(),
     curControl: CONST.CONTROL_TYPE.NULL,
     curPrompt: CONST.PROMPT_TYPE.NULL,
     curGraph: CONST.GRAPH_TYPE.NULL,
     curComparison: CONST.COM_TYPE.NULL,
-    isLoading: false
+    isLoading: false,
+    freshman: true
   };
   controlElement = React.createRef(); //For routing prompt, preventing accidental leaving the page
 
@@ -134,24 +136,26 @@ class Main extends Component {
         return data;
       })
       .then((data) => { //prompt, items, root, id2Name, generator
-        this.setState({
-          prompt: data.prompt,
-          option: {
-            ...this.state.option,
-            ...data.option
-          },
-          criterion: {
-            ...this.state.criterion,
-            ...data.criterion
-          },
-          pairDataGenerator: data.pairDataGenerator,
-          curPairData: data.pairDataGenerator.next().value,
-          curControl: CONST.CONTROL_TYPE.NULL,
-          curPrompt: CONST.PROMPT_TYPE.UPLOAD,
-          curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
-          curComparison: CONST.COM_TYPE.CONFIRM_PRE,
-          isLoading: false
-        });
+        this.setState((state) => ({
+            //Reset data states
+            ...state,
+            ...buildDefaultState(),
+
+            //Update data states 
+            prompt: data.prompt,
+            option: { ...buildDefaultState().option, ...data.option },
+            criterion: { ...buildDefaultState().criterion, ...data.criterion },
+            pairDataGenerator: data.pairDataGenerator,
+
+            //Update marker states
+            curPairData: data.pairDataGenerator.next().value,
+            curControl: CONST.CONTROL_TYPE.NULL,
+            curPrompt: CONST.PROMPT_TYPE.UPLOAD,
+            curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
+            curComparison: CONST.COM_TYPE.CONFIRM_PRE,
+            isLoading: false
+          })
+        );
       }) //`.then()` uses its cb to create a promise. When this promise resolved, executes next then and creates next promise
       .then(() => {
         this.setState({ nQuestion: countQuestion(this.state.criterion.root, this.state.option.items.length) });
@@ -161,27 +165,24 @@ class Main extends Component {
 
   handleComData = (comData) => {
     //Accept batch compare data and update App state
-    this.setState((state, _) => {
-      state[comData.type].compares.push({
+    this.setState((state) => {
+      let newState = { ...state };
+      newState[comData.type].compares.push({
         ...comData,
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
-      state.curPairProgress += state.curPairData.pairs.length / state.nQuestion * 100;
-      state.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
+      newState.curPairProgress += state.curPairData.pairs.length / state.nQuestion * 100;
+      newState.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
 
-      //Shuffle the pair order (for display)
-      if (!util.isEmpty(this.state.curPairData)) util.shuffle(state.curPairData.pairs);
-      
-      //If all pairs are displayed, enter post confirm
-      else {
-        state.curPairData = {};
-        state.curComparison = CONST.COM_TYPE.CONFIRM_POST;
+      if (util.isEmpty(newState.curPairData)) {
+        newState.curPairData = {};
+        newState.curComparison = CONST.COM_TYPE.CONFIRM_POST;
       }
 
-      return state;
+      return newState;
     });
 
-      util.scrollTo(this.controlElement.current.offsetTop - 20, "auto");
+    util.scrollTo(this.controlElement.current.offsetTop - 20, "auto");
   };
 
   enterComparison = () => { //From pre confirm into real comparison
@@ -211,15 +212,20 @@ class Main extends Component {
     }, async () => { //compute score and produce report
       await util.sleep(2000);
 
-      this.setState((state, _) => {
+      this.setState((state) => {
         let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
-        state.criterion.root = root;
-        state.isLoading = false;
-        state.curControl = CONST.CONTROL_TYPE.UPDATE;
-        state.curGraph = CONST.GRAPH_TYPE.TREE_UPDATE;
-        state.curPrompt = CONST.PROMPT_TYPE.REPORT;
-
-        return state;
+        
+        return {
+          ...state,
+          criterion: {
+            ...state.criterion,
+            root: root
+          },
+          isLoading: false,
+          curControl: CONST.CONTROL_TYPE.UPDATE,
+          curGraph: CONST.GRAPH_TYPE.TREE_UPDATE,
+          curPrompt: CONST.PROMPT_TYPE.REPORT
+        };
       });
 
       util.scrollTo(this.controlElement.current.offsetTop - 30);
@@ -274,34 +280,36 @@ class Main extends Component {
   };
 
   renderFetchedResult = (data) => {
-    this.setState((state) => {
-      //Clear cur state
-      state = {
-        ...state,
-        ...buildDefaultState()
-      };
+    let root = genRoot(data.body.items_criterion);
+
+    this.setState((state) => ({
+      //Reset data states
+      ...state,
+      ...buildDefaultState(),
       
-      //Retrieve data from the saved entry
-      state.prompt = data.body.prompt || {
+      //Update data states
+      prompt: data.body.prompt || {
         text: "Which company to work for?", //TODO: remove the need of fallback
         adjs: ["famous", "nice"]
-      };
-      state.option.items = data.body.items_option;
-      state.criterion.items = data.body.items_criterion;
-      state.option.compares = data.body.compares_option;
-      state.criterion.compares = data.body.compares_criterion;
-      let root = genRoot(data.body.items_criterion);
+      },
+      option: {
+        ...buildDefaultState().option,
+        items: data.body.items_option,
+        compares: data.body.compares_option
+      },
+      criterion: {
+        ...buildDefaultState().criterion,
+        items: data.body.items_criterion,
+        compares: data.body.compares_criterion,
+        root: root
+      },
 
-      //Setup current context
-      state.criterion.root = root;
-      state.curGraph = data.graphType;
-      state.curControl = data.targetControl;
-      state.curPrompt = data.targetPrompt;
-  
-      state.isLoading = false;
-  
-      return state;
-    });
+      //Update marker states
+      curGraph: data.graphType,
+      curControl: data.targetControl,
+      curPrompt: data.targetPrompt,
+      isLoading: false
+    }));
 
     //When demo, scroll to graph
     if (this.state.curGraph === CONST.GRAPH_TYPE.TREE_DEMO) util.scrollTo(this.controlElement.current.offsetTop - 30);
