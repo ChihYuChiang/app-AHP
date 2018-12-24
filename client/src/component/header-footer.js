@@ -69,7 +69,7 @@ class Footer extends Component {
               />
               <ComponentWTip
                 //Add <span> to maintain the height as in other conditions with <a>
-                component={<span><i className="fas fa-sign-out-alt" onClick={this.toggleCfTip} /></span>}
+                component={<span className="remove-focus-effect"><i className="fas fa-sign-out-alt" onClick={this.toggleCfTip} /></span>}
                 tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
                 tippyConfig={{
                   placement: "top",
@@ -79,7 +79,7 @@ class Footer extends Component {
               <ComponentWTipCf
                 //Imperative routing https://tylermcginnis.com/react-router-programmatically-navigate/
                 action={() => this.props.history.push('/home')}
-                component={<span><i className="fas fa-home pl-3" /></span>}
+                component={<span className="remove-focus-effect"><i className="fas fa-home pl-3" /></span>}
                 tipContent={confirmMsg}
               />
             </div>
