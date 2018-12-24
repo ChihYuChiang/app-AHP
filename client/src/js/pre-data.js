@@ -1,5 +1,7 @@
 import * as d3 from "d3"; //TODO: include only used modules
 import isNull from "lodash/isNull";
+import isUndefined from "lodash/isUndefined";
+import isEmpty from "lodash/isEmpty";
 
 import { rand2Adjs } from "../js/random-decision";
 import util from "./util";
@@ -72,7 +74,11 @@ export function preprocessNew(rows) { //The excel module removes empty row or co
       root: root,
       id2Name: id2Name
     },
-    pairDataGenerator: genComPairs(pairs_criterion, root, pairs_option)
+    pairDataGenerator: genComPairs({
+      root: root,
+      pairs_criterion: pairs_criterion,
+      pairs_option: pairs_option
+    })
   };
 }
 
@@ -110,7 +116,13 @@ export function preprocessSaved(data) {
       root: root,
       id2Name: id2Name
     },
-    pairDataGenerator: genComPairs(pairs_criterion, root, pairs_option)
+    pairDataGenerator: genComPairs({
+      root: root,
+      pairs_criterion: pairs_criterion,
+      pairs_option: pairs_option,
+      compares_criterion: data.body.compares_criterion,
+      compares_option: data.body.compares_option
+    })
   };
 }
 
@@ -128,7 +140,7 @@ export function genRoot(data) {
 }
 
 export function countQuestion(root, nOption) {
-  if (!util.isEmpty(root)) {
+  if (!isEmpty(root)) {
     let optionQ = root.leaves().length * util.combinations(nOption, 2);
     let criterionQ = 0;
     for (let node of root.descendants()) {
@@ -207,22 +219,27 @@ function extractPairs(root) {
 }
 
 //A generator prepares all info to be used in AHP comparison stage
-function* genComPairs(criterionPairs, criterionRoot, optionPairs) { //* for generator
-  for (let gId8pairs of Object.entries(criterionPairs)) { //Yield can't be used in forEach callback
+function* genComPairs(data) { //* for generator
+  //Retrieve recorded data from `compares` if there's any
+  for (let gId8pairs of Object.entries(data.pairs_criterion)) { //Yield can't be used in forEach callback
     yield ({
       type: CONST.DATA_TYPE.CRITERION,
       gId: gId8pairs[0],
-      breadCrumb: getAncestorIds(criterionRoot, gId8pairs[0]),
-      pairs: gId8pairs[1]
+      breadCrumb: getAncestorIds(data.root, gId8pairs[0]),
+      pairs: isUndefined(data.compares_criterion) ?
+        gId8pairs[1] :
+        data.compares_criterion.filter((comData) => comData.gId === gId8pairs[0])[0].raw
     });
   }
     
-  for (let leaf of criterionRoot.leaves()) {
+  for (let leaf of data.root.leaves()) {
     yield ({
       type: CONST.DATA_TYPE.OPTION,
       gId: leaf.id,
-      breadCrumb: getAncestorIds(criterionRoot, leaf.id),
-      pairs: optionPairs
+      breadCrumb: getAncestorIds(data.root, leaf.id),
+      pairs: isUndefined(data.compares_option) ?
+        data.pairs_option :
+        data.compares_option.filter((comData) => comData.gId === leaf.id)[0].raw
     });
   }
 }

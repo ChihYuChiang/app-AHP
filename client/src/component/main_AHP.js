@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
+import isEmpty from "lodash/isEmpty";
 
 import { preprocessNew, preprocessSaved, countQuestion } from "../js/pre-data";
 import util from "../js/util";
@@ -98,7 +99,7 @@ class Main extends Component {
   componentDidMount() {
     if (this.recordId) {
       //Render the specific record graph
-      this.fetch8Render(CONST.GRAPH_TYPE.TREE_RECORD_ENTRY);
+      this.fetch8Render(CONST.GRAPH_TYPE.TREE_RECORD);
 
     } else {
       //Render entry graph
@@ -176,7 +177,7 @@ class Main extends Component {
       newState.curPairProgress += state.curPairData.pairs.length / this.nQuestion * 100;
       newState.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
 
-      if (util.isEmpty(newState.curPairData)) {
+      if (isEmpty(newState.curPairData)) {
         newState.curPairData = {};
         newState.curComparison = CONST.COM_TYPE.CONFIRM_POST;
       }
@@ -209,6 +210,8 @@ class Main extends Component {
 
   exitComparison = () => { //From post confirm (showing 100% progress) into report 
     this.setState({
+      curPrompt: CONST.PROMPT_TYPE.NULL,
+      curGraph: CONST.GRAPH_TYPE.NULL,
       curComparison: CONST.COM_TYPE.NULL,
       isLoading: true
     }, async () => { //compute score and produce report
@@ -265,7 +268,7 @@ class Main extends Component {
         response = await fetch('/api/demo');
         break;
       
-      case CONST.GRAPH_TYPE.TREE_RECORD_ENTRY:
+      case CONST.GRAPH_TYPE.TREE_RECORD:
         targetPrompt = CONST.PROMPT_TYPE.REPORT_PRE;
         targetControl = CONST.CONTROL_TYPE.NULL;
         targetComparison = CONST.COM_TYPE.REPORT_PRE;
@@ -343,7 +346,7 @@ class Main extends Component {
 
   becomeOld = () => {
     this.setState({ freshman: false });
-  }
+  };
 }
 
 

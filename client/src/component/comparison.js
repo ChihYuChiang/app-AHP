@@ -36,7 +36,7 @@ class Comparison extends Component {
         return (
           <div className="comparison-wrapper col-8">
             <Button className="btn-medium mr-5" onClick={this.props.enterComparison}>Modify Input</Button>
-            <Button className="btn-medium disabled">Go to Report</Button>
+            <Button className="btn-medium" onClick={this.props.exitComparison}>Go to Report</Button>
           </div>
         );
 
@@ -186,9 +186,7 @@ class Comparison extends Component {
     this.setState({ ...buildDefaultState() });
   };
 
-  updateComData = (value, data) => {
-    data.value = value;
-
+  updateComData = (data) => {
     this.setState((state) => { //Update uses the current state/prop values requires the function form
       let compares = state.compares.filter((pair) => pair.dest !== data.dest || pair.source !== data.source);
       compares.push(data);

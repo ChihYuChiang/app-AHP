@@ -79,7 +79,7 @@ GroupLabel.propTypes = { //As in the parent
 
 class Pair extends Component { //TODO: better comparison format? tip when sliding?
   state = {
-    value: 0
+    value: this.props.data.value || 0
   };
 
   sliderElement = React.createRef();
@@ -112,9 +112,13 @@ class Pair extends Component { //TODO: better comparison format? tip when slidin
   }
   
   componentDidMount() {
-    this.props.updateComData(this.state.value, this.props.data); //Set default comData (if not changed by user)
+    this.props.updateComData({
+      ...this.props.data,
+      value: this.state.value
+    }); //Set default comData (if not changed by user)
     this.genSliderLabel(); //Set default presentation
   }
+
 
   genSliderLabel = () => {
     let sliderElement = this.sliderElement.current;
@@ -122,13 +126,16 @@ class Pair extends Component { //TODO: better comparison format? tip when slidin
     let labelPosition = (sliderElement.value - sliderElement.min) / (sliderElement.max - sliderElement.min);
   
     labelElement.style.left = labelPosition * (styles.sliderWidth - 19) - 120 + "px";
-  }
+  };
   
   handleChange = (event) => { //Arrow functions always gets the context from where they have been defined.
     this.setState({ value: +event.target.value }, () => {
-      this.props.updateComData(this.state.value, this.props.data);
+      this.props.updateComData({
+        ...this.props.data,
+        value: this.state.value
+      });
     });
-  }
+  };
 }
 
 Pair.propTypes = {

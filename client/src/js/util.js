@@ -1,21 +1,5 @@
 class main {
   /**
-   * Check if an obj is empty, w/o any property.
-   * 
-   * @param {object} obj Any js object.
-   * 
-   * @return {boolean} True if empty.
-   */
-  //TODO: remove this one; use lodash
-  static isEmpty(obj) {
-    for (var key in obj) {
-      if(obj.hasOwnProperty(key))
-        return false;
-    }
-    return true;
-  }
-
-  /**
    * Create an array of int range.
    * 
    * @param {Number} lowerBound An int. 
