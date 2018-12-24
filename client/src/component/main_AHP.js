@@ -44,7 +44,7 @@ class Main extends Component {
     curGraph: CONST.GRAPH_TYPE.NULL,
     curComparison: CONST.COM_TYPE.NULL,
     isLoading: false,
-    freshman: true //TODO: if load saved data, `freshman` to false
+    freshman: true
   };
   nQuestion = 0;
   recordId = this.props.match.params.recordId;
@@ -100,6 +100,7 @@ class Main extends Component {
     if (this.recordId) {
       //Render the specific record graph
       this.fetch8Render(CONST.GRAPH_TYPE.TREE_RECORD);
+      this.setState({ freshman: false }); //Return users are not freshman
 
     } else {
       //Render entry graph
