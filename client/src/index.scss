@@ -22,7 +22,7 @@ html { //For rem, which Bootstrap 4 bases on
   padding-left: 25px;
 }
 
-a:link, a:visited, a:hover, a:active {
+a:link, a:visited, a:hover, a:active, a:focus {
   @extend %remove-a-effect;
   color: theme-color-level(primary, 3);
 }
@@ -33,6 +33,7 @@ a:hover {
 
 .anchor {
   height: 0;
+  width: 0;
   pointer-events: none;
 }
 
