@@ -31,6 +31,7 @@ const buildDefaultState = () => ({
     root: {},
     id2Name: {}
   },
+  isRevised: false, //Let recording record only when revised (enter report through comparison)
   pairDataGenerator: {},
   curPairData: {},
   curPairProgress: 0
@@ -59,6 +60,7 @@ class Main extends Component {
         <div className="mt-7" ref={this.controlElement}>
           <Control
             curControl={this.state.curControl}
+            isRevised={this.state.isRevised}
             handleCriterionFile={this.handleCriterionFile}
             renderDemoGraph={() => {this.fetch8Render(CONST.GRAPH_TYPE.TREE_DEMO);}}
             recordResult={this.recordResult}
@@ -202,6 +204,7 @@ class Main extends Component {
       //Update the real content
       this.setState({
         curComparison: CONST.COM_TYPE.COMPARISON,
+        isRevised: true,
         isLoading: false
       });
 

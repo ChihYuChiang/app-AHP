@@ -29,7 +29,7 @@ class Control extends Component {
         return (
           <div>
             <ButtonToolbar id="control-wrapper" className="justify-content-center">
-              {this.state.recordUrl ?
+              {this.state.recordUrl || !this.props.isRevised ?
               <ButtonWTip className="disabled"
                 buttonContent="Revise Assessment"
                 tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
@@ -41,7 +41,7 @@ class Control extends Component {
               />
               }
               <Button className="ml-2 mr-2">
-                <Link to="/">Make New Decision</Link>
+                <Link to="/home">Make New Decision</Link>
               </Button>
               <Instruction
                 className="align-self-center"
@@ -124,6 +124,7 @@ class Control extends Component {
 
 Control.propTypes = {
   curControl: PropTypes.string.isRequired, //App state marker
+  isRevised: PropTypes.string.isRequired, //Let recording record only when revised (enter report through comparison)
   handleCriterionFile: PropTypes.func.isRequired, //Deliver the uploaded criterion file to be handled by main
   renderDemoGraph: PropTypes.func.isRequired,
   recordResult: PropTypes.func.isRequired, //Record to db the current comparison data
