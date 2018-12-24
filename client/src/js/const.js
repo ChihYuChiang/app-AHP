@@ -38,6 +38,7 @@ const main = {
     TREE_DEMO: 'tree_demo',
     TREE_ENTRY: 'tree_entry',
     TREE_RECORD: 'tree_record',
+    TREE_RECORD_ENTRY: 'tree_record_entry',
     NULL: 'null'
   },
   COM_TYPE: {

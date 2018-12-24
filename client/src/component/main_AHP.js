@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 
-import { preprocessNew, preprocessSaved, genRoot, countQuestion } from "../js/pre-data";
+import { preprocessNew, preprocessSaved, countQuestion } from "../js/pre-data";
 import util from "../js/util";
 import score from "../js/score";
 import CONST from "../js/const";
@@ -98,7 +98,7 @@ class Main extends Component {
   componentDidMount() {
     if (this.recordId) {
       //Render the specific record graph
-      this.fetch8Render(CONST.GRAPH_TYPE.TREE_RECORD);
+      this.fetch8Render(CONST.GRAPH_TYPE.TREE_RECORD_ENTRY);
 
     } else {
       //Render entry graph
@@ -139,25 +139,24 @@ class Main extends Component {
       .then((data) => { //prompt, items, root, id2Name, generator
         this.nQuestion = countQuestion(data.criterion.root, data.option.items.length);
         this.setState((state) => ({
-            //Reset data states
-            ...state,
-            ...buildDefaultState(),
+          //Reset data states
+          ...state,
+          ...buildDefaultState(),
 
-            //Update data states 
-            prompt: data.prompt,
-            option: { ...buildDefaultState().option, ...data.option },
-            criterion: { ...buildDefaultState().criterion, ...data.criterion },
-            pairDataGenerator: data.pairDataGenerator,
+          //Update data states 
+          prompt: data.prompt,
+          option: { ...buildDefaultState().option, ...data.option },
+          criterion: { ...buildDefaultState().criterion, ...data.criterion },
+          pairDataGenerator: data.pairDataGenerator,
 
-            //Update marker states
-            curPairData: data.pairDataGenerator.next().value,
-            curControl: CONST.CONTROL_TYPE.NULL,
-            curPrompt: CONST.PROMPT_TYPE.UPLOAD,
-            curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
-            curComparison: CONST.COM_TYPE.CONFIRM_PRE,
-            isLoading: false
-          })
-        );
+          //Update marker states
+          curPairData: data.pairDataGenerator.next().value,
+          curControl: CONST.CONTROL_TYPE.NULL,
+          curPrompt: CONST.PROMPT_TYPE.UPLOAD,
+          curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
+          curComparison: CONST.COM_TYPE.CONFIRM_PRE,
+          isLoading: false
+        }));
       }) //`.then()` uses its cb to create a promise. When this promise resolved, executes next then and creates next promise
       .then(() => {
         util.scrollTo(this.controlElement.current.offsetTop - 30);
@@ -168,6 +167,8 @@ class Main extends Component {
     //Accept batch compare data and update App state
     this.setState((state) => {
       let newState = { ...state };
+      
+      newState[comData.type].compares = newState[comData.type].compares.filter((element) => element.gId !== comData.gId);
       newState[comData.type].compares.push({
         ...comData,
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
@@ -247,24 +248,27 @@ class Main extends Component {
       isLoading: true
     });
 
-    let targetPrompt, targetControl, response;
+    let targetPrompt, targetControl, targetComparison, response;
     switch (graphType) {
       default:
       case CONST.GRAPH_TYPE.TREE_DEMO: //TODO: remove the server call; reuse the entry response
         targetPrompt = CONST.PROMPT_TYPE.DEMO;
         targetControl = CONST.CONTROL_TYPE.DEFAULT;
+        targetComparison = CONST.COM_TYPE.NULL;
         response = await fetch('/api/demo');
         break;
 
       case CONST.GRAPH_TYPE.TREE_ENTRY:
         targetPrompt = CONST.PROMPT_TYPE.ENTRY;
         targetControl = CONST.CONTROL_TYPE.DEFAULT;
+        targetComparison = CONST.COM_TYPE.NULL;
         response = await fetch('/api/demo');
         break;
       
-      case CONST.GRAPH_TYPE.TREE_RECORD:
-        targetPrompt = CONST.PROMPT_TYPE.REPORT;
+      case CONST.GRAPH_TYPE.TREE_RECORD_ENTRY:
+        targetPrompt = CONST.PROMPT_TYPE.REPORT_PRE;
         targetControl = CONST.CONTROL_TYPE.NULL;
+        targetComparison = CONST.COM_TYPE.REPORT_PRE;
         response = await fetch('/api/record/' + this.recordId);
     }
 
@@ -275,13 +279,17 @@ class Main extends Component {
       graphType: graphType,
       targetPrompt: targetPrompt,
       targetControl: targetControl,
+      targetComparison: targetComparison,
       body: body
     };
     return data;
   };
 
   renderFetchedResult = (data) => {
-    let root = genRoot(data.body.items_criterion);
+    let data_processed = preprocessSaved(data);
+    let curPairData = data_processed.pairDataGenerator.next().value;
+
+    this.nQuestion = countQuestion(data_processed.criterion.root, data_processed.option.items.length);
 
     this.setState((state) => ({
       //Reset data states
@@ -289,31 +297,21 @@ class Main extends Component {
       ...buildDefaultState(),
       
       //Update data states
-      prompt: data.body.prompt || {
-        text: "Which company to work for?", //TODO: remove the need of fallback
-        adjs: ["famous", "nice"]
-      },
-      option: {
-        ...buildDefaultState().option,
-        items: data.body.items_option,
-        compares: data.body.compares_option
-      },
-      criterion: {
-        ...buildDefaultState().criterion,
-        items: data.body.items_criterion,
-        compares: data.body.compares_criterion,
-        root: root
-      },
+      ...data_processed,
+      curPairData: curPairData,
 
       //Update marker states
       curGraph: data.graphType,
       curControl: data.targetControl,
       curPrompt: data.targetPrompt,
+      curComparison: data.targetComparison,
       isLoading: false
     }));
 
     //When demo, scroll to graph
-    if (this.state.curGraph === CONST.GRAPH_TYPE.TREE_DEMO) util.scrollTo(this.controlElement.current.offsetTop - 30);
+    if ([CONST.GRAPH_TYPE.TREE_DEMO].includes(this.state.curGraph)) {
+      util.scrollTo(this.controlElement.current.offsetTop - 30);
+    }
   };
 
   recordResult = async () => {

@@ -18,6 +18,7 @@ const targetCR = 0.2;
 const buildDefaultState = () => ({
   compares: [], //Store the pair data and comparison result
   matrix: [],
+  weights: [],
   mIndex: [],
   CR: 0,
   pose_submitBtn: '',
@@ -34,11 +35,8 @@ class Comparison extends Component {
       case CONST.COM_TYPE.REPORT_PRE:
         return (
           <div className="comparison-wrapper col-8">
-            <p className="mt--3 fs-85">
-              Choose to modify the input or go directly to the report.
-            </p>
             <Button className="btn-medium mr-5" onClick={this.props.enterComparison}>Modify Input</Button>
-            <Button className="btn-medium">Generate Report</Button>
+            <Button className="btn-medium disabled">Go to Report</Button>
           </div>
         );
 
@@ -203,6 +201,7 @@ class Comparison extends Component {
         ...state,
         compares: compares,
         matrix: matrix,
+        weights: weights,
         mIndex: mIndex,
         CR: CR,
         showCrTip: CR < targetCR ? false : state.showCrTip,

@@ -62,7 +62,7 @@ function Prompt(props) {
         <PosedNull key="prompt">
           <PosedFadeY>
             <div className="col-8 fs-115">
-              These are your decision and criteria hierarchy.
+              Decision and criteria retrieved.
             </div>
           </PosedFadeY>
           <PosedFadeY cDelay={1000}>

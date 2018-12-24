@@ -76,15 +76,42 @@ export function preprocessNew(rows) { //The excel module removes empty row or co
   };
 }
 
-export function preprocessSaved() {
+export function preprocessSaved(data) {
+  //--Option
+  //Get pairwise data
+  let pairs_option = genPair(data.body.items_option);
+  pairs_option = pairs_option.map((pair) => ({
+    source: pair[0].id + '', //A weird way of converting number to string
+    dest: pair[1].id + ''
+  }));
 
-  // return {
-  //   criterion: {
-  //     root: root,
-  //     id2Name: id2Name
-  //   },
-  //   pairDataGenerator: genComPairs(pairs_criterion, root, pairs_option)
-  // };
+
+  //--Criterion
+  //Get root
+  let root = genRoot(data.body.items_criterion);
+
+  //Get pairwise data and id to name dict
+  let [pairs_criterion, id2Name] = extractPairs(root);
+  
+
+  //--Return
+  return {
+    prompt: data.body.prompt || {
+      text: "Which company to work for?", //TODO: remove the need of fallback
+      adjs: ["famous", "nice"]
+    },
+    option: {
+      items: data.body.items_option,
+      compares: data.body.compares_option
+    },
+    criterion: {
+      items: data.body.items_criterion,
+      compares: data.body.compares_criterion,
+      root: root,
+      id2Name: id2Name
+    },
+    pairDataGenerator: genComPairs(pairs_criterion, root, pairs_option)
+  };
 }
 
 
