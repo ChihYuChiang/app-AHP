@@ -5,7 +5,7 @@ import { PoseGroup } from 'react-pose';
 
 import { GroupLabel, Pair } from './comparison_label-pair';
 import BreadCrumbC from './breadcrumb';
-import { PosedFade, PosedFadeY, PosedAttX } from './pose';
+import { PosedFade, PosedFadeY, PosedAttX, PosedNull } from './pose';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
 import util from "../js/util";
@@ -110,17 +110,23 @@ class Comparison extends Component {
 
               {pairs}
               <PosedFadeY key={this.props.pairData.gId + '_submit'} i={this.props.pairData.pairs.length + 1}>
+                <div className="mt--3">
+                  <PoseGroup>
+                    {this.state.showCrTip ?
+                    //Move `mt` to an outer layer to avoid animation cluttering
+                    <PosedFade cDelay={100} cDurEx={200} key="crTip">
+                      <div className="info-text">{CONTENT.TIP_BTN.SUBMIT_COMPARISON}</div>
+                    </PosedFade> :
+                    <PosedNull key="crTip_placeholder">
+                      <div className="info-text invisible">{CONTENT.TIP_BTN.SUBMIT_COMPARISON}</div>
+                    </PosedNull>}
+                  </PoseGroup>
+                </div>
                 <PosedAttX pose={this.state.pose_submitBtn}>
-                  <Button className="btn-wide mt-4" onClick={this.handleComData8Reset}>
+                  <Button className="btn-wide mt-2" onClick={this.handleComData8Reset}>
                     Submit
                   </Button>
                 </PosedAttX>
-                <PoseGroup>
-                  {this.state.showCrTip && 
-                    <PosedFade cDelay={100} key="crTip">
-                      <div className="info-text mt-2">{CONTENT.TIP_BTN.SUBMIT_COMPARISON}</div>
-                    </PosedFade>}
-                </PoseGroup>
               </PosedFadeY>
             </PoseGroup>
           </div>

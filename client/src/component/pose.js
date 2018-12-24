@@ -10,7 +10,7 @@ export const POSE_MEASURE = {
 }
 
 
-//An empty Posed component to pass pose stages to its children
+//An empty Posed component to pass pose stages to its children / as placeholder
 export const PosedNull = posed.div({
   enter: {},
   exit: {}
