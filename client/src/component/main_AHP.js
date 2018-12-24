@@ -286,6 +286,9 @@ class Main extends Component {
       targetComparison: targetComparison,
       body: body
     };
+
+    //Fake a certain loading time before return
+    await util.sleep(1000);
     return data;
   };
 
