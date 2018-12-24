@@ -6,6 +6,7 @@ import { PoseGroup } from 'react-pose';
 import { GroupLabel, Pair } from './comparison_label-pair';
 import BreadCrumbC from './breadcrumb';
 import { PosedFade, PosedFadeY, PosedAttX, PosedNull } from './pose';
+import { ButtonWTip } from './util';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
 import util from "../js/util";
@@ -35,7 +36,11 @@ class Comparison extends Component {
       case CONST.COM_TYPE.REPORT_PRE:
         return (
           <div className="comparison-wrapper col-8">
-            <Button className="btn-medium mr-5" onClick={this.props.enterComparison}>Modify Input</Button>
+            <ButtonWTip className="btn-medium mr-5"
+              buttonContent="Evaluate Again"
+              buttonOnClick={this.props.enterComparison}
+              tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
+            />    
             <Button className="btn-medium" onClick={this.props.exitComparison}>Go to Report</Button>
           </div>
         );

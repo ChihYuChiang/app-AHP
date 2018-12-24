@@ -74,7 +74,7 @@ function Prompt(props) {
 
     case CONST.PROMPT_TYPE.REPORT: //No tip
       promptContent = (
-        <PosedFadeY key="prompt">
+        <PosedFadeY key="prompt" cDelay={500}>
           {prompt}
         </PosedFadeY>
       );

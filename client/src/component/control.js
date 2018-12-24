@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Button, ButtonToolbar, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
+import { PoseGroup } from 'react-pose';
 
+import { PosedFadeY } from './pose';
 import { ButtonWTip, ComponentWTipFb } from "./util";
 import Instruction from "./instruction";
 
@@ -23,38 +25,49 @@ class Control extends Component {
         return <div id="control-wrapper"/>;
 
       case CONST.CONTROL_TYPE.UPDATE:
-        return (
-          <ButtonToolbar id="control-wrapper" className="justify-content-center">
-            <ButtonWTip
-              buttonContent="Save Your Report"
-              buttonOnClick={this.record8GetUrl}
-              tipContent={CONTENT.TIP_BTN.RECORD_REPORT}
-            />            
-            <Button className="ml-2 mr-2">
-              <Link to="/">Make New Decision</Link>
-            </Button>
-            <Instruction
-              className="align-self-center"
-              freshman={this.props.freshman}
-              becomeOld={this.props.becomeOld}
-            />
-          </ButtonToolbar>
-        );
-      
       case CONST.CONTROL_TYPE.RECORDED:
         return (
-          <div id="control-wrapper" className="col-8 mt-4">
-            <Label for="recordUrl">Click to copy report URL</Label >
-            <ComponentWTipFb tipContent="Copied">
-              <Input type="text" id="recordUrl" readOnly
-                onClick={copyRecordUrl}
-                value={this.state.recordUrl}
+          <div>
+            <ButtonToolbar id="control-wrapper" className="justify-content-center">
+              {this.state.recordUrl ?
+              <ButtonWTip className="disabled"
+                buttonContent="Revise Assessment"
+                tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
+              /> :
+              <ButtonWTip
+                buttonContent="Save Your Report"
+                buttonOnClick={this.record8GetUrl}
+                tipContent={CONTENT.TIP_BTN.RECORD_REPORT}
               />
-            </ComponentWTipFb>
-            <div className="info-text pt-2">{CONTENT.INSTRUCTION.SUBJECT2CHANGE}</div>
+              }
+              <Button className="ml-2 mr-2">
+                <Link to="/">Make New Decision</Link>
+              </Button>
+              <Instruction
+                className="align-self-center"
+                freshman={this.props.freshman}
+                becomeOld={this.props.becomeOld}
+              />
+            </ButtonToolbar>
+            <PoseGroup>
+              {this.props.curControl === CONST.CONTROL_TYPE.UPDATE ?
+              false :
+              <PosedFadeY key="reportUrl">
+                <div className="col-8 mt-4 mb-5">
+                  <Label for="recordUrl">Click to copy report URL</Label >
+                  <ComponentWTipFb tipContent="Copied">
+                    <Input type="text" id="recordUrl" readOnly
+                      onClick={copyRecordUrl}
+                      value={this.state.recordUrl}
+                    />
+                  </ComponentWTipFb>
+                  <div className="info-text pt-2">{CONTENT.INSTRUCTION.SUBJECT2CHANGE}</div>
+                </div>
+              </PosedFadeY>}
+            </PoseGroup>
           </div>
         );
-      
+
       case CONST.CONTROL_TYPE.DEFAULT:
       default:
         return (

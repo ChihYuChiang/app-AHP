@@ -15,12 +15,16 @@ const main = {
     UPLOAD_CRITERIA:
       <div>
         Start the AHP procedure by uploading decision options and criteria. 
-        They have to be in an <b>Excel</b> file of a particular format.
+        They have to be in an <b>Excel</b> file of a particular format. 
         Please acquire the template by the <b>Download Template</b> button.
       </div>,
     RECORD_REPORT:
       <div>
-        This saves your report to the cloud and produces an unique <b>URL</b> for later access.
+        Save your report along with all the assessments to the cloud and produces an <b>unique URL</b> for <b>revision</b> and <b>later access</b>.
+      </div>,
+    EVALUATE_AGAIN:
+      <div>
+        Go through the evaluation process again and <b>modify</b> your <b>last assessments</b> if needed.
       </div>,
     SUBMIT_COMPARISON:
       <div>

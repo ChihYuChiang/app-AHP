@@ -330,8 +330,9 @@ class Main extends Component {
 
   recordResult = async () => {
     this.setState({
-      curControl: CONST.CONTROL_TYPE.NULL, 
-      isLoading: true
+      isLoading: true,
+      curPrompt: CONST.PROMPT_TYPE.NULL,
+      curGraph: CONST.GRAPH_TYPE.NULL,
     });
 
     const response = await fetch('/api/create', {
@@ -348,8 +349,10 @@ class Main extends Component {
     const recordId = await response.text();
 
     this.setState({
-      curControl: CONST.CONTROL_TYPE.RECORDED, 
-      isLoading: false
+      isLoading: false,
+      curControl: CONST.CONTROL_TYPE.RECORDED,
+      curPrompt: CONST.PROMPT_TYPE.REPORT,
+      curGraph: CONST.GRAPH_TYPE.TREE_UPDATE,
     });
 
     return recordId;
