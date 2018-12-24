@@ -252,6 +252,10 @@ class Main extends Component {
       isLoading: true
     });
 
+    //Fake a certain loading time before return
+    //`await` later to let the promise run along side the `fetch` call
+    let sleeper = util.sleep(1000);
+
     let targetPrompt, targetControl, targetComparison, response;
     switch (graphType) {
       default:
@@ -276,7 +280,12 @@ class Main extends Component {
         response = await fetch('/api/record/' + this.recordId);
     }
 
-    const body = await response.json();
+    const parser = response.json();
+    
+    //Await here to ensure the loading time is at least a certain amount of time
+    let body = await parser;
+    await sleeper;
+
     if (response.status !== 200) throw Error(body.message);
 
     let data = {
@@ -287,8 +296,6 @@ class Main extends Component {
       body: body
     };
 
-    //Fake a certain loading time before return
-    await util.sleep(1000);
     return data;
   };
 
