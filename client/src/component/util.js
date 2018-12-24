@@ -7,6 +7,7 @@ import Tippy from '@tippy.js/react';
 import { PosedFade } from './pose';
 
 import util from '../js/util';
+import CONST from '../js/const';
 import styles from '../scss/variable.scss';
 
 const maxTipWidth = "250px";
@@ -111,29 +112,50 @@ export class ComponentWTipCf extends Component {
   tip={};
 
   render() {
+    let buttons;
+    switch (this.props.buttonType) {
+      default:
+      case CONST.TIPBTN_TYPE.CONFIRM:
+        buttons = (
+          <div className="mt-4">
+            <Button size="sm" outline color="info" className="mr-4" onClick={() => {this.hideTip(); this.props.action();}}>
+              Proceed
+            </Button>
+            <Button size="sm" outline color="info" onClick={this.hideTip}>
+              Cancel
+            </Button>
+          </div>
+        );
+        break;
+      case CONST.TIPBTN_TYPE.ALERT:
+        buttons = (
+          <div className="mt-4">
+            <Button size="sm" outline color="info" className="mr-4" onClick={() => {this.hideTip(); this.props.action();}}>
+              OK
+            </Button>
+          </div>
+        );
+      //TODO: tip component case prompt
+    }
+
     let tipContent8Btn = (
       <div className="m-3">
         <div>
           {this.props.tipContent}
         </div>
-        <div className="mt-4">
-          <Button size="sm" outline color="info" className="mr-4" onClick={() => {this.hideTip(); this.props.action();}}>
-            Proceed
-          </Button>
-          <Button size="sm" outline color="info" onClick={this.hideTip}>
-            Cancel
-          </Button>
-        </div>
+        {buttons}
       </div>
     );
+
     return (
-      <Tippy
+      <Tippy isVisible={this.props.isVisible}
         content={tipContent8Btn}
-        theme="light-border" trigger="click" interactive={true}
+        theme="light-border" trigger={this.props.trigger} interactive={true}
         placement="top" distance={20} arrow={false} maxWidth="300px"
         animation="shift-away" duration={[250, 100]} delay={[0, 0]} inertia={false}
         performance={true}
         onCreate={this.storeTippyInstance}
+        onHidden={this.hideTip} //Manually set `isVisible` to false when hid by Tippy preset auto-mechanisms
         {...this.props.tippyConfig}>
         {this.props.component}
       </Tippy>
@@ -146,11 +168,22 @@ export class ComponentWTipCf extends Component {
   };
 
   hideTip = () => {
-    this.tip.hide();
+    if (this.props.trigger === "manual" && this.props.isVisible) this.props.toggleVisible();
+    else this.tip.hide();
   };
 }
 
+ComponentWTipCf.defaultProps = {
+  trigger: "click",
+  toggleVisible: () => {},
+  isVisible: false,
+  buttonType: CONST.TIPBTN_TYPE.CONFIRM
+}
 ComponentWTipCf.propTypes = {
+  trigger: PropTypes.string, //Tippy trigger type
+  toggleVisible: PropTypes.func, //Prop control when showing the tip
+  isVisible: PropTypes.bool,
+  buttonType: PropTypes.string, //As its name
   action: PropTypes.func.isRequired, //The action to be made (confirmed by tip)
   component: PropTypes.element.isRequired, //Content of the component
   tipContent: PropTypes.node.isRequired, //Content for the tooltip, except for the buttons

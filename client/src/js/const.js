@@ -13,6 +13,11 @@ const main = {
     CRITERION: 'criterion',
     OPTION: 'option'
   },
+  TIPBTN_TYPE: {
+    ALERT: 'alert',
+    PROMPT: 'prompt',
+    CONFIRM: 'confirm',
+  },
   CONTROL_TYPE: {
     UPDATE: 'update',
     DEFAULT: 'default',

@@ -13,10 +13,7 @@ import CONST from "../js/const";
 import CONTENT from "../js/content";
 
 
-//TODO: replace the slider bar form
-//TODO: save comparison for each page, when leaving, prompt  https://docs.mongodb.com/manual/core/index-ttl/
 //TODO: a tree to be able to click, to go back and modify
-//TODO: implement CR
 const targetCR = 0.2;
 const buildDefaultState = () => ({
   compares: [], //Store the pair data and comparison result
@@ -201,7 +198,7 @@ class Comparison extends Component {
       let [matrix, mIndex] = genMatrix(compares);
       let weights = genWeight(matrix);
       let CR = computeCR(matrix, weights);
-      console.log(CR)
+      
       return ({
         ...state,
         compares: compares,

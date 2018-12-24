@@ -50,6 +50,7 @@ Header = withRouter(Header); //Acquire location info
 class Footer extends Component {
   state = {
     version: "",
+    cfTipVisible: false
   };
 
   render() {
@@ -62,16 +63,23 @@ class Footer extends Component {
           controls = (
             //TODO: tip + click confirm
             <div className="d-inline-flex">
-              <ComponentWTipCf
-                multiple={true}
+               <ComponentWTipCf trigger="manual" isVisible={this.state.cfTipVisible} toggleVisible={this.toggleCfTip}
                 action={() => this.props.history.push('/simple')}
-                component={<i className="fas fa-sign-out-alt" />}
+                component={<div className="anchor" />}
                 tipContent={confirmMsg}
+              />
+              <ComponentWTip
+                component={<a><i className="fas fa-sign-out-alt" onClick={this.toggleCfTip} /></a>}
+                tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
+                tippyConfig={{
+                  placement: "top",
+                  offset: "0px, 5px"
+                }}
               />
               <ComponentWTipCf
                 //Imperative routing https://tylermcginnis.com/react-router-programmatically-navigate/
                 action={() => this.props.history.push('/home')}
-                component={<i className="fas fa-home pl-3" />}
+                component={<a><i className="fas fa-home pl-3" /></a>}
                 tipContent={confirmMsg}
               />
             </div>
@@ -129,6 +137,11 @@ class Footer extends Component {
         });
       });
   }
+
+
+  toggleCfTip = () => {
+    this.setState({ cfTipVisible: !this.state.cfTipVisible })
+  };
 }
 
 Footer = withRouter(Footer);
