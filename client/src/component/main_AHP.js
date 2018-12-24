@@ -32,8 +32,7 @@ const buildDefaultState = () => ({
   },
   pairDataGenerator: {},
   curPairData: {},
-  curPairProgress: 0,
-  nQuestion: 0,
+  curPairProgress: 0
 });
 class Main extends Component {
   //Marker states here
@@ -44,8 +43,10 @@ class Main extends Component {
     curGraph: CONST.GRAPH_TYPE.NULL,
     curComparison: CONST.COM_TYPE.NULL,
     isLoading: false,
-    freshman: true
+    freshman: true //TODO: if load saved data, `freshman` to false
   };
+  nQuestion = 0;
+  recordId = this.props.match.params.recordId;
   controlElement = React.createRef(); //For routing prompt, preventing accidental leaving the page
 
   render() {
@@ -85,7 +86,7 @@ class Main extends Component {
             pairData={this.state.curPairData}
             id2Name={this.state.criterion.id2Name}
             options={this.state.option.items}
-            nQuestion={this.state.nQuestion}
+            nQuestion={this.nQuestion}
           />
         </div>
         <div className="spacer-150"></div>
@@ -95,7 +96,7 @@ class Main extends Component {
   }
 
   componentDidMount() {
-    if (this.props.match.params.recordId) {
+    if (this.recordId) {
       //Render the specific record graph
       this.fetch8Render(CONST.GRAPH_TYPE.TREE_RECORD);
 
@@ -136,6 +137,7 @@ class Main extends Component {
         return data;
       })
       .then((data) => { //prompt, items, root, id2Name, generator
+        this.nQuestion = countQuestion(data.criterion.root, data.option.items.length);
         this.setState((state) => ({
             //Reset data states
             ...state,
@@ -158,7 +160,6 @@ class Main extends Component {
         );
       }) //`.then()` uses its cb to create a promise. When this promise resolved, executes next then and creates next promise
       .then(() => {
-        this.setState({ nQuestion: countQuestion(this.state.criterion.root, this.state.option.items.length) });
         util.scrollTo(this.controlElement.current.offsetTop - 30);
       });
   }
@@ -171,7 +172,7 @@ class Main extends Component {
         ...comData,
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
-      newState.curPairProgress += state.curPairData.pairs.length / state.nQuestion * 100;
+      newState.curPairProgress += state.curPairData.pairs.length / this.nQuestion * 100;
       newState.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
 
       if (util.isEmpty(newState.curPairData)) {
@@ -264,7 +265,7 @@ class Main extends Component {
       case CONST.GRAPH_TYPE.TREE_RECORD:
         targetPrompt = CONST.PROMPT_TYPE.REPORT;
         targetControl = CONST.CONTROL_TYPE.NULL;
-        response = await fetch('/api/record/' + this.props.match.params.recordId);
+        response = await fetch('/api/record/' + this.recordId);
     }
 
     const body = await response.json();

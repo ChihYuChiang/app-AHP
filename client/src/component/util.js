@@ -46,7 +46,7 @@ export function Loading(props) { //TODO: split text effect ...
         className="d-flex justify-content-center small mt-1"
         style={{ color: styles.gray800 }}
         >Loading ...</p>
-    </PosedFade> //TODO: Random loading message
+    </PosedFade>
   );
   
   return (

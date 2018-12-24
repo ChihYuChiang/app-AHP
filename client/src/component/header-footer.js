@@ -61,7 +61,6 @@ class Footer extends Component {
         if ([CONST.COM_TYPE.COMPARISON, CONST.COM_TYPE.CONFIRM_POST].includes(this.props.curComparison)) {
           let confirmMsg = <div>Progress you made will <b>not</b> be saved.<br />Proceed anyway?</div>;
           controls = (
-            //TODO: tip + click confirm
             <div className="d-inline-flex">
                <ComponentWTipCf trigger="manual" isVisible={this.state.cfTipVisible} toggleVisible={this.toggleCfTip}
                 action={() => this.props.history.push('/simple')}
@@ -69,7 +68,8 @@ class Footer extends Component {
                 tipContent={confirmMsg}
               />
               <ComponentWTip
-                component={<a><i className="fas fa-sign-out-alt" onClick={this.toggleCfTip} /></a>}
+                //Add <span> to maintain the height as in other conditions with <a>
+                component={<span><i className="fas fa-sign-out-alt" onClick={this.toggleCfTip} /></span>}
                 tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
                 tippyConfig={{
                   placement: "top",
@@ -79,7 +79,7 @@ class Footer extends Component {
               <ComponentWTipCf
                 //Imperative routing https://tylermcginnis.com/react-router-programmatically-navigate/
                 action={() => this.props.history.push('/home')}
-                component={<a><i className="fas fa-home pl-3" /></a>}
+                component={<span><i className="fas fa-home pl-3" /></span>}
                 tipContent={confirmMsg}
               />
             </div>
