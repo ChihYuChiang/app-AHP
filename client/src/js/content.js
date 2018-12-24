@@ -24,9 +24,9 @@ const main = {
       </div>,
     SUBMIT_COMPARISON:
       <div>
-        <p>Inputs are not logically transitive.</p>
-        Please check your answers and try to be consistent.<br />
-        e.g. if <b>A</b> > <b>B</b>, <b>B</b> > <b>C</b>, then <b>A</b> can't {"<"} <b>C</b>.
+        Please check your answers and try to be more consistent.<br />
+        Both transitivity and degree matter.<br />
+        i.e. if A > B, B > C, then A has to much > C.
       </div>
   },
   TIP_OTHER: {

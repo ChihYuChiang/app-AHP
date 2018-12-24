@@ -6,7 +6,6 @@ import { PoseGroup } from 'react-pose';
 import { GroupLabel, Pair } from './comparison_label-pair';
 import BreadCrumbC from './breadcrumb';
 import { PosedFade, PosedFadeY, PosedAttX } from './pose';
-import { ComponentWTipFb } from './util';
 
 import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
 import util from "../js/util";
@@ -18,12 +17,19 @@ import CONTENT from "../js/content";
 //TODO: save comparison for each page, when leaving, prompt  https://docs.mongodb.com/manual/core/index-ttl/
 //TODO: a tree to be able to click, to go back and modify
 //TODO: implement CR
+const targetCR = 0.2;
+const buildDefaultState = () => ({
+  compares: [], //Store the pair data and comparison result
+  matrix: [],
+  mIndex: [],
+  CR: 0,
+  pose_submitBtn: '',
+  showCrTip: false
+});
 class Comparison extends Component {
   state = {
-    compares: [], //Store the pair data and comparison result
-    pose_submitBtn: '',
-    crTipVisible: false
-  }
+    ...buildDefaultState()
+  };
 
   render() {
     switch (this.props.curComparison) {
@@ -104,20 +110,17 @@ class Comparison extends Component {
 
               {pairs}
               <PosedFadeY key={this.props.pairData.gId + '_submit'} i={this.props.pairData.pairs.length + 1}>
-                <div className="mt-4">
-                  <ComponentWTipFb tipContent={CONTENT.TIP_BTN.SUBMIT_COMPARISON}
-                    isVisible={this.state.crTipVisible}
-                    offset="0px, px"
-                    trigger="manual" toggleVisible={this.toggleCrTipVisible}
-                    hideAfter={3000}>
-                    <div className="anchor" />
-                  </ComponentWTipFb>
-                  <PosedAttX pose={this.state.pose_submitBtn}>
-                    <Button className="btn-wide" onClick={this.handleComData8Reset}>
-                      Submit
-                    </Button>
-                  </PosedAttX>
-                </div>
+                <PosedAttX pose={this.state.pose_submitBtn}>
+                  <Button className="btn-wide mt-4" onClick={this.handleComData8Reset}>
+                    Submit
+                  </Button>
+                </PosedAttX>
+                <PoseGroup>
+                  {this.state.showCrTip && 
+                    <PosedFade cDelay={100} key="crTip">
+                      <div className="info-text mt-2">{CONTENT.TIP_BTN.SUBMIT_COMPARISON}</div>
+                    </PosedFade>}
+                </PoseGroup>
               </PosedFadeY>
             </PoseGroup>
           </div>
@@ -154,48 +157,53 @@ class Comparison extends Component {
   }
 
 
-  toggleCrTipVisible = () => {
-    this.setState({ crTipVisible: !this.state.crTipVisible })
-  };
-
   attSubmitBtn = () => {
     this.setState({ pose_submitBtn: "attention" }, () => {
       util.sleep(300).then(() => {
         this.setState({ pose_submitBtn: "offAttention" });
       });
-    })
+    });
   };
 
   handleComData8Reset = () => {
-    let [matrix, mIndex] = genMatrix(this.state.compares);
-    let weights = genWeight(matrix);
-    let CR = computeCR(matrix, weights);
-    
-    if (CR > 0.2) { //TODO: adjust back to 0.1, but have to remodel the presentation
+    if (this.state.CR > targetCR) { //TODO: adjust back to 0.1, but have to remodel the presentation
       this.attSubmitBtn();
-      if (!this.state.crTipVisible) this.toggleCrTipVisible();
+      this.setState({ showCrTip: true });
       return;
     }
 
     let comData = {
       type: this.props.pairData.type,
       gId: this.props.pairData.gId,
-      weights: weights,
-      mIndex: mIndex,
+      weights: this.state.weights,
+      mIndex: this.state.mIndex,
       raw: this.state.compares //For resuming progress
     };
-
     this.props.handleComData(comData);
-    this.setState({ compares: [] });
+
+    //Reset state
+    this.setState({ ...buildDefaultState() });
   };
 
   updateComData = (value, data) => {
     data.value = value;
-    this.setState((curState) => { //Update uses the current state/prop values requires the function form
-      let compares = curState.compares.filter((pair) => pair.dest !== data.dest || pair.source !== data.source);
+
+    this.setState((state) => { //Update uses the current state/prop values requires the function form
+      let compares = state.compares.filter((pair) => pair.dest !== data.dest || pair.source !== data.source);
       compares.push(data);
-      curState.compares = compares;
-      return curState;
+
+      let [matrix, mIndex] = genMatrix(compares);
+      let weights = genWeight(matrix);
+      let CR = computeCR(matrix, weights);
+      console.log(CR)
+      return ({
+        ...state,
+        compares: compares,
+        matrix: matrix,
+        mIndex: mIndex,
+        CR: CR,
+        showCrTip: CR < targetCR ? false : state.showCrTip,
+      });
     });
   };
 }

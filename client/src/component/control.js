@@ -50,7 +50,7 @@ class Control extends Component {
                 value={this.state.recordUrl}
               />
             </ComponentWTipFb>
-            <div className="fs-70 pt-2 text-info font-weight-bold">{CONTENT.INSTRUCTION.SUBJECT2CHANGE}</div>
+            <div className="info-text pt-2">{CONTENT.INSTRUCTION.SUBJECT2CHANGE}</div>
           </div>
         );
       

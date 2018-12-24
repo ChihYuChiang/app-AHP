@@ -36,6 +36,13 @@ a:hover {
   pointer-events: none;
 }
 
+.info-text {
+  @extend .fs-70;
+  @extend .text-info;
+  @extend .font-weight-bold;
+  @extend %themed-b;
+}
+
 
 .remove-focus-effect {
   &:focus {

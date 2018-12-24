@@ -9,6 +9,7 @@ import util from '../js/util';
 import CONTENT from '../js/content';
 
 
+//TODO: academic citing and explanation
 class Instruction extends Component {
   state = {
     modal: false,
