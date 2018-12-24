@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Button, ButtonToolbar, Label, Input } from "reactstrap";
+import { Link } from "react-router-dom";
 
 import { ButtonWTip, ComponentWTipFb } from "./util";
 import Instruction from "./instruction";
@@ -29,8 +30,8 @@ class Control extends Component {
               buttonOnClick={this.record8GetUrl}
               tipContent={CONTENT.TIP_BTN.RECORD_REPORT}
             />            
-            <Button className="ml-2 mr-2" disabled>
-              Upload New Criteria
+            <Button className="ml-2 mr-2">
+              <Link to="/">Make New Decision</Link>
             </Button>
             <Instruction
               className="align-self-center"
