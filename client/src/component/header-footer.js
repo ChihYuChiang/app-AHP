@@ -21,7 +21,7 @@ class Header extends Component {
       default:
       case CONST.LOCATION.AHP: {
         content = {
-          title: "AHP",
+          title: "Hierarchic",
           subTitle: CONTENT.SUBTITLE.AHP
         };
         break;

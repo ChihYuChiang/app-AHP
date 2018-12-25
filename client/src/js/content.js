@@ -14,8 +14,8 @@ const main = {
       </div>,
     UPLOAD_CRITERIA:
       <div>
-        Start the AHP procedure by uploading decision options and criteria. 
-        They have to be in an <b>Excel</b> file of a particular format. 
+        Start the AHP procedure by uploading decision options and criteria.
+        They have to be in an <b>Excel</b> file of a particular format.
         Please acquire the template by the <b>Download Template</b> button.
       </div>,
     RECORD_REPORT:
@@ -56,7 +56,7 @@ const main = {
         <p><b>1</b> - this criterion is <b>moderately</b> more important than the opposite one</p>
         <p><b>2</b> - this criterion is <b>strongly</b> more important than the opposite one</p>
         <p><b>3</b> - this criterion is <b>very strongly</b> more important than the opposite one</p>
-        <p><b>4</b> - this criterion is <b>extremely</b> more important than the opposite one</p>        
+        <p><b>4</b> - this criterion is <b>extremely</b> more important than the opposite one</p>
       </div>,
     COM_OPTION:
       <div>
@@ -64,7 +64,7 @@ const main = {
         <p><b>1</b> - this option performs <b>moderately</b> better than the opposite one</p>
         <p><b>2</b> - this option performs <b>strongly</b> better than the opposite one</p>
         <p><b>3</b> - this option performs <b>very strongly</b> better than the opposite one</p>
-        <p><b>4</b> - this option performs <b>extremely</b> better than the opposite one</p>        
+        <p><b>4</b> - this option performs <b>extremely</b> better than the opposite one</p>
       </div>,
     STEP_INTRO:
       <div>
@@ -93,10 +93,10 @@ const main = {
     AHP:
       <div>
         <p>
-          This app implements the <a href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process" target="_blank" rel="noopener noreferrer">analytical hierarchy process (AHP)</a> for decision making in complex situations, such as whether to accept a business offer, to hire a candidate, or to change your career track.
+          Hierarchic is the first interactive implementation of the <a href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process" target="_blank" rel="noopener noreferrer">analytical hierarchy process (AHP)</a>.
         </p>
         <p>
-          Based on mathematics and psychology, AHP is a structured technique developed by <a href="https://en.wikipedia.org/wiki/Thomas_L._Saaty" target="_blank" rel="noopener noreferrer">Thomas L. Saaty</a> for organizing and analyzing complex decisions, especially ones with manifold review criteria. It is widely used in compounded business contexts and can also be applied in complicated individual matters. 
+          AHP is a structured technique for complex decision makings. Developed by <a href="https://en.wikipedia.org/wiki/Thomas_L._Saaty" target="_blank" rel="noopener noreferrer">Thomas L. Saaty</a>, it helps organizing and analyzing decisions especially of ones with manifold review criteria by mathematics and psychology. It is widely used in compounded business situations and complicated individual matters alike.
         </p>
       </div>
   },
@@ -114,7 +114,7 @@ const main = {
   ],
   ADJECTIVES: [
     "adaptable", "adventurous", "affable", "affectionate", "agreeable", "ambitious", "amiable", "amicable", "amusing", "brave", "bright", "broad-minded",
-    "calm", "careful", "charming", "communicative", "compassionate ", "conscientious", "considerate", "convivial", "courageous", "courteous", "creative",
+    "calm", "careful", "charming", "communicative", "compassionate", "conscientious", "considerate", "convivial", "courageous", "courteous", "creative",
     "decisive", "determined", "diligent", "diplomatic", "discreet", "dynamic", "easygoing", "emotional", "energetic", "enthusiastic", "exuberant",
     "fair-minded", "faithful", "fearless", "forceful", "frank", "friendly", "funny", "generous", "gentle", "good", "gregarious",
     "hard-working", "helpful", "honest", "humorous", "imaginative", "impartial", "independent", "intellectual", "intelligent", "intuitive", "inventive",
