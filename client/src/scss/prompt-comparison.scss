@@ -1,3 +1,18 @@
+.decision-prompt {
+  @extend .remove-focus-effect;
+  border: 0px;
+  
+  .card-body {
+    padding: 0.75rem;
+    color: $gray-600;
+    font-size: 1.15rem;
+
+    .blockquote-footer {
+      font-size: 0.85rem;
+    }
+  }
+}
+
 .prompt {
   width: $slider-width;
 }
@@ -20,6 +35,13 @@
       color: $gray-700;
     }
   }
+}
+
+.pbar-thin {
+  height: 2px;
+  border-radius: .25rem .25rem 0px 0px;
+  margin-bottom: -2px;
+  z-index: z(1);
 }
 
 .comparison-wrapper {

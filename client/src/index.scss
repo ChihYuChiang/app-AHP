@@ -5,12 +5,14 @@
 
 @import "scss/function.scss";
 @import "scss/mixin-extend.scss";
+@import "scss/util.scss";
 
 @import "scss/fluid-slider.scss";
 @import "scss/control.scss";
 @import "scss/graph.scss";
-@import "scss/comparison.scss";
+@import "scss/prompt-comparison.scss";
 @import "scss/header-footer.scss";
+@import "scss/modal-tip.scss";
 
 
 html { //For rem, which Bootstrap 4 bases on
@@ -29,104 +31,4 @@ a:link, a:visited, a:hover, a:active, a:focus {
 
 a:hover {
   border-bottom: 1px solid theme-color-level(primary, -8);
-}
-
-.anchor {
-  height: 0;
-  width: 0;
-  pointer-events: none;
-}
-
-.info-text {
-  @extend .fs-70;
-  @extend .text-info;
-  @extend .font-weight-bold;
-  @extend %themed-b;
-}
-
-
-.remove-focus-effect {
-  &:focus {
-    outline: 0px;
-  }
-}
-
-.tippy-tooltip.light-theme .tippy-content,
-.tippy-tooltip.light-border-theme .tippy-content {
-  @extend %themed-b;
-
-  color: $gray-700;
-}
-
-
-#prompt {
-  @extend .remove-focus-effect;
-  border: 0px;
-  
-  .card-body {
-    padding: 0.75rem;
-    color: $gray-600;
-    font-size: 1.15rem;
-
-    .blockquote-footer {
-      font-size: 0.85rem;
-    }
-  }
-}
-
-.black-hole { //Contains elements won't take any space, like doesn't exist
-  @extend .m-0;
-  @extend .p-0;
-  @extend .border-0;
-  width: 0;
-  height: 0;
-  overflow: hidden;
-  z-index: z(bottomless-pit);
-  pointer-events: none;
-}
-
-.no-pointer {
-  pointer-events: none;
-}
-
-.no-overflow {
-  overflow: hidden;
-}
-
-.pbar-thin {
-  height: 2px;
-  border-radius: .25rem .25rem 0px 0px;
-  margin-bottom: -2px;
-  z-index: z(1);
-}
-
-.modal-header {
-  .modal-title {
-    font-size: 1.5rem;
-  }
-
-  .close {
-    margin-top: -0.7rem;
-
-    &:focus { //Modify the default bs focus stye
-      outline-color: $gray-500;
-    }
-  }
-  
-}
-
-.modal-body {
-  @extend %themed-b;
-
-  h5 {
-    margin-top: 1.5rem !important;
-  }
-
-  img {
-    width: 66%;
-  }
-
-  li {
-    margin-top: 0.4rem;
-  }
 }

@@ -1,0 +1,37 @@
+.modal-header {
+  .modal-title {
+    font-size: 1.5rem;
+  }
+
+  .close {
+    margin-top: -0.7rem;
+
+    &:focus { //Modify the default bs focus stye
+      outline-color: $gray-500;
+    }
+  }
+  
+}
+
+.modal-body {
+  @extend %themed-b;
+
+  h5 {
+    margin-top: 1.5rem !important;
+  }
+
+  img {
+    width: 66%;
+  }
+
+  li {
+    margin-top: 0.4rem;
+  }
+}
+
+.tippy-tooltip.light-theme .tippy-content,
+.tippy-tooltip.light-border-theme .tippy-content {
+  @extend %themed-b;
+
+  color: $gray-700;
+}

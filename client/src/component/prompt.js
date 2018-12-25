@@ -14,7 +14,7 @@ function Prompt(props) {
   let promptContent;
   let adj2 = (['a', 'e', 'i', 'o', 'u'].includes(props.prompt.adjs[1][0]) ? "an " : "a ") + props.prompt.adjs[1]; //Add a proper determinant
   let prompt = (
-    <Card id="prompt" className="mt-4">
+    <Card className="mt-4 decision-prompt">
       <CardBody>
         <CardText>{props.prompt.text}</CardText>
         <CardText className="blockquote-footer">

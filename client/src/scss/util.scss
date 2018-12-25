@@ -1,0 +1,41 @@
+.anchor {
+  height: 0;
+  width: 0;
+  pointer-events: none;
+}
+
+.info-text {
+  @extend .fs-70;
+  @extend .text-info;
+  @extend .font-weight-bold;
+  @extend %themed-b;
+}
+
+.remove-focus-effect {
+  &:focus {
+    outline: 0px;
+  }
+}
+
+.black-hole { //Contains elements won't take any space, like doesn't exist
+  @extend .m-0;
+  @extend .p-0;
+  @extend .border-0;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  z-index: z(bottomless-pit);
+  pointer-events: none;
+}
+
+.no-pointer {
+  pointer-events: none;
+}
+
+.use-pointer {
+  pointer-events: auto;
+}
+
+.no-overflow {
+  overflow: hidden;
+}
