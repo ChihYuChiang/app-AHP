@@ -56,7 +56,6 @@ class main {
       }
     }
 
-    console.log(data)
     let root = genRoot(data);
     return root;
   }

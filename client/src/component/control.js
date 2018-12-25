@@ -4,7 +4,7 @@ import { Button, ButtonToolbar, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { PoseGroup } from 'react-pose';
 
-import { PosedFadeY } from './pose';
+import { PosedFadeY, PosedFade } from './pose';
 import { ButtonWTip, ComponentWTipFb } from "./util";
 import Instruction from "./instruction";
 
@@ -27,90 +27,92 @@ class Control extends Component {
       case CONST.CONTROL_TYPE.UPDATE:
       case CONST.CONTROL_TYPE.RECORDED:
         return (
-          <div>
-            <ButtonToolbar id="control-wrapper" className="justify-content-center">
-              {this.props.isRevised ?
-              <ButtonWTip
-                buttonContent="Save Your Report"
-                buttonOnClick={this.record8GetUrl}
-                tipContent={CONTENT.TIP_BTN.RECORD_REPORT}
-              /> :            
-              <ButtonWTip
-                buttonContent="Revise Assessment"
-                buttonOnClick={this.props.renderReviseGraph}
-                tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
-              />}
-              <Button className="ml-2 mr-2">
-                <Link to="/home">Make New Decision</Link>
-              </Button>
-              <Instruction
-                className="align-self-center"
-                freshman={this.props.freshman}
-                becomeOld={this.props.becomeOld}
-              />
-            </ButtonToolbar>
-            <PoseGroup animateOnMount={true}>
-              {this.props.curControl === CONST.CONTROL_TYPE.UPDATE ?
-              false :
-              <PosedFadeY key="reportUrl">
-                <div className="col-8 mt-4 mb-5">
-                  <Label for="recordUrl">Click to copy report URL</Label >
-                  <ComponentWTipFb tipContent="Copied">
-                    <Input type="text" id="recordUrl" readOnly
-                      onClick={copyRecordUrl}
-                      value={this.state.recordUrl}
-                    />
-                  </ComponentWTipFb>
-                  <div className="info-text pt-2">{CONTENT.INSTRUCTION.SUBJECT2CHANGE}</div>
-                </div>
-              </PosedFadeY>}
-            </PoseGroup>
-          </div>
+          <PoseGroup animateOnMount={true}>
+            <PosedFade key="btnToolBar">
+              <ButtonToolbar id="control-wrapper" className="justify-content-center">
+                {this.props.isRevised ?
+                <ButtonWTip
+                  buttonContent="Save Your Report"
+                  buttonOnClick={this.record8GetUrl}
+                  tipContent={CONTENT.TIP_BTN.RECORD_REPORT}
+                /> :            
+                <ButtonWTip
+                  buttonContent="Revise Assessment"
+                  buttonOnClick={this.props.renderReviseGraph}
+                  tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
+                />}
+                <Button className="ml-2 mr-2">
+                  <Link to="/home">Make New Decision</Link>
+                </Button>
+                <Instruction
+                  className="align-self-center"
+                  freshman={this.props.freshman}
+                  becomeOld={this.props.becomeOld}
+                />
+              </ButtonToolbar>
+            </PosedFade>
+            {this.props.curControl === CONST.CONTROL_TYPE.UPDATE ?
+            false :
+            <PosedFadeY key="reportUrl">
+              <div className="col-8 mt-4 mb-5">
+                <Label for="recordUrl">Click to copy report URL</Label >
+                <ComponentWTipFb tipContent="Copied">
+                  <Input type="text" id="recordUrl" readOnly
+                    onClick={copyRecordUrl}
+                    value={this.state.recordUrl}
+                  />
+                </ComponentWTipFb>
+                <div className="info-text pt-2">{CONTENT.INSTRUCTION.SUBJECT2CHANGE}</div>
+              </div>
+            </PosedFadeY>}
+          </PoseGroup>
         );
 
       case CONST.CONTROL_TYPE.DEFAULT:
       default:
         return (
-          <div id="control-wrapper">
-            <input
-              className="file-input"
-              id="fileInput-criteria"
-              type="file"
-              accept=".xlsx"
-              onChange={(evt) => {this.props.handleCriterionFile(evt.target.files[0]);}}
-            />
-            <ButtonToolbar className="justify-content-center">
-              <ButtonWTip
-                className="mr-2"
-                buttonContent="Demo Result"
-                buttonOnClick={this.props.renderDemoGraph}
-                tipContent={CONTENT.TIP_BTN.DEMO_RESULT}
+          <PoseGroup animateOnMount={true}>
+            <PosedFade key="btnToolBar">
+              <input key="input"
+                className="file-input"
+                id="fileInput-criteria"
+                type="file"
+                accept=".xlsx"
+                onChange={(evt) => {this.props.handleCriterionFile(evt.target.files[0]);}}
               />
-              <ButtonWTip
-                className="btnGroup-left"
-                buttonContent={
-                  <a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>
-                    Download Template
-                  </a>
-                }
-                tipContent={CONTENT.TIP_BTN.DOWNLOAD_TEMPLATE}>
-              </ButtonWTip>
-              <ButtonWTip
-                className="btnGroup-right mr-2"
-                buttonContent={
-                  <label htmlFor="fileInput-criteria" className="file-label">
-                    Upload Your Criteria
-                  </label>
-                }
-                tipContent={CONTENT.TIP_BTN.UPLOAD_CRITERIA}>
-              </ButtonWTip>
-              <Instruction
-                className="align-self-center"
-                freshman={this.props.freshman}
-                becomeOld={this.props.becomeOld}
-              />
-            </ButtonToolbar>
-          </div>
+              <ButtonToolbar id="control-wrapper" className="justify-content-center">
+                <ButtonWTip
+                  className="mr-2"
+                  buttonContent="Demo Result"
+                  buttonOnClick={this.props.renderDemoGraph}
+                  tipContent={CONTENT.TIP_BTN.DEMO_RESULT}
+                />
+                <ButtonWTip
+                  className="btnGroup-left"
+                  buttonContent={
+                    <a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>
+                      Download Template
+                    </a>
+                  }
+                  tipContent={CONTENT.TIP_BTN.DOWNLOAD_TEMPLATE}>
+                </ButtonWTip>
+                <ButtonWTip
+                  className="btnGroup-right mr-2"
+                  buttonContent={
+                    <label htmlFor="fileInput-criteria" className="file-label">
+                      Upload Your Criteria
+                    </label>
+                  }
+                  tipContent={CONTENT.TIP_BTN.UPLOAD_CRITERIA}>
+                </ButtonWTip>
+                <Instruction
+                  className="align-self-center"
+                  freshman={this.props.freshman}
+                  becomeOld={this.props.becomeOld}
+                />
+              </ButtonToolbar>
+            </PosedFade>
+          </PoseGroup>
         );
     }
   }
