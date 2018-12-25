@@ -257,73 +257,88 @@ class Main extends Component {
 
     //Fake a certain loading time before return
     //`await` later to let the promise run along side the `fetch` call
-    let sleeper = util.sleep(1000);
+    let sleeper = util.sleep(1500);
 
-    let targetPrompt, targetControl, targetComparison, response;
+    let response, body;
     switch (graphType) {
       default:
-      case CONST.GRAPH_TYPE.TREE_DEMO: //TODO: remove the server call; reuse the entry response
-        targetPrompt = CONST.PROMPT_TYPE.DEMO;
-        targetControl = CONST.CONTROL_TYPE.DEFAULT;
-        targetComparison = CONST.COM_TYPE.NULL;
-        response = await fetch('/api/demo');
+      case CONST.GRAPH_TYPE.TREE_DEMO:
         break;
-
+      
       case CONST.GRAPH_TYPE.TREE_ENTRY:
-        targetPrompt = CONST.PROMPT_TYPE.ENTRY;
-        targetControl = CONST.CONTROL_TYPE.DEFAULT;
-        targetComparison = CONST.COM_TYPE.NULL;
         response = await fetch('/api/demo');
         break;
       
       case CONST.GRAPH_TYPE.TREE_RECORD:
-        targetPrompt = CONST.PROMPT_TYPE.REPORT_PRE;
-        targetControl = CONST.CONTROL_TYPE.NULL;
-        targetComparison = CONST.COM_TYPE.REPORT_PRE;
         response = await fetch('/api/record/' + this.recordId);
     }
 
-    const parser = response.json();
-    
-    //Await here to ensure the loading time is at least a certain amount of time
-    let body = await parser;
+    if ([CONST.GRAPH_TYPE.TREE_ENTRY, CONST.GRAPH_TYPE.TREE_RECORD].includes(graphType)) {
+      const parser = response.json();
+      body = await parser;
+      if (response.status !== 200) throw Error(body.message);
+    }
+
+    //Await here to ensure the loading time is at least a certain amount of time (it starts before `fetch`)
     await sleeper;
 
-    if (response.status !== 200) throw Error(body.message);
-
-    let data = {
+    return {
       graphType: graphType,
-      targetPrompt: targetPrompt,
-      targetControl: targetControl,
-      targetComparison: targetComparison,
       body: body
     };
-
-    return data;
   };
 
   renderFetchedResult = (data) => {
-    let data_processed = preprocessSaved(data);
-    let curPairData = data_processed.pairDataGenerator.next().value;
+    let targetMarkers;
+    switch (data.graphType) {
+      default:
+      case CONST.GRAPH_TYPE.TREE_DEMO:
+        targetMarkers = {
+          curControl: CONST.CONTROL_TYPE.DEFAULT,
+          curPrompt: CONST.PROMPT_TYPE.DEMO,
+          curComparison: CONST.COM_TYPE.NULL,
+        };
+        break;
 
-    this.nQuestion = countQuestion(data_processed.criterion.root, data_processed.option.items.length);
-
-    this.setState((state) => ({
-      //Reset data states
-      ...state,
-      ...buildDefaultState(),
+      case CONST.GRAPH_TYPE.TREE_ENTRY:
+        targetMarkers = {
+          curControl: CONST.CONTROL_TYPE.DEFAULT,
+          curPrompt: CONST.PROMPT_TYPE.ENTRY,
+          curComparison: CONST.COM_TYPE.NULL,
+        };
+        break;
       
-      //Update data states
-      ...data_processed,
-      curPairData: curPairData,
+      case CONST.GRAPH_TYPE.TREE_RECORD:
+        targetMarkers = {
+          curControl: CONST.CONTROL_TYPE.NULL,
+          curPrompt: CONST.PROMPT_TYPE.REPORT_PRE,
+          curComparison: CONST.COM_TYPE.REPORT_PRE,
+        };
+    }
+    targetMarkers = { ...targetMarkers, curGraph: data.graphType, isLoading: false };
 
+    //Only part of the cases need data preprocessing
+    if ([CONST.GRAPH_TYPE.TREE_ENTRY, CONST.GRAPH_TYPE.TREE_RECORD].includes(data.graphType)) {
+      console.log(data)
+      let data_processed = preprocessSaved(data);
+      let curPairData = data_processed.pairDataGenerator.next().value;
+      this.nQuestion = countQuestion(data_processed.criterion.root, data_processed.option.items.length);
+  
+      this.setState((state) => ({
+        //Reset data states
+        ...state,
+        ...buildDefaultState(),
+        
+        //Update data states
+        ...data_processed,
+        curPairData: curPairData,
+      }));
+    }
+
+    this.setState({
       //Update marker states
-      curGraph: data.graphType,
-      curControl: data.targetControl,
-      curPrompt: data.targetPrompt,
-      curComparison: data.targetComparison,
-      isLoading: false
-    }));
+      ...targetMarkers
+    });
 
     //When demo, scroll to graph
     if ([CONST.GRAPH_TYPE.TREE_DEMO].includes(this.state.curGraph)) {
