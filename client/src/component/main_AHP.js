@@ -356,7 +356,7 @@ class Main extends Component {
     });
 
     //When demo, scroll to graph
-    if ([CONST.GRAPH_TYPE.TREE_DEMO].includes(this.state.curGraph)) {
+    if ([CONST.GRAPH_TYPE.TREE_DEMO, CONST.GRAPH_TYPE.TREE_RECORD, CONST.GRAPH_TYPE.TREE_REVISE].includes(this.state.curGraph)) {
       util.scrollTo(this.controlElement.current.offsetTop - 30);
     }
   };

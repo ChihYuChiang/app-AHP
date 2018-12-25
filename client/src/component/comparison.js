@@ -14,6 +14,7 @@ import CONST from "../js/const";
 import CONTENT from "../js/content";
 
 
+//TODO: >>> form
 //TODO: a tree to be able to click, to go back and modify
 const targetCR = 0.2;
 const buildDefaultState = () => ({
@@ -35,14 +36,16 @@ class Comparison extends Component {
 
       case CONST.COM_TYPE.REPORT_PRE:
         return (
-          <div className="comparison-wrapper col-8">
-            <ButtonWTip className="btn-medium mr-5"
-              buttonContent="Evaluate Again"
-              buttonOnClick={this.props.enterComparison}
-              tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
-            />    
-            <Button className="btn-medium" onClick={this.props.exitComparison}>Go to Report</Button>
-          </div>
+          <PoseGroup animateOnMount={true}>
+            <PosedFadeY className="comparison-wrapper col-8" key="btn" cDelay={CONST.POSE_DELAY.PHASE_2}>
+              <ButtonWTip className="btn-medium mr-5"
+                buttonContent="Evaluate Again"
+                buttonOnClick={this.props.enterComparison}
+                tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
+              />    
+              <Button className="btn-medium" onClick={this.props.exitComparison}>Go to Report</Button>
+            </PosedFadeY>
+          </PoseGroup>
         );
 
       case CONST.COM_TYPE.CONFIRM_PRE:
@@ -52,25 +55,27 @@ class Comparison extends Component {
         let nMin = Math.round(this.props.nQuestion * secPerQ / 60) === 0 ? 1 : Math.round(this.props.nQuestion * secPerQ / 60);
         
         return (
-          <div className="comparison-wrapper col-8">
-            <input
-              className="file-input"
-              id="fileInput-criteria"
-              type="file"
-              accept=".xlsx"
-              onChange={(evt) => {this.props.handleCriterionFile(evt.target.files[0]);}}
-            />          
-            <p className="mt--3 fs-85">
-              Regarding the provided criteria and options, you will answer about <span className="text-primary">{nQuestion} questions</span>.
-              This process takes around <span className="text-primary">{nMin} minutes</span>.
-            </p>
-            <Button className="btn-medium mr-5" onClick={this.props.enterComparison}>Confirm</Button>
-            <Button className="btn-medium">
-              <label htmlFor="fileInput-criteria" className="file-label">
-                Modify
-              </label>
-            </Button>
-          </div>
+          <PoseGroup animateOnMount={true}>
+            <PosedFadeY className="comparison-wrapper col-8" key="btn" cDelay={CONST.POSE_DELAY.PHASE_2}>
+              <input
+                className="file-input"
+                id="fileInput-criteria"
+                type="file"
+                accept=".xlsx"
+                onChange={(evt) => {this.props.handleCriterionFile(evt.target.files[0]);}}
+              />          
+              <p className="mt--3 fs-85">
+                Regarding the provided criteria and options, you will answer about <span className="text-primary">{nQuestion} questions</span>.
+                This process takes around <span className="text-primary">{nMin} minutes</span>.
+              </p>
+              <Button className="btn-medium mr-5" onClick={this.props.enterComparison}>Confirm</Button>
+              <Button className="btn-medium">
+                <label htmlFor="fileInput-criteria" className="file-label">
+                  Modify
+                </label>
+              </Button>
+            </PosedFadeY>
+          </PoseGroup>
         );
       
       case CONST.COM_TYPE.COMPARISON:
@@ -90,7 +95,7 @@ class Comparison extends Component {
         return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
           <div className="comparison-wrapper mt-4">
             <PoseGroup animateOnMount={true}>
-              <PosedFadeY key="breadCrumb">
+              <PosedFadeY key="breadCrumb" cDelay={CONST.POSE_DELAY.PHASE_0}>
                 <Progress className="col-8 p-0 pbar-thin"
                   value={this.props.curPairProgress}
                   color="info"
@@ -100,7 +105,7 @@ class Comparison extends Component {
                 />
               </PosedFadeY>
 
-              <PosedFadeY key="groupLabel">
+              <PosedFadeY key="groupLabel" cDelay={CONST.POSE_DELAY.PHASE_0}>
                 <GroupLabel className="mb-5 mt-4 fs-115"
                   pairDataType={this.props.pairData.type}
                   pairDataGId={this.props.pairData.gId}
@@ -136,7 +141,7 @@ class Comparison extends Component {
         return (
           <div className="comparison-wrapper mt-4">
             <PoseGroup animateOnMount={true}>
-              <PosedFadeY key="breadCrumb">
+              <PosedFadeY key="breadCrumb" cDelay={CONST.POSE_DELAY.PHASE_0}>
                 <Progress className="col-8 p-0 pbar-thin"
                   value={100}
                   color="info"
@@ -146,10 +151,10 @@ class Comparison extends Component {
                 />
               </PosedFadeY>
               
-              <PosedFade key="msg">
+              <PosedFade key="msg" cDelay={CONST.POSE_DELAY.PHASE_0}>
                 <p className="mt-6 fs-115">Required information collected.</p>
               </PosedFade>
-              <PosedFadeY key="btn" cDelay={1000}>
+              <PosedFadeY key="btn" cDelay={CONST.POSE_DELAY.PHASE_2}>
                 <Button className="mt-6 btn-wide" onClick={this.props.exitComparison}>Generate Report</Button>
               </PosedFadeY>
             </PoseGroup>

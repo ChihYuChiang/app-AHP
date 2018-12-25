@@ -4,7 +4,7 @@ import { Button, ButtonToolbar, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
 import { PoseGroup } from 'react-pose';
 
-import { PosedFadeY, PosedFade } from './pose';
+import { PosedFade } from './pose';
 import { ButtonWTip, ComponentWTipFb } from "./util";
 import Instruction from "./instruction";
 
@@ -28,7 +28,7 @@ class Control extends Component {
       case CONST.CONTROL_TYPE.RECORDED:
         return (
           <PoseGroup animateOnMount={true}>
-            <PosedFade key="btnToolBar">
+            <PosedFade key="btnToolBar" cDelay={CONST.POSE_DELAY.PHASE_0}>
               <ButtonToolbar id="control-wrapper" className="justify-content-center">
                 {this.props.isRevised ?
                 <ButtonWTip
@@ -53,7 +53,7 @@ class Control extends Component {
             </PosedFade>
             {this.props.curControl === CONST.CONTROL_TYPE.UPDATE ?
             false :
-            <PosedFadeY key="reportUrl">
+            <PosedFade key="reportUrl" cDelay={CONST.POSE_DELAY.PHASE_0}>
               <div className="col-8 mt-4 mb-5">
                 <Label for="recordUrl">Click to copy report URL</Label >
                 <ComponentWTipFb tipContent="Copied">
@@ -64,7 +64,7 @@ class Control extends Component {
                 </ComponentWTipFb>
                 <div className="info-text pt-2">{CONTENT.INSTRUCTION.SUBJECT2CHANGE}</div>
               </div>
-            </PosedFadeY>}
+            </PosedFade>}
           </PoseGroup>
         );
 
@@ -72,7 +72,7 @@ class Control extends Component {
       default:
         return (
           <PoseGroup animateOnMount={true}>
-            <PosedFade key="btnToolBar">
+            <PosedFade key="btnToolBar" cDelay={CONST.POSE_DELAY.PHASE_0}>
               <input key="input"
                 className="file-input"
                 id="fileInput-criteria"

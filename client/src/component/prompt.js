@@ -24,7 +24,7 @@ function Prompt(props) {
     </Card>
   );
   let withTip = (tipContent) => (
-    <PosedFadeY key="prompt">
+    <PosedFadeY key="prompt" cDelay={CONST.POSE_DELAY.PHASE_1}>
       <ComponentWTip
         component={prompt}
         tipContent={tipContent}
@@ -45,12 +45,12 @@ function Prompt(props) {
     case CONST.PROMPT_TYPE.UPLOAD:
       promptContent = (
         <PosedNull key="prompt">
-          <PosedFadeY>
+          <PosedFadeY cDelay={CONST.POSE_DELAY.PHASE_0}>
             <div className="col-8 fs-115">
               Please review and confirm the following information and criteria hierarchy are correct.
             </div>
           </PosedFadeY>
-          <PosedFadeY cDelay={1000}>
+          <PosedFadeY cDelay={CONST.POSE_DELAY.PHASE_2}>
             {prompt}
           </PosedFadeY>
         </PosedNull>
@@ -60,12 +60,12 @@ function Prompt(props) {
     case CONST.PROMPT_TYPE.REPORT_PRE:
       promptContent = (
         <PosedNull key="prompt">
-          <PosedFadeY>
+          <PosedFadeY cDelay={CONST.POSE_DELAY.PHASE_0}>
             <div className="col-8 fs-115">
               Decision and criteria retrieved.
             </div>
           </PosedFadeY>
-          <PosedFadeY cDelay={1000}>
+          <PosedFadeY cDelay={CONST.POSE_DELAY.PHASE_2}>
             {prompt}
           </PosedFadeY>
         </PosedNull>
@@ -74,14 +74,15 @@ function Prompt(props) {
 
     case CONST.PROMPT_TYPE.REPORT: //No tip
       promptContent = (
-        <PosedFadeY key="prompt" cDelay={500}>
+        <PosedFadeY key="prompt" cDelay={CONST.POSE_DELAY.PHASE_2}>
           {prompt}
         </PosedFadeY>
       );
       break;
       
     case CONST.PROMPT_TYPE.DEMO: //With tip
-      promptContent = withTip(CONTENT.TIP_OTHER.CARD_PROMPT_DEMO); break;
+      promptContent = withTip(CONTENT.TIP_OTHER.CARD_PROMPT_DEMO);
+      break;
     case CONST.PROMPT_TYPE.ENTRY:
       promptContent = withTip(CONTENT.TIP_OTHER.CARD_PROMPT_ENTRY);
   }
