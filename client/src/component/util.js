@@ -35,7 +35,7 @@ Title.propTypes = {
 
 export function Loading(props) { //TODO: split text effect ...
   const loadingContent = (
-    <PosedFade key="loading">
+    <PosedFade key="loading" className={props.className}>
       <div className="d-flex justify-content-center">
         <i
           className="fas fa-cog fa-spin fa-3x"
@@ -56,6 +56,7 @@ export function Loading(props) { //TODO: split text effect ...
 }
 
 Loading.propTypes = {
+  className: PropTypes.string,
   isLoading: PropTypes.bool.isRequired
 };
 

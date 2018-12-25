@@ -68,7 +68,7 @@ class Main extends Component {
           />
         </div>
         <div className="content mt-4">
-          <Loading isLoading={this.state.isLoading} />
+          <Loading isLoading={this.state.isLoading} className="pt-4" />
           <Prompt
             curPrompt={this.state.curPrompt}
             prompt={this.state.prompt}
