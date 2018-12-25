@@ -24,7 +24,7 @@ const main = {
       </div>,
     EVALUATE_AGAIN:
       <div>
-        Go through the evaluation process again and <b>modify</b> your <b>last assessments</b> if needed.
+        Go through the <b>evaluation process</b> again and modify your last assessments if needed.
       </div>,
     SUBMIT_COMPARISON:
       <div>

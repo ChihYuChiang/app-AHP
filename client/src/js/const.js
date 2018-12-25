@@ -33,11 +33,12 @@ const main = {
     NULL: 'null'
   },
   GRAPH_TYPE: { //TODO: remove "tree" prefixes
-    TREE_UPLOAD: 'tree_upload',
-    TREE_UPDATE: 'tree_update',
+    TREE_UPLOAD: 'tree_upload', //The static graph pre-comparison
+    TREE_UPDATE: 'tree_update', //The interactive graph post-comparison
     TREE_DEMO: 'tree_demo',
     TREE_ENTRY: 'tree_entry',
-    TREE_RECORD: 'tree_record',
+    TREE_RECORD: 'tree_record', //The static graph when retrieving record data
+    TREE_REVISE: 'tree_revise', //The static graph when revising the retrieved record data
     NULL: 'null'
   },
   COM_TYPE: {

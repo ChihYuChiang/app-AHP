@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 import isEmpty from "lodash/isEmpty";
 
-import { preprocessNew, preprocessSaved, countQuestion } from "../js/pre-data";
+import { preprocessNew, preprocessSaved, preprocessOld } from "../js/pre-data";
 import util from "../js/util";
 import score from "../js/score";
 import CONST from "../js/const";
@@ -31,10 +31,11 @@ const buildDefaultState = () => ({
     root: {},
     id2Name: {}
   },
-  isRevised: false, //Let recording record only when revised (enter report through comparison)
-  pairDataGenerator: {},
+  nQuestion: 0,
   curPairData: {},
-  curPairProgress: 0
+  curPairProgress: 0,
+  pairDataGen: {},
+  isRevised: false //Let recording record only when revised (enter report through comparison)
 });
 class Main extends Component {
   //Marker states here
@@ -45,15 +46,12 @@ class Main extends Component {
     curGraph: CONST.GRAPH_TYPE.NULL,
     curComparison: CONST.COM_TYPE.NULL,
     isLoading: false,
-    freshman: true
+    freshman: true,
   };
-  nQuestion = 0;
-  recordId = this.props.match.params.recordId;
+  recordId = this.props.match.params.recordId; //Will never change, placed in property
   controlElement = React.createRef(); //For routing prompt, preventing accidental leaving the page
 
   render() {
-    let { curComparison } = this.state;
-
     return (
       <div className="container" align="center">
         <Header />
@@ -63,6 +61,7 @@ class Main extends Component {
             isRevised={this.state.isRevised}
             handleCriterionFile={this.handleCriterionFile}
             renderDemoGraph={() => {this.fetch8Render(CONST.GRAPH_TYPE.TREE_DEMO);}}
+            renderReviseGraph={() => {this.fetch8Render(CONST.GRAPH_TYPE.TREE_REVISE);}}
             recordResult={this.recordResult}
             freshman={this.state.freshman}
             becomeOld={this.becomeOld}
@@ -89,11 +88,11 @@ class Main extends Component {
             pairData={this.state.curPairData}
             id2Name={this.state.criterion.id2Name}
             options={this.state.option.items}
-            nQuestion={this.nQuestion}
+            nQuestion={this.state.nQuestion}
           />
         </div>
         <div className="spacer-150"></div>
-        <Footer curComparison={curComparison} />
+        <Footer curComparison={this.state.curComparison} />
       </div>
     );
   }
@@ -141,7 +140,6 @@ class Main extends Component {
         return data;
       })
       .then((data) => { //prompt, items, root, id2Name, generator
-        this.nQuestion = countQuestion(data.criterion.root, data.option.items.length);
         this.setState((state) => ({
           //Reset data states
           ...state,
@@ -151,10 +149,10 @@ class Main extends Component {
           prompt: data.prompt,
           option: { ...buildDefaultState().option, ...data.option },
           criterion: { ...buildDefaultState().criterion, ...data.criterion },
-          pairDataGenerator: data.pairDataGenerator,
+          nQuestion: data.nQuestion,
+          pairDataGen: data.pairDataGen,
 
           //Update marker states
-          curPairData: data.pairDataGenerator.next().value,
           curControl: CONST.CONTROL_TYPE.NULL,
           curPrompt: CONST.PROMPT_TYPE.UPLOAD,
           curGraph: CONST.GRAPH_TYPE.TREE_UPLOAD,
@@ -177,8 +175,8 @@ class Main extends Component {
         ...comData,
         type: undefined //Remove type property (use undefined would be faster but with potential memory leak)
       });
-      newState.curPairProgress += state.curPairData.pairs.length / this.nQuestion * 100;
-      newState.curPairData = state.pairDataGenerator.next().value; //Gen next pairs
+      newState.curPairProgress += state.curPairData.pairs.length / this.state.nQuestion * 100;
+      newState.curPairData = state.pairDataGen.next().value; //Gen next pairs
 
       if (isEmpty(newState.curPairData)) {
         newState.curPairData = {};
@@ -197,12 +195,14 @@ class Main extends Component {
       curGraph: CONST.GRAPH_TYPE.NULL,
       curPrompt: CONST.PROMPT_TYPE.NULL,
       curComparison: CONST.COM_TYPE.NULL,
-      isLoading: true
+      isLoading: true,
     }, async () => {
       await util.sleep(1500);
 
       //Update the real content
       this.setState({
+        curPairProgress: 0,
+        curPairData: this.state.pairDataGen.next().value,
         curComparison: CONST.COM_TYPE.COMPARISON,
         isRevised: true,
         isLoading: false
@@ -212,14 +212,17 @@ class Main extends Component {
     });
   };
 
-  exitComparison = () => { //From post confirm (showing 100% progress) into report 
+  exitComparison = () => { //From post confirm (showing 100% progress) into report
+    //When generating report (enter report from comparison), wait longer
+    let sleepTime = this.state.curGraph === CONST.GRAPH_TYPE.NULL ? 2000 : 1000;
+
     this.setState({
       curPrompt: CONST.PROMPT_TYPE.NULL,
       curGraph: CONST.GRAPH_TYPE.NULL,
       curComparison: CONST.COM_TYPE.NULL,
       isLoading: true
     }, async () => { //compute score and produce report
-      await util.sleep(2000);
+      await util.sleep(sleepTime);
 
       this.setState((state) => {
         let root = score.embedValue(state.criterion.items, state.option.compares, state.criterion.compares);
@@ -249,8 +252,11 @@ class Main extends Component {
   fetchRecordedResult = async (graphType) => {
     //Hide graph and display loading spinner
     this.setState({
-      curGraph: CONST.GRAPH_TYPE.NULL,
+      curControl: [CONST.GRAPH_TYPE.TREE_REVISE, CONST.GRAPH_TYPE.TREE_RECORD].includes(graphType) ?
+        CONST.CONTROL_TYPE.NULL :
+        CONST.CONTROL_TYPE.DEFAULT,
       curPrompt: CONST.PROMPT_TYPE.NULL,
+      curGraph: CONST.GRAPH_TYPE.NULL,
       curComparison: CONST.COM_TYPE.NULL,
       isLoading: true
     });
@@ -262,6 +268,7 @@ class Main extends Component {
     let response, body;
     switch (graphType) {
       default:
+      case CONST.GRAPH_TYPE.TREE_REVISE:
       case CONST.GRAPH_TYPE.TREE_DEMO:
         break;
       
@@ -309,6 +316,7 @@ class Main extends Component {
         break;
       
       case CONST.GRAPH_TYPE.TREE_RECORD:
+      case CONST.GRAPH_TYPE.TREE_REVISE:
         targetMarkers = {
           curControl: CONST.CONTROL_TYPE.NULL,
           curPrompt: CONST.PROMPT_TYPE.REPORT_PRE,
@@ -317,25 +325,32 @@ class Main extends Component {
     }
     targetMarkers = { ...targetMarkers, curGraph: data.graphType, isLoading: false };
 
-    //Only part of the cases need data preprocessing
-    if ([CONST.GRAPH_TYPE.TREE_ENTRY, CONST.GRAPH_TYPE.TREE_RECORD].includes(data.graphType)) {
-      console.log(data)
-      let data_processed = preprocessSaved(data);
-      let curPairData = data_processed.pairDataGenerator.next().value;
-      this.nQuestion = countQuestion(data_processed.criterion.root, data_processed.option.items.length);
-  
-      this.setState((state) => ({
-        //Reset data states
-        ...state,
-        ...buildDefaultState(),
-        
-        //Update data states
-        ...data_processed,
-        curPairData: curPairData,
-      }));
+    //Different stage requires different data preprocessing
+    let data_processed;
+    switch (data.graphType) {
+      case CONST.GRAPH_TYPE.TREE_ENTRY:
+      case CONST.GRAPH_TYPE.TREE_RECORD:
+        data_processed = {
+          ...buildDefaultState(),
+          ...preprocessSaved(data),
+        }
+        break;
+      
+      default:
+      case CONST.GRAPH_TYPE.TREE_DEMO:
+      case CONST.GRAPH_TYPE.TREE_REVISE:
+        data_processed = preprocessOld(
+          this.state.criterion.root,
+          this.state.option.items,
+          this.state.criterion.compares,
+          this.state.option.compares
+        );
     }
-
+      
     this.setState({
+      //Update data states
+      ...data_processed,
+
       //Update marker states
       ...targetMarkers
     });
@@ -349,8 +364,9 @@ class Main extends Component {
   recordResult = async () => {
     this.setState({
       isLoading: true,
+      curControl: CONST.CONTROL_TYPE.NULL,
       curPrompt: CONST.PROMPT_TYPE.NULL,
-      curGraph: CONST.GRAPH_TYPE.NULL,
+      curGraph: CONST.GRAPH_TYPE.NULL
     });
 
     const response = await fetch('/api/create', {
@@ -368,9 +384,10 @@ class Main extends Component {
 
     this.setState({
       isLoading: false,
+      isRevised: false,
       curControl: CONST.CONTROL_TYPE.RECORDED,
       curPrompt: CONST.PROMPT_TYPE.REPORT,
-      curGraph: CONST.GRAPH_TYPE.TREE_UPDATE,
+      curGraph: CONST.GRAPH_TYPE.TREE_UPDATE
     });
 
     return recordId;

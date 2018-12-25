@@ -20,11 +20,7 @@ export function preprocessNew(rows) { //The excel module removes empty row or co
   items_option = items_option.map((item, i) => ({id: i + 1, name: item})); //id starts from 1
   
   //Get pairwise data
-  let pairs_option = genPair(items_option);
-  pairs_option = pairs_option.map((pair) => ({
-    source: pair[0].id + '', //A weird way of converting number to string
-    dest: pair[1].id + ''
-  }));
+  let pairs_option = genOptionPairs(genPair(items_option));
 
 
   //--Criterion
@@ -74,33 +70,20 @@ export function preprocessNew(rows) { //The excel module removes empty row or co
       root: root,
       id2Name: id2Name
     },
-    pairDataGenerator: genComPairs({
+    pairDataGen: genComPairs({
       root: root,
       pairs_criterion: pairs_criterion,
       pairs_option: pairs_option
-    })
+    }),
+    nQuestion: countQuestion(root, items_option.length)
   };
 }
 
 export function preprocessSaved(data) {
-  //--Option
-  //Get pairwise data
-  let pairs_option = genPair(data.body.items_option);
-  pairs_option = pairs_option.map((pair) => ({
-    source: pair[0].id + '', //A weird way of converting number to string
-    dest: pair[1].id + ''
-  }));
-
-
-  //--Criterion
-  //Get root
+  let pairs_option = genOptionPairs(genPair(data.body.items_option));
   let root = genRoot(data.body.items_criterion);
-
-  //Get pairwise data and id to name dict
   let [pairs_criterion, id2Name] = extractPairs(root);
   
-
-  //--Return
   return {
     prompt: data.body.prompt || {
       text: "Which company to work for?", //TODO: remove the need of fallback
@@ -116,12 +99,28 @@ export function preprocessSaved(data) {
       root: root,
       id2Name: id2Name
     },
-    pairDataGenerator: genComPairs({
+    pairDataGen: genComPairs({
       root: root,
       pairs_criterion: pairs_criterion,
       pairs_option: pairs_option,
       compares_criterion: data.body.compares_criterion,
       compares_option: data.body.compares_option
+    }),
+    nQuestion: countQuestion(root, data.body.items_option.length)
+  };
+}
+
+export function preprocessOld(root, items_option, compares_criterion, compares_option) {
+  let pairs_option = genOptionPairs(genPair(items_option));
+  let [pairs_criterion, ] = extractPairs(root);
+ 
+  return { //We need only update generator with the old data
+    pairDataGen: genComPairs({
+      root: root,
+      pairs_criterion: pairs_criterion,
+      pairs_option: pairs_option,
+      compares_criterion: compares_criterion,
+      compares_option: compares_option
     })
   };
 }
@@ -189,6 +188,14 @@ function genPair(data) {
   combination = combination.filter(c => c);
 
   return combination;
+}
+
+//Generate option pairs in coveted format
+function genOptionPairs(combination) {
+  return combination.map((pair) => ({
+    source: pair[0].id + '', //A weird way of converting number to string
+    dest: pair[1].id + ''
+  }));
 }
 
 //Generate pairs from a root obj

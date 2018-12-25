@@ -29,17 +29,17 @@ class Control extends Component {
         return (
           <div>
             <ButtonToolbar id="control-wrapper" className="justify-content-center">
-              {this.state.recordUrl || !this.props.isRevised ?
-              <ButtonWTip className="disabled"
-                buttonContent="Revise Assessment"
-                tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
-              /> :
+              {this.props.isRevised ?
               <ButtonWTip
                 buttonContent="Save Your Report"
                 buttonOnClick={this.record8GetUrl}
                 tipContent={CONTENT.TIP_BTN.RECORD_REPORT}
-              />
-              }
+              /> :            
+              <ButtonWTip
+                buttonContent="Revise Assessment"
+                buttonOnClick={this.props.renderReviseGraph}
+                tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
+              />}
               <Button className="ml-2 mr-2">
                 <Link to="/home">Make New Decision</Link>
               </Button>
@@ -49,7 +49,7 @@ class Control extends Component {
                 becomeOld={this.props.becomeOld}
               />
             </ButtonToolbar>
-            <PoseGroup>
+            <PoseGroup animateOnMount={true}>
               {this.props.curControl === CONST.CONTROL_TYPE.UPDATE ?
               false :
               <PosedFadeY key="reportUrl">
@@ -127,6 +127,7 @@ Control.propTypes = {
   isRevised: PropTypes.bool.isRequired, //Let recording record only when revised (enter report through comparison)
   handleCriterionFile: PropTypes.func.isRequired, //Deliver the uploaded criterion file to be handled by main
   renderDemoGraph: PropTypes.func.isRequired,
+  renderReviseGraph: PropTypes.func.isRequired,
   recordResult: PropTypes.func.isRequired, //Record to db the current comparison data
   freshman: PropTypes.bool.isRequired, //To be used in `Instruction`
   becomeOld: PropTypes.func.isRequired //Set freshman to `false`

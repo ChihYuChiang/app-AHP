@@ -1,4 +1,5 @@
 import { genRoot } from './pre-data';
+import isEmpty from "lodash/isEmpty";
 
 
 class main {
@@ -46,16 +47,16 @@ class main {
     //--Weighted score
     //Sort higher level to the higher index
     data.sort((a, b) => b.level - a.level);
-
     //Propagate to middle nodes
     for (let i = 0; i < data.length; i++) {
-      if (data[i].score == null) { //Check both undefined and null
+      if (isEmpty(optCom.filter((compare) => compare.gId === data[i].id))) {
         let children = data.filter((d) => d.parent === data[i].id);
         let sMatrix = children.map((child) => child.score.map((s) => s * child.weight));
         data[i].score = sMatrix.reduce((acc, cur) => acc.map((a, i) => a + cur[i]), new Array(sMatrix[0].length).fill(0));
       }
     }
 
+    console.log(data)
     let root = genRoot(data);
     return root;
   }
