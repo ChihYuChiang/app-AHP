@@ -46,7 +46,6 @@ class Header extends Component {
 Header = withRouter(Header); //Acquire location info
 
 
-//FIXME: pointer events blocked
 //TODO: when mobile, footer not sticky
 class Footer extends Component {
   state = {

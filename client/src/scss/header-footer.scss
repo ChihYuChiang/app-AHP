@@ -9,6 +9,7 @@
 }
 
 .footer-band {
+  pointer-events: auto;
   color: $gray-200;
   font-size: 0.75rem;
   background-color: $gray-700;
@@ -16,6 +17,8 @@
 }
 
 #footer-wrapper {
+  pointer-events: none;
+
   a:link, a:visited, a:hover, a:active {
     @extend %remove-a-effect;
   }

@@ -11,6 +11,7 @@
 
 #dashboard {
   @extend .mt-4;
+  pointer-events: none;
   margin-right: -120px; //Makes the graph entirely overlaps on it
   width: 120px;
   top: 50px;
@@ -37,6 +38,7 @@
   }
 
   g {
+    pointer-events: auto;
     cursor: pointer;
   }
 }
