@@ -124,7 +124,7 @@ class Control extends Component {
 
 Control.propTypes = {
   curControl: PropTypes.string.isRequired, //App state marker
-  isRevised: PropTypes.string.isRequired, //Let recording record only when revised (enter report through comparison)
+  isRevised: PropTypes.bool.isRequired, //Let recording record only when revised (enter report through comparison)
   handleCriterionFile: PropTypes.func.isRequired, //Deliver the uploaded criterion file to be handled by main
   renderDemoGraph: PropTypes.func.isRequired,
   recordResult: PropTypes.func.isRequired, //Record to db the current comparison data
