@@ -2,7 +2,6 @@ import React from "react";
 import posed from 'react-pose';
 import PropTypes from 'prop-types';
 //Note: PoseGroup can only be used locally, within each React component
-//TODO: pose + prop type?
 
 
 export const POSE_MEASURE = {
@@ -18,11 +17,6 @@ export const PosedNull = posed.div({
 
 
 export const PosedPop = posed.div({
-  /*
-    props = {
-      cColor //In #FFFFFF format
-    }
-  */
   enter: {
     x: -10,
     y: -10,
@@ -37,6 +31,10 @@ export const PosedPop = posed.div({
     boxShadow: '0px 0px 0px #FFFFFF',
   }
 });
+
+PosedPop.propTypes = {
+  cColor: PropTypes.string.isRequired //In #FFFFFF format
+}
 
 
 export const PosedAttX = posed.div({
@@ -72,12 +70,6 @@ export const PosedAttY = posed.div({
 
 
 export const PosedFadeX = posed.div({
-  /*
-    props = {
-      i //Optional, element id for staggering
-      cDelay //Option, delay when enter (keyword `delay` is used by Pose module)
-    }
-  */  
   enter: {
     delay: (props) => (props.cDelay + props.i * props.cDelay) || (POSE_MEASURE.DELAY_INTERVAL + props.i * POSE_MEASURE.DELAY_INTERVAL) || props.cDelay || POSE_MEASURE.DELAY_INTERVAL,
     x: 0,
@@ -92,14 +84,13 @@ export const PosedFadeX = posed.div({
   }
 });
 
+PosedFadeX.propTypes = {
+  i: PropTypes.number, //Optional, element id for staggering
+  cDelay: PropTypes.number //Option, delay when enter
+}
+
 
 export const PosedFadeY = posed.div({
-  /*
-    props = {
-      i //Optional, element id for staggering
-      cDelay //Option, delay when enter
-    }
-  */    
   enter: {
     delay: (props) => (props.cDelay + props.i * props.cDelay) || (POSE_MEASURE.DELAY_INTERVAL + props.i * POSE_MEASURE.DELAY_INTERVAL) || props.cDelay || POSE_MEASURE.DELAY_INTERVAL,
     y: 0,
@@ -114,15 +105,13 @@ export const PosedFadeY = posed.div({
   }
 });
 
+PosedFadeY.propTypes = {
+  i: PropTypes.number, //Optional, element id for staggering
+  cDelay: PropTypes.number //Option, delay when enter
+}
+
 
 export const PosedFade = posed.div({
-  /*
-    props = {
-      i //Optional, element id for staggering
-      cDelay //Option, delay when enter
-      cDurEx //Option, duration when exit
-    }
-  */    
   enter: {
     delay: (props) => (props.cDelay + props.i * props.cDelay) || props.cDelay || 0,
     opacity: 1
@@ -134,6 +123,12 @@ export const PosedFade = posed.div({
     })
   }
 });
+
+PosedFade.propTypes = {
+  i: PropTypes.number, //Optional, element id for staggering
+  cDelay: PropTypes.number, //Option, delay when enter
+  cDurEx: PropTypes.number //Option, duration when exit
+}
 
 
 const _PosedExpandY = posed.div({
@@ -156,10 +151,6 @@ PosedExpandY.propTypes = {
 
 
 export const PosedRotate180 = posed.div({
-  /*
-    props = {
-    }
-  */    
   upright: { rotate: 0, transition: { type: "tween", ease: "easeOut" } },
   upSideDown: { rotate: 180, transition: { type: "tween", ease: "easeOut" } }
 });

@@ -68,6 +68,7 @@ function main(root, options, graphType) {
     .attr("id", "sub-information");
 
   //Setup svg
+  //TODO: the svg width should be connected to level height
   const width_svg = 550;
   const height_svg = x1 - x0 + root.dx * 2 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
   const svg = d3.select("#canvasRoot")

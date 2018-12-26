@@ -71,6 +71,7 @@ class Control extends Component {
       case CONST.CONTROL_TYPE.DEFAULT:
       default:
         return (
+          //TODO: FA for all buttons
           <PoseGroup animateOnMount={true}>
             <PosedFade key="btnToolBar" cDelay={CONST.POSE_DELAY.PHASE_0}>
               <input key="input"
