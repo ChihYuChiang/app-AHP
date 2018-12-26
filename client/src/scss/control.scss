@@ -35,11 +35,8 @@
 }
 
 #recordUrl {
-  &::selection {
-    color: inherit; 
-    background: inherit;
-  }
-  
+  cursor: pointer;
+
   &::selection {
     color: inherit; 
     background: inherit;

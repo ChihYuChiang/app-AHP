@@ -7,8 +7,12 @@
     color: $gray-600;
     font-size: 1.15rem;
 
+    p:first-child {
+      @extend .mb-1;
+    }
+
     .blockquote-footer {
-      font-size: 0.85rem;
+      font-size: 0.7rem;
     }
   }
 }

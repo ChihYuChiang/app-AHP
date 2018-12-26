@@ -9,6 +9,7 @@ import CONST from './js/const';
 
 //TODO: redux
 //TODO: logging fluentd logging layer lightsail after ML app
+//TODO: user log in and personal decision record
 class App extends Component {
   render() {
     return (

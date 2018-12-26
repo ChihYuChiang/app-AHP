@@ -4,7 +4,7 @@ cd D:\Dropbox\Ongoing - Dropbox\app-AHP
 
 
 //--Build
-//major | minor | patch
+//major | minor | patch | 0.5.0
 npm version patch -m "v%s"
 heroku login
 git push heroku production:master
