@@ -87,16 +87,16 @@ class Control extends Component {
                   buttonOnClick={this.props.renderDemoGraph}
                   tipContent={CONTENT.TIP_BTN.DEMO_RESULT}
                 />
+                <a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>
+                  <ButtonWTip
+                  //Make a wrapping btn instead of inside btn to make works in Firefox
+                    className="btnGroup-left"
+                    buttonContent="Download Template"
+                    tipContent={CONTENT.TIP_BTN.DOWNLOAD_TEMPLATE}>
+                  </ButtonWTip>
+                </a>
                 <ButtonWTip
-                  className="btnGroup-left"
-                  buttonContent={
-                    <a href={`${CONST.PATH.TEMPLATE_SERVER}/api/template`} download>
-                      Download Template
-                    </a>
-                  }
-                  tipContent={CONTENT.TIP_BTN.DOWNLOAD_TEMPLATE}>
-                </ButtonWTip>
-                <ButtonWTip
+                  //TODO: label look like a btn. Firefox doesn't allow embedding
                   className="btnGroup-right mr-2"
                   buttonContent={
                     <label htmlFor="fileInput-criteria" className="file-label">

@@ -53,8 +53,8 @@ function main(root, options, graphType) {
       .attr("id", "legend-title");
     legend
       .append("svg")
-      .style("width", "100%")
-      .style("height", options.length * CONST.GRAPH_MEASURE.LEGEND_ITEM_HEIGHT);
+      .attr("width", "100%")
+      .attr("height", options.length * CONST.GRAPH_MEASURE.LEGEND_ITEM_HEIGHT);
     
   let information = dashboard
     .append("div")
@@ -72,8 +72,8 @@ function main(root, options, graphType) {
   const height_svg = x1 - x0 + root.dx * 2 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
   const svg = d3.select("#canvasRoot")
     .append("svg")
-    .style("width", width_svg)
-    .style("height", height_svg);
+    .attr("width", width_svg)
+    .attr("height", height_svg);
 
   //Graph root
   //#canvasRoot -> svg -> g -> g.links and g.nodes
