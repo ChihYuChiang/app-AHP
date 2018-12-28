@@ -7,9 +7,9 @@ import MainSimple from './component/main_simple';
 import CONST from './js/const';
 
 
-//TODO: redux
+//TODO: redux ML app
 //TODO: logging fluentd logging layer lightsail after ML app
-//TODO: user log in and personal decision record
+//TODO: OAuth log in and personal decision record
 class App extends Component {
   render() {
     return (
