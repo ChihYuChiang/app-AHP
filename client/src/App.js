@@ -23,7 +23,7 @@ class App extends Component {
           <Route path="/record/:recordId" component={MainAHP} />
           <Route path={CONST.LOCATION.SIMPLE} component={MainSimple} />
         </div>
-      </BrowserRouter> //TODO: deal with 404
+      </BrowserRouter>
     );
   }
 }

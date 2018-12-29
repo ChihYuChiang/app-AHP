@@ -19,6 +19,10 @@ html { //For rem, which Bootstrap 4 bases on
   font-size: 14px;
 }
 
+label { //For the file upload delegate
+  margin-bottom: 0;
+}
+
 .container {
   padding-right: 25px;
   padding-left: 25px;

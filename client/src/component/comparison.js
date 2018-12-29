@@ -69,11 +69,9 @@ class Comparison extends Component {
                 This process takes around <span className="text-primary">{nMin} minutes</span>.
               </p>
               <Button className="btn-medium mr-5" onClick={this.props.enterComparison}>Confirm</Button>
-              <Button className="btn-medium">
-                <label htmlFor="fileInput-criteria" className="file-label">
-                  Modify
-                </label>
-              </Button>
+              <label htmlFor="fileInput-criteria" className="btn btn-medium btn-secondary">
+                Modify
+              </label>
             </PosedFadeY>
           </PoseGroup>
         );

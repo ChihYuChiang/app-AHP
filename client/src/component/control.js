@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { PoseGroup } from 'react-pose';
 
 import { PosedFade } from './pose';
-import { ButtonWTip, ComponentWTipFb } from "./util";
+import { ButtonWTip, ComponentWTip, ComponentWTipFb } from "./util";
 import Instruction from "./instruction";
 
 import CONST from "../js/const";
@@ -41,9 +41,11 @@ class Control extends Component {
                   buttonOnClick={this.props.renderReviseGraph}
                   tipContent={CONTENT.TIP_BTN.EVALUATE_AGAIN}
                 />}
-                <Button className="ml-2 mr-2">
-                  <Link to="/home">Make New Decision</Link>
-                </Button>
+                <Link to="/home">
+                  <Button className="ml-2 mr-2">
+                    Make New Decision
+                  </Button>
+                </Link>
                 <Instruction
                   className="align-self-center"
                   freshman={this.props.freshman}
@@ -96,16 +98,15 @@ class Control extends Component {
                     tipContent={CONTENT.TIP_BTN.DOWNLOAD_TEMPLATE}>
                   </ButtonWTip>
                 </a>
-                <ButtonWTip
-                  //TODO: label look like a btn. Firefox doesn't allow embedding
-                  className="btnGroup-right mr-2"
-                  buttonContent={
-                    <label htmlFor="fileInput-criteria" className="file-label">
+                <ComponentWTip
+                  component={
+                    <label htmlFor="fileInput-criteria" className="btn btn-secondary btnGroup-right mr-2">
                       Upload Your Criteria
                     </label>
                   }
-                  tipContent={CONTENT.TIP_BTN.UPLOAD_CRITERIA}>
-                </ButtonWTip>
+                  tipContent={CONTENT.TIP_BTN.UPLOAD_CRITERIA}
+                  tippyConfig={{ offset: "40px, 5px" }}
+                />
                 <Instruction
                   className="align-self-center"
                   freshman={this.props.freshman}

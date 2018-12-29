@@ -1,7 +1,6 @@
 import CONTENT from "./content";
 
 
-//TODO: change name, dont use default main
 function main(options, magic, problem) {
   let optionScores = options.map(uniScore);
   let magicScore = uniScore(magic);

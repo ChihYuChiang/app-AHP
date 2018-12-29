@@ -14,7 +14,6 @@ const maxTipWidth = "250px";
 
 
 export function Title(props) {
-  //TODO: remove subtitle when not needed
   return (
     <PoseGroup animateOnMount={true}>
       <PosedFade key={"title_" + props.title} cDelay={200}>
