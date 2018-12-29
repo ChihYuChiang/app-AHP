@@ -5,6 +5,7 @@ const path = require('path');
 const morgan = require('morgan');
 
 
+//TODO: redirect http to https
 //--Configure app
 const app = express();
 const port = process.env.PORT || 5000;
@@ -41,7 +42,8 @@ app.use(function(err, req, res, next) {
   console.error(err.stack)
 
   //Render the error page
-  res.locals.title = process.env.npm_package_name //The locals are for the "Pug" template
+  err = err.status ? err : createError(500); //If it's internal error, create an http error 500
+  res.locals.title = process.env.npm_package_name; //The locals are for the "Pug" template
   res.locals.err = err;
   res.status(err.status || 500);
   res.render(path.join(__dirname, 'view/error.pug'));
