@@ -1,6 +1,9 @@
-import React from "react";
+import React, { Component } from "react";
 import posed from 'react-pose';
+import SplitText from 'react-pose-text';
 import PropTypes from 'prop-types';
+
+import util from '../js/util';
 //Note: PoseGroup can only be used locally, within each React component
 
 
@@ -154,3 +157,53 @@ export const PosedRotate180 = posed.div({
   upright: { rotate: 0, transition: { type: "tween", ease: "easeOut" } },
   upSideDown: { rotate: 180, transition: { type: "tween", ease: "easeOut" } }
 });
+
+
+//Specifically made for the 3 dots in `Loading`
+export class PosedLoadingDots extends Component {
+  state = {
+    pose: "enter",
+    preExit: false //For smooth loop
+  }
+  _isMounted = false;
+
+  poseConfig = {
+    exit: {
+      opacity: 0,
+      transition: { duration: 0 }
+    },
+    enter: {
+      opacity: 1,
+      transition: ({ charIndex }) => ({
+        delay: charIndex * 500,
+        duration: 500
+      })
+    }
+  };
+
+  render() {
+    return (
+      <SplitText
+        initialPose="exit" pose={this.state.pose} charPoses={this.poseConfig}
+        onPoseComplete={this.exit} withParent={false}>
+        {this.props.children}
+      </SplitText>
+    );
+  }
+
+  componentDidMount() {this._isMounted = true;}
+  componentWillUnmount() {this._isMounted = false;}
+
+  exit = async () => {
+    if (this.state.preExit === false) {
+      this.setState({ preExit: true });
+
+      await util.sleep(1200);
+      if (this._isMounted) {
+        this.setState({ pose: "exit" });
+        await util.sleep(100);
+        this.setState({ pose: "enter",  preExit: false });
+      }
+    }
+  };
+}

@@ -4,7 +4,7 @@ import { Button } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 import Tippy from '@tippy.js/react';
 
-import { PosedFade } from './pose';
+import { PosedFade, PosedLoadingDots } from './pose';
 
 import util from '../js/util';
 import CONST from '../js/const';
@@ -32,19 +32,15 @@ Title.propTypes = {
 };
 
 
-export function Loading(props) { //TODO: split text effect ...
+export function Loading(props) {
   const loadingContent = (
     <PosedFade key="loading" className={props.className}>
       <div className="d-flex justify-content-center">
-        <i
-          className="fas fa-cog fa-spin fa-3x"
-          style={{ color: styles.gray800 }}
-          />
+        <i className="fas fa-cog fa-spin fa-3x" style={{ color: styles.gray800 }} />
       </div>
-      <p
-        className="d-flex justify-content-center small mt-1"
-        style={{ color: styles.gray800 }}
-        >Loading ...</p>
+      <div className="d-flex justify-content-center small mt-1" style={{ color: styles.gray800 }}>
+        Loading<PosedLoadingDots> ...</PosedLoadingDots>
+      </div>
     </PosedFade>
   );
   
