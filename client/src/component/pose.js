@@ -149,6 +149,7 @@ export function PosedExpandY(props) {
 }
 
 PosedExpandY.propTypes = {
+  children: PropTypes.node.isRequired, //Target component
   pose: PropTypes.oneOf(['collapsed', 'expanded']).isRequired
 };
 
@@ -207,3 +208,7 @@ export class PosedLoadingDots extends Component {
     }
   };
 }
+
+PosedLoadingDots.propTypes = {
+  children: PropTypes.node.isRequired, //Target component '...'
+};

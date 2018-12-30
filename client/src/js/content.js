@@ -68,7 +68,7 @@ const main = {
       </div>,
     STEP_INTRO:
       <div>
-        <p>The AHP is powerful but complex. This app handles all the technical difficulties you'll encounter when implementing the AHP and streamlines the process into 4 simple steps.</p>
+        <p>AHP is powerful but complex. Hierarchic handles its technical difficulties for you and streamlines its process into 4 simple steps.</p>
       </div>,
     STEP_1: "Download the template for decision options and criteria. Follow the template's instruction and modify its content.",
     STEP_2: "Upload your personalized options and criteria.",

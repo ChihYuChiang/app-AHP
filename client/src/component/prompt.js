@@ -26,13 +26,13 @@ function Prompt(props) {
   let withTip = (tipContent) => (
     <PosedFadeY key="prompt" cDelay={CONST.POSE_DELAY.PHASE_1}>
       <ComponentWTip
-        component={prompt}
         tipContent={tipContent}
         tippyConfig={{
           placement: "bottom",
           offset: "40px"
-        }}
-      />
+        }}>
+        {prompt}
+      </ComponentWTip>
     </PosedFadeY>
   );
 

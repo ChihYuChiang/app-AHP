@@ -99,14 +99,12 @@ class Control extends Component {
                   </ButtonWTip>
                 </a>
                 <ComponentWTip
-                  component={
-                    <label htmlFor="fileInput-criteria" className="btn btn-secondary btnGroup-right mr-2">
-                      Upload Your Criteria
-                    </label>
-                  }
                   tipContent={CONTENT.TIP_BTN.UPLOAD_CRITERIA}
-                  tippyConfig={{ offset: "40px, 5px" }}
-                />
+                  tippyConfig={{ offset: "40px, 5px" }}>
+                  <label htmlFor="fileInput-criteria" className="btn btn-secondary btnGroup-right mr-2">
+                    Upload Your Criteria
+                  </label>
+                </ComponentWTip>
                 <Instruction
                   className="align-self-center"
                   freshman={this.props.freshman}

@@ -81,7 +81,6 @@ ButtonWTip.propTypes = {
 };
 
 
-//TODO: use props.children
 export function ComponentWTip(props) {
   return (
     <Tippy
@@ -91,13 +90,13 @@ export function ComponentWTip(props) {
       animation="shift-toward" duration={[350, 200]} delay={[1000, 50]} inertia={true}
       performance={true}
       {...props.tippyConfig}>
-      {props.component}
+      {props.children}
     </Tippy>
   );
 }
 
 ComponentWTip.propTypes = {
-  component: PropTypes.element.isRequired, //Content of the component
+  children: PropTypes.node.isRequired, //Target component
   tipContent: PropTypes.node.isRequired, //Content for the tooltip
   tippyConfig: PropTypes.object //Overwrite the default settings in Tippy and in this component
 };
@@ -153,7 +152,7 @@ export class ComponentWTipCf extends Component {
         onCreate={this.storeTippyInstance}
         onHidden={this.hideTip} //Manually set `isVisible` to false when hid by Tippy preset auto-mechanisms
         {...this.props.tippyConfig}>
-        {this.props.component}
+        {this.props.children}
       </Tippy>
     );
   }
@@ -176,12 +175,12 @@ ComponentWTipCf.defaultProps = {
   buttonType: CONST.TIPBTN_TYPE.CONFIRM
 }
 ComponentWTipCf.propTypes = {
+  children: PropTypes.node.isRequired, //Target component
   trigger: PropTypes.string, //Tippy trigger type
   toggleVisible: PropTypes.func, //Prop control when showing the tip
   isVisible: PropTypes.bool,
   buttonType: PropTypes.string, //As its name
   action: PropTypes.func.isRequired, //The action to be made (confirmed by tip)
-  component: PropTypes.element.isRequired, //Content of the component
   tipContent: PropTypes.node.isRequired, //Content for the tooltip, except for the buttons
   tippyConfig: PropTypes.object //Overwrite the default settings in Tippy and in this component
 };
@@ -228,6 +227,7 @@ ComponentWTipFb.defaultProps = {
   hideAfter: 1200,
 }
 ComponentWTipFb.propTypes = {
+  children: PropTypes.node.isRequired, //Target component
   trigger: PropTypes.string, //Tippy trigger type
   toggleVisible: PropTypes.func, //Prop control when showing the tip
   isVisible: PropTypes.bool,

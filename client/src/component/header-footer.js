@@ -2,14 +2,12 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Link, withRouter } from "react-router-dom";
 
-
 import CONTENT from "../js/content";
 import CONST from "../js/const";
 
 import { ComponentWTip, ComponentWTipCf, Title } from "./util";
 
 
-//TODO: menu
 class Header extends Component {
   render() {
     let content = {
@@ -36,6 +34,11 @@ class Header extends Component {
   
     return (
       <div>
+        <div className="fixed-top">
+          <div className="footer-control d-flex mt-3">
+            <span className="remove-focus-effect ml-auto mr-2"><i className="fas fa-user-circle" /></span>
+          </div>
+        </div>
         <div className="spacer-100"></div>
         <Title {...content} />
       </div>
@@ -62,39 +65,39 @@ class Footer extends Component {
           let confirmMsg = <div>Progress you made will <b>not</b> be saved.<br />Proceed anyway?</div>;
           controls = (
             <div className="d-inline-flex">
-               <ComponentWTipCf trigger="manual" isVisible={this.state.cfTipVisible} toggleVisible={this.toggleCfTip}
+              <ComponentWTipCf trigger="manual" isVisible={this.state.cfTipVisible} toggleVisible={this.toggleCfTip}
                 action={() => this.props.history.push('/simple')}
-                component={<div className="anchor" />}
-                tipContent={confirmMsg}
-              />
+                tipContent={confirmMsg}>
+                <div className="anchor" />
+              </ComponentWTipCf>
               <ComponentWTip
                 //Add <span> to maintain the height as in other conditions with <a>
-                component={<span className="remove-focus-effect"><i className="fas fa-sign-out-alt" onClick={this.toggleCfTip} /></span>}
                 tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
                 tippyConfig={{
                   placement: "top",
                   offset: "0px, 5px"
-                }}
-              />
+                }}>
+                <span className="remove-focus-effect"><i className="fas fa-sign-out-alt" onClick={this.toggleCfTip} /></span>
+              </ComponentWTip>
               <ComponentWTipCf
                 //Imperative routing https://tylermcginnis.com/react-router-programmatically-navigate/
                 action={() => this.props.history.push('/home')}
-                component={<span className="remove-focus-effect"><i className="fas fa-home pl-3" /></span>}
-                tipContent={confirmMsg}
-              />
+                tipContent={confirmMsg}>
+                <span className="remove-focus-effect"><i className="fas fa-home pl-3" /></span>
+              </ComponentWTipCf>
             </div>
           );
         } else {
           controls = (
             <div className="d-inline-flex">
               <ComponentWTip
-                component={<Link to="/simple"><i className="fas fa-sign-out-alt" /></Link>}
                 tipContent={CONTENT.TIP_OTHER.A_ESCAPE_SIMPLE}
                 tippyConfig={{
                   placement: "top",
                   offset: "0px, 5px"
-                }}
-              />
+                }}>
+                <Link to="/simple"><i className="fas fa-sign-out-alt" /></Link>
+              </ComponentWTip>
               <Link to="/home"><i className="fas fa-home pl-3" /></Link>
             </div>
           );
