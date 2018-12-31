@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Button } from 'reactstrap';
 import { PoseGroup } from 'react-pose';
 import Tippy from '@tippy.js/react';
+import isUndefined from "lodash/isUndefined";
 
 import { PosedFade, PosedLoadingDots } from './pose';
 
@@ -104,7 +105,7 @@ ComponentWTip.propTypes = {
 
 export class ComponentWTipCf extends Component {
   //Click produces tip, confirm or cancel the underlying action
-  tip={};
+  tip = {};
 
   render() {
     let buttons;
@@ -122,6 +123,21 @@ export class ComponentWTipCf extends Component {
           </div>
         );
         break;
+      case CONST.TIPBTN_TYPE.PROMPT:
+        buttons = (
+          <div className="mt-4">
+            <Button size="sm" outline color="info" className="mr-4" onClick={() => {this.hideTip(); this.props.action();}}>
+              Yes
+            </Button>
+            <Button size="sm" outline color="info" onClick={() => {
+              this.hideTip();
+              if (!isUndefined(this.props.action_no)) this.props.action_no();
+            }}>
+              No
+            </Button>
+          </div>
+        );
+        break;
       case CONST.TIPBTN_TYPE.ALERT:
         buttons = (
           <div className="mt-4">
@@ -130,7 +146,6 @@ export class ComponentWTipCf extends Component {
             </Button>
           </div>
         );
-      //TODO: tip component case prompt
     }
 
     let tipContent8Btn = (
@@ -181,6 +196,7 @@ ComponentWTipCf.propTypes = {
   isVisible: PropTypes.bool,
   buttonType: PropTypes.string, //As its name
   action: PropTypes.func.isRequired, //The action to be made (confirmed by tip)
+  action_no: PropTypes.func, //The action to be made when click "no"
   tipContent: PropTypes.node.isRequired, //Content for the tooltip, except for the buttons
   tippyConfig: PropTypes.object //Overwrite the default settings in Tippy and in this component
 };
@@ -188,7 +204,7 @@ ComponentWTipCf.propTypes = {
 
 export class ComponentWTipFb extends Component  {
   //Click produces tip, close tip after a while
-  tip={};
+  tip = {};
 
   render() {
     return (
