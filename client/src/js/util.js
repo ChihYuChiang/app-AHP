@@ -7,9 +7,9 @@ class main {
    * 
    * @return {Array<Number>} Int array.
    */
-  static range(lowerBound, upperBound) {
-    let len = upperBound - lowerBound;
-    return Array.from(new Array(len), (_, i) => i + lowerBound);
+  static range(lowerBound, upperBound, step=1) {
+    let len = (upperBound - lowerBound) / step;
+    return Array.from(new Array(len), (_, i) => i * step + lowerBound);
   }
 
   /**
