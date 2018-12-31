@@ -188,12 +188,19 @@ class Comparison extends Component {
   genCRSolutionTxt = (compares) => {
     let { targetCompare, targetIndex } = genCRSolution(compares, targetCR);
     if (targetCompare) { //If there's a solution
+      let sourceName = this.props.pairData.type === CONST.DATA_TYPE.CRITERION
+        ? this.props.id2Name[targetCompare.source]
+        : this.props.options.filter((op) => op.id + '' === targetCompare.source)[0].name;
+      let destName = this.props.pairData.type === CONST.DATA_TYPE.CRITERION
+        ? this.props.id2Name[targetCompare.dest]
+        : this.props.options.filter((op) => op.id + '' === targetCompare.dest)[0].name;
       let movementModifier = (targetIndex / 2 - 4) === 0 ? '.' : <span>,<br />closer to </span>;
-      let movementTarget = (targetIndex / 2 - 4) > 0 ? this.props.id2Name[targetCompare.source] : this.props.id2Name[targetCompare.dest];
+      let movementTarget = (targetIndex / 2 - 4) > 0 ? sourceName : destName;
+
       return (
         <div>
           <u>Tip for Adjustment</u><br/>
-          Move <b>{this.props.id2Name[targetCompare.dest] + ' or ' + this.props.id2Name[targetCompare.source]}</b>
+          Move <b>{destName + ' or ' + sourceName}</b>
           {' to ' + Math.abs(targetIndex / 2 - 4)}
           {movementModifier}<b>{movementTarget}</b>.
         </div>
