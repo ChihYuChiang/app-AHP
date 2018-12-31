@@ -10,8 +10,9 @@ import { ButtonWTip, ComponentWTip } from './util';
 
 import { genMatrix, genWeight, computeCR, genCRSolution } from "../js/com-matrix";
 import util from "../js/util";
-import CONST from "../js/const";
-import CONTENT from "../js/content";
+
+import CONST from "../share/const";
+import CONTENT from "../share/content";
 
 
 //TODO: >>> form

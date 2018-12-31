@@ -11,8 +11,9 @@ import { Loading } from "./util";
 import Validator from "../js/validate";
 import randomDecide from "../js/random-decision";
 import util from "../js/util";
-import CONST from "../js/const";
-import CONTENT from "../js/content";
+
+import CONST from "../share/const";
+import CONTENT from "../share/content";
 
 
 //TODO: simple instruction

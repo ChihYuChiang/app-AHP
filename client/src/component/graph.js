@@ -4,7 +4,8 @@ import PropTypes from 'prop-types';
 import { PosedFadeY } from './pose';
 
 import drawTreeGraph from "../js/treegraph";
-import CONST from "../js/const";
+
+import CONST from "../share/const";
 
 
 //TODO: text report: decision barchart + most important criteria + best-performing criteria for each option (hover)

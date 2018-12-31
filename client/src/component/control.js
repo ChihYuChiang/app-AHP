@@ -8,8 +8,8 @@ import { PosedFade } from './pose';
 import { ButtonWTip, ComponentWTip, ComponentWTipFb } from "./util";
 import Instruction from "./instruction";
 
-import CONST from "../js/const";
-import CONTENT from "../js/content";
+import CONST from "../share/const";
+import CONTENT from "../share/content";
 
 
 //TODO: share social media

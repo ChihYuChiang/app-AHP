@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 import { PosedExpandY, PosedRotate180 } from './pose';
 
-import CONST from "../js/const";
-import CONTENT from "../js/content";
+import CONST from "../share/const";
+import CONTENT from "../share/content";
 import styles from "../scss/variable.scss";
 
 

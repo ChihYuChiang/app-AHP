@@ -6,8 +6,8 @@ import { PoseGroup } from 'react-pose';
 import { PosedFadeY, PosedNull } from './pose';
 import { ComponentWTip } from './util';
 
-import CONST from "../js/const";
-import CONTENT from "../js/content";
+import CONST from "../share/const";
+import CONTENT from "../share/content";
 
 
 function Prompt(props) {

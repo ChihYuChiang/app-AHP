@@ -1,7 +1,8 @@
 import * as d3 from "d3";
 
 import util from "./util";
-import CONST from "./const";
+
+import CONST from "../share/const";
 import styles from "../scss/variable.scss";
 
 

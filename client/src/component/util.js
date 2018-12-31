@@ -8,7 +8,8 @@ import isUndefined from "lodash/isUndefined";
 import { PosedFade, PosedLoadingDots } from './pose';
 
 import util from '../js/util';
-import CONST from '../js/const';
+
+import CONST from '../share/const';
 import styles from '../scss/variable.scss';
 
 const maxTipWidth = "250px";

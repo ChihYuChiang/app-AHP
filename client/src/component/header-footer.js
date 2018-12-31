@@ -2,10 +2,10 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Link, withRouter } from "react-router-dom";
 
-import CONTENT from "../js/content";
-import CONST from "../js/const";
-
 import { ComponentWTip, ComponentWTipCf, Title } from "./util";
+
+import CONTENT from "../share/content";
+import CONST from "../share/const";
 
 
 class Header extends Component {

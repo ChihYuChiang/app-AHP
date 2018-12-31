@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Redirect } from "react-router-dom";
 import MainAHP from './component/main_AHP';
 import MainSimple from './component/main_simple';
 
-import CONST from './js/const';
+import CONST from './share/const';
 
 
 //TODO: redux ML app

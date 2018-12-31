@@ -5,7 +5,8 @@ import isEmpty from "lodash/isEmpty";
 
 import { rand2Adjs } from "../js/random-decision";
 import util from "./util";
-import CONST from "./const";
+
+import CONST from "../share/const";
 
 
 export function preprocessNew(rows) { //The excel module removes empty row or column

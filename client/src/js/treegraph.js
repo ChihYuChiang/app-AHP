@@ -1,8 +1,9 @@
 import * as d3 from "d3";
 
-import CONST from "./const";
 import interaction from "./treegraph_inter";
 import util from "./util";
+
+import CONST from "../share/const";
 import styles from "../scss/variable.scss";
 
 

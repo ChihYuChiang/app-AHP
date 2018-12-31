@@ -1,4 +1,4 @@
-import CONTENT from "./content";
+import CONTENT from "../share/content";
 
 
 function main(options, magic, problem) {

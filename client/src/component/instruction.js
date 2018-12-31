@@ -6,7 +6,8 @@ import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { PosedAttY } from './pose';
 
 import util from '../js/util';
-import CONTENT from '../js/content';
+
+import CONTENT from '../share/content';
 
 
 //TODO: academic citing and explanation

@@ -1,6 +1,6 @@
 import validate from 'validator';
 
-import CONST from './const';
+import CONST from '../share/const';
 
 
 class Validator {

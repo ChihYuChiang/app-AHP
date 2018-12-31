@@ -2,17 +2,18 @@ import React, { Component } from "react";
 import readXlsxFile from "read-excel-file";
 import isEmpty from "lodash/isEmpty";
 
-import { preprocessNew, preprocessSaved, preprocessOld } from "../js/pre-data";
-import util from "../js/util";
-import score from "../js/score";
-import CONST from "../js/const";
-
 import { Header, Footer } from "./header-footer";
 import Comparison from "./comparison";
 import Graph from "./graph";
 import Control from "./control";
 import Prompt from "./prompt";
 import { Loading } from "./util";
+
+import { preprocessNew, preprocessSaved, preprocessOld } from "../js/pre-data";
+import score from "../js/score";
+import util from "../js/util";
+
+import CONST from "../share/const";
 
 
 const buildDefaultState = () => ({
