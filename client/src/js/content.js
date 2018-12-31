@@ -28,9 +28,9 @@ const main = {
       </div>,
     SUBMIT_COMPARISON:
       <div>
-        Please check your answers and try to be more consistent.<br />
+        Please check your answers and be more consistent.<br />
         Both transitivity and degree matter.<br />
-        i.e. if A > B, B > C, then A has to much > C.
+        i.e. if A > B, B > C, then A is much > C.
       </div>
   },
   TIP_OTHER: {

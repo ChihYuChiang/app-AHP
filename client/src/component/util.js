@@ -202,6 +202,7 @@ ComponentWTipCf.propTypes = {
 };
 
 
+//TODO: unify the style to the white one
 export class ComponentWTipFb extends Component  {
   //Click produces tip, close tip after a while
   tip = {};
@@ -217,7 +218,7 @@ export class ComponentWTipFb extends Component  {
         onCreate={this.storeTippyInstance}
         onShown={this.hideAfterSometime}
         {...this.props.tippyConfig}>
-        <div className="remove-focus-effect">
+        <div className={"remove-focus-effect " + this.props.className}>
           {this.props.children}
         </div>
       </Tippy>
@@ -244,6 +245,7 @@ ComponentWTipFb.defaultProps = {
 }
 ComponentWTipFb.propTypes = {
   children: PropTypes.node.isRequired, //Target component
+  className: PropTypes.string, //Classes for the wrapper `div`
   trigger: PropTypes.string, //Tippy trigger type
   toggleVisible: PropTypes.func, //Prop control when showing the tip
   isVisible: PropTypes.bool,

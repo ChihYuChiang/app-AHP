@@ -6,9 +6,9 @@ import { PoseGroup } from 'react-pose';
 import { GroupLabel, Pair } from './comparison_label-pair';
 import BreadCrumbC from './breadcrumb';
 import { PosedFade, PosedFadeY, PosedAttX, PosedNull } from './pose';
-import { ButtonWTip } from './util';
+import { ButtonWTip, ComponentWTip } from './util';
 
-import { genMatrix, genWeight, computeCR } from "../js/com-matrix";
+import { genMatrix, genWeight, computeCR, genCRSolution } from "../js/com-matrix";
 import util from "../js/util";
 import CONST from "../js/const";
 import CONTENT from "../js/content";
@@ -23,6 +23,7 @@ const buildDefaultState = () => ({
   weights: [],
   mIndex: [],
   CR: 0,
+  CRSolution: '',
   pose_submitBtn: '',
   showCrTip: false
 });
@@ -118,10 +119,20 @@ class Comparison extends Component {
                     {this.state.showCrTip ?
                     //Move `mt` to an outer layer to avoid animation cluttering
                     <PosedFade cDelay={100} cDurEx={200} key="crTip">
-                      <div className="info-text">{CONTENT.TIP_BTN.SUBMIT_COMPARISON}</div>
+                      <div className="info-text d-inline-flex">
+                        {CONTENT.TIP_BTN.SUBMIT_COMPARISON}
+                        <ComponentWTip
+                          tipContent={this.state.CRSolution}
+                          tippyConfig={{ delay: [50, 50], placement: "top", hideOnClick: false }}>
+                          <i className="fas fa-exclamation-circle align-self-end" />
+                        </ComponentWTip>
+                      </div>
                     </PosedFade> :
                     <PosedNull key="crTip_placeholder">
-                      <div className="info-text invisible">{CONTENT.TIP_BTN.SUBMIT_COMPARISON}</div>
+                      <div className="info-text d-inline-flex invisible">
+                        {CONTENT.TIP_BTN.SUBMIT_COMPARISON}
+                        <i className="fas fa-exclamation-circle align-self-end" />
+                      </div>
                     </PosedNull>}
                   </PoseGroup>
                 </div>
@@ -174,10 +185,31 @@ class Comparison extends Component {
     });
   };
 
+  genCRSolutionTxt = (compares) => {
+    let { targetCompare, targetIndex } = genCRSolution(compares, targetCR);
+    if (targetCompare) { //If there's a solution
+      let movementModifier = (targetIndex / 2 - 4) === 0 ? '.' : <span>,<br />closer to </span>;
+      let movementTarget = (targetIndex / 2 - 4) > 0 ? this.props.id2Name[targetCompare.source] : this.props.id2Name[targetCompare.dest];
+      return (
+        <div>
+          <u>Tip for Adjustment</u><br/>
+          Move <b>{this.props.id2Name[targetCompare.dest] + ' or ' + this.props.id2Name[targetCompare.source]}</b>
+          {' to ' + Math.abs(targetIndex / 2 - 4)}
+          {movementModifier}<b>{movementTarget}</b>.
+        </div>
+      );
+    } else {
+      return <div><u>Tip for Adjustment</u><br/>Make your answers less extreme.</div>;
+    }
+  }
+
   handleComData8Reset = () => {
     if (this.state.CR > targetCR) { //TODO: adjust back to 0.1, but have to remodel the presentation
       this.attSubmitBtn();
-      this.setState({ showCrTip: true });
+      this.setState({
+        showCrTip: true,
+        CRSolution: this.genCRSolutionTxt(this.state.compares)
+      });
       return;
     }
 
@@ -202,6 +234,11 @@ class Comparison extends Component {
       let [matrix, mIndex] = genMatrix(compares);
       let weights = genWeight(matrix);
       let CR = computeCR(matrix, weights);
+
+      let CRSolution;
+      if (state.showCrTip) { //Reduce some computation
+        CRSolution = this.genCRSolutionTxt(compares);
+      }
       
       return ({
         ...state,
@@ -210,6 +247,7 @@ class Comparison extends Component {
         weights: weights,
         mIndex: mIndex,
         CR: CR,
+        CRSolution: CRSolution,
         showCrTip: CR < targetCR ? false : state.showCrTip,
       });
     });

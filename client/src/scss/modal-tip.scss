@@ -32,6 +32,7 @@
 .tippy-tooltip.light-theme .tippy-content,
 .tippy-tooltip.light-border-theme .tippy-content {
   @extend %themed-b;
+  @extend %themed-u;
 
   color: $gray-700;
 }

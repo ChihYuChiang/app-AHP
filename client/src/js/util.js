@@ -115,6 +115,18 @@ class main {
       behavior: behavior
     });
   }
+
+  /**
+   * Deep copy of and object.
+   * Note: bad performance.
+   * 
+   * @param {*} obj The obj to be copied.
+   * 
+   * @return {*} The copy.
+   */
+  static deepCopy(obj) {
+    return JSON.parse(JSON.stringify(obj));
+  }
 }
 
 

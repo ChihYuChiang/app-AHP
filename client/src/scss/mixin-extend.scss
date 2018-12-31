@@ -45,3 +45,17 @@
     color: theme-color-level(primary, 3);
   }
 }
+
+%themed-u {
+  u {
+    display: inline-block;
+    padding-bottom: 0.1rem;
+    margin-bottom: 0.2rem;
+    font-size: 0.8rem;
+    text-decoration: none;
+    border-bottom-style: solid;
+    border-bottom-color: theme-color-level(light, 0);
+    border-bottom-width: 2px;
+    color: theme-color-level(dark, -7);
+  }
+}

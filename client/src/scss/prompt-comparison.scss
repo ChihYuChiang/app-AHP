@@ -69,4 +69,18 @@
       cursor: pointer;
     }
   }
+
+  .info-text {
+    i {
+      @extend .remove-focus-effect;
+      @extend .ml--3;
+      color: theme-color-level(info, -8);
+      padding-bottom: 0.15rem;
+      cursor: pointer;
+
+      &:hover {
+        color: theme-color-level(info, -4);
+      }
+    }
+  }
 }

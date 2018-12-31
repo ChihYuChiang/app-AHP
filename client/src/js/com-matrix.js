@@ -1,3 +1,7 @@
+import util from "./util";
+import isEmpty from "lodash/isEmpty";
+
+
 function genMatrix(compares) {
   let mIndex = new Set();
   compares.forEach((compare) => {mIndex.add(compare.dest); mIndex.add(compare.source);});
@@ -41,9 +45,39 @@ function computeCR(matrix, weights) {
   })
   let CI = ((lambda.reduce((acc, cur) => acc + cur, 0) / matrix.length) - matrix.length) / (matrix.length - 1);
   const RIs = [null, null, null, 0.58, 0.9, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49, 1.51, 1.53, 1.56, 1.57, 1.58];
-  let CR = CI / RIs[matrix.length]
+  let CR = CI / RIs[Math.min(RIs.length, matrix.length)];
   return CR;
 }
 
+function genCRSolution(compares, targetCR) {
+  for (let i = 0; i < compares.length; i++) {
+    let CRs = util.range(-8, 9).map((v) => {
+      let tmpCompares = util.deepCopy(compares);
+      tmpCompares[i].value = v;
 
-export { genMatrix, genWeight, computeCR };
+      let matrix = genMatrix(tmpCompares)[0];
+      let weights = genWeight(matrix);
+      let CR = computeCR(matrix, weights);
+
+      return CR; 
+    });
+
+    //Modifying only one compare, is there any solutions?
+    let eligibleCRs = CRs.filter((CR) => CR <= targetCR);
+    if (!isEmpty(eligibleCRs)) {
+      return {
+        targetCompare: compares[i],
+        targetIndex: CRs.indexOf(Math.max(...eligibleCRs))
+      };
+    }
+  }
+
+  //If no solution
+  return {
+    targetCompare: null,
+    targetIndex: null
+  };
+}
+
+
+export { genMatrix, genWeight, computeCR, genCRSolution };
