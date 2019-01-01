@@ -34,8 +34,8 @@ class Header extends Component {
   
     return (
       <div>
-        <div className="fixed-top">
-          <div className="footer-control d-flex mt-3">
+        <div id="header-wrapper" className="fixed-top">
+          <div className="header-control d-flex mt-3">
             <span className="ml-auto mr-2 mt-1 d-inline-block no-pointer">{greetByTime()}</span>
             <i className="fas fa-user-circle remove-focus-effect" />
           </div>

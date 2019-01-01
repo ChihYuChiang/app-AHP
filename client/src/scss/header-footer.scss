@@ -1,14 +1,12 @@
-.footer-control {
+//Common
+.hf-control {
   font-size: 0.75rem;
   padding: 0px 15px 3px;
 
   @extend %i-control;
-  i.fa-sign-out-alt {
-    transform: rotate(180deg);
-  }
 }
 
-.footer-band {
+.hf-band {
   pointer-events: auto;
   color: $gray-200;
   font-size: 0.75rem;
@@ -16,10 +14,40 @@
   padding: 12px 15px;
 }
 
-#footer-wrapper {
-  pointer-events: none;
 
+//Header
+.header-control {
+  @extend .hf-control;
+}
+
+.header-band {
+  @extend .hf-band;
+}
+
+#header-wrapper {
+  pointer-events: none;
   a:link, a:visited, a:hover, a:active {
     @extend %remove-a-effect;
+  };
+}
+
+
+//Footer
+.footer-control {
+  @extend .hf-control;
+
+  i.fa-sign-out-alt {
+    transform: rotate(180deg);
   }
+}
+
+.footer-band {
+  @extend .hf-band;
+}
+
+#footer-wrapper {
+  pointer-events: none;
+  a:link, a:visited, a:hover, a:active {
+    @extend %remove-a-effect;
+  };
 }
