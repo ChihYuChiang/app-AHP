@@ -132,7 +132,7 @@ class Footer extends Component {
         </div>
         <div className="footer-band d-flex">
           <span className="ml-auto">
-            2018<a className="ml-2" href="mailto:chihyuchiang@uchicago.edu">Chih-Yu Chiang</a>
+            2019<a className="ml-2" href="mailto:chihyuchiang@uchicago.edu">Chih-Yu Chiang</a>
           </span>
         </div>
       </div>

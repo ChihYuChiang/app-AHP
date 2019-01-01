@@ -2,13 +2,13 @@ import * as d3 from "d3";
 
 import util from "./util";
 
-import CONST from "../share/const";
+import MEASURE from "../share/measure";
 import styles from "../scss/variable.scss";
 
 
 function main(datum) {
   //Graph root
-  let [height, width] = [CONST.GRAPH_MEASURE.BAR_HEIGHT, CONST.GRAPH_MEASURE.BAR_WIDTH];
+  let [height, width] = [MEASURE.GRAPH.BAR_HEIGHT, MEASURE.GRAPH.BAR_WIDTH];
   let gr = d3.select("#canvasRoot>svg")
     .append("g")
     .attr("id", "barRoot")
@@ -53,7 +53,7 @@ function main(datum) {
     .classed("fs-55", true)
     .text((d) => Math.round(d * staggerDelay))
     .attr("x", (_, i) => xScale(i + 1) + 0.5 * xScale.bandwidth())
-    .attr("y", (d) => CONST.GRAPH_MEASURE.BAR_HEIGHT - yScale(d) - 4)
+    .attr("y", (d) => MEASURE.GRAPH.BAR_HEIGHT - yScale(d) - 4)
     .attr("fill", styles.gray800)
     .attr("text-anchor", "middle")
     .style("opacity", 0)

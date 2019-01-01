@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import drawBarChart from './barchart';
 import { getCircleR } from './treegraph';
 
-import CONST from "../share/const";
+import MEASURE from "../share/measure";
 
 
 class main {
@@ -73,7 +73,7 @@ class main {
       let curLabel = d3.selectAll(".node_text")
         .filter(d => datum.id === d.id)
         .style("visibility", "hidden")
-        .attr("transform",`translate(${CONST.GRAPH_MEASURE.BAR_WIDTH / 2 - 3}, ${getCircleR(datum.data.parWeight, datum.inter) + 27})`)
+        .attr("transform",`translate(${MEASURE.GRAPH.BAR_WIDTH / 2 - 3}, ${getCircleR(datum.data.parWeight, datum.inter) + 27})`)
         .attr("font-size", "1.2em");
       curLabel
         .transition()

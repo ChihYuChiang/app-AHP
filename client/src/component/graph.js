@@ -6,6 +6,7 @@ import { PosedFadeY } from './pose';
 import drawTreeGraph from "../js/treegraph";
 
 import CONST from "../share/const";
+import MEASURE from "../share/measure";
 
 
 //TODO: text report: decision barchart + most important criteria + best-performing criteria for each option (hover)
@@ -13,8 +14,8 @@ function Graph (props) {
   let cDelay;
   switch (props.curGraph) {
     case CONST.GRAPH_TYPE.TREE_ENTRY:
-    case CONST.GRAPH_TYPE.TREE_DEMO: cDelay = CONST.POSE_DELAY.PHASE_1; break;
-    default: cDelay = CONST.POSE_DELAY.PHASE_2;
+    case CONST.GRAPH_TYPE.TREE_DEMO: cDelay = MEASURE.POSE_DELAY.PHASE_1; break;
+    default: cDelay = MEASURE.POSE_DELAY.PHASE_2;
   }
 
   //In React DOM, there's always <svg /> only (no change at all), the d3 code implements on top of that 

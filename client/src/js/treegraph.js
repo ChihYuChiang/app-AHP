@@ -4,6 +4,7 @@ import interaction from "./treegraph_inter";
 import util from "./util";
 
 import CONST from "../share/const";
+import MEASURE from "../share/measure";
 import styles from "../scss/variable.scss";
 
 
@@ -55,7 +56,7 @@ function main(root, options, graphType) {
     legend
       .append("svg")
       .attr("width", "100%")
-      .attr("height", options.length * CONST.GRAPH_MEASURE.LEGEND_ITEM_HEIGHT);
+      .attr("height", options.length * MEASURE.GRAPH.LEGEND_ITEM_HEIGHT);
     
   let information = dashboard
     .append("div")
@@ -71,7 +72,7 @@ function main(root, options, graphType) {
   //Setup svg
   //TODO: the svg width should be connected to level height
   const width_svg = 550;
-  const height_svg = x1 - x0 + root.dx * 2 + CONST.GRAPH_MEASURE.BAR_HEIGHT / 2;
+  const height_svg = x1 - x0 + root.dx * 2 + MEASURE.GRAPH.BAR_HEIGHT / 2;
   const svg = d3.select("#canvasRoot")
     .append("svg")
     .attr("width", width_svg)
@@ -80,7 +81,7 @@ function main(root, options, graphType) {
   //Graph root
   //#canvasRoot -> svg -> g -> g.links and g.nodes
   root.transX = root.dy / 3; //Origin translate (the root node in the graph)
-  root.transY = root.dx - x0 + (inter ? CONST.GRAPH_MEASURE.BAR_HEIGHT / 2 : 0);
+  root.transY = root.dx - x0 + (inter ? MEASURE.GRAPH.BAR_HEIGHT / 2 : 0);
   let gr = svg
     .append("g")
     .attr("id", "treeRoot")
@@ -212,7 +213,7 @@ function produceLegend(root, options) {
     .append("g")
     .classed("legendItem", true)
     .each(function(d) {d3.select(this).classed("topOptId_" + d.id, true);})
-    .attr("transform", (_, i) => "translate(0," + i * CONST.GRAPH_MEASURE.LEGEND_ITEM_HEIGHT + ")")
+    .attr("transform", (_, i) => "translate(0," + i * MEASURE.GRAPH.LEGEND_ITEM_HEIGHT + ")")
     .on("click", interaction.highlightClicked_legend);
   d3.select("#canvasRoot > svg") //Click the svg to resume
     .on("click", interaction.resumeClicked_legend);

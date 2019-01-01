@@ -7,6 +7,7 @@ import { PosedFadeY, PosedNull } from './pose';
 import { ComponentWTip } from './util';
 
 import CONST from "../share/const";
+import MEASURE from "../share/measure";
 import CONTENT from "../share/content";
 
 
@@ -24,7 +25,7 @@ function Prompt(props) {
     </Card>
   );
   let withTip = (tipContent) => (
-    <PosedFadeY key="prompt" cDelay={CONST.POSE_DELAY.PHASE_1}>
+    <PosedFadeY key="prompt" cDelay={MEASURE.POSE_DELAY.PHASE_1}>
       <ComponentWTip
         tipContent={tipContent}
         tippyConfig={{
@@ -45,12 +46,12 @@ function Prompt(props) {
     case CONST.PROMPT_TYPE.UPLOAD:
       promptContent = (
         <PosedNull key="prompt">
-          <PosedFadeY cDelay={CONST.POSE_DELAY.PHASE_0}>
+          <PosedFadeY cDelay={MEASURE.POSE_DELAY.PHASE_0}>
             <div className="col-8 fs-115">
               Please review and confirm the following information and criteria hierarchy are correct.
             </div>
           </PosedFadeY>
-          <PosedFadeY cDelay={CONST.POSE_DELAY.PHASE_2}>
+          <PosedFadeY cDelay={MEASURE.POSE_DELAY.PHASE_2}>
             {prompt}
           </PosedFadeY>
         </PosedNull>
@@ -60,12 +61,12 @@ function Prompt(props) {
     case CONST.PROMPT_TYPE.REPORT_PRE:
       promptContent = (
         <PosedNull key="prompt">
-          <PosedFadeY cDelay={CONST.POSE_DELAY.PHASE_0}>
+          <PosedFadeY cDelay={MEASURE.POSE_DELAY.PHASE_0}>
             <div className="col-8 fs-115">
               Decision and criteria retrieved.
             </div>
           </PosedFadeY>
-          <PosedFadeY cDelay={CONST.POSE_DELAY.PHASE_2}>
+          <PosedFadeY cDelay={MEASURE.POSE_DELAY.PHASE_2}>
             {prompt}
           </PosedFadeY>
         </PosedNull>
@@ -74,7 +75,7 @@ function Prompt(props) {
 
     case CONST.PROMPT_TYPE.REPORT: //No tip
       promptContent = (
-        <PosedFadeY key="prompt" cDelay={CONST.POSE_DELAY.PHASE_2}>
+        <PosedFadeY key="prompt" cDelay={MEASURE.POSE_DELAY.PHASE_2}>
           {prompt}
         </PosedFadeY>
       );

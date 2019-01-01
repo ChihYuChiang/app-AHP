@@ -9,6 +9,7 @@ import { ButtonWTip, ComponentWTip, ComponentWTipFb } from "./util";
 import Instruction from "./instruction";
 
 import CONST from "../share/const";
+import MEASURE from "../share/measure";
 import CONTENT from "../share/content";
 
 
@@ -28,7 +29,7 @@ class Control extends Component {
       case CONST.CONTROL_TYPE.RECORDED:
         return (
           <PoseGroup animateOnMount={true}>
-            <PosedFade key="btnToolBar" cDelay={CONST.POSE_DELAY.PHASE_0}>
+            <PosedFade key="btnToolBar" cDelay={MEASURE.POSE_DELAY.PHASE_0}>
               <ButtonToolbar id="control-wrapper" className="justify-content-center">
                 {this.props.isRevised ?
                 <ButtonWTip
@@ -55,7 +56,7 @@ class Control extends Component {
             </PosedFade>
             {this.props.curControl === CONST.CONTROL_TYPE.UPDATE ?
             false :
-            <PosedFade key="reportUrl" cDelay={CONST.POSE_DELAY.PHASE_0}>
+            <PosedFade key="reportUrl" cDelay={MEASURE.POSE_DELAY.PHASE_0}>
               <div className="col-8 mt-4 mb-5">
                 <Label for="recordUrl">Click to copy report URL</Label >
                 <ComponentWTipFb tipContent="Copied">
@@ -75,7 +76,7 @@ class Control extends Component {
         return (
           //TODO: FA for all buttons
           <PoseGroup animateOnMount={true}>
-            <PosedFade key="btnToolBar" cDelay={CONST.POSE_DELAY.PHASE_0}>
+            <PosedFade key="btnToolBar" cDelay={MEASURE.POSE_DELAY.PHASE_0}>
               <input key="input"
                 className="file-input"
                 id="fileInput-criteria"

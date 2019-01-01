@@ -12,6 +12,7 @@ import { genMatrix, genWeight, computeCR, genCRSolution } from "../js/com-matrix
 import util from "../js/util";
 
 import CONST from "../share/const";
+import MEASURE from "../share/measure";
 import CONTENT from "../share/content";
 
 
@@ -39,7 +40,7 @@ class Comparison extends Component {
       case CONST.COM_TYPE.REPORT_PRE:
         return (
           <PoseGroup animateOnMount={true}>
-            <PosedFadeY className="comparison-wrapper col-8" key="btn" cDelay={CONST.POSE_DELAY.PHASE_2}>
+            <PosedFadeY className="comparison-wrapper col-8" key="btn" cDelay={MEASURE.POSE_DELAY.PHASE_2}>
               <ButtonWTip className="btn-medium mr-5"
                 buttonContent="Evaluate Again"
                 buttonOnClick={this.props.enterComparison}
@@ -58,7 +59,7 @@ class Comparison extends Component {
         
         return (
           <PoseGroup animateOnMount={true}>
-            <PosedFadeY className="comparison-wrapper col-8" key="btn" cDelay={CONST.POSE_DELAY.PHASE_2}>
+            <PosedFadeY className="comparison-wrapper col-8" key="btn" cDelay={MEASURE.POSE_DELAY.PHASE_2}>
               <input
                 className="file-input"
                 id="fileInput-criteria"
@@ -95,7 +96,7 @@ class Comparison extends Component {
         return ( //animateOnMount=true lets the first element mounted being animated (it's mounted along with the PoseGroup and will not be animated by default)
           <div className="comparison-wrapper mt-4">
             <PoseGroup animateOnMount={true}>
-              <PosedFadeY key="breadCrumb" cDelay={CONST.POSE_DELAY.PHASE_0}>
+              <PosedFadeY key="breadCrumb" cDelay={MEASURE.POSE_DELAY.PHASE_0}>
                 <Progress className="col-8 p-0 pbar-thin"
                   value={this.props.curPairProgress}
                   color="info"
@@ -105,7 +106,7 @@ class Comparison extends Component {
                 />
               </PosedFadeY>
 
-              <PosedFadeY key="groupLabel" cDelay={CONST.POSE_DELAY.PHASE_0}>
+              <PosedFadeY key="groupLabel" cDelay={MEASURE.POSE_DELAY.PHASE_0}>
                 <GroupLabel className="mb-5 mt-4 fs-115"
                   pairDataType={this.props.pairData.type}
                   pairDataGId={this.props.pairData.gId}
@@ -151,7 +152,7 @@ class Comparison extends Component {
         return (
           <div className="comparison-wrapper mt-4">
             <PoseGroup animateOnMount={true}>
-              <PosedFadeY key="breadCrumb" cDelay={CONST.POSE_DELAY.PHASE_0}>
+              <PosedFadeY key="breadCrumb" cDelay={MEASURE.POSE_DELAY.PHASE_0}>
                 <Progress className="col-8 p-0 pbar-thin"
                   value={100}
                   color="info"
@@ -161,10 +162,10 @@ class Comparison extends Component {
                 />
               </PosedFadeY>
               
-              <PosedFade key="msg" cDelay={CONST.POSE_DELAY.PHASE_0}>
+              <PosedFade key="msg" cDelay={MEASURE.POSE_DELAY.PHASE_0}>
                 <p className="mt-6 fs-115">Required information collected.</p>
               </PosedFade>
-              <PosedFadeY key="btn" cDelay={CONST.POSE_DELAY.PHASE_2}>
+              <PosedFadeY key="btn" cDelay={MEASURE.POSE_DELAY.PHASE_2}>
                 <Button className="mt-6 btn-wide" onClick={this.props.exitComparison}>Generate Report</Button>
               </PosedFadeY>
             </PoseGroup>
