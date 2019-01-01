@@ -27,9 +27,11 @@ class Instruction extends Component {
           />
         </PosedAttY>
         <Modal isOpen={this.state.modal} toggle={this.toggleModal}>
-          <ModalHeader toggle={this.toggleModal}>Instruction</ModalHeader>
-          <ModalBody>
+          <ModalHeader toggle={this.toggleModal}>
+            Instruction
             {CONTENT.INSTRUCTION.STEP_INTRO}
+          </ModalHeader>
+          <ModalBody>
             <h5 className="mt-3">Step 1</h5>
             {CONTENT.INSTRUCTION.STEP_1}
             <div><img src="asset/instruction_1.png" alt="step 1 illustration" /></div>

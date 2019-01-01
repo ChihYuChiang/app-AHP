@@ -68,12 +68,12 @@ const main = {
       </div>,
     STEP_INTRO:
       <div>
-        <p>AHP is powerful but complex. Hierarchic handles its technical difficulties for you and streamlines its process into 4 simple steps.</p>
+        <p>Hierarchic handles AHP's technical difficulties and streamlines it into 4 steps.</p>
       </div>,
-    STEP_1: "Download the template for decision options and criteria. Follow the template's instruction and modify its content.",
-    STEP_2: "Upload your personalized options and criteria.",
-    STEP_3: "Answer questions regarding the options and criteria.",
-    STEP_4: "Acquire your AHP report.",
+    STEP_1: <p>Download the template for decision options and criteria. Follow the template's instruction and modify its content.</p>,
+    STEP_2: <p>Upload your personalized options and criteria.</p>,
+    STEP_3: <p>Answer questions regarding the options and criteria.</p>,
+    STEP_4: <p>Acquire your AHP report.</p>,
     INTERPRET:
       <ul>
         <li>Your report will be presented in a form of tree graph where each node represents a decision criterion. The nodes are connected to show their hierarchical relations. In addition, the <b>size of a node</b> represents how important is this criterion to the evaluation.</li>
