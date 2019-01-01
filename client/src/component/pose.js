@@ -7,6 +7,8 @@ import util from '../js/util';
 //Note: PoseGroup can only be used locally, within each React component
 
 
+//TODO: draw tick
+//https://codepen.io/popmotion/pen/yPxNao?editors=0010
 export const POSE_MEASURE = {
   DELAY_INTERVAL: 150
 }

@@ -121,8 +121,13 @@ const main = {
     "kind", "loving", "loyal", "modest", "neat", "nice", "optimistic", "passionate", "patient", "persistent ", "pioneering", "philosophical", "placid", "plucky", "polite", "powerful", "practical", "pro-active", "quick-witted", "quiet",
     "rational", "reliable", "reserved", "resourceful", "romantic", "self-confident", "self-disciplined", "sensible", "sensitive", "shy", "sincere", "sociable", "straightforward", "sympathetic",
     "thoughtful", "tidy", "tough", "unassuming", "understanding", "versatile", "warmhearted", "willing", "witty"
+  ],
+  GREETING_PREFIX: [
+    "Good",
+    "It's a wonderful", "It's a beautiful", "It's a delightful",
+    "Such a wonderful", "Such a beautiful", "Such a delightful"
   ]
-}
+};
 
 
 export default main;

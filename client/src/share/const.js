@@ -1,4 +1,3 @@
-//TODO: move to share folder
 const main = {
   LOCATION: {
     AHP: '/',
@@ -72,7 +71,7 @@ const main = {
   PATH: {
     TEMPLATE_SERVER: process.env.NODE_ENV === 'production' ? '.' : 'http://localhost:5000'
   }
-}
+};
 
 
 export default main;

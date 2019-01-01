@@ -36,7 +36,8 @@ class Header extends Component {
       <div>
         <div className="fixed-top">
           <div className="footer-control d-flex mt-3">
-            <span className="remove-focus-effect ml-auto mr-2"><i className="fas fa-user-circle" /></span>
+            <span className="ml-auto mr-2 mt-1 d-inline-block no-pointer">{greetByTime()}</span>
+            <i className="fas fa-user-circle remove-focus-effect" />
           </div>
         </div>
         <div className="spacer-100"></div>
@@ -44,6 +45,15 @@ class Header extends Component {
       </div>
     );
   }
+
+
+  logIn = () => {
+    //TODO: OAuth implementation
+  };
+
+  logOff = () => {
+
+  };
 }
 
 Header = withRouter(Header); //Acquire location info
@@ -151,6 +161,29 @@ Footer = withRouter(Footer);
 Footer.propTypes = {
   curComparison: PropTypes.string //Used to decide if pop confirms when clicking routing icons
 };
+
+
+function greetByTime() {
+  let curDate = new Date();
+
+  let prefix = CONTENT.GREETING_PREFIX[curDate.getDate() % CONTENT.GREETING_PREFIX.length];
+  
+  let timeLiteral;
+  switch (parseInt(curDate.getHours() / 4)) {
+    default: timeLiteral = "day"; break;
+
+    case 1: //4-11
+    case 2: timeLiteral = "morning"; break;
+
+    case 3: //12-19
+    case 4: timeLiteral = "afternoon"; break;
+
+    case 0: //20-3
+    case 5: timeLiteral = "evening";
+  }
+
+  return prefix + " " + timeLiteral;
+}
 
 
 export { Header, Footer };
