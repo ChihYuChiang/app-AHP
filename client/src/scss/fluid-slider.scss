@@ -50,9 +50,9 @@
   &:active::-moz-range-thumb {
     background: transparent;
   }
-
+  //FIXME: can't have ::before after for `input` element (firefox)
   //The label at the both sides
-  &:before, &:after {
+  &::before, &::after {
     position: absolute;
     width: 100px;
     padding: 0.35em 0.5em 0.47em;
@@ -67,13 +67,13 @@
     border-radius: 3px;
   }
 
-  &:before {
+  &::before {
     transform: translate(-100%, -50%);
     left: -10px;
     content: attr(data-dest);
   }
 
-  &:after {
+  &::after {
     transform: translate(100%, -50%);
     right: -10px;
     content: attr(data-source);
