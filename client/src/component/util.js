@@ -15,25 +15,6 @@ import styles from '../scss/variable.scss';
 const maxTipWidth = "250px";
 
 
-export function Title(props) {
-  return (
-    <PoseGroup animateOnMount={true}>
-      <PosedFade key={"title_" + props.title} cDelay={200}>
-        <h1>{props.title}</h1>
-      </PosedFade>
-      <PosedFade key={"subTitle_" + props.title} cDelay={600}>
-        <div className="col-8 mt-4">{props.subTitle}</div>
-      </PosedFade>
-    </PoseGroup>
-  );
-}
-
-Title.propTypes = {
-  title: PropTypes.node.isRequired,
-  subTitle: PropTypes.node
-};
-
-
 export function Loading(props) {
   const loadingContent = (
     <PosedFade key="loading" className={props.className}>

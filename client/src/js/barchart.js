@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import util from "./util";
 
 import MEASURE from "../share/measure";
-import styles from "../scss/variable.scss";
+import styles from "../scss/variable.scss"; //TODO: capitalize
 
 
 function main(datum) {

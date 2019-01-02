@@ -4,6 +4,7 @@ import { Button, Input } from "reactstrap";
 import { PoseGroup } from 'react-pose';
 
 import { Header, Footer } from "./header-footer";
+import Title from "./title";
 import { PosedNull, PosedFade, PosedFadeY, PosedAttX } from './pose';
 import DynamicInput from "./dynamic-input";
 import { Loading } from "./util";
@@ -33,6 +34,7 @@ class Main extends Component {
     return (
       <div className="container" align="center">
         <Header />
+        <Title />
         <div className="content mt-4">
           <Loading isLoading={this.state.stage === CONST.SIMPLE_STAGE.LOADING}/>
           <DynamicInput

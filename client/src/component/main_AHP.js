@@ -3,6 +3,7 @@ import readXlsxFile from "read-excel-file";
 import isEmpty from "lodash/isEmpty";
 
 import { Header, Footer } from "./header-footer";
+import Title from "./title";
 import Comparison from "./comparison";
 import Graph from "./graph";
 import Control from "./control";
@@ -56,6 +57,7 @@ class Main extends Component {
     return (
       <div className="container" align="center">
         <Header />
+        <Title />
         <div className="mt-7" ref={this.controlElement}>
           <Control
             curControl={this.state.curControl}

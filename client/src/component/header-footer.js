@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Link, withRouter } from "react-router-dom";
 
-import { ComponentWTip, ComponentWTipCf, Title } from "./util";
+import { ComponentWTip, ComponentWTipCf } from "./util";
 
 import CONTENT from "../share/content";
 import CONST from "../share/const";
@@ -10,28 +10,6 @@ import CONST from "../share/const";
 
 class Header extends Component {
   render() {
-    let content = {
-      title: "",
-      subTitle: ""
-    };
-  
-    switch (this.props.location.pathname) {
-      default:
-      case CONST.LOCATION.AHP: {
-        content = {
-          title: "Hierarchic",
-          subTitle: CONTENT.SUBTITLE.AHP
-        };
-        break;
-      }
-      case CONST.LOCATION.SIMPLE: {
-        content = {
-          title: "Simple",
-          subTitle: CONTENT.SUBTITLE.SIMPLE
-        };     
-      }
-    }
-  
     return (
       <div>
         <div id="header-wrapper" className="fixed-top">
@@ -41,7 +19,6 @@ class Header extends Component {
           </div>
         </div>
         <div className="spacer-100"></div>
-        <Title {...content} />
       </div>
     );
   }
@@ -55,8 +32,6 @@ class Header extends Component {
 
   };
 }
-
-Header = withRouter(Header); //Acquire location info
 
 
 //TODO: when mobile, footer not sticky
