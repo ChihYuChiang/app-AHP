@@ -1,6 +1,5 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
-import PropTypes from 'prop-types';
 import { PoseGroup } from 'react-pose';
 
 import { PosedFade } from './pose';
@@ -64,10 +63,10 @@ function Title(props) {
 
   return (
     <PoseGroup animateOnMount={true}>
-      <PosedFade key={"title_" + props.title} cDelay={200}>
+      <PosedFade key={"title_" + content.title} cDelay={200}>
         {title}
       </PosedFade>
-      <PosedFade key={"subTitle_" + props.title} cDelay={600}>
+      <PosedFade key={"subTitle_" + content.title} cDelay={600}>
         <div className="col-8 mt-4">{content.subTitle}</div>
       </PosedFade>
     </PoseGroup>
@@ -76,10 +75,6 @@ function Title(props) {
 
 //eslint-disable-next-line
 Title = withRouter(Title); //Acquire location info
-Title.propTypes = {
-  title: PropTypes.node.isRequired,
-  subTitle: PropTypes.node
-};
 
 
 export default Title;
