@@ -13,7 +13,8 @@ const main = {
     PHASE_1: 500,
     PHASE_2: 1000,
     PHASE_3: 1500,
-    LANDING: STYLE.TITLE_ANIM_LENGTH
+    LANDING: STYLE.TITLE_ANIM_LENGTH * 1000, //Second to millisecond
+    STAGGER_INTERVAL: 150
   }
 }
 

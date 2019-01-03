@@ -15,6 +15,7 @@ import score from "../js/score";
 import util from "../js/util";
 
 import CONST from "../share/const";
+import MEASURE from "../share/measure";
 
 
 const buildDefaultState = () => ({
@@ -261,12 +262,15 @@ class Main extends Component {
       curPrompt: CONST.PROMPT_TYPE.NULL,
       curGraph: CONST.GRAPH_TYPE.NULL,
       curComparison: CONST.COM_TYPE.NULL,
-      isLoading: true
+      isLoading: graphType === CONST.GRAPH_TYPE.TREE_ENTRY ? false : true
     });
 
     //Fake a certain loading time before return
     //`await` later to let the promise run along side the `fetch` call
-    let sleeper = util.sleep(1500);
+    let sleeper = util.sleep(graphType === CONST.GRAPH_TYPE.TREE_ENTRY ? MEASURE.POSE_DELAY.LANDING: 1500)
+      .then(() => { //For entry. If the response is not ready after the anim, show loading
+        this.setState({ isLoading: true });
+      });
 
     let response, body;
     switch (graphType) {

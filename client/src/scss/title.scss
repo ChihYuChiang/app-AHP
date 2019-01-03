@@ -10,7 +10,7 @@
 @include media-breakpoint-up(md) {
   .title-AHP-static {display: none;}
   .title-AHP {
-    transform: translate(-15px, 0);
+    transform: translate(-17px, 0);
   
     &-animated {
       display: block;
@@ -18,58 +18,29 @@
       overflow: hidden;
       height: 45px;
   
-      &:before {
-        content: '|';
-        left: 0;
-      }
-  
-      &:after {
-        content: '|';
-        right: 0;
-      }
-  
-      &:after, &:before {
-        position: absolute;
-        top: 0;
-        opacity: 0;
-        color: $gray-r400;
-        font-size: 42px;
-        line-height: 45px;
-        
-        -webkit-animation-name: opacity;
-        -webkit-animation-duration: 2s;
-        -webkit-animation-iteration-count: 4;
-        animation-name: opacity;
-        animation-duration: 2s;
-        animation-iteration-count: 4;
-      }
-  
       &__carousel {
         margin-top: 0;
         transform: translate3d(0, -50%, 0);
-        padding-right: 51px;
+        padding-right: 53px;
         text-align: center;
         list-style: none;
         
         -webkit-animation-name: change;
-        -webkit-animation-duration: 7s;
+        -webkit-animation-duration: $title-anim-length + s;
         -webkit-animation-iteration-count: 1;
+        -webkit-animation-timing-function: cubic-bezier(.17,.84,.44,1);
         animation-name: change;
-        animation-duration: 7s;
+        animation-duration: $title-anim-length + s;
         animation-iteration-count: 1;
+        animation-timing-function: cubic-bezier(.17,.84,.44,1);
       }
     }
   }
 }
 
 
-@include keyframes(opacity) {
-  0%, 100% {opacity: 0;}
-  50% {opacity: 1;}
-}
-
 @include keyframes(change) {
   0%, 20% {transform: translate3d(0, -50%, 0);}
-  30%, 70% {transform: translate3d(0, -100%, 0);}
-  80%, 100% {transform: translate3d(0, -50%, 0);}
+  40%, 70% {transform: translate3d(0, -100%, 0);}
+  90%, 100% {transform: translate3d(0, -50%, 0);}
 }

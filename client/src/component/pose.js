@@ -4,16 +4,13 @@ import SplitText from 'react-pose-text';
 import PropTypes from 'prop-types';
 
 import util from '../js/util';
+
+import MEASURE from '../share/measure';
 //Note: PoseGroup can only be used locally, within each React component
 
 
 //TODO: draw tick
 //https://codepen.io/popmotion/pen/yPxNao?editors=0010
-export const POSE_MEASURE = {
-  DELAY_INTERVAL: 150
-}
-
-
 //An empty Posed component to pass pose stages to its children / as placeholder
 export const PosedNull = posed.div({
   enter: {},
@@ -76,7 +73,7 @@ export const PosedAttY = posed.div({
 
 export const PosedFadeX = posed.div({
   enter: {
-    delay: (props) => (props.cDelay + props.i * props.cDelay) || (POSE_MEASURE.DELAY_INTERVAL + props.i * POSE_MEASURE.DELAY_INTERVAL) || props.cDelay || POSE_MEASURE.DELAY_INTERVAL,
+    delay: (props) => (props.cDelay + props.i * props.cDelay) || (MEASURE.POSE_DELAY.STAGGER_INTERVAL + props.i * MEASURE.POSE_DELAY.STAGGER_INTERVAL) || props.cDelay || MEASURE.POSE_DELAY.STAGGER_INTERVAL,
     x: 0,
     opacity: 1
   },
@@ -97,7 +94,7 @@ PosedFadeX.propTypes = {
 
 export const PosedFadeY = posed.div({
   enter: {
-    delay: (props) => (props.cDelay + props.i * props.cDelay) || (POSE_MEASURE.DELAY_INTERVAL + props.i * POSE_MEASURE.DELAY_INTERVAL) || props.cDelay || POSE_MEASURE.DELAY_INTERVAL,
+    delay: (props) => (props.cDelay + props.i * props.cDelay) || (MEASURE.POSE_DELAY.STAGGER_INTERVAL + props.i * MEASURE.POSE_DELAY.STAGGER_INTERVAL) || props.cDelay || MEASURE.POSE_DELAY.STAGGER_INTERVAL,
     y: 0,
     opacity: 1
   },

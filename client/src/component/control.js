@@ -76,7 +76,7 @@ class Control extends Component {
         return (
           //TODO: FA for all buttons
           <PoseGroup animateOnMount={true}>
-            <PosedFade key="btnToolBar" cDelay={MEASURE.POSE_DELAY.PHASE_0}>
+            <PosedFade key="btnToolBar" cDelay={MEASURE.POSE_DELAY.PHASE_0 + MEASURE.POSE_DELAY.LANDING}>
               <input key="input"
                 className="file-input"
                 id="fileInput-criteria"
