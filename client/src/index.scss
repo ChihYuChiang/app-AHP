@@ -16,15 +16,10 @@
 @import "scss/modal-tip.scss";
 
 
+@include hide-scrollbar();
+
 html { //For rem, which Bootstrap 4 bases on
   font-size: 14px;
-  overflow: scroll;
-  overflow-x: hidden;
-}
-
-::-webkit-scrollbar {
-  width: 0px;  /* remove scrollbar space */
-  background: transparent;  /* optional: just make scrollbar invisible */
 }
 
 label { //For the file upload delegate

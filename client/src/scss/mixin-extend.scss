@@ -5,6 +5,19 @@
   @keyframes #{$animationName} {@content;}
 }
 
+@mixin hide-scrollbar() {
+  //This works for Chrome; Firefox will constantly show scrollbar and still solves the stuttering due to scrollbar appear and disappear
+  html {
+    overflow: scroll;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0px;  /* remove scrollbar space */
+    background: transparent;  /* optional: just make scrollbar invisible */
+  }
+}
+
 %remove-a-effect {
   color: inherit;
   text-decoration: none;
