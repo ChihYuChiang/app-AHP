@@ -10,7 +10,7 @@ import { PosedFade, PosedLoadingDots } from './pose';
 import util from '../js/util';
 
 import CONST from '../share/const';
-import styles from '../scss/variable.scss';
+import STYLE from '../scss/variable.scss';
 
 const maxTipWidth = "250px";
 
@@ -19,9 +19,9 @@ export function Loading(props) {
   const loadingContent = (
     <PosedFade key="loading" className={props.className}>
       <div className="d-flex justify-content-center">
-        <i className="fas fa-cog fa-spin fa-3x" style={{ color: styles.gray800 }} />
+        <i className="fas fa-cog fa-spin fa-3x" style={{ color: STYLE.GRAY_800 }} />
       </div>
-      <div className="d-flex justify-content-center small mt-1" style={{ color: styles.gray800 }}>
+      <div className="d-flex justify-content-center small mt-1" style={{ color: STYLE.GRAY_800 }}>
         Loading<PosedLoadingDots> ...</PosedLoadingDots>
       </div>
     </PosedFade>

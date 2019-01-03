@@ -43,14 +43,14 @@ $dark     : $gray-800;
 
 //Extend/override Bootstrap maps
 $theme-colors: (
-  primary:    $primary,
-  secondary:  $secondary,
-  success:    $success,
-  info:       $info,
-  warning:    $warning,
-  danger:     $danger,
-  light:      $light,
-  dark:       $dark
+  primary  : $primary,
+  secondary: $secondary,
+  success  : $success,
+  info     : $info,
+  warning  : $warning,
+  danger   : $danger,
+  light    : $light,
+  dark     : $dark
 );
 
 $spacer: 1rem;
@@ -62,27 +62,27 @@ $spacers: (
   -5: ($spacer * -3),
   -6: ($spacer * -4.5),
   -7: ($spacer * -6),
-  6: ($spacer * 4.5),
-  7: ($spacer * 6)
+  6 : ($spacer * 4.5),
+  7 : ($spacer * 6)
 );
 
 //Potentially useful way to manage z index
 //only works on positioned elements (e.g. position:absolute, position:relative).
 $z-layers: (
   bottomless-pit: -10000,
-  -3 : -3,
-  -2 : -2,
-  -1 : -1,
-  0 : 0,
-  1 : 1,
-  2 : 2,
-  3 : 3,
-  hover: 100,
-  active: 200,
-  focus: 300,
+  -3      : -3,
+  -2      : -2,
+  -1      : -1,
+  0       : 0,
+  1       : 1,
+  2       : 2,
+  3       : 3,
+  hover   : 100,
+  active  : 200,
+  focus   : 300,
   dropdown: 1000,
-  overlay: 2000,
-  modal: 3000
+  overlay : 2000,
+  modal   : 3000
 );
 
 $spacer-breakpoints: (
@@ -96,9 +96,9 @@ $spacer-breakpoints: (
 );
 
 $fontsize-breakpoints: (
-  55: 0.55rem,
-  70: 0.70rem,
-  85: 0.85rem,
+  55 : 0.55rem,
+  70 : 0.70rem,
+  85 : 0.85rem,
   100: 1.00rem,
   115: 1.15rem,
   130: 1.30rem,
@@ -108,49 +108,53 @@ $fontsize-breakpoints: (
 $font-family-base: "Open Sans", "Helvetica Neue", Arial, sans-serif;
 
 $slider-width: 300;
+$title-anim-length: 7;
 
+
+//Parsed by Webpack and can be imported in js files
 :export {
-  white: $white;
-  gray100: $gray-100; 
-  gray200: $gray-200; 
-  gray300: $gray-300; 
-  gray400: $gray-400; 
-  gray500: $gray-500; 
-  gray600: $gray-600; 
-  gray700: $gray-700; 
-  gray800: $gray-800; 
-  gray900: $gray-900; 
-  black: $black;
+  WHITE    : $white;
+  GRAY_100 : $gray-100; 
+  GRAY_200 : $gray-200; 
+  GRAY_300 : $gray-300; 
+  GRAY_400 : $gray-400; 
+  GRAY_500 : $gray-500; 
+  GRAY_600 : $gray-600; 
+  GRAY_700 : $gray-700; 
+  GRAY_800 : $gray-800; 
+  GRAY_900 : $gray-900; 
+  BLACK    : $black;
 
-  grayr100: $gray-r100; 
-  grayr200: $gray-r200; 
-  grayr300: $gray-r300; 
-  grayr400: $gray-r400; 
-  grayr500: $gray-r500; 
-  grayr600: $gray-r600; 
-  grayr700: $gray-r700; 
-  grayr800: $gray-r800; 
-  grayr900: $gray-r900; 
+  GRAY_R100: $gray-r100; 
+  GRAY_R200: $gray-r200; 
+  GRAY_R300: $gray-r300; 
+  GRAY_R400: $gray-r400; 
+  GRAY_R500: $gray-r500; 
+  GRAY_R600: $gray-r600; 
+  GRAY_R700: $gray-r700; 
+  GRAY_R800: $gray-r800; 
+  GRAY_R900: $gray-r900; 
 
-  blue: $blue;     
-  indigo: $indigo;   
-  purple: $purple;   
-  pink: $pink;     
-  red: $red;      
-  orange: $orange;   
-  yellow: $yellow;   
-  green: $green;   
-  teal: $teal;     
-  cyan: $cyan;
+  BLUE     : $blue;     
+  INDIGO   : $indigo;   
+  PURPLE   : $purple;   
+  PINK     : $pink;     
+  RED      : $red;      
+  ORANGE   : $orange;   
+  YELLOW   : $yellow;   
+  GREEN    : $green;   
+  TEAL     : $teal;     
+  CYAN     : $cyan;
 
-  primary: $primary;  
-  secondary: $secondary;
-  success: $success;  
-  info: $info;     
-  warning: $warning;  
-  danger: $danger;   
-  light: $light;    
-  dark: $dark;
+  PRIMARY  : $primary;  
+  SECONDARY: $secondary;
+  SUCCESS  : $success;  
+  INFO     : $info;     
+  WARNING  : $warning;  
+  DANGER   : $danger;   
+  LIGHT    : $light;    
+  DARK     : $dark;
 
-  sliderWidth: $slider-width;
+  SLIDER_WIDTH: $slider-width;
+  TITLE_ANIM_LENGTH: $title-anim-length;
 }

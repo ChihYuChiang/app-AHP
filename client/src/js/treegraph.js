@@ -5,7 +5,7 @@ import util from "./util";
 
 import CONST from "../share/const";
 import MEASURE from "../share/measure";
-import styles from "../scss/variable.scss";
+import STYLE from "../scss/variable.scss";
 
 
 //TODO: when graph too small (only few criteria), the legend overlaps the root node -> if no of leaves <= x, legend not sticky and in the normal flow
@@ -108,7 +108,7 @@ function produceTreeGraph(root, options, inter) {
     .append("path")
     .classed("link", true)
     .attr("fill", "none")
-    .attr("stroke", styles.gray300)
+    .attr("stroke", STYLE.GRAY_300)
     .merge(linkPaths) //Both enter and update
     .attr(
       "d",
@@ -144,7 +144,7 @@ function produceTreeGraph(root, options, inter) {
   nodeGs_enter
     .append("text")
     .classed("node_text", true)
-    .attr("fill", styles.gray800)
+    .attr("fill", STYLE.GRAY_800)
     .attr("text-anchor", "middle");
 
   let nodeGs_enter8Update = nodeGs_enter.merge(nodeGs); //Under current design, no update will be made
@@ -166,7 +166,7 @@ function produceTreeGraph(root, options, inter) {
     .select(".node_circle")
     .attr("r", d => getCircleR(d.data.parWeight, inter))
     .attr("fill", d => {
-      if (!inter) return styles.primary;
+      if (!inter) return STYLE.PRIMARY;
       else {
         let [hueScale, lightnessScale] = genScales(root);
         let colorHue = hueScale(d.topOptId);
@@ -227,7 +227,7 @@ function produceLegend(root, options) {
     .attr("dx", "-5px")
     .text((d) => d.name)
     .style("text-anchor", "start")
-    .style("fill", styles.gray800)
+    .style("fill", STYLE.GRAY_800)
     .style("font-size", 12);
   
   //Option color

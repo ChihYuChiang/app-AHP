@@ -5,7 +5,7 @@ import { PosedExpandY, PosedRotate180 } from './pose';
 
 import CONST from "../share/const";
 import CONTENT from "../share/content";
-import styles from "../scss/variable.scss";
+import MEASURE from "../share/measure";
 
 
 class GroupLabel extends Component {
@@ -125,7 +125,7 @@ class Pair extends Component { //TODO: better comparison format? tip when slidin
     let labelElement = this.labelElement.current;
     let labelPosition = (sliderElement.value - sliderElement.min) / (sliderElement.max - sliderElement.min);
   
-    labelElement.style.left = labelPosition * (styles.sliderWidth - 19) - 120 + "px";
+    labelElement.style.left = labelPosition * (MEASURE.GRAPH.SLIDER_WIDTH - 19) - 120 + "px";
   };
   
   handleChange = (event) => { //Arrow functions always gets the context from where they have been defined.

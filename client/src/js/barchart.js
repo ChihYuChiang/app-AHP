@@ -3,7 +3,7 @@ import * as d3 from "d3";
 import util from "./util";
 
 import MEASURE from "../share/measure";
-import styles from "../scss/variable.scss"; //TODO: capitalize
+import STYLE from "../scss/variable.scss";
 
 
 function main(datum) {
@@ -54,7 +54,7 @@ function main(datum) {
     .text((d) => Math.round(d * staggerDelay))
     .attr("x", (_, i) => xScale(i + 1) + 0.5 * xScale.bandwidth())
     .attr("y", (d) => MEASURE.GRAPH.BAR_HEIGHT - yScale(d) - 4)
-    .attr("fill", styles.gray800)
+    .attr("fill", STYLE.GRAY_800)
     .attr("text-anchor", "middle")
     .style("opacity", 0)
     .transition("barText")
