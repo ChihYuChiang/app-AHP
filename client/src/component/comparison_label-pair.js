@@ -96,16 +96,16 @@ class Pair extends Component { //TODO: better comparison format? tip when slidin
     return (
       <div>
         <p>{destName}<span className="text-secondary ml-2 mr-2">or</span>{sourceName}</p>
-        <div>
-          <input name="range-slider" type="range" className="fluid-slider" max="8" min="-8" step="1"
-            data-source={sourceName}
-            data-dest={destName}
+        <div className="fluid-slider"
+          data-source={sourceName}
+          data-dest={destName}>
+          <input className="fluid-slider__input" name="range-slider" type="range" max="8" min="-8" step="1"
             value={this.state.value}
             onChange={this.handleChange}
             onInput={this.genSliderLabel}
             ref={this.sliderElement}
             />
-          <span className="range-label" ref={this.labelElement}>{Math.abs(this.state.value) / 2}</span>
+          <span className="fluid-slider__range-label" ref={this.labelElement}>{Math.abs(this.state.value) / 2}</span>
         </div>
       </div>
     );
