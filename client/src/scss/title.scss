@@ -11,7 +11,27 @@
   .title-AHP-static {display: none;}
   .title-AHP {
     transform: translate(-17px, 0);
-  
+    
+    &:before {
+      content: '';
+      position: absolute;
+      display: inline-block;
+      opacity: 0;
+      left: calc(50% + 82px);
+      top: 115%;
+      border-top: 3px solid $primary;
+
+      transform: translate(-50%, 0); //Make the elongation centered
+      -webkit-transform: translate(-50%, 0); 
+      
+      -webkit-animation-name: opacity;
+      -webkit-animation-duration: $title-anim-length + s;
+      -webkit-animation-iteration-count: 1;
+      animation-name: opacity;
+      animation-duration: $title-anim-length + s;
+      animation-iteration-count: 1;
+    }
+
     &-animated {
       display: block;
       position: relative;
@@ -38,6 +58,13 @@
   }
 }
 
+
+@-webkit-keyframes opacity {
+  0%, 100% {opacity: 0; width: 28px;}
+  20%, 90% {width: 28px;}
+  40%, 70% {width: 300px;}
+  5%, 95% {opacity: 1;}
+}
 
 @include keyframes(change) {
   0%, 20% {transform: translate3d(0, -50%, 0);}
