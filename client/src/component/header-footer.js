@@ -1,25 +1,34 @@
 import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import { Link, withRouter } from "react-router-dom";
+import { PoseGroup } from 'react-pose';
 
+import { PosedFade } from './pose';
 import { ComponentWTip, ComponentWTipCf } from "./util";
 
 import CONTENT from "../share/content";
 import CONST from "../share/const";
+import MEASURE from "../share/measure";
 
 
+//TODO: hide header footer when title animation
+//TODO: when mobile, show loading when title animation
 class Header extends Component {
   render() {
+    let cDelay = getCDelay(this.props.location.pathname);
+
     return (
-      <div>
-        <div id="header-wrapper" className="fixed-top">
-          <div className="header-control d-flex mt-3">
-            <span className="ml-auto mr-2 mt-1 d-inline-block no-pointer">{greetByTime()}</span>
-            <i className="fas fa-user-circle remove-focus-effect" />
+      <PoseGroup animateOnMount={true}>
+        <PosedFade key="header" cDelay={cDelay}>
+          <div id="header-wrapper" className="fixed-top">
+            <div className="header-control d-flex mt-3">
+              <span className="ml-auto mr-2 mt-1 d-inline-block no-pointer">{greetByTime()}</span>
+              <i className="fas fa-user-circle remove-focus-effect" />
+            </div>
           </div>
-        </div>
-        <div className="spacer-100"></div>
-      </div>
+          <div className="spacer-100" />
+        </PosedFade>
+      </PoseGroup>
     );
   }
 
@@ -32,6 +41,9 @@ class Header extends Component {
 
   };
 }
+
+//eslint-disable-next-line
+Header = withRouter(Header); //Acquire location info
 
 
 //TODO: when mobile, footer not sticky
@@ -98,19 +110,24 @@ class Footer extends Component {
     }
 
     let versionInfo = this.state.version ? "Version " + this.state.version : "";
+    let cDelay = getCDelay(this.props.location.pathname);
 
     return (
-      <div id="footer-wrapper" className="fixed-bottom">
-        <div className="footer-control d-flex mb-2">
-          {controls}
-          <span className="ml-auto align-self-end">{versionInfo}</span>
-        </div>
-        <div className="footer-band d-flex">
-          <span className="ml-auto">
-            2019<a className="ml-2" href="mailto:chihyuchiang@uchicago.edu">Chih-Yu Chiang</a>
-          </span>
-        </div>
-      </div>
+      <PoseGroup animateOnMount={true}>
+        <PosedFade key="footer" cDelay={cDelay}>
+          <div id="footer-wrapper" className="fixed-bottom">
+            <div className="footer-control d-flex mb-2">
+              {controls}
+              <span className="ml-auto align-self-end">{versionInfo}</span>
+            </div>
+            <div className="footer-band d-flex">
+              <span className="ml-auto">
+                2019<a className="ml-2" href="mailto:chihyuchiang@uchicago.edu">Chih-Yu Chiang</a>
+              </span>
+            </div>
+          </div>
+        </PosedFade>
+      </PoseGroup>
     );
   }
 
@@ -158,6 +175,17 @@ function greetByTime() {
   }
 
   return prefix + " " + timeLiteral;
+}
+
+function getCDelay(location) {
+  switch (location) {
+    case CONST.LOCATION.AHP:
+      return MEASURE.POSE_DELAY.PHASE_0 + MEASURE.POSE_DELAY.LANDING;
+    
+    default:
+    case CONST.LOCATION.SIMPLE:
+      return MEASURE.POSE_DELAY.PHASE_0;
+  }
 }
 
 
