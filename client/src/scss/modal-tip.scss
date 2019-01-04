@@ -1,5 +1,6 @@
 .modal-header {
   border: none;
+  @extend %themed-b;
   
   .modal-title {
     font-size: 1.5rem;

@@ -68,7 +68,7 @@ const main = {
       </div>,
     STEP_INTRO:
       <div>
-        <p>Hierarchic handles AHP's technical difficulties and streamlines it into 4 steps.</p>
+        <p><b>Hierarchic</b> implements the <b>analytical hierarchy process (AHP)</b> in 4 steps.</p>
       </div>,
     STEP_1: <p>Download the template for decision options and criteria. Follow the template's instruction and modify its content.</p>,
     STEP_2: <p>Upload your personalized options and criteria.</p>,
@@ -94,9 +94,10 @@ const main = {
       <div>
         <p>
           Hierarchic is the first interactive implementation of the <a href="https://en.wikipedia.org/wiki/Analytic_hierarchy_process" target="_blank" rel="noopener noreferrer">analytical hierarchy process (AHP)</a>.
+          We handle AHP's technical difficulties, redesign its interface, and streamline its procedure. 
         </p>
         <p>
-          AHP is a structured technique for complex decision makings. Developed by <a href="https://en.wikipedia.org/wiki/Thomas_L._Saaty" target="_blank" rel="noopener noreferrer">Thomas L. Saaty</a>, it helps organizing and analyzing decisions especially of ones with manifold review criteria by mathematics and psychology. It is widely used in compounded business situations and complicated individual matters alike.
+          AHP is the preeminent technique for complex decision makings. Developed by <a href="https://en.wikipedia.org/wiki/Thomas_L._Saaty" target="_blank" rel="noopener noreferrer">Thomas L. Saaty</a>, it helps organizing and analyzing decisions especially of ones with manifold review criteria by mathematics and psychology. It is widely used in compounded business situations and complicated individual matters alike.
         </p>
       </div>
   },
